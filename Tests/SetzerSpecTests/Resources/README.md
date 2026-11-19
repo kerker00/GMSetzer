@@ -23,6 +23,8 @@ examples. The 670-example count excluded them and was incomplete for GMSetzer.
 
 `baseline.json` records passing example IDs per profile. The spec tests fail
 if any protected example regresses, even if another starts passing. Add new
-passing IDs in the same commit. M1 through containers protects 299 CommonMark
-and 300 GFM examples. At M0 only CommonMark 207 and GFM 176/188 passed; those
+passing IDs in the same commit. M1 through HTML/references protects 339 CommonMark
+and 339 GFM examples. The harness explicitly permits raw HTML and comments for
+trusted conformance fixtures; safe-default rendering is tested separately.
+At M0 only CommonMark 207 and GFM 176/188 passed; those
 rendered empty output and did not demonstrate parser implementation.

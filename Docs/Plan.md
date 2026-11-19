@@ -1,6 +1,6 @@
 # GMSetzer – Plan and Requirements
 
-**Status: 19 November 2026, M1 in progress: leaf blocks, block quotes and lists implemented.** This document is the
+**Status: 19 November 2026, M1 block implementations present, including HTML and multiline references; final acceptance/API review open.** This document is the
 reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
@@ -355,7 +355,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | Milestone | Contents | Done when | Estimate | Status |
 | --- | --- | --- | --- | --- |
 | M0 | Repository, package layout, specification run, benchmark setup, name and gap check | Starting point measured; harness reviewed, reference configurations corrected | 2–3 | **reviewed and corrected** (19 Nov 2026); new reference timings pending |
-| M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **in progress**: leaf blocks, nested quotes/lists, lazy continuation, tightness, depth limits and projected extension lines; 299/652 CommonMark and 300/672 GFM examples pass. HTML blocks and complete references remain open |
+| M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **in progress**: HTML classes, multiline references and optional component ranges added; 339/652 CommonMark and 339/672 GFM examples pass. Final acceptance/API review and custom container-hook scope remain open |
 | M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | |
 | M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; editor adapter for syntax spans/findings | Security/position/analysis tests pass; Setzkit proves snapshot-bound syntax decoration and diagnostic underlines; integration can start | re-estimate | |
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | |
@@ -416,5 +416,6 @@ profile conversions, incremental parsing if measurements call for it.
 
 The M0 findings, corrections and validation are recorded in
 [Review-M0.md](Review-M0.md). M1's first implementation and example trees are
-documented in [SyntaxTree.md](SyntaxTree.md). Next: HTML blocks and complete
-reference-definition syntax, then the remaining extension contract review.
+documented in [SyntaxTree.md](SyntaxTree.md). HTML/reference behavior and tests
+are in [HTMLReferences.md](HTMLReferences.md). Next: final M1 acceptance and
+extension/annotation contract review before the M2 inline implementation.

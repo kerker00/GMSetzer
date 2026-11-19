@@ -30,7 +30,7 @@ internal struct OpenContainer {
 }
 
 internal struct OpenLeaf {
-    enum Kind { case paragraph, fenced(BlockParser.Fence), indented }
+    enum Kind { case paragraph, fenced(BlockParser.Fence), indented, html(HTMLBlockKind) }
     let kind: Kind
     let parent: Int
     let start: Int
@@ -46,7 +46,7 @@ extension BlockParser {
             for container in containers {
                 let prefix: ContainerPrefix
                 if case .item(let padding) = container.kind {
-                    prefix = .item(padding: padding, acceptsBlank: container.childCount > 0)
+                    prefix = .item(padding: padding, acceptsBlank: container.childCount > 0 || leaf?.parent == container.node)
                 } else { prefix = container.prefix }
                 guard let next = Self.project(view, source: source, prefixes: [prefix]) else { break }
                 view = next
@@ -73,7 +73,20 @@ extension BlockParser {
                 case .paragraph:
                     if let level = setextLevel(index) {
                         touchContainers(through: index)
-                        finishLeaf(headingLevel: level, closingLine: index)
+                        let parent = leaf!.parent
+                        if !finishLeaf(headingLevel: level, closingLine: index) {
+                            // Removing only definitions leaves the underline
+                            // as paragraph text; it is not a fresh list marker.
+                            leaf = OpenLeaf(kind: .paragraph, parent: parent, start: index, indices: [index])
+                        }
+                        index += 1
+                        continue
+                    }
+                case .html(let kind):
+                    if (kind != .blockTag && kind != .completeTag) || !isBlank(index) {
+                        leaf!.indices.append(index)
+                        touchContainers(through: index)
+                        if endsHTMLBlock(index, kind: kind) { finishLeaf() }
                         index += 1
                         continue
                     }
@@ -155,20 +168,25 @@ extension BlockParser {
             if consumedExtension { continue }
             touchContainers(through: index)
             if isBlank(index) { index += 1; continue }
-            beginChild()
             let parent = containers.last?.node ?? 0
             if !limited && indentation(index).columns >= 4 {
+                beginChild()
                 leaf = OpenLeaf(kind: .indented, parent: parent, start: index, indices: [index])
             } else if !limited, let fence = openingFence(index) {
+                beginChild()
                 leaf = OpenLeaf(kind: .fenced(fence), parent: parent, start: index, indices: [])
             } else if !limited, let heading = atxHeading(index) {
+                beginChild()
                 let node = append(.heading(level: heading.level), range: lines[index].range,
                                   segments: heading.content.isEmpty ? [] : [heading.content])
                 appendText(heading.content, to: node)
             } else if !limited && thematicBreak(index) {
+                beginChild()
                 append(.thematicBreak, range: lines[index].range)
-            } else if !limited, let reference = referenceDefinition(index) {
-                append(.referenceDefinition(reference), range: lines[index].range)
+            } else if !limited, let kind = htmlBlockStart(index, interrupting: false) {
+                beginChild()
+                leaf = OpenLeaf(kind: .html(kind), parent: parent, start: index, indices: [index])
+                if endsHTMLBlock(index, kind: kind) { finishLeaf() }
             } else {
                 leaf = OpenLeaf(kind: .paragraph, parent: parent, start: index, indices: [index])
             }
@@ -182,6 +200,7 @@ extension BlockParser {
     mutating func interruptsParagraph(_ index: Int, matchedContainers: Int) -> Bool {
         if atxHeading(index) != nil || openingFence(index) != nil || thematicBreak(index) { return true }
         if Self.quoteContent(lines[index], source: source) != nil { return true }
+        if htmlBlockStart(index, interrupting: matchedContainers == containers.count) != nil { return true }
         // At an unmatched outer container this begins a new block there; it
         // does not interrupt that outer container's existing paragraph.
         if listMarker(index, interrupting: matchedContainers == containers.count) != nil { return true }
@@ -237,23 +256,39 @@ extension BlockParser {
         }
     }
 
-    mutating func finishLeaf(headingLevel: Int? = nil, closingLine: Int? = nil) {
-        guard let active = leaf else { return }
+    @discardableResult
+    mutating func finishLeaf(headingLevel: Int? = nil, closingLine: Int? = nil) -> Bool {
+        guard let active = leaf else { return false }
         leaf = nil
         switch active.kind {
         case .paragraph:
-            var segments = active.indices.map { index in
+            let allSegments = active.indices.map { index in
                 SourceRange(indentation(index).offset, lines[index].contentRange.upperBound)
             }
+            let scanner = ReferenceScanner(source: source, content: allSegments,
+                endings: active.indices.map { lines[$0].range.upperBound }, collectSyntax: collectSyntaxDetails)
+            var firstContent = 0
+            while let reference = scanner.parse(at: firstContent) {
+                let first = active.indices[reference.firstLine]
+                let last = active.indices[reference.endLine - 1]
+                append(.referenceDefinition(reference.definition),
+                       range: SourceRange(lines[first].range.lowerBound, lines[last].range.upperBound),
+                       segments: active.indices[reference.firstLine..<reference.endLine].map { lines[$0].range }, to: active.parent)
+                firstContent = reference.endLine
+            }
+            guard firstContent < active.indices.count else { return false }
+            beginChild()
+            let contentIndices = Array(active.indices.dropFirst(firstContent))
+            var segments = Array(allSegments.dropFirst(firstContent))
             if let last = segments.last { segments[segments.count - 1] = trimmed(last.lowerBound, last.upperBound) }
-            let endLine = closingLine ?? active.indices.last!
+            let endLine = closingLine ?? contentIndices.last!
             let node = append(headingLevel.map { .heading(level: $0) } ?? .paragraph,
-                              range: SourceRange(lines[active.start].range.lowerBound, lines[endLine].range.upperBound),
+                              range: SourceRange(lines[contentIndices[0]].range.lowerBound, lines[endLine].range.upperBound),
                               segments: segments, to: active.parent)
             for (position, segment) in segments.enumerated() {
                 appendText(segment, to: node)
                 if position + 1 < segments.count {
-                    let line = lines[active.indices[position]]
+                    let line = lines[contentIndices[position]]
                     append(.softBreak, range: SourceRange(line.contentRange.upperBound, line.range.upperBound), to: node)
                 }
             }
@@ -285,7 +320,19 @@ extension BlockParser {
             append(.codeBlock(info: info, literal: literal),
                    range: SourceRange(lines[active.start].range.lowerBound, lines[endLine].range.upperBound),
                    segments: segments, to: active.parent)
+        case .html(let kind):
+            let segments = active.indices.map { lines[$0].range }
+            var literal = ""
+            for index in active.indices {
+                literal += String(repeating: " ", count: lines[index].virtualIndentation)
+                literal += decode(lines[index].contentRange) + "\n"
+            }
+            let last = active.indices.last!
+            append(.htmlBlock(HTMLBlock(kind: kind, literal: literal)),
+                   range: SourceRange(lines[active.start].range.lowerBound, lines[last].range.upperBound),
+                   segments: segments, to: active.parent)
         }
+        return true
     }
 
     static func quoteContent(_ line: SourceLine, source: [UInt8]) -> SourceLine? {

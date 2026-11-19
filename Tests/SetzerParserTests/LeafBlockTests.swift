@@ -78,8 +78,9 @@ struct LeafBlockTests {
 
     @Test func sourceHTMLIsEscapedAndBlockAnchorsAreExplicit() {
         let document = MarkdownParser().parse("<script>alert(1)</script>\n")
-        #expect(HTMLRenderer().render(document) == "<p>&lt;script&gt;alert(1)&lt;/script&gt;</p>\n")
-        #expect(HTMLRenderer(includeSourceRanges: true).render(document).hasPrefix("<p data-source-start=\"0\" data-source-end=\"26\">"))
+        #expect(HTMLRenderer().render(document) == "&lt;script&gt;alert(1)&lt;/script&gt;\n")
+        let paragraph = MarkdownParser().parse("text\n")
+        #expect(HTMLRenderer(includeSourceRanges: true).render(paragraph).hasPrefix("<p data-source-start=\"0\" data-source-end=\"5\">"))
         #expect(HTMLRenderer.escape("<\u{0301}&\"😀") == "&lt;\u{0301}&amp;&quot;😀")
         let code = MarkdownParser().parse("```x\"onmouseover=bad\ncode\n```\n")
         #expect(HTMLRenderer().render(code) == "<pre><code class=\"language-x&quot;onmouseover=bad\">code\n</code></pre>\n")

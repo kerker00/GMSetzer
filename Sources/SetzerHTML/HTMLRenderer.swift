@@ -10,14 +10,19 @@ public enum HTMLRendering: Sendable {
 public typealias HTMLRendererHook = @Sendable (Node, Document) -> HTMLRendering?
 
 /// Iterative rendering of the currently implemented block tree. Source
-/// literals are escaped; raw HTML parsing and explicit conformance options
-/// follow with the remaining parser phases. Hook output is a caller trust boundary.
+/// literals and HTML blocks are escaped by default. Raw HTML and comment
+/// preservation require explicit options. Hook output is a caller trust boundary.
 public struct HTMLRenderer: Sendable {
     public let includeSourceRanges: Bool
+    public let allowRawHTML: Bool
+    public let preserveHTMLComments: Bool
     private let hooks: [NodeKind: HTMLRendererHook]
 
-    public init(includeSourceRanges: Bool = false, hooks: [NodeKind: HTMLRendererHook] = [:]) {
+    public init(includeSourceRanges: Bool = false, allowRawHTML: Bool = false,
+                preserveHTMLComments: Bool = false, hooks: [NodeKind: HTMLRendererHook] = [:]) {
         self.includeSourceRanges = includeSourceRanges
+        self.allowRawHTML = allowRawHTML
+        self.preserveHTMLComments = preserveHTMLComments
         self.hooks = hooks
     }
 
@@ -91,6 +96,9 @@ public struct HTMLRenderer: Sendable {
                     }
                     output += ">\(Self.escape(literal))</code></pre>\n"
                 case .referenceDefinition: break
+                case .htmlBlock(let block):
+                    let html = preserveHTMLComments ? block.literal : Self.removingHTMLComments(block.literal)
+                    output += allowRawHTML ? html : Self.escape(html)
                 case .custom:
                     if node.firstChild != nil {
                         scheduleChildren(index, document: document, pending: &pending)

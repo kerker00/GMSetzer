@@ -1,16 +1,19 @@
 public import SetzerSyntax
 
-/// Parses block structure, including quote/list containers. Full reference and
-/// HTML syntax and inline markup remain subsequent steps; see Docs/SyntaxTree.md.
+/// Parses CommonMark block structure, HTML blocks and reference definitions.
+/// Inline markup and editor analysis follow; see Docs/SyntaxTree.md.
 public struct MarkdownParser: Sendable {
     public let profile: Profile
     private let extensions: [MarkdownExtension]
     public let limits: ParserLimits
+    public let collectSyntaxDetails: Bool
 
-    public init(profile: Profile = .commonMark, extensions: [MarkdownExtension] = [], limits: ParserLimits = ParserLimits()) {
+    public init(profile: Profile = .commonMark, extensions: [MarkdownExtension] = [], limits: ParserLimits = ParserLimits(),
+                collectSyntaxDetails: Bool = false) {
         self.profile = profile
         self.extensions = extensions
         self.limits = limits
+        self.collectSyntaxDetails = collectSyntaxDetails
     }
 
     public func parse(_ text: String) -> Document { parse(bytes: Array(text.utf8)) }
@@ -18,7 +21,8 @@ public struct MarkdownParser: Sendable {
     /// Keeps original bytes, including malformed UTF-8. Literals use Swift's
     /// UTF-8 replacement decoding; NUL becomes U+FFFD. Source offsets never shift.
     public func parse(bytes: [UInt8]) -> Document {
-        var parser = BlockParser(source: bytes, profile: profile, extensions: extensions, limits: limits)
+        var parser = BlockParser(source: bytes, profile: profile, extensions: extensions, limits: limits,
+                                 collectSyntaxDetails: collectSyntaxDetails)
         return parser.parse()
     }
 }
@@ -34,16 +38,18 @@ internal struct BlockParser {
     let physicalLines: [SourceLine]
     var lines: [SourceLine]
     let limits: ParserLimits
+    let collectSyntaxDetails: Bool
     var containers: [OpenContainer] = []
     var leaf: OpenLeaf?
     var builder: DocumentBuilder
     var rules: [ActiveRule] = []
 
-    init(source: [UInt8], profile: Profile, extensions: [MarkdownExtension], limits: ParserLimits) {
+    init(source: [UInt8], profile: Profile, extensions: [MarkdownExtension], limits: ParserLimits, collectSyntaxDetails: Bool) {
         self.source = source
         self.physicalLines = Self.scanLines(source)
         self.lines = self.physicalLines
         self.limits = limits
+        self.collectSyntaxDetails = collectSyntaxDetails
         self.builder = DocumentBuilder(source: source)
         var registry: [String: MarkdownExtension] = [:]
         for item in extensions {
@@ -207,75 +213,6 @@ internal struct BlockParser {
         cursor.consumeIndentation(columns)
         return (SourceRange(cursor.view.range.lowerBound, line.range.upperBound),
                 String(repeating: " ", count: cursor.virtual) + decode(SourceRange(cursor.offset, line.contentRange.upperBound)) + "\n")
-    }
-
-    /// Initial single-line reference definitions. Multiline labels/titles,
-    /// decoding and reference resolution belong to the remaining M1/M2 work.
-    func referenceDefinition(_ index: Int) -> ReferenceDefinition? {
-        let indent = indentation(index)
-        guard indent.columns <= 3 else { return nil }
-        let end = lines[index].contentRange.upperBound
-        var cursor = indent.offset
-        guard cursor < end && source[cursor] == 91 else { return nil }
-        let labelStart = cursor + 1
-        cursor += 1
-        while cursor < end && source[cursor] != 93 {
-            if source[cursor] == 91 { return nil }
-            if source[cursor] == 92 && cursor + 1 < end && punctuation(source[cursor + 1]) { cursor += 1 }
-            cursor += 1
-        }
-        guard cursor + 1 < end, source[cursor + 1] == 58,
-              !trimmed(labelStart, cursor).isEmpty,
-              decode(SourceRange(labelStart, cursor)).unicodeScalars.count <= 999 else { return nil }
-        let label = decode(SourceRange(labelStart, cursor))
-        guard label.unicodeScalars.contains(where: { !$0.properties.isWhitespace }) else { return nil }
-        cursor += 2
-        while cursor < end && space(source[cursor]) { cursor += 1 }
-        var destinationStart = cursor
-        var destinationEnd = cursor
-        if cursor < end && source[cursor] == 60 {
-            cursor += 1
-            destinationStart = cursor
-            while cursor < end && source[cursor] != 62 {
-                if source[cursor] == 60 { return nil }
-                if source[cursor] == 92 && cursor + 1 < end && punctuation(source[cursor + 1]) { cursor += 1 }
-                cursor += 1
-            }
-            guard cursor < end else { return nil }
-            destinationEnd = cursor
-            cursor += 1
-        } else {
-            var depth = 0
-            while cursor < end && !space(source[cursor]) {
-                if source[cursor] < 32 { return nil }
-                if source[cursor] == 92 && cursor + 1 < end && punctuation(source[cursor + 1]) { cursor += 2; continue }
-                if source[cursor] == 40 { depth += 1 }
-                if source[cursor] == 41 { depth -= 1; if depth < 0 { return nil } }
-                cursor += 1
-            }
-            guard depth == 0, cursor > destinationStart else { return nil }
-            destinationEnd = cursor
-        }
-        let separator = cursor
-        while cursor < end && space(source[cursor]) { cursor += 1 }
-        var title: String?
-        if cursor < end {
-            guard cursor > separator, [UInt8(34), 39, 40].contains(source[cursor]) else { return nil }
-            let closing: UInt8 = source[cursor] == 40 ? 41 : source[cursor]
-            cursor += 1
-            let titleStart = cursor
-            while cursor < end && source[cursor] != closing {
-                if closing == 41 && source[cursor] == 40 { return nil }
-                if source[cursor] == 92 && cursor + 1 < end && punctuation(source[cursor + 1]) { cursor += 1 }
-                cursor += 1
-            }
-            guard cursor < end else { return nil }
-            title = decode(SourceRange(titleStart, cursor))
-            cursor += 1
-            while cursor < end && space(source[cursor]) { cursor += 1 }
-            guard cursor == end else { return nil }
-        }
-        return ReferenceDefinition(rawLabel: label, rawDestination: decode(SourceRange(destinationStart, destinationEnd)), rawTitle: title)
     }
 
     mutating func extensionMatch(at index: Int, interrupting: Bool, prefixCount: Int? = nil) -> BlockMatch? {
