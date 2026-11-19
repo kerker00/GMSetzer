@@ -1,8 +1,10 @@
 # M1-B measurement protocol
 
-Status: instrumentation prepared; measurements, phase budgets and acceptance
-remain pending. This follows [Review-M1.md](Review-M1.md). A benchmark executable
-that builds or lists successfully is not performance evidence.
+Status: two authorised full runs recorded on 19 November 2026; the checked
+validation optimisation passes the current block-parser budget. See the
+[measured results](Benchmarks.md#m1-b-measured-baseline-and-checked-validation)
+and [receipts](BenchmarkData/M1-B/receipt.json). M1-C/M1-D and completed
+inline/GFM performance remain open. This follows [Review-M1.md](Review-M1.md).
 
 ## Cases and comparison scope
 
@@ -51,8 +53,9 @@ swift package --package-path Tools benchmark list --target ParserBenchmarks
 swift package --package-path Tools benchmark run --target ParserBenchmarks --format markdown --time-units microseconds --no-progress > /private/tmp/gmsetzer-m1-b-results.log
 ```
 
-Obtain the owner's authorization before the second command, as required by
-`CLAUDE.md`. Build/list and ordinary tests do not execute the full measurement
+The owner authorised this measurement series and necessary countermeasurements
+on 19 November 2026. Existing session authorization remains valid; otherwise
+follow `CLAUDE.md` before a full run. Build/list and ordinary tests do not execute the full measurement
 suite. In the restricted workspace, redirect compiler/package caches and scratch
 paths, disable sandboxed plugin execution, and use `-debug-info-format none` if
 dSYM generation is unavailable. Release optimisation must remain enabled.
@@ -79,7 +82,32 @@ path is justified. Do not subtract independently measured medians and claim an
 exact phase attribution; setup/cache effects differ. Repeat questionable
 measurements before accepting a storage/dispatch redesign.
 
-After a representative baseline exists, choose and document a local regression
-tolerance and named comparison cases. Do not invent numeric phase budgets or
-regression thresholds before the data, and do not add wall-clock assertions to
-ordinary unit tests. No CI is enabled by this gate.
+The local gate is implemented in
+[check_benchmark_budget.py](../Scripts/check_benchmark_budget.py):
+
+```sh
+python3 -I Scripts/check_benchmark_budget.py /private/tmp/gmsetzer-m1-b-results.log --baseline Docs/BenchmarkData/M1-B/after.md --max-regression-percent 10
+```
+
+It requires matching actual byte counts/corpus IDs for all six core/GFM
+size/profile comparisons, converts timing units explicitly and checks strict
+absolute limits plus the inclusive 2-×-C limit. With a baseline, it also checks
+the six GMSetzer parse cases against the explicit regression tolerance and
+requires unchanged case/input identity. Exit codes: 0 passes, 1 exceeds a
+budget/tolerance, 2 is invalid or incomplete input. Missing cases cannot pass.
+
+Use **10% as a provisional local regression alert** for the same block workload
+on this machine/toolchain. The unchanged C controls differ by about 0–1.3%
+between the two full runs (the first output is rounded), so 10% provides room
+above the observed variation. Repeat alerts before attributing them to code;
+changes in hardware, allocator backend, corpus or implemented work need an
+explicitly reviewed new baseline. M2's added inline work must be measured
+separately and fit the unchanged total limits; an old block-only regression
+baseline is not equivalent completed work.
+
+The measured phase timings and total remaining headroom are in Benchmarks.md;
+isolated phase medians are not additive deadlines. No wall-clock assertions
+are added to ordinary unit tests and no CI is enabled by this gate. The frozen
+pre-optimisation data fail all three core ratio checks; the post-optimisation
+data pass all six comparisons. Unit tests cover those real exports, unit
+conversion, threshold boundaries, missing/mismatched data and CLI exit codes.

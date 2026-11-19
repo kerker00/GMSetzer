@@ -355,7 +355,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | Milestone | Contents | Done when | Estimate | Status |
 | --- | --- | --- | --- | --- |
 | M0 | Repository, package layout, specification run, benchmark setup, name and gap check | Starting point measured; harness reviewed, reference configurations corrected | 2–3 | **reviewed and corrected** (19 Nov 2026); new reference timings pending |
-| M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **reviewed; acceptance open**: PRs #2/#3 merged; M1-A correctness fixes implemented with 57 tests and 3,919 reference comparisons. 339/652 CommonMark and 339/672 GFM examples pass. [Review-M1](Review-M1.md) tracks remaining M1-B measurements, M1-C extension/storage proof and M1-D refactor/acceptance before M2 |
+| M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **reviewed; acceptance open**: M1-A merged in PR #4 (`51efee6`); M1-B measurements, checked validation optimisation and local budget gate implemented. 57 tests and 3,919 reference comparisons pass; 339/652 CommonMark and 339/672 GFM examples pass. [Review-M1](Review-M1.md) tracks remaining M1-C extension/storage proof and M1-D refactor/acceptance before M2 |
 | M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | |
 | M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; editor adapter for syntax spans/findings | Security/position/analysis tests pass; Setzkit proves snapshot-bound syntax decoration and diagnostic underlines; integration can start | re-estimate | |
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | |
@@ -421,9 +421,10 @@ are in [HTMLReferences.md](HTMLReferences.md). The M1 architecture, code,
 QA and extensibility review is in [Review-M1.md](Review-M1.md), including the
 follow-up assessment, reproduced defects and proposed work packages. The
 assessment qualifies the historical speed comparison and retains release tree
-validation. Its M1-A follow-up fixes the three reproduced correctness defects;
-the broader architectural redesign remains open. Next: M1-B comparable
-measurements (instrumentation and protocol prepared in
-[M1Measurements.md](M1Measurements.md)), M1-C extension/storage proof and M1-D
-refactor/acceptance before the M2 inline implementation. The full benchmark run
-needs owner authorization.
+validation. M1-A fixes the three reproduced defects and is merged in PR #4.
+M1-B records two authorised full runs, a checked validation optimisation and a
+local performance gate in [M1Measurements.md](M1Measurements.md). The current
+block baseline passes its measured budgets; completed inline/GFM performance
+is not established. Next: M1-C extension/storage proof and M1-D refactor/
+acceptance before the M2 inline implementation. Existing measurement-series
+authorization remains valid; otherwise follow the full-benchmark owner rule.

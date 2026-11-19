@@ -100,6 +100,10 @@ renderer wrappers preserve built-in list tightness.
   mismatching example with source, expected HTML and actual HTML as JSON.
 - `Tools/` is a separate package for benchmarks against cmark-gfm in C and
   swift-markdown: `cd Tools && swift package benchmark`.
+- [M1 measurements](Docs/M1Measurements.md) describe the recorded block-only
+  baseline, optional syntax costs and local performance gate. Run
+  `python3 -I Scripts/check_benchmark_budget.py <results.log>` against a full
+  Markdown benchmark export to check matching C/absolute parse budgets.
 
 ## Licence
 
