@@ -1,6 +1,6 @@
 # GMSetzer – Plan and Requirements
 
-**Status: 19 November 2026, milestone M0 done.** This document is the
+**Status: 19 November 2026, M0 reviewed and corrected; M1 not started.** This document is the
 reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
@@ -33,20 +33,20 @@ Setzkit needs a parser that handles CommonMark, the complete GFM, footnotes,
 front matter, inline and block math, and alerts and callouts. It must offer
 switchable dialect profiles and exact source positions, run fast on an
 iPhone and inside a Quick Look extension, and come under a permissive
-licence. The candidates were checked against their sources and documentation
-on 19 November 2026:
+licence. These candidates were considered; the limits of the available
+evidence were checked in the M0 review on 19 November 2026:
 
 | Candidate | Result |
 | --- | --- |
-| [swift-markdown](https://github.com/swiftlang/swift-markdown) (Apple, wraps cmark-gfm in C) | GFM only. No footnotes, front matter or math in its source tree, no API for custom syntax, extensions cannot be switched. Inline math cannot be added by pre- or post-processing because cmark already treats `_` and `*` inside `$…$` as emphasis. |
-| [micromark](https://github.com/micromark/micromark) / unified (JavaScript) | All needed extensions and exact positions, but it would run in JavaScriptCore. Inside iOS apps that engine has no JIT; reported slowdowns are up to about 7.5× (reports from 2019/2020). Too risky for large documents on the iPhone. |
-| [comrak](https://github.com/kivikakk/comrak) (Rust, BSD-2) | Everything needed and more, 652/652 CommonMark and 670/670 GFM. Costs a Rust toolchain in the build, an XCFramework and a C interface. |
+| [swift-markdown](https://github.com/swiftlang/swift-markdown) (wraps cmark-gfm in C) | The locally pinned 0.9.0 parser attaches tables, strikethrough and task lists, but not extended autolinks. Its parse options do not expose independent GFM switches or custom inline syntax. Post-processing alone cannot recover math already parsed as emphasis; preprocessing would also need source mapping. |
+| [micromark](https://github.com/micromark/micromark) / unified (JavaScript) | Extension ecosystem and positions are relevant. JavaScriptCore adds an engine and a bridge; no local iPhone measurement exists. Historical JIT slowdown reports are not a project benchmark. |
+| [comrak](https://github.com/kivikakk/comrak) (Rust, BSD-2) | A relevant reference for the required extensions. Integration needs a Rust build and a Swift/C boundary; coverage counts have not been independently reproduced here. |
 | [MarkdownKit by objecthub](https://github.com/objecthub/swift-markdownkit) (pure Swift, Apache-2.0) | Closest pure Swift parser: passes all 652 CommonMark examples according to its README and is extensible. Apple platforms only, no footnotes, no extended autolinks, no documented source positions. |
 | Other Swift packages for GFM on Linux (swift-cmark, Swift-GFM, cmark-gfm wrappers) | All wrap cmark-gfm in C. |
 
-**The gap:** there is no Swift library that implements CommonMark and complete
-GFM in pure Swift, runs on Linux, gives exact source positions and offers
-switchable extensions and profiles. GMSetzer fills that gap.
+**The gap in the evaluated candidates:** none has been demonstrated here to
+meet all these requirements together. This supports the GMSetzer decision;
+it is not an exhaustive claim about every available Swift package.
 
 <a id="decisions"></a>
 
@@ -76,7 +76,7 @@ All taken by the project owner on 19 November 2026.
 | Area | Version 1.0 | Later |
 | --- | --- | --- |
 | Core | CommonMark 0.31.2, all 652 examples | Later spec versions |
-| GFM | Tables, task lists, strikethrough, extended autolinks; all 670 enabled examples of the GFM spec 0.29 | – |
+| GFM | Tables, task lists, strikethrough, extended autolinks and disallowed raw HTML (tag filtering); all 672 examples in the pinned GFM 0.29-derived cmark corpus, including the two task list examples marked `disabled` upstream | – |
 | Further syntax | Footnotes; front matter (YAML/TOML at the start, delivered as raw text); math inline `$…$`, display `$$…$$` and ` ```math ` blocks; GitHub alerts `> [!NOTE]` (NOTE, TIP, IMPORTANT, WARNING, CAUTION); Obsidian callouts `> [!type]` with optional `+`/`-` folding marker and title | – |
 | Profiles | Every extension switchable on its own; shipped profiles "CommonMark strict" and "GFM" | Obsidian (wikilinks, embeds `![[…]]`, `==highlight==`, tags), Pandoc (definition lists, attributes `{.class}`, fenced divs, sub-/superscript, citations `[@key]`), MultiMarkdown, kramdown, user-defined profiles |
 | Output | Syntax tree with source ranges; HTML renderer with block anchors | Markdown serialiser (for converting between profiles), other output formats |
@@ -92,7 +92,11 @@ All taken by the project owner on 19 November 2026.
 - **Positions.** Every node carries its source range as UTF-8 byte offsets.
   A conversion helper gives lines, columns and UTF-16 offsets (what TextKit
   and `NSRange` use). Positions must be exact for every node kind, including
-  extensions.
+  extensions. Ranges are half-open `[lowerBound, upperBound)` in the original
+  snapshot, including syntax delimiters for syntax nodes. A container range
+  can include quote/list prefixes and line endings; it is not necessarily the
+  decoded text rendered for that node. Non-contiguous content needs source
+  segments. Specify tabs, CRLF, empty nodes and offsets inside scalars in M1.
 - **Speed.** Measured with the benchmarks in `Tools/` (see
   [Benchmarks.md](Benchmarks.md)):
 
@@ -103,15 +107,29 @@ All taken by the project owner on 19 November 2026.
   | 5 MB | < 300 ms | < 1 s |
 
   The stricter rule: **at most twice the time of cmark-gfm in C** on the same
-  machine and document, aiming for parity. Measured reference on the owner's
-  Mac (M2): 1.7 ms for 100 KB, 19 ms for 1 MB, 96 ms for 5 MB.
+  machine, document and corresponding core/GFM configuration, aiming for
+  parity. Source positions must be enabled for both. The historical M0 C
+  numbers (1.7 / 19 / 96 ms) used the core without source-position options;
+  they do not establish the corrected comparison.
 - **Robust.** Linear time even on hostile input (deep nesting, many open
   brackets, long runs of emphasis characters); limits for nesting depth; no
-  crash on invalid UTF-8.
+  crash on invalid UTF-8. The current `String` input is already valid Unicode;
+  M1 must define byte input and mapping to original offsets before claiming
+  invalid-UTF-8 coverage. Depth limits need a documented fallback
+  and must bound rendering and traversal as well as parsing.
 - **Safe by default.** The HTML renderer writes raw HTML from the source as
   escaped text unless the caller allows it; HTML comments are left out;
-  dangerous URL schemes (`javascript:`, `vbscript:`, `data:` except images)
-  are neutralised. Allowing raw HTML is an explicit option.
+  dangerous URL schemes (`javascript:`, `vbscript:`, `data:`) are neutralised.
+  Any image data URL exception needs an explicit raster MIME allowlist and
+  applies only to image sources. Check schemes after escape/entity decoding,
+  including ASCII controls and mixed case. Allowing raw HTML is explicit
+  and does not by itself disable URL checks.
+
+  Conformance tests need a separate explicit configuration: preserve raw HTML
+  and comments, permit spec URL examples and disable block anchors. GFM tag
+  filtering still applies with the GFM profile. These settings are for trusted
+  fixtures; safe-default rendering has separate tests. Escaping source HTML
+  does not sanitise HTML returned by a caller's renderer hook.
 
 <a id="setzkit"></a>
 
@@ -128,7 +146,7 @@ useful to other apps as well.
 | Switchable extensions and named profiles | Setzkit lets the user choose a dialect per app, project or document; changing the profile never changes the file |
 | A renderer hook per node kind | Math becomes MathML through Temml, code blocks get syntax highlighting, Mermaid diagrams are rendered elsewhere |
 | Speed on the iPhone and in a Quick Look extension | Large documents (up to 5 MB) must stay usable; Quick Look runs with tight limits and without JavaScript |
-| `Sendable` results | Parsing runs in the background on immutable snapshots of the text; results carry the text revision they come from |
+| `Sendable` results | The Setzkit adapter associates background parse results with their snapshot revision, dialect and configuration; GMSetzer does not import app-specific revision types |
 | Safe HTML by default | Previews and exports never run active content from documents |
 
 <a id="architecture"></a>
@@ -141,7 +159,7 @@ useful to other apps as well.
 | --- | --- | --- |
 | `SetzerSyntax` | Syntax tree (node kinds, source ranges), position conversion, outline query, visitors | – |
 | `SetzerParser` | Block and inline parser, extension API, profiles | `SetzerSyntax` |
-| `SetzerExtensions` | GFM, footnotes, front matter, math, alerts and callouts | `SetzerParser` |
+| `SetzerExtensions` | GFM, footnotes, front matter, math, alerts and callouts | `SetzerParser`, `SetzerSyntax` |
 | `SetzerHTML` | HTML renderer, block anchors, escaping and URL checks, renderer hooks | `SetzerSyntax` |
 | `GMSetzer` | Re-exports all of the above | all |
 
@@ -149,8 +167,9 @@ useful to other apps as well.
 
 - **Input as UTF-8 bytes**, not as `String` characters. Parsing works on one
   contiguous byte buffer with integer indices, as cmark does. This is what
-  makes the speed and exact positions possible. `Span`/`UTF8Span` (Swift 6.2)
-  are the intended tools.
+  supports efficient parsing and exact positions. Start with `[UInt8]` and
+  bounded buffer access. `Span`/`UTF8Span` are candidates, not prerequisites;
+  availability must be checked against the chosen deployment targets.
 - **Two phases as in the CommonMark spec** (appendix "A parsing strategy"):
   first the block structure line by line, with open containers and lazy
   continuation; then the inlines of each leaf block with the delimiter stack
@@ -162,7 +181,12 @@ useful to other apps as well.
   indices (`Document.nodes`, see `Sources/SetzerSyntax/Document.swift`). Fast,
   little memory, `Sendable`. A convenient tree API sits on top.
 - **Node kinds** are predefined for CommonMark and GFM; extensions register
-  their own kinds by name (`NodeKind`), so new syntax never needs a fork.
+  their own kinds by name, so new syntax never needs a fork.
+- **M1 model contract:** define node payloads (heading level, list start and
+  tightness, fence info, decoded literals, link destination/title), source
+  segments and a builder usable from the parser module. Validate ranges and
+  tree indices, including cycles, at the construction boundary. Named kinds
+  alone are not an extensible syntax model; the M0 structs are provisional.
 - **Incremental parsing** (re-parsing only changed top-level blocks) comes
   later and only if measurements show the need.
 
@@ -182,6 +206,12 @@ An extension can register:
 
 A **profile** is a named list of active extensions with their options.
 comrak's per-extension options are a good model for the switches.
+
+The current `Profile` stores only a name and activates no syntax. Define the
+registration/options contract in M1 before fixing parser dispatch. Rules need
+deterministic priority, bounded lookahead and progress guarantees. Syntax
+payloads live in `SetzerSyntax`; renderer hooks are supplied to `SetzerHTML`
+by the caller, without a dependency from the parser to the HTML renderer.
 
 Math: the library produces nodes with the TeX source and nothing else.
 
@@ -231,7 +261,7 @@ documentation, and they live in `Tools/` or in test targets.
 | Task | Solution | Linux | Use |
 | --- | --- | --- | --- |
 | Unicode categories (punctuation and whitespace for the emphasis rules) | Standard library, `Unicode.Scalar.Properties` | yes | core |
-| Fast byte access | Standard library, `Span`/`UTF8Span` (Swift 6.2) | yes | core |
+| Fast byte access | Standard library, `[UInt8]`/buffer access initially; evaluate `Span`/`UTF8Span` availability before adoption | yes | core |
 | HTML5 named character references (2,231) | Own table generated from the WHATWG list; [Kitura swift-html-entities](https://github.com/Kitura/swift-html-entities) (Apache-2.0) as test reference | yes | core (table), tests (package) |
 | Unicode case folding for link labels | Missing in the standard library; own table generated from Unicode `CaseFolding.txt` (Unicode licence), as cmark does | yes | core (table) |
 | Benchmarks | [package-benchmark](https://github.com/ordo-one/package-benchmark) (Apache-2.0): time and allocations | yes | `Tools/` |
@@ -251,15 +281,28 @@ source files; source, version and licence go into the file header and into
 ## 9. Testing
 
 - **Specification runs** (`Tests/SetzerSpecTests`): every example of CommonMark
-  0.31.2 and of the GFM spec. `baseline.json` records how many pass; the tests
-  fail when the number drops. Raise the baseline in the same commit that makes
-  more examples pass. The comparison is exact today; the spec's HTML
-  normalisation (as in cmark's `normalize.py`) is added in M3.
-- **Extensions:** own fixtures per extension, with comrak's and micromark's
+  0.31.2 and all 672 examples of the pinned GFM-derived corpus, including task
+  lists 279/280 even though upstream marks them `disabled`. `baseline.json`
+  records the IDs of passing examples; losing any recorded example fails even
+  if another starts passing. Add newly passing IDs in the same commit.
+  Downloads are revision-pinned and SHA-256 checked; updating the corpus is
+  a separate reviewed change. The comparison is exact today. Introduce a
+  narrowly defined HTML normaliser, with its own regression tests, by M2;
+  never erase meaningful whitespace in code or raw HTML.
+- **Version differences:** CommonMark 0.31.2 and the GFM 0.29-derived corpus
+  are distinct targets. Classify conflicting inputs before M4; retain both
+  original fixtures and use explicit profile-specific behaviour. Any proposed
+  deviation needs a documented decision, never an implicit skipped example.
+- **Extensions:** test each switch independently, off/on and in combinations;
+  own fixtures per extension, with comrak's and micromark's
   tests as references for expected behaviour (with attribution).
-- **Positions:** for every node, its source range must contain exactly the
-  text it came from. UTF-16 conversion is tested with umlauts, emoji,
+- **Positions:** ranges address the exact original snapshot, with tests for
+  syntax versus decoded content, container prefixes, CRLF/CR/LF, tabs,
+  entities and escapes. UTF-16 conversion is tested with umlauts, emoji,
   combining characters, CJK and right-to-left text.
+- **Rendering:** conformance configuration is separate from safe defaults.
+  Test escaping, comments, decoded/obfuscated URL schemes, GFM tag filtering,
+  anchors and caller hook trust before Setzkit integration in M3.
 - **Reference comparisons:** a corpus of real documents is compared with
   cmark-gfm; every difference is explained.
 - **Hostile input:** cmark's pathological cases with a time limit.
@@ -272,16 +315,17 @@ source files; source, version and licence go into the file header and into
 
 ## 10. Milestones
 
-Estimates in person days for an experienced developer. Every milestone ends
-with a measurable result.
+Initial estimates in person days for an experienced developer; these are not
+delivery commitments. Re-estimate after M1, especially renderer safety,
+extension API and hardening work. Every milestone ends with a measurable result.
 
 | Milestone | Contents | Done when | Estimate | Status |
 | --- | --- | --- | --- | --- |
-| M0 | Repository, package layout, specification run, benchmark setup, name and gap check | Spec run shows the starting point; benchmarks measure the reference | 2–3 | **done** (19 Nov 2026) |
-| M1 | Block parser: paragraphs, ATX and setext headings, thematic breaks, block quotes, lists, indented and fenced code, HTML blocks, link reference definitions | All block sections of the spec pass | 8–12 | next |
-| M2 | Inline parser: escapes, entities, code spans, emphasis (delimiter stack), links and images, autolinks, raw HTML, line breaks | 652/652 CommonMark; repository goes public after the owner confirms | 8–12 | |
-| M3 | HTML renderer with spec normalisation, block anchors, position conversion, outline query | Position tests pass; Setzkit starts using GMSetzer | 3–5 | |
-| M4 | GFM extensions | 670/670 GFM | 4–6 | |
+| M0 | Repository, package layout, specification run, benchmark setup, name and gap check | Starting point measured; harness reviewed, reference configurations corrected | 2–3 | **reviewed and corrected** (19 Nov 2026); new reference timings pending |
+| M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | next; not started |
+| M2 | Inline parser: escapes, entities, code spans, emphasis, links/images, autolinks, raw HTML, breaks; complete CommonMark conformance rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; publication only after owner confirmation | 8–12 | |
+| M3 | Safe HTML rendering, block anchors, renderer hooks, position conversion, outline query | Security and position tests pass; Setzkit adapter binds results to snapshot/configuration; integration can start | 3–5 | |
+| M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | |
 | M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Setzkit's corpus complete | 5–8 | |
 | M6 | Speed and hardening: measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met | 5–8 | |
 | M7 | Version 1.0: API review, DocC documentation, release; Setzkit pins the version | Setzkit uses 1.0 | 3–5 | |
@@ -325,9 +369,18 @@ profile conversions, incremental parsing if measurements call for it.
 
 ## 13. Open questions
 
-1. **Minimum platform and Swift versions.** `Package.swift` currently declares
-   macOS 15, iOS 18 and visionOS 2 provisionally; using `Span` needs Swift 6.2
-   and may raise the OS minimums.
+1. **Minimum platform and Swift versions.** The manifest requires Swift tools
+   6.2 and provisionally macOS 15, iOS 18 and visionOS 2. The local Swift 6.4.2
+   SDK marks `UTF8Span` as Apple OS 26+, while `Span` has back-deployment
+   support; do not treat their availability as identical. Keep the byte-buffer
+   path until deployment targets and the minimum-toolchain build are verified.
 2. **Linux verification.** The package is designed for Linux but has not been
    built there yet (no container tool on the owner's Mac).
 3. **Fuzzing on macOS** with the Xcode toolchain, or only on Linux.
+4. **Setzkit plan alignment.** Its existing product/architecture documents still
+   name Swift Markdown and a micromark/cmark evaluation. Update those at the
+   integration step; this review changes only GMSetzer.
+
+The M0 findings, corrections and validation are recorded in
+[Review-M0.md](Review-M0.md). Further implementation starts with M1 after
+the owner resumes work; this review does not start that milestone.

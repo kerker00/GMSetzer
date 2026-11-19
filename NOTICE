@@ -15,7 +15,9 @@ Tests/SetzerSpecTests/Resources/commonmark-0.31.2.json
 
 Tests/SetzerSpecTests/Resources/gfm-0.29.json
   GitHub Flavored Markdown Spec 0.29-gfm, https://github.github.com/gfm/
-  from test/spec.txt of https://github.com/github/cmark-gfm
+  from test/spec.txt of https://github.com/github/cmark-gfm,
+  reproduced from its Swift fork at revision
+  https://github.com/swiftlang/swift-cmark/tree/08ddb528923cc1a6527e02b7a1aee9e516ca749a
   Copyright (c) John MacFarlane, GitHub
   Licensed under CC-BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
 

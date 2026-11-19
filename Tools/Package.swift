@@ -29,6 +29,7 @@ let package = Package(
                 .product(name: "GMSetzer", package: "GMSetzer"),
                 .product(name: "Markdown", package: "swift-markdown"),
                 .product(name: "cmark-gfm", package: "swift-cmark"),
+                .product(name: "cmark-gfm-extensions", package: "swift-cmark"),
                 .product(name: "Benchmark", package: "package-benchmark"),
             ],
             path: "Benchmarks/ParserBenchmarks",

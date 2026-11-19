@@ -6,3 +6,4 @@ xcuserdata/
 DerivedData/
 Tools/.build/
 Tools/.benchmarkBaselines/
+__pycache__/

@@ -5,9 +5,9 @@ Markdown with switchable extensions, exact source positions and an HTML
 renderer. No C, no Rust, no JavaScript, no runtime dependencies — it builds
 wherever Swift runs, including Linux.
 
-> **Status:** milestone M0 (scaffold). The parser does not parse yet; the
-> repository holds the package layout, the specification test run and the
-> benchmark setup. The repository stays private until milestone M2.
+> **Status:** milestone M0 (scaffold), reviewed and corrected. The parser
+> emits only a document root and the renderer emits an empty string. M1 has
+> not started. The repository stays private until M2 and owner approval.
 
 ## Goals
 
@@ -28,6 +28,7 @@ wherever Swift runs, including Linux.
 - [Docs/Plan.md](Docs/Plan.md) – requirements, decisions, architecture,
   milestones and licence rules. Start here.
 - [Docs/Benchmarks.md](Docs/Benchmarks.md) – measurements against cmark-gfm.
+- [Docs/Review-M0.md](Docs/Review-M0.md) – review findings and corrections.
 - [CONTRIBUTING.md](CONTRIBUTING.md) – workflow and rules.
 
 ## Modules
@@ -43,16 +44,23 @@ wherever Swift runs, including Linux.
 ```swift
 import GMSetzer
 
-let document = MarkdownParser(profile: .gfm).parse("# Hello")
+let document = MarkdownParser().parse("# Hello")
 let html = HTMLRenderer().render(document)
 ```
 
 ## Development
 
-- `swift test` runs the unit tests and every specification example. The
-  number of passing examples is recorded in
-  `Tests/SetzerSpecTests/Resources/baseline.json` and must never drop.
-- `Scripts/update-specs.sh` refreshes the specification examples.
+- `swift test` runs the unit tests and every specification example (652
+  CommonMark, 672 in the pinned GFM corpus, including task lists). The IDs of
+  passing examples are recorded in
+  `Tests/SetzerSpecTests/Resources/baseline.json`; each recorded example must
+  keep passing. Green tests mean the recorded baseline is preserved; they do
+  not claim complete CommonMark or GFM conformance.
+- `Scripts/update-specs.sh` reproduces the specification examples from pinned,
+  SHA-256 checked sources.
+- `python3 -I -m unittest discover -s Scripts` tests the update tools offline.
+- `GMSETZER_SPEC_DIAGNOSTICS=1 swift test --filter SpecTests` also prints each
+  mismatching example with source, expected HTML and actual HTML as JSON.
 - `Tools/` is a separate package for benchmarks against cmark-gfm in C and
   swift-markdown: `cd Tools && swift package benchmark`.
 

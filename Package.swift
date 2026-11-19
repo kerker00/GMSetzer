@@ -30,7 +30,7 @@ let package = Package(
         // Block and inline parser, extension API, profiles.
         .target(name: "SetzerParser", dependencies: ["SetzerSyntax"], swiftSettings: strict),
         // GFM, footnotes, front matter, math, alerts and callouts.
-        .target(name: "SetzerExtensions", dependencies: ["SetzerParser"], swiftSettings: strict),
+        .target(name: "SetzerExtensions", dependencies: ["SetzerParser", "SetzerSyntax"], swiftSettings: strict),
         // HTML renderer with block anchors and safe defaults.
         .target(name: "SetzerHTML", dependencies: ["SetzerSyntax"], swiftSettings: strict),
         // Convenience module re-exporting the above.

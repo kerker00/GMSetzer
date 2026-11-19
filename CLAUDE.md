@@ -8,8 +8,9 @@ describes the workflow.
 
 - Keep the library targets free of runtime dependencies and of Foundation in
   the core; everything must build on Linux.
-- Never let the number of passing specification examples drop; raise
-  `Tests/SetzerSpecTests/Resources/baseline.json` when more pass.
+- Keep every specification example ID recorded in
+  `Tests/SetzerSpecTests/Resources/baseline.json` passing; add IDs when more
+  pass. A new pass must never compensate for a regression elsewhere.
 - Follow the licence rules in Plan section 7 when taking over code or tests:
   MIT, BSD or Apache-2.0 only, origin in the file header, licence in `NOTICE`;
   never GPL or LGPL.

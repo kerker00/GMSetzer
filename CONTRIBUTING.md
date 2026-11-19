@@ -6,11 +6,14 @@ the decisions behind it and the order of work.
 ## Workflow
 
 1. Create a feature branch from `main` (`feature/m1-blocks`, `fix/…`).
-2. Make the change with tests. When more specification examples pass, raise
-   `Tests/SetzerSpecTests/Resources/baseline.json` in the same commit.
-3. Run `swift test`. For changes that may affect speed, also run the
-   benchmarks (`cd Tools && swift package benchmark`) and add the result to
-   [Docs/Benchmarks.md](Docs/Benchmarks.md).
+2. Make the change with tests. Add newly passing specification example IDs to
+   `Tests/SetzerSpecTests/Resources/baseline.json` in the same commit. Never
+   remove a protected example to hide a regression.
+3. Run `swift test`; after changes to spec tools, also run
+   `python3 -I -m unittest discover -s Scripts`. For speed-relevant changes,
+   prepare the benchmarks (`cd Tools && swift package benchmark`) and record
+   measurements in [Docs/Benchmarks.md](Docs/Benchmarks.md); obtain the owner's
+   confirmation before full benchmark runs or long test runs.
 4. Update [Docs/Plan.md](Docs/Plan.md) when a milestone, a decision or a
    requirement changes.
 5. Open a pull request against `main`. The owner merges.
