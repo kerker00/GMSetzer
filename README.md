@@ -49,13 +49,16 @@ wherever Swift runs, including Linux.
 
 ## Modules
 
-| Module | Contents |
-| --- | --- |
-| `SetzerSyntax` | Syntax tree, source ranges, position conversion, outline queries |
-| `SetzerParser` | Block and inline parser, extension API, profiles |
-| `SetzerExtensions` | GFM, footnotes, front matter, math, alerts and callouts |
-| `SetzerHTML` | HTML renderer with block anchors |
-| `GMSetzer` | Imports all of the above |
+| Module | Implemented | Planned |
+| --- | --- | --- |
+| `SetzerSyntax` | Validated syntax tree, original-byte source ranges and segments | Generic optional syntax spans, position conversion, outline queries |
+| `SetzerParser` | Block parser, custom leaf rules, ordered profiles | Inline parser, container/transform hooks, validated shared configuration |
+| `SetzerExtensions` | GFM profile selections | GFM rule implementations, footnotes, front matter, math, alerts and callouts |
+| `SetzerHTML` | Block HTML rendering, source anchors, escaping and comment policy | Inline rendering and URL safety |
+| `GMSetzer` | Imports the four implemented modules above | Optional analysis module with its first tested rules |
+
+M1 is not accepted yet. The [M1 review](Docs/Review-M1.md) defines the
+correctness, measurement, architecture and refactoring gates before M2.
 
 ```swift
 import GMSetzer
