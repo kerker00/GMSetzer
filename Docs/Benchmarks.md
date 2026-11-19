@@ -105,3 +105,78 @@ The correctness tests and reference comparisons do not establish speed. No full
 benchmark or new timing/allocation claim accompanies M1-A. M1-B must measure
 the matching core/GFM references, actual UTF-8 byte counts, validation,
 annotations off/on and rendering before accepting a phase budget.
+
+### M1-B instrumentation
+
+The harness now includes isolated tree validation and safe rendering, plus a
+separate reference-heavy corpus with optional syntax collection off/on. The
+original mixed corpus is unchanged. All 30 cases tag actual UTF-8 byte counts
+and corpus identity and request allocation counts/bytes as well as wall-clock
+percentiles. See [M1Measurements.md](M1Measurements.md) for comparison limits,
+the run receipt and the local acceptance gate. The following entry records the
+subsequent authorised full runs.
+
+### M1-B measured baseline and checked validation
+
+19 November 2026, Apple M2 (8 physical cores), 16 GiB RAM, macOS 27.0.1
+(26A434), Darwin 27.0.0, Apple Swift 6.4.2. Both measured checkouts were clean.
+Before: `a345fea4dd735d4e781113e3a57765b8f7fd8243`; after:
+`fbc2081391be0c1bcd510cad3c4cff9fc597b0b3`. The lockfile SHA-256 is
+`b04f6826b9801a9655860ce82f86725f8fc6204915ca0771b7028f76cfcf6002`.
+Both runs use release optimisation, disabled debug symbols, the same three
+metrics and 30 cases, with up to five seconds per case plus setup/warmup.
+
+Raw exports: [before](BenchmarkData/M1-B/before.md),
+[after](BenchmarkData/M1-B/after.md),
+[receipts and checksums](BenchmarkData/M1-B/receipt.json). The first tool output
+uses rounded automatic units; the second uses microseconds for more precise
+reporting. This changes presentation, not the timed operations. Allocation
+metrics are enabled in both runs; these are instrumented measurements, not
+unmeasured application/device latency guarantees.
+
+The first full run fails the core ratio target at every size. The 1 MB core
+parse takes about 42 ms against 19 ms for C; validation alone takes about
+18 ms and 133 K allocations, about 9.3 MB of gross allocations. Remove the
+per-node optional-index/`compactMap` arrays and use a dense visited buffer
+instead of hashing. All range, topology, payload and fallback validation stays
+active in release. Afterward, 1 MB validation takes **3.025 ms, 3 allocations
+and about 77 KB gross allocations**; the core parse takes **26.755 ms**.
+
+Post-change p50 times, in milliseconds, on unchanged `mixed-v1`:
+
+| Nominal size (actual UTF-8 bytes) | GM core | C core | Core ratio | GM GFM selection | C GFM | GFM ratio |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 100 KB (100,284) | 2.726 | 1.725 | 1.580 | 2.677 | 3.058 | 0.875 |
+| 1 MB (1,000,100) | 26.755 | 18.989 | 1.409 | 27.066 | 36.995 | 0.732 |
+| 5 MB (5,000,500) | 140.902 | 94.765 | 1.487 | 135.397 | 196.346 | 0.690 |
+
+GMSetzer is still a block parser and the GFM selection has no GFM rule
+implementations. These ratios show current headroom, not completed CommonMark/
+GFM parity. The C configurations enable source positions and the GFM extension
+set described above; swift-markdown remains contextual.
+
+The stricter total core ceilings are **3.450 / 37.978 / 189.530 ms**, leaving
+**0.724 / 11.223 / 48.628 ms** from the measured block parse for future work.
+For the GFM selection, the ceilings are **6.116 / 60 / 300 ms**, leaving
+**3.439 / 32.934 / 164.603 ms**. These are remaining total budgets; subtracting
+isolated median timings does not establish an exact additive phase breakdown.
+
+| Nominal size | Validate, mixed | Safe render, mixed | Reference syntax off | Reference syntax on |
+| --- | ---: | ---: | ---: | ---: |
+| 100 KB | 0.292 | 1.909 | 2.644 | 3.271 |
+| 1 MB | 3.025 | 19.022 | 26.165 | 32.834 |
+| 5 MB | 14.623 | 100.991 | 133.956 | 162.005 |
+
+Reference-corpus actual byte counts are **100,188 / 1,000,098 / 5,000,094**.
+At 1 MB, reference annotation collection adds about **6.669 ms (25.5%)**, with
+gross allocations about **39 → 44 MB** and allocation counts **162 → 232 K**.
+This focused corpus repeats definition labels and does not predict all future
+inline-token costs. Gross allocation volume is not retained memory or peak RSS.
+
+The [local gate](M1Measurements.md#local-acceptance-gate) rejects the original
+three core ratio violations and passes all six post-change comparisons. Its
+same-workload regression alert uses an explicit 10% tolerance over the frozen
+post-change baseline; repeated measurements are required before interpreting an
+alert as a code regression. Full library tests pass in debug/release, the four
+Tools tests pass (corpus checks and 3,919 C comparisons), and all eight offline
+Python tests pass. Linux, Swift 6.2 and iPhone measurements remain unverified.

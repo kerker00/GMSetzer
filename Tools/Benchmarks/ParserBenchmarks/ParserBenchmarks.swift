@@ -5,6 +5,11 @@ import Markdown
 import cmark_gfm
 import cmark_gfm_extensions
 
+private func measurement(_ text: String, corpus: String) -> Benchmark.Configuration {
+    .init(metrics: [.wallClock, .mallocCountTotal, .mallocBytesCount],
+          tags: ["bytes": String(text.utf8.count), "corpus": corpus], maxDuration: .seconds(5))
+}
+
 /// Parse times on the same documents:
 /// - GMSetzer: syntax tree with source positions.
 /// - cmark-gfm in C: separate core and GFM references with source positions,
@@ -17,12 +22,12 @@ let benchmarks: @Sendable () -> Void = {
     for (label, bytes) in [("100 KB", 100_000), ("1 MB", 1_000_000), ("5 MB", 5_000_000)] {
         let text = Corpus.document(bytes: bytes)
         for (mode, profile) in [("CommonMark", Profile.commonMark), ("GFM", Profile.gfm)] {
-            Benchmark("GMSetzer \(mode) parse \(label)", configuration: .init(metrics: [.wallClock, .mallocCountTotal], maxDuration: .seconds(5))) { benchmark in
+            Benchmark("GMSetzer \(mode) parse \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
                 for _ in benchmark.scaledIterations {
                     blackHole(MarkdownParser(profile: profile).parse(text))
                 }
             }
-            Benchmark("cmark-gfm (C) \(mode) parse \(label)", configuration: .init(metrics: [.wallClock, .mallocCountTotal], maxDuration: .seconds(5))) { benchmark in
+            Benchmark("cmark-gfm (C) \(mode) parse \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
                 for _ in benchmark.scaledIterations {
                     let parser = cmark_parser_new(CMARK_OPT_SOURCEPOS)
                     if profile == .gfm {
@@ -40,9 +45,39 @@ let benchmarks: @Sendable () -> Void = {
                 }
             }
         }
-        Benchmark("swift-markdown parse \(label)", configuration: .init(metrics: [.wallClock, .mallocCountTotal], maxDuration: .seconds(5))) { benchmark in
+        Benchmark("swift-markdown parse \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
             for _ in benchmark.scaledIterations {
                 blackHole(Markdown.Document(parsing: text))
+            }
+        }
+        let document = MarkdownParser().parse(text)
+        Benchmark("GMSetzer validate \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            for _ in benchmark.scaledIterations {
+                blackHole(try Document(source: document.source, nodes: document.nodes,
+                    diagnostics: document.diagnostics, customLeafFallbacks: document.customLeafFallbacks))
+            }
+        }
+        let renderer = HTMLRenderer()
+        Benchmark("GMSetzer render \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            for _ in benchmark.scaledIterations { blackHole(renderer.render(document)) }
+        }
+        let referenceText = Corpus.referenceDocument(bytes: bytes)
+        for collect in [false, true] {
+            let parser = MarkdownParser(collectSyntaxDetails: collect)
+            let mode = collect ? "on" : "off"
+            Benchmark("GMSetzer reference syntax \(mode) \(label)",
+                      configuration: measurement(referenceText, corpus: "references-v1")) { benchmark in
+                for _ in benchmark.scaledIterations { blackHole(parser.parse(referenceText)) }
+            }
+        }
+        Benchmark("cmark-gfm (C) references \(label)",
+                  configuration: measurement(referenceText, corpus: "references-v1")) { benchmark in
+            for _ in benchmark.scaledIterations {
+                referenceText.withCString { input in
+                    let root = cmark_parse_document(input, referenceText.utf8.count, CMARK_OPT_SOURCEPOS)
+                    blackHole(root)
+                    cmark_node_free(root)
+                }
             }
         }
     }

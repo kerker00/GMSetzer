@@ -199,8 +199,8 @@ complete M1 or establish a speed guarantee.
 
 ## M1-A implementation follow-up
 
-Implemented on `fix/m1-combinations`, after the assessment above. M1-B through
-M1-D remain open; this step does not start M2.
+Implemented in PR #4, merged into `main` at `51efee6`, after the assessment
+above. This step does not start M2; the subsequent M1-B result is recorded below.
 
 - **BOM:** skip exactly one UTF-8 BOM at byte zero for first-line recognition,
   retaining the original bytes/root range and physical-line provenance. Reset
@@ -240,3 +240,59 @@ Validation with Swift 6.4.2:
 - No full benchmark, Linux/minimum-Swift build, fuzzing or Setzkit editor/device
   check ran. No new performance or editor-integration claim follows from this
   correctness result. M1-B remains the next measurement gate.
+
+After the merge, PR #5 was retargeted to `main`. The verified merged correction
+branch was removed locally/remotely and its clean worktree removed. The primary
+review worktree remains intact with its uncommitted workflow-skill changes.
+
+## M1-B instrumentation follow-up
+
+Prepared separately on `perf/m1-measurement-gate`. The original mixed corpus is
+unchanged; a second reference-heavy corpus exercises actual optional reference
+spans. Tests check collection off/on and unchanged rendering at all three sizes.
+The 30 benchmark cases cover corresponding C core/GFM parses, the contextual
+swift-markdown parse, isolated validation/rendering and reference annotation
+costs, with actual byte counts/corpus tags and allocation counts/bytes.
+
+The corpus test passes all three size cases, and `swift package benchmark list`
+builds the release executable and lists all 30 tagged cases. These checks do
+not execute the measured iterations or supply timing evidence.
+
+[M1Measurements.md](M1Measurements.md) defines the receipt, comparison caveats
+and local acceptance gate. No full measurement run or numeric phase/regression
+budget was claimed by preparing this harness. The measured follow-up below
+records the subsequent authorised result.
+
+### Checked validation optimisation
+
+The first authorised full run at `a345fea` finds about 42 ms for the 1 MB mixed
+block parse against 19 ms for the corresponding C core parse. Isolated public
+tree validation takes about 18 ms and 133 K allocations (rounded tool output).
+The per-node temporary optional-index/`compactMap` arrays are avoidable.
+
+Replace those arrays with direct optional-index bounds checks, and the hashed
+visited set with a dense Boolean buffer over the already bounds-checked node
+indices. Preserve traversal/error order, repeated-node, unreachable-node and
+all payload/segment/fallback checks in release. All 57 library tests pass in
+both debug and release after this change. The matching full countermeasurement
+completed at clean commit `fbc2081`, using the unchanged benchmark operations
+with microsecond display units. All 30 cases complete. The 1 MB core parse
+falls to **26.755 ms** against **18.989 ms** for C; validation falls to
+**3.025 ms and 3 allocations**. The C controls remain stable.
+
+All six current size/profile budgets pass. Core total ceilings are
+3.450 / 37.978 / 189.530 ms, leaving 0.724 / 11.223 / 48.628 ms from the block
+baseline. This headroom is required for future inline work; it is not a claim
+of completed inline/GFM performance. Reference syntax collection adds about
+25.5% on the focused 1 MB corpus; general inline annotations remain unmeasured.
+See [Benchmarks.md](Benchmarks.md#m1-b-measured-baseline-and-checked-validation)
+for raw exports, receipts, allocation metrics and phase timings.
+
+M1-B now supplies a measured baseline and a local executable gate with an
+explicit provisional 10% same-workload regression alert. It detects the three
+pre-change core violations, checks matching input sizes/corpus identities and
+rejects missing/invalid measurements. Eight offline Python tests pass; all 57
+library tests pass in debug/release, and all four Tools tests pass (including
+3,919 C comparisons). M1-C extension/storage proof and M1-D final acceptance
+remain open. Linux, the minimum toolchain, completed inline/GFM and iPhone
+performance are not established here.

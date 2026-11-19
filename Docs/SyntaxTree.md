@@ -60,6 +60,11 @@ Only zero is a document root. Siblings follow non-overlapping source order;
 children stay within their parent. Empty ranges are allowed. Custom extension
 names should use a namespace such as `example.notice`.
 
+Validation uses direct optional-index checks and a dense visited buffer after
+all indices have been checked. It remains iterative and active in release;
+there is no unchecked parser-only construction path. The M1-B benchmark and
+local budget gate cover the cost of this validated construction.
+
 The parser treats a failure of its own builder validation as an implementation
 invariant violation. Extension match results are checked before insertion, so
 malformed returned ranges or consumption counts do not reach that boundary.
@@ -251,8 +256,9 @@ text/soft breaks. It deliberately does not claim all examples in those spec
 sections: inline escapes/entities and code info decoding belong to M2.
 
 M1-A fixes leading BOMs, wrapper tightness and custom-leaf fallback projection.
-Remaining M1 work is comparable measurements, extension/storage proof and final
-refactor/acceptance, including the custom container continuation hook scope and
+M1-B records comparable measurements and checked validation improvements.
+Remaining M1 work is extension/storage proof and final refactor/acceptance,
+including the custom container continuation hook scope and
 annotation/diagnostic contract; see [Review-M1.md](Review-M1.md).
 M2 adds inline payloads/rules and reference decoding/case folding. M3 completes
 position queries, outline, renderer safety options and integration. GFM and the
@@ -278,5 +284,6 @@ by block depth/properties/literals and ten leading-BOM cases against pinned
 cmark; all agree. The block
 quote/list sections now pass including their HTML-comment cases. These counts
 do not claim implemented inline or GFM extensions.
-The benchmark executable builds against this API. New release timings, Linux
-verification and a build using the minimum Swift 6.2 toolchain remain pending.
+The measured M1-B release baseline and annotation cost are in
+[Benchmarks.md](Benchmarks.md#m1-b-measured-baseline-and-checked-validation).
+Linux verification and a build using the minimum Swift 6.2 toolchain remain pending.

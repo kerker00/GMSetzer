@@ -39,4 +39,24 @@ public enum Corpus {
         let unit = block.utf8.count
         return String(repeating: block, count: max(1, (bytes + unit - 1) / unit))
     }
+
+    /// Separate workload for opt-in reference syntax. Keep the original mixed
+    /// corpus unchanged so existing measurements are not silently relabelled.
+    public static let referenceBlock = """
+    [benchmark]: <https://example.com/path>
+      "A multiline reference title"
+
+    > [nested]: /nested 'Quoted title'
+    >
+    > A quoted paragraph.
+
+    A paragraph with [benchmark] and Unicode äöü 😀 日本語.
+
+
+    """
+
+    public static func referenceDocument(bytes: Int) -> String {
+        let unit = referenceBlock.utf8.count
+        return String(repeating: referenceBlock, count: max(1, (bytes + unit - 1) / unit))
+    }
 }

@@ -226,10 +226,11 @@ public struct Document: Sendable {
                     }
                 }
             }
-            for target in [node.firstChild, node.nextSibling].compactMap({ $0 }) {
-                guard nodes.indices.contains(target) else {
-                    throw DocumentError.invalidIndex(node: index, target: target)
-                }
+            if let target = node.firstChild, !nodes.indices.contains(target) {
+                throw DocumentError.invalidIndex(node: index, target: target)
+            }
+            if let target = node.nextSibling, !nodes.indices.contains(target) {
+                throw DocumentError.invalidIndex(node: index, target: target)
             }
             switch node.data {
             case .heading(let level) where !(1...6).contains(level):
@@ -250,10 +251,13 @@ public struct Document: Sendable {
             default: break
             }
         }
-        var visited = Set<Int>()
+        // Node indices are dense and have all been bounds-checked above.
+        // Avoid hashing and per-node temporary arrays in this linear pass.
+        var visited = [Bool](repeating: false, count: nodes.count)
         var pending: [(index: Int, parent: Int?)] = [(0, nil)]
         while let (index, parent) = pending.popLast() {
-            guard visited.insert(index).inserted else { throw DocumentError.repeatedNode(index) }
+            guard !visited[index] else { throw DocumentError.repeatedNode(index) }
+            visited[index] = true
             let node = nodes[index]
             if let parent {
                 guard nodes[parent].range.contains(node.range) else {
@@ -266,14 +270,14 @@ public struct Document: Sendable {
             if let sibling = node.nextSibling {
                 guard node.range.upperBound <= nodes[sibling].range.lowerBound else {
                     // Check repeated nodes first, so self-cycles have a precise error.
-                    if visited.contains(sibling) { throw DocumentError.repeatedNode(sibling) }
+                    if visited[sibling] { throw DocumentError.repeatedNode(sibling) }
                     throw DocumentError.unorderedSiblings(node: index)
                 }
                 pending.append((sibling, parent))
             }
             if let child = node.firstChild { pending.append((child, index)) }
         }
-        if let unreachable = nodes.indices.first(where: { !visited.contains($0) }) {
+        if let unreachable = visited.firstIndex(of: false) {
             throw DocumentError.unreachableNode(unreachable)
         }
         for index in customLeafFallbacks.keys {
