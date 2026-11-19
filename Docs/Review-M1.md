@@ -240,3 +240,20 @@ Validation with Swift 6.4.2:
 - No full benchmark, Linux/minimum-Swift build, fuzzing or Setzkit editor/device
   check ran. No new performance or editor-integration claim follows from this
   correctness result. M1-B remains the next measurement gate.
+
+## M1-B instrumentation follow-up
+
+Prepared separately on `perf/m1-measurement-gate`. The original mixed corpus is
+unchanged; a second reference-heavy corpus exercises actual optional reference
+spans. Tests check collection off/on and unchanged rendering at all three sizes.
+The 30 benchmark cases cover corresponding C core/GFM parses, the contextual
+swift-markdown parse, isolated validation/rendering and reference annotation
+costs, with actual byte counts/corpus tags and allocation counts/bytes.
+
+The corpus test passes all three size cases, and `swift package benchmark list`
+builds the release executable and lists all 30 tagged cases. These checks do
+not execute the measured iterations or supply timing evidence.
+
+[M1Measurements.md](M1Measurements.md) defines the receipt, comparison caveats
+and local acceptance gate. No full measurement run or numeric phase/regression
+budget is claimed by preparing this harness; M1-B remains open pending results.

@@ -22,6 +22,9 @@ let package = Package(
     targets: [
         // Deterministic Markdown documents of a given size.
         .target(name: "BenchmarkCorpus"),
+        .testTarget(name: "BenchmarkCorpusTests", dependencies: [
+            "BenchmarkCorpus", .product(name: "GMSetzer", package: "GMSetzer"),
+        ]),
         .testTarget(
             name: "ContainerReferenceTests",
             dependencies: [

@@ -423,5 +423,7 @@ follow-up assessment, reproduced defects and proposed work packages. The
 assessment qualifies the historical speed comparison and retains release tree
 validation. Its M1-A follow-up fixes the three reproduced correctness defects;
 the broader architectural redesign remains open. Next: M1-B comparable
-measurements, M1-C extension/storage proof and M1-D refactor/acceptance before
-the M2 inline implementation. The full benchmark run needs owner authorization.
+measurements (instrumentation and protocol prepared in
+[M1Measurements.md](M1Measurements.md)), M1-C extension/storage proof and M1-D
+refactor/acceptance before the M2 inline implementation. The full benchmark run
+needs owner authorization.

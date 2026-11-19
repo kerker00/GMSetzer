@@ -105,3 +105,13 @@ The correctness tests and reference comparisons do not establish speed. No full
 benchmark or new timing/allocation claim accompanies M1-A. M1-B must measure
 the matching core/GFM references, actual UTF-8 byte counts, validation,
 annotations off/on and rendering before accepting a phase budget.
+
+### M1-B instrumentation
+
+The harness now includes isolated tree validation and safe rendering, plus a
+separate reference-heavy corpus with optional syntax collection off/on. The
+original mixed corpus is unchanged. All 30 cases tag actual UTF-8 byte counts
+and corpus identity and request allocation counts/bytes as well as wall-clock
+percentiles. See [M1Measurements.md](M1Measurements.md) for comparison limits,
+the run receipt and the local acceptance gate. This preparation supplies no new
+timing results; the full run and data-based budgets remain pending.
