@@ -91,3 +91,17 @@ measurements should distinguish parse, metadata and renderer options.
 Both Tools comparison tests pass (1,985 exact-HTML and 1,924 block-structure
 documents), and the benchmark executable builds. No full benchmark run, new
 allocation figure or release speed claim was made for this change.
+
+### M1-A correctness
+
+Leading BOM handling preserves original offsets. Renderer wrappers share list
+child scheduling with built-in rendering. Parsed custom leaves retain their
+projected fallback literals in a sparse document table; `Node` and `NodeData`
+do not grow. Built-in-only documents keep this table empty. Custom leaves pay
+for literal construction and storage even when a caller replaces their HTML;
+include that cost in the extension measurements before choosing storage changes.
+
+The correctness tests and reference comparisons do not establish speed. No full
+benchmark or new timing/allocation claim accompanies M1-A. M1-B must measure
+the matching core/GFM references, actual UTF-8 byte counts, validation,
+annotations off/on and rendering before accepting a phase budget.

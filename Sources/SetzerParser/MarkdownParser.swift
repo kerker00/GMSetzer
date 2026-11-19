@@ -19,7 +19,8 @@ public struct MarkdownParser: Sendable {
     public func parse(_ text: String) -> Document { parse(bytes: Array(text.utf8)) }
 
     /// Keeps original bytes, including malformed UTF-8. Literals use Swift's
-    /// UTF-8 replacement decoding; NUL becomes U+FFFD. Source offsets never shift.
+    /// UTF-8 replacement decoding; NUL becomes U+FFFD. A leading UTF-8 BOM is
+    /// ignored as syntax, but remains in the source and its original offsets.
     public func parse(bytes: [UInt8]) -> Document {
         var parser = BlockParser(source: bytes, profile: profile, extensions: extensions, limits: limits,
                                  collectSyntaxDetails: collectSyntaxDetails)
@@ -82,8 +83,10 @@ internal struct BlockParser {
     }
 
     @discardableResult
-    mutating func append(_ data: NodeData, range: SourceRange, segments: [SourceRange] = [], to parent: Int? = nil) -> Int {
-        try! builder.append(data, range: range, sourceSegments: segments, to: parent ?? containers.last?.node ?? 0)
+    mutating func append(_ data: NodeData, range: SourceRange, segments: [SourceRange] = [],
+                         fallbackLiteral: String? = nil, to parent: Int? = nil) -> Int {
+        try! builder.append(data, range: range, sourceSegments: segments, fallbackLiteral: fallbackLiteral,
+                            to: parent ?? containers.last?.node ?? 0)
     }
 
     mutating func appendText(_ range: SourceRange, to parent: Int) {
@@ -104,6 +107,11 @@ internal struct BlockParser {
             } else { cursor += 1 }
         }
         if start < bytes.count { result.append(SourceLine(start, bytes.count, bytes.count)) }
+        if bytes.starts(with: [0xEF, 0xBB, 0xBF]), let first = result.first {
+            // Keep physicalRange at byte zero, but begin syntax recognition
+            // after the BOM with a fresh column for indentation/tab stops.
+            result[0] = SourceLine(original: first, offset: 3, column: 0, virtual: 0, virtualSourceOffset: nil)
+        }
         return result
     }
 
@@ -215,7 +223,8 @@ internal struct BlockParser {
                 String(repeating: " ", count: cursor.virtual) + decode(SourceRange(cursor.offset, line.contentRange.upperBound)) + "\n")
     }
 
-    mutating func extensionMatch(at index: Int, interrupting: Bool, prefixCount: Int? = nil) -> BlockMatch? {
+    mutating func extensionMatch(at index: Int, interrupting: Bool, prefixCount: Int? = nil)
+        -> (match: BlockMatch, lines: [SourceLine])? {
         let indent = indentation(index)
         guard indent.columns <= 3 else { return nil }
         let first = indent.offset
@@ -238,9 +247,11 @@ internal struct BlockParser {
             if case .custom(let kind, .block, _) = match.data {
                 valid = valid && !kind.name.isEmpty && !NodeKind.builtins.contains(kind)
             } else { valid = false }
+            var projected: [SourceLine] = []
             if valid {
                 for target in index..<(index + match.consumedLines) {
-                    if context.line(at: target) == nil { valid = false; break }
+                    guard let line = context.line(at: target) else { valid = false; break }
+                    projected.append(line)
                 }
             }
             if valid {
@@ -251,9 +262,21 @@ internal struct BlockParser {
                     previousEnd = segment.upperBound
                 }
             }
-            if valid { return match }
+            if valid { return (match, projected) }
             builder.report(ParseDiagnostic(.invalidExtensionResult(active.rule.identifier), range: lines[index].range))
         }
         return nil
+    }
+
+    /// Source segments describe semantic provenance, not a fallback literal:
+    /// they may omit delimiters, line endings and virtual tab spaces.
+    func extensionFallback(_ projected: [SourceLine]) -> String {
+        var literal = ""
+        for line in projected {
+            literal += String(repeating: " ", count: line.virtualIndentation)
+            literal += decode(line.contentRange)
+            if line.range.upperBound > line.contentRange.upperBound { literal += "\n" }
+        }
+        return literal
     }
 }

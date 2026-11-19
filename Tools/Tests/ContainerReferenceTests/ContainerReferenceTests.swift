@@ -12,6 +12,15 @@ import Glibc
 /// No inline features or raw HTML: those are later parser milestones. The
 /// pinned C implementation is a behavioral oracle, not a library dependency.
 struct ContainerReferenceTests {
+    @Test func leadingBOMCombinationsMatchCmark() {
+        let renderer = HTMLRenderer(allowRawHTML: true, preserveHTMLComments: true)
+        for body in ["", "\r\n", "# Title\r\n", "> quote\n", "- item\n", "\tcode\n",
+                     "```\nbody\n```\n", "<div>\nbody\n", "[a]: /u\n\nbody\n", "\u{FEFF}# title\n"] {
+            let source = "\u{FEFF}" + body
+            #expect(renderer.render(MarkdownParser().parse(source)) == Self.reference(source, renderOptions: CMARK_OPT_UNSAFE))
+        }
+    }
+
     static let fragments = [
         "p", "q", "", "> p", ">", "> > p", "> - p", "- p", "-", "- q",
         "  q", "  - q", "    q", "\tp", "-\tq", "-     q", "  > q", "  >",
@@ -19,11 +28,11 @@ struct ContainerReferenceTests {
         "***", "---", "===", "# q", "```", "~~~", "    - q",
     ]
 
-    static func reference(_ text: String) -> String {
+    static func reference(_ text: String, renderOptions: Int32 = CMARK_OPT_DEFAULT) -> String {
         text.withCString { input in
             let document = cmark_parse_document(input, text.utf8.count, CMARK_OPT_DEFAULT)!
             defer { cmark_node_free(document) }
-            let html = cmark_render_html(document, CMARK_OPT_DEFAULT, nil)!
+            let html = cmark_render_html(document, renderOptions, nil)!
             defer { free(html) }
             return String(cString: html)
         }

@@ -13,7 +13,8 @@ original marker/trivia provenance as the remaining block/inline payloads grow.
 ## Values and construction
 
 `Document` owns the original `[UInt8]`, an immutable `[Node]` and parse
-diagnostics. It is `Sendable`. Root index is always zero; indices belong to
+diagnostics, plus sparse `customLeafFallbacks` keyed by custom leaf index. It is
+`Sendable`. Root index is always zero; indices belong to
 one document snapshot, not to later parses. Setzkit owns snapshot revisions
 and configuration fingerprints outside this module.
 
@@ -51,6 +52,10 @@ links; incomplete values never escape as a `Document`.
 validates externally assembled trees and throws `DocumentError` for invalid
 root/ranges, indices, content models, heading levels, list markers/starts, segments, reserved
 custom kind names, repeated nodes, overlapping siblings or unreachable nodes.
+Fallback entries must refer to existing custom nodes without children;
+otherwise validation throws `DocumentError.invalidFallback(node:)`. Builder
+`append` accepts an optional `fallbackLiteral`; `finish` replaces it, clearing
+any prior entry when omitted. Built-in-only documents keep the table empty.
 Only zero is a document root. Siblings follow non-overlapping source order;
 children stay within their parent. Empty ranges are allowed. Custom extension
 names should use a namespace such as `example.notice`.
@@ -64,7 +69,13 @@ malformed returned ranges or consumption counts do not reach that boundary.
 - All ranges are half-open `[lowerBound, upperBound)` byte offsets into
   `Document.source`. Bounds are immutable, non-negative and ordered.
 - Root range includes every byte, including blank lines and final line endings.
-- Top-level block ranges start at the physical line start. Nested blocks start
+- A single UTF-8 BOM at byte zero is ignored for block recognition. It remains
+  in `Document.source` and the root range. First-line block/content offsets
+  begin after those three bytes, while `SourceLine.physicalRange` retains
+  byte zero and indentation columns start at zero after the BOM. Later U+FEFF
+  characters and incomplete BOM byte sequences are not stripped.
+- Top-level block ranges start at the physical line start (after an initial
+  BOM, if present). Nested blocks start
   after enclosing quote/item prefixes, retaining their own indentation/markers.
   Ranges include consumed final line endings and may span ancestor prefixes on
   subsequent lines. Headings include opening and
@@ -212,7 +223,23 @@ Hooks are keyed by kind. They can replace a node with caller-supplied HTML,
 wrap rendered children, or return nil for normal rendering. **Hook output is
 trusted caller output.** Use `HTMLRenderer.escape` on source-derived values.
 Unknown custom containers render children; unknown custom leaves preserve their
-escaped source. Optional `data-source-start`/`data-source-end` block attributes
+escaped projected source through `Document.customLeafFallbacks`. The parser
+records consumed lines after container-prefix projection, including residual
+virtual tab spaces, replacement-decoded UTF-8/NUL and LF-normalised original
+line endings. It does not add a newline at EOF. This is independent of
+extension-provided semantic `sourceSegments`, which can omit delimiters or line
+endings. Neither `Node` nor `NodeData` gains a per-node fallback field.
+Hand-built trees can provide a fallback through the builder or document
+initializer; without it, unknown custom leaves retain escaped raw node-range
+bytes as before. Copy fallback metadata when reconstructing such a document.
+
+`wrapChildren` retains built-in list/item child semantics, including tightness,
+paragraph separators and omission of non-rendered reference definitions.
+Nested quotes and lists retain their own paragraph/tightness rules. Hooks own
+their opening/closing markup and whitespace; a list-item hook must include any
+desired newline in its opening markup. Full hook-context APIs remain M1-C work.
+
+Optional `data-source-start`/`data-source-end` block attributes
 are off by default, so source anchors do not change conformance comparisons.
 
 ## Current boundary and next work
@@ -223,8 +250,10 @@ fenced/indented code, all seven HTML block classes, multiline reference definiti
 text/soft breaks. It deliberately does not claim all examples in those spec
 sections: inline escapes/entities and code info decoding belong to M2.
 
-Remaining M1 work is final acceptance/API review, including the custom container
-continuation hook scope and annotation/diagnostic contract.
+M1-A fixes leading BOMs, wrapper tightness and custom-leaf fallback projection.
+Remaining M1 work is comparable measurements, extension/storage proof and final
+refactor/acceptance, including the custom container continuation hook scope and
+annotation/diagnostic contract; see [Review-M1.md](Review-M1.md).
 M2 adds inline payloads/rules and reference decoding/case folding. M3 completes
 position queries, outline, renderer safety options and integration. GFM and the
 additional dialect extensions retain their planned milestones.
@@ -238,12 +267,15 @@ reporting; do not present every such condition as an error in document text.
 exact component/marker ranges, including zero-length locations. It is optional;
 the general syntax-span collection and editor diagnostics are not implemented.
 
-Validation: all 49 library Swift Testing tests pass with Swift 6.4.2, including the
+Validation: all 57 library Swift Testing tests pass with Swift 6.4.2, including the
 three documented trees, invalid topology/extension results, mixed line endings,
 UTF-8/NUL handling, concurrent snapshots and short adversarial-input smoke
 tests. The protected exact-HTML baseline is 339/652 CommonMark and 339/672 GFM.
-Tools compare 1,985 documents by exact HTML and 1,924 HTML/reference documents
-by block depth/properties/literals against pinned cmark; all agree. The block
+Eight combination tests add BOM/offset, wrapper/container and projected fallback
+coverage, including fallback metadata validation and immutable builder snapshots.
+Tools compare 1,985 documents by exact HTML, 1,924 HTML/reference documents
+by block depth/properties/literals and ten leading-BOM cases against pinned
+cmark; all agree. The block
 quote/list sections now pass including their HTML-comment cases. These counts
 do not claim implemented inline or GFM extensions.
 The benchmark executable builds against this API. New release timings, Linux

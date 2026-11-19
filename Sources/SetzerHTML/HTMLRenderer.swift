@@ -1,7 +1,8 @@
 public import SetzerSyntax
 
 /// Hook output is trusted HTML supplied by the caller, not sanitised document
-/// input. A nil result uses normal rendering. Wrapping renders children only.
+/// input. A nil result uses normal rendering. Wrapping renders children only,
+/// retaining built-in list tightness. The hook owns its opening/closing markup.
 public enum HTMLRendering: Sendable {
     case replace(String)
     case wrapChildren(open: String, close: String)
@@ -42,7 +43,7 @@ public struct HTMLRenderer: Sendable {
                     case .wrapChildren(let open, let close):
                         output += open
                         pending.append(.output(close))
-                        scheduleChildren(index, document: document, pending: &pending)
+                        scheduleChildren(index, document: document, tightItem: tightItem, pending: &pending)
                     }
                     continue
                 }
@@ -69,19 +70,13 @@ public struct HTMLRenderer: Sendable {
                         output += "<ol\(startAttribute)\(anchors(node))>\n"
                     }
                     pending.append(.output("</\(tag)>\n"))
-                    for child in document.children(of: index).reversed() {
-                        pending.append(.enter(child, tightItem: attributes.isTight))
-                    }
+                    scheduleChildren(index, document: document, pending: &pending)
                 case .listItem:
                     let children = document.children(of: index).filter { document.nodes[$0].kind != .referenceDefinition }
                     output += "<li\(anchors(node))>"
                     if let first = children.first, !tightItem || document.nodes[first].kind != .paragraph { output += "\n" }
                     pending.append(.output("</li>\n"))
-                    for (position, child) in children.enumerated().reversed() {
-                        let unwrapped = tightItem && document.nodes[child].kind == .paragraph
-                        if unwrapped && position + 1 < children.count { pending.append(.output("\n")) }
-                        pending.append(.enter(child, tightItem: unwrapped))
-                    }
+                    scheduleItemChildren(children, document: document, tightItem: tightItem, pending: &pending)
                 case .heading(let level):
                     output += "<h\(level)\(anchors(node))>"
                     pending.append(.output("</h\(level)>\n"))
@@ -103,9 +98,13 @@ public struct HTMLRenderer: Sendable {
                     if node.firstChild != nil {
                         scheduleChildren(index, document: document, pending: &pending)
                     } else {
-                        // Unknown leaf extensions retain escaped source text.
-                        let bytes = document.source[node.range.lowerBound..<node.range.upperBound]
-                        output += Self.escape(String(decoding: bytes, as: UTF8.self))
+                        if let literal = document.customLeafFallbacks[index] {
+                            output += Self.escape(literal)
+                        } else {
+                            // Hand-built trees may omit a projected fallback.
+                            let bytes = document.source[node.range.lowerBound..<node.range.upperBound]
+                            output += Self.escape(String(decoding: bytes, as: UTF8.self))
+                        }
                     }
                 }
             }
@@ -113,8 +112,26 @@ public struct HTMLRenderer: Sendable {
         return output
     }
 
-    private func scheduleChildren(_ index: Int, document: Document, pending: inout [Event]) {
-        for child in document.children(of: index).reversed() { pending.append(.enter(child)) }
+    private func scheduleChildren(_ index: Int, document: Document, tightItem: Bool = false, pending: inout [Event]) {
+        switch document.nodes[index].data {
+        case .list(let attributes):
+            for child in document.children(of: index).reversed() {
+                pending.append(.enter(child, tightItem: attributes.isTight))
+            }
+        case .listItem:
+            let children = document.children(of: index).filter { document.nodes[$0].kind != .referenceDefinition }
+            scheduleItemChildren(children, document: document, tightItem: tightItem, pending: &pending)
+        default:
+            for child in document.children(of: index).reversed() { pending.append(.enter(child)) }
+        }
+    }
+
+    private func scheduleItemChildren(_ children: [Int], document: Document, tightItem: Bool, pending: inout [Event]) {
+        for (position, child) in children.enumerated().reversed() {
+            let unwrapped = tightItem && document.nodes[child].kind == .paragraph
+            if unwrapped && position + 1 < children.count { pending.append(.output("\n")) }
+            pending.append(.enter(child, tightItem: unwrapped))
+        }
     }
 
     private func anchors(_ node: Node) -> String {

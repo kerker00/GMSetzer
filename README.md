@@ -37,6 +37,8 @@ wherever Swift runs, including Linux.
   milestones and licence rules. Start here.
 - [Docs/Benchmarks.md](Docs/Benchmarks.md) – measurements against cmark-gfm.
 - [Docs/Review-M0.md](Docs/Review-M0.md) – review findings and corrections.
+- [Docs/Review-M1.md](Docs/Review-M1.md) – M1 architecture, code, QA and
+  extensibility review with recommendations before M2.
 - [Docs/SyntaxTree.md](Docs/SyntaxTree.md) – implemented tree/extension contract,
   example ranges and remaining M1 work.
 - [Docs/EditorAnalysis.md](Docs/EditorAnalysis.md) – planned syntax, native lint
@@ -47,13 +49,16 @@ wherever Swift runs, including Linux.
 
 ## Modules
 
-| Module | Contents |
-| --- | --- |
-| `SetzerSyntax` | Syntax tree, source ranges, position conversion, outline queries |
-| `SetzerParser` | Block and inline parser, extension API, profiles |
-| `SetzerExtensions` | GFM, footnotes, front matter, math, alerts and callouts |
-| `SetzerHTML` | HTML renderer with block anchors |
-| `GMSetzer` | Imports all of the above |
+| Module | Implemented | Planned |
+| --- | --- | --- |
+| `SetzerSyntax` | Validated syntax tree, original-byte source ranges and segments | Generic optional syntax spans, position conversion, outline queries |
+| `SetzerParser` | Block parser, custom leaf rules, ordered profiles | Inline parser, container/transform hooks, validated shared configuration |
+| `SetzerExtensions` | GFM profile selections | GFM rule implementations, footnotes, front matter, math, alerts and callouts |
+| `SetzerHTML` | Block HTML rendering, source anchors, escaping and comment policy | Inline rendering and URL safety |
+| `GMSetzer` | Imports the four implemented modules above | Optional analysis module with its first tested rules |
+
+M1 is not accepted yet. The [M1 review](Docs/Review-M1.md) defines the
+correctness, measurement, architecture and refactoring gates before M2.
 
 ```swift
 import GMSetzer
@@ -64,13 +69,17 @@ let html = HTMLRenderer().render(document)
 ```
 
 `parse(bytes:)` also accepts original UTF-8 bytes, preserving invalid sequences
-in `Document.source` while replacing them in literals. `.gfm` selects its five
+in `Document.source` while replacing them in literals. A leading UTF-8 BOM is
+ignored for syntax recognition but retained in the original bytes and offsets.
+`.gfm` selects its five
 extensions explicitly; until M4 implements them, missing extensions are listed
 in `Document.diagnostics`.
 
 `collectSyntaxDetails: true` optionally retains reference component/marker
 ranges. HTML blocks are escaped and recognised comments omitted by default;
 `allowRawHTML` and `preserveHTMLComments` are explicit renderer options.
+Custom leaf fallbacks retain projected content without quote/list prefixes;
+renderer wrappers preserve built-in list tightness.
 
 ## Development
 
@@ -84,8 +93,8 @@ ranges. HTML blocks are escaped and recognised comments omitted by default;
   SHA-256 checked sources.
 - `python3 -I -m unittest discover -s Scripts` tests the update tools offline.
 - `swift test --package-path Tools --filter ContainerReferenceTests` compares
-  1,985 documents by exact HTML and 1,924 HTML/reference documents by block
-  structure and literal content with pinned cmark in C. These
+  1,985 documents by exact HTML, 1,924 HTML/reference documents by block
+  structure and literal content, and ten BOM cases with pinned cmark in C. These
   development dependencies remain separate from the library.
 - `GMSETZER_SPEC_DIAGNOSTICS=1 swift test --filter SpecTests` also prints each
   mismatching example with source, expected HTML and actual HTML as JSON.

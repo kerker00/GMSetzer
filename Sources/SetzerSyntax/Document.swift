@@ -169,6 +169,7 @@ public enum DocumentError: Error, Equatable, Sendable {
     case invalidChild(parent: Int, child: Int)
     case unorderedSiblings(node: Int)
     case invalidParent(Int)
+    case invalidFallback(node: Int)
 }
 
 public struct ParseDiagnostic: Hashable, Sendable {
@@ -192,8 +193,13 @@ public struct Document: Sendable {
     public let source: [UInt8]
     public let nodes: [Node]
     public let diagnostics: [ParseDiagnostic]
+    /// Projected, replacement-decoded text for unknown custom leaves. Kept
+    /// separately so built-in nodes and semantic source segments do not grow.
+    /// Values are plain text; renderers must escape them.
+    public let customLeafFallbacks: [Int: String]
 
-    public init(source: [UInt8], nodes: [Node], diagnostics: [ParseDiagnostic] = []) throws {
+    public init(source: [UInt8], nodes: [Node], diagnostics: [ParseDiagnostic] = [],
+                customLeafFallbacks: [Int: String] = [:]) throws {
         guard let root = nodes.first, root.data == .document,
               root.range == SourceRange(0, source.count), root.nextSibling == nil else {
             throw DocumentError.invalidRoot
@@ -270,9 +276,14 @@ public struct Document: Sendable {
         if let unreachable = nodes.indices.first(where: { !visited.contains($0) }) {
             throw DocumentError.unreachableNode(unreachable)
         }
+        for index in customLeafFallbacks.keys {
+            guard nodes.indices.contains(index), case .custom = nodes[index].data,
+                  nodes[index].firstChild == nil else { throw DocumentError.invalidFallback(node: index) }
+        }
         self.source = source
         self.nodes = nodes
         self.diagnostics = diagnostics
+        self.customLeafFallbacks = customLeafFallbacks
     }
 
     public var root: Node { nodes[0] }
@@ -297,6 +308,7 @@ public struct DocumentBuilder: Sendable {
     private var nodes: [Node]
     private var lastChildren: [Int?]
     private var diagnostics: [ParseDiagnostic] = []
+    private var customLeafFallbacks: [Int: String] = [:]
 
     public init(source: [UInt8]) {
         self.source = source
@@ -304,9 +316,12 @@ public struct DocumentBuilder: Sendable {
         self.lastChildren = [nil]
     }
 
+    /// A fallback literal is plain text for a custom leaf, independent of its
+    /// semantic source segments. build() checks the owning node.
     @discardableResult
     public mutating func append(_ data: NodeData, range: SourceRange,
-                                sourceSegments: [SourceRange] = [], to parent: Int = 0) throws -> Int {
+                                sourceSegments: [SourceRange] = [], fallbackLiteral: String? = nil,
+                                to parent: Int = 0) throws -> Int {
         guard nodes.indices.contains(parent) else { throw DocumentError.invalidParent(parent) }
         let index = nodes.count
         nodes.append(Node(data: data, range: range, sourceSegments: sourceSegments))
@@ -314,6 +329,7 @@ public struct DocumentBuilder: Sendable {
         if let last = lastChildren[parent] { nodes[last].nextSibling = index }
         else { nodes[parent].firstChild = index }
         lastChildren[parent] = index
+        if let fallbackLiteral { customLeafFallbacks[index] = fallbackLiteral }
         return index
     }
 
@@ -321,15 +337,17 @@ public struct DocumentBuilder: Sendable {
 
     /// Complete an open block while retaining its topology. Validation occurs
     /// at build(), before an immutable Document can escape the builder.
+    /// Replaces fallback metadata too; nil clears a previous fallback.
     public mutating func finish(_ index: Int, data: NodeData, range: SourceRange,
-                                sourceSegments: [SourceRange] = []) throws {
+                                sourceSegments: [SourceRange] = [], fallbackLiteral: String? = nil) throws {
         guard index > 0 && nodes.indices.contains(index) else { throw DocumentError.invalidParent(index) }
         let old = nodes[index]
         nodes[index] = Node(data: data, range: range, sourceSegments: sourceSegments,
                             firstChild: old.firstChild, nextSibling: old.nextSibling)
+        customLeafFallbacks[index] = fallbackLiteral
     }
 
     public func build() throws -> Document {
-        try Document(source: source, nodes: nodes, diagnostics: diagnostics)
+        try Document(source: source, nodes: nodes, diagnostics: diagnostics, customLeafFallbacks: customLeafFallbacks)
     }
 }
