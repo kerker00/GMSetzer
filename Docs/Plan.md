@@ -417,5 +417,8 @@ profile conversions, incremental parsing if measurements call for it.
 The M0 findings, corrections and validation are recorded in
 [Review-M0.md](Review-M0.md). M1's first implementation and example trees are
 documented in [SyntaxTree.md](SyntaxTree.md). HTML/reference behavior and tests
-are in [HTMLReferences.md](HTMLReferences.md). Next: final M1 acceptance and
-extension/annotation contract review before the M2 inline implementation.
+are in [HTMLReferences.md](HTMLReferences.md). The M1 architecture, code,
+QA and extensibility review is in [Review-M1.md](Review-M1.md); its
+recommendations are not yet decided or implemented. Next: decide on the speed
+budget, the extension architecture and the token/parent storage from that
+review, then final M1 acceptance before the M2 inline implementation.

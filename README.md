@@ -37,6 +37,8 @@ wherever Swift runs, including Linux.
   milestones and licence rules. Start here.
 - [Docs/Benchmarks.md](Docs/Benchmarks.md) – measurements against cmark-gfm.
 - [Docs/Review-M0.md](Docs/Review-M0.md) – review findings and corrections.
+- [Docs/Review-M1.md](Docs/Review-M1.md) – M1 architecture, code, QA and
+  extensibility review with recommendations before M2.
 - [Docs/SyntaxTree.md](Docs/SyntaxTree.md) – implemented tree/extension contract,
   example ranges and remaining M1 work.
 - [Docs/EditorAnalysis.md](Docs/EditorAnalysis.md) – planned syntax, native lint
