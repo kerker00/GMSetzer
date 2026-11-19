@@ -48,7 +48,7 @@ From the GMSetzer repository root:
 
 ```sh
 swift package --package-path Tools benchmark list --target ParserBenchmarks
-swift package --package-path Tools benchmark run --target ParserBenchmarks --format markdown --path /private/tmp/gmsetzer-m1-b-results --no-progress
+swift package --package-path Tools benchmark run --target ParserBenchmarks --format markdown --time-units microseconds --no-progress > /private/tmp/gmsetzer-m1-b-results.log
 ```
 
 Obtain the owner's authorization before the second command, as required by
@@ -57,7 +57,8 @@ suite. In the restricted workspace, redirect compiler/package caches and scratch
 paths, disable sandboxed plugin execution, and use `-debug-info-format none` if
 dSYM generation is unavailable. Release optimisation must remain enabled.
 
-Keep the raw exports and add a measured entry to [Benchmarks.md](Benchmarks.md)
+Keep the raw output (Markdown prints to stdout in the pinned tool) and add a
+measured entry to [Benchmarks.md](Benchmarks.md)
 with p50 values, units, allocation metrics and the exact tagged byte counts.
 Explain failures or unsupported metrics rather than replacing them with the
 historical M0 numbers. Fixture creation and pre-parsed tree setup are outside

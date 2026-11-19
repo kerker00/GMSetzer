@@ -257,3 +257,17 @@ not execute the measured iterations or supply timing evidence.
 [M1Measurements.md](M1Measurements.md) defines the receipt, comparison caveats
 and local acceptance gate. No full measurement run or numeric phase/regression
 budget is claimed by preparing this harness; M1-B remains open pending results.
+
+### Checked validation optimisation
+
+The first authorised full run at `a345fea` finds about 42 ms for the 1 MB mixed
+block parse against 19 ms for the corresponding C core parse. Isolated public
+tree validation takes about 18 ms and 133 K allocations (rounded tool output).
+The per-node temporary optional-index/`compactMap` arrays are avoidable.
+
+Replace those arrays with direct optional-index bounds checks, and the hashed
+visited set with a dense Boolean buffer over the already bounds-checked node
+indices. Preserve traversal/error order, repeated-node, unreachable-node and
+all payload/segment/fallback checks in release. All 57 library tests pass in
+both debug and release after this change. The matching full countermeasurement
+is required before treating it as a performance improvement.
