@@ -11,7 +11,8 @@
     "memory_bytes": "17179869184",
     "lockfile_sha256": "b04f6826b9801a9655860ce82f86725f8fc6204915ca0771b7028f76cfcf6002",
     "configuration": "Release, debug-info-format none; 30 cases, wallClock/mallocCountTotal/mallocBytesCount; core/GFM C positions enabled",
-    "raw_output_sha256": "195ff8c653b96c698a4d4636bd27837be5b8a707c33b3a1c3acb2cdd37f59250"
+    "raw_output_sha256": "4a924b254c17bea60c0cf5965d94320af01c683c1af4d3a1391af546d71a473b",
+    "export_normalization": "Compilation preamble omitted; trailing blank lines trimmed. Metric values unchanged."
   },
   "after": {
     "recorded_at_utc": "2026-11-19T21:56:41.794855+00:00",
@@ -26,6 +27,7 @@
     "lockfile_sha256": "b04f6826b9801a9655860ce82f86725f8fc6204915ca0771b7028f76cfcf6002",
     "configuration": "Release, debug-info-format none; 30 cases, wallClock/mallocCountTotal/mallocBytesCount; core/GFM C positions enabled",
     "presentation": "--format markdown --time-units microseconds; timing configuration unchanged",
-    "raw_output_sha256": "29ad8c4264732f51739931e22820356ddbcfefa602feba2b3ad3adbbfe2b9292"
+    "raw_output_sha256": "43f0a9842ad7b09c73b6e33a71fca2e58fa37d8dea09e17fad1da01944365172",
+    "export_normalization": "Compilation preamble omitted; trailing blank lines trimmed. Metric values unchanged."
   }
 }
