@@ -5,8 +5,10 @@ build). Every entry names the commit, machine and OS. Times are medians (p50).
 
 ## How to read the numbers
 
-- **GMSetzer** has separate CommonMark and GFM entries. At M0 both are stubs;
-  once implemented they parse into a syntax tree with source positions.
+- **GMSetzer** has separate CommonMark and GFM entries. M1 now parses leaf
+  blocks and quote/list containers into a validated syntax tree with source ranges.
+  Inline markup, HTML blocks and GFM rules are still pending; do not compare its
+  current timings as equivalent work to a complete parser.
 - **cmark-gfm (C)** has corresponding core and GFM entries. Both enable
   `CMARK_OPT_SOURCEPOS` for inline positions and include parser creation,
   parsing and freeing the document. The GFM entry attaches `table`, `tasklist`,
@@ -52,6 +54,26 @@ source now uses the two explicit configurations above. Its executable was
 built during review, but no full benchmark run was performed. New timings,
 allocations and enforceable ratio baselines remain pending; the historical
 numbers must not be relabelled as measurements of the corrected harness.
+
+### First M1 implementation
+
+The parser now does real leaf-block work, source segmentation and tree
+validation. The benchmark executable was rebuilt successfully against this
+API. No full benchmark run has been performed; new release measurements remain
+pending, and the historical stub timings describe neither this implementation
+nor full CommonMark/GFM parsing.
+
+### M1 containers
+
+Quote/list continuation now uses an iterative open-container stack and a
+single set of original-byte line views. The default depth ceiling is 128
+container nodes (maximum configurable ceiling 256). Open leaf buffers remain
+unique during continuation to avoid copying accumulated line indices on each
+append. Source-cursor projection retains partial-tab provenance.
+
+The Tools test/build also builds the benchmark executable against this API.
+The 1,985-document C reference comparison checks behavior, not performance;
+no new full benchmark run or speed claim is recorded here.
 
 For the next measured entry, record the exact commit and dirty-state/diff,
 Swift version, machine/OS, package lockfile, profile/options, actual UTF-8 byte

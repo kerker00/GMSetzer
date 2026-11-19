@@ -1,17 +1,20 @@
-/// A range in the source text, as UTF-8 byte offsets from its start.
-///
-/// Byte offsets are what the parser works with; `LineIndex` converts them
-/// to lines, columns and UTF-16 offsets for text views.
+/// A half-open range of UTF-8 byte offsets in the exact original snapshot.
+/// Invalid UTF-8 and CRLF do not change these offsets. Position conversion
+/// to UTF-16 and line/column coordinates follows in M3.
 public struct SourceRange: Hashable, Sendable {
-    public var lowerBound: Int
-    public var upperBound: Int
+    public let lowerBound: Int
+    public let upperBound: Int
 
     public init(_ lowerBound: Int, _ upperBound: Int) {
-        precondition(lowerBound <= upperBound, "a source range must not be reversed")
+        precondition(lowerBound >= 0 && lowerBound <= upperBound,
+                     "a source range must be non-negative and ordered")
         self.lowerBound = lowerBound
         self.upperBound = upperBound
     }
 
     public var count: Int { upperBound - lowerBound }
     public var isEmpty: Bool { lowerBound == upperBound }
+    public func contains(_ other: SourceRange) -> Bool {
+        lowerBound <= other.lowerBound && other.upperBound <= upperBound
+    }
 }

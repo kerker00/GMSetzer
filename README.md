@@ -5,9 +5,13 @@ Markdown with switchable extensions, exact source positions and an HTML
 renderer. No C, no Rust, no JavaScript, no runtime dependencies — it builds
 wherever Swift runs, including Linux.
 
-> **Status:** milestone M0 (scaffold), reviewed and corrected. The parser
-> emits only a document root and the renderer emits an empty string. M1 has
-> not started. The repository stays private until M2 and owner approval.
+> **Status:** milestone M1 in progress. The first slice implements a validated
+> syntax tree, paragraphs, headings, code, nested block quotes and ordered/bullet
+> lists, including lazy continuation, tightness and depth limits. Custom leaf
+> rules receive projected source lines. HTML blocks, complete references and
+> inline markup are still pending. Current spec passes: 299/652 CommonMark and
+> 300/672 GFM. The repository stays private until
+> milestone M2 and owner approval.
 
 ## Goals
 
@@ -22,6 +26,9 @@ wherever Swift runs, including Linux.
 - **Safe defaults:** raw HTML is written as text unless the caller allows
   it.
 - **Swift 6:** `Sendable` values, strict concurrency, no global state.
+- **Editor analysis (planned):** source-spelled syntax roles and precise native
+  lint findings/fix suggestions over the same parse, for snapshot-bound editor
+  highlighting and underlines. The current implementation is not a finished linter.
 
 ## Documentation
 
@@ -29,6 +36,10 @@ wherever Swift runs, including Linux.
   milestones and licence rules. Start here.
 - [Docs/Benchmarks.md](Docs/Benchmarks.md) – measurements against cmark-gfm.
 - [Docs/Review-M0.md](Docs/Review-M0.md) – review findings and corrections.
+- [Docs/SyntaxTree.md](Docs/SyntaxTree.md) – implemented tree/extension contract,
+  example ranges and remaining M1 work.
+- [Docs/EditorAnalysis.md](Docs/EditorAnalysis.md) – planned syntax, native lint
+  and editor-diagnostic contracts and acceptance gates.
 - [CONTRIBUTING.md](CONTRIBUTING.md) – workflow and rules.
 
 ## Modules
@@ -46,7 +57,13 @@ import GMSetzer
 
 let document = MarkdownParser().parse("# Hello")
 let html = HTMLRenderer().render(document)
+// <h1>Hello</h1>\n
 ```
+
+`parse(bytes:)` also accepts original UTF-8 bytes, preserving invalid sequences
+in `Document.source` while replacing them in literals. `.gfm` selects its five
+extensions explicitly; until M4 implements them, missing extensions are listed
+in `Document.diagnostics`.
 
 ## Development
 
@@ -59,6 +76,9 @@ let html = HTMLRenderer().render(document)
 - `Scripts/update-specs.sh` reproduces the specification examples from pinned,
   SHA-256 checked sources.
 - `python3 -I -m unittest discover -s Scripts` tests the update tools offline.
+- `swift test --package-path Tools --filter ContainerReferenceTests` compares
+  1,985 generated plain-text block documents with pinned cmark in C. These
+  development dependencies remain separate from the library.
 - `GMSETZER_SPEC_DIAGNOSTICS=1 swift test --filter SpecTests` also prints each
   mismatching example with source, expected HTML and actual HTML as JSON.
 - `Tools/` is a separate package for benchmarks against cmark-gfm in C and

@@ -1,9 +1,13 @@
 public import SetzerParser
 
-/// Syntax extensions beyond CommonMark: GFM (tables, task lists,
-/// strikethrough, extended autolinks), footnotes, front matter, math,
-/// alerts and callouts. They arrive from milestone M4 on.
 extension Profile {
-    /// GitHub Flavored Markdown.
-    public static let gfm = Profile(name: "gfm")
+    /// GFM's explicit selection. Its implementations arrive in M4; until then
+    /// the parser reports unavailable rules in `Document.diagnostics`.
+    public static let gfm = Profile(name: "gfm", extensions: [
+        ExtensionConfiguration("gfm.table"),
+        ExtensionConfiguration("gfm.tasklist"),
+        ExtensionConfiguration("gfm.strikethrough"),
+        ExtensionConfiguration("gfm.autolink"),
+        ExtensionConfiguration("gfm.tagfilter"),
+    ])
 }
