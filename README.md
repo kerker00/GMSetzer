@@ -23,6 +23,13 @@ wherever Swift runs, including Linux.
   it.
 - **Swift 6:** `Sendable` values, strict concurrency, no global state.
 
+## Documentation
+
+- [Docs/Plan.md](Docs/Plan.md) – requirements, decisions, architecture,
+  milestones and licence rules. Start here.
+- [Docs/Benchmarks.md](Docs/Benchmarks.md) – measurements against cmark-gfm.
+- [CONTRIBUTING.md](CONTRIBUTING.md) – workflow and rules.
+
 ## Modules
 
 | Module | Contents |
@@ -46,8 +53,8 @@ let html = HTMLRenderer().render(document)
   number of passing examples is recorded in
   `Tests/SetzerSpecTests/Resources/baseline.json` and must never drop.
 - `Scripts/update-specs.sh` refreshes the specification examples.
-- `Tools/` is a separate package for benchmarks against cmark-gfm:
-  `cd Tools && swift package benchmark`.
+- `Tools/` is a separate package for benchmarks against cmark-gfm in C and
+  swift-markdown: `cd Tools && swift package benchmark`.
 
 ## Licence
 
