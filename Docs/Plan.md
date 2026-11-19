@@ -1,6 +1,6 @@
 # GMSetzer – Plan and Requirements
 
-**Status: 19 November 2026, M0 reviewed and corrected; M1 not started.** This document is the
+**Status: 19 November 2026, M1 in progress: leaf blocks, block quotes and lists implemented.** This document is the
 reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
@@ -81,6 +81,8 @@ All taken by the project owner on 19 November 2026.
 | Profiles | Every extension switchable on its own; shipped profiles "CommonMark strict" and "GFM" | Obsidian (wikilinks, embeds `![[…]]`, `==highlight==`, tags), Pandoc (definition lists, attributes `{.class}`, fenced divs, sub-/superscript, citations `[@key]`), MultiMarkdown, kramdown, user-defined profiles |
 | Output | Syntax tree with source ranges; HTML renderer with block anchors | Markdown serialiser (for converting between profiles), other output formats |
 | Outline | Query for headings and block structure with their ranges | – |
+| Editor syntax | Optional source-spelled syntax/delimiter spans and precisely located document diagnostics; UTF-16 mapping in the caller's snapshot | – |
+| Native analysis | Optional `SetzerAnalysis` module over the same tree/source; configurable named rule subset, portable findings and explicit suggested fixes | Further rules and separately verified markdownlint compatibility |
 
 ### Non-functional
 
@@ -96,7 +98,8 @@ All taken by the project owner on 19 November 2026.
   snapshot, including syntax delimiters for syntax nodes. A container range
   can include quote/list prefixes and line endings; it is not necessarily the
   decoded text rendered for that node. Non-contiguous content needs source
-  segments. Specify tabs, CRLF, empty nodes and offsets inside scalars in M1.
+  segments. The conventions for tabs, CRLF, empty nodes and offsets inside
+  scalars are defined in [SyntaxTree.md](SyntaxTree.md); conversion follows in M3.
 - **Speed.** Measured with the benchmarks in `Tools/` (see
   [Benchmarks.md](Benchmarks.md)):
 
@@ -113,9 +116,9 @@ All taken by the project owner on 19 November 2026.
   they do not establish the corrected comparison.
 - **Robust.** Linear time even on hostile input (deep nesting, many open
   brackets, long runs of emphasis characters); limits for nesting depth; no
-  crash on invalid UTF-8. The current `String` input is already valid Unicode;
-  M1 must define byte input and mapping to original offsets before claiming
-  invalid-UTF-8 coverage. Depth limits need a documented fallback
+  crash on invalid UTF-8. The `String` input is already valid Unicode;
+  `parse(bytes:)` now preserves original bytes while replacement-decoding
+  literals, with tests for invalid sequences and NUL. Depth limits need a documented fallback
   and must bound rendering and traversal as well as parsing.
 - **Safe by default.** The HTML renderer writes raw HTML from the source as
   escaped text unless the caller allows it; HTML comments are left out;
@@ -148,6 +151,22 @@ useful to other apps as well.
 | Speed on the iPhone and in a Quick Look extension | Large documents (up to 5 MB) must stay usable; Quick Look runs with tight limits and without JavaScript |
 | `Sendable` results | The Setzkit adapter associates background parse results with their snapshot revision, dialect and configuration; GMSetzer does not import app-specific revision types |
 | Safe HTML by default | Previews and exports never run active content from documents |
+| Syntax roles and document findings | Theme-based highlighting and precise underline/caret/gutter locations in TextKit; preserve delimiters and original trivia |
+| Native lint rules over the same parse | Optional checks reuse GMSetzer's dialect semantics and source, with provider/rule IDs, severity, related ranges and advisory fixes |
+
+### Editor analysis is an explicit deliverable
+
+The original position requirements were necessary but did not define complete
+syntax-checking and lint services. The owner confirmed these uses on
+19 November 2026. [EditorAnalysis.md](EditorAnalysis.md) now specifies them,
+including source-spelled syntax spans, a future optional analysis module,
+revision-bound UTF-16 underlines, diagnostics versus parser/provider failures,
+rule profiles and strict suggested-fix transactions.
+
+This is a planned contract. Current `ParseDiagnostic` covers infrastructure
+conditions, not a finished linter. CommonMark literal fallbacks are not syntax
+errors by default. Markdownlint remains an optional compatibility/provider
+path; equivalence is not assumed for native rules.
 
 <a id="architecture"></a>
 
@@ -161,7 +180,12 @@ useful to other apps as well.
 | `SetzerParser` | Block and inline parser, extension API, profiles | `SetzerSyntax` |
 | `SetzerExtensions` | GFM, footnotes, front matter, math, alerts and callouts | `SetzerParser`, `SetzerSyntax` |
 | `SetzerHTML` | HTML renderer, block anchors, escaping and URL checks, renderer hooks | `SetzerSyntax` |
+| `SetzerAnalysis` (planned) | Optional native rules over existing tree/source; portable findings and suggested edits | `SetzerSyntax` |
 | `GMSetzer` | Re-exports all of the above | all |
+
+Portable syntax-span/diagnostic/fix values belong in `SetzerSyntax`.
+`SetzerAnalysis` is not implemented or a package target yet; introduce it with
+its first tested rules. The parser remains independent of analysis and HTML.
 
 ### Approach
 
@@ -180,13 +204,14 @@ useful to other apps as well.
 - **Flat value tree.** All nodes live in one array; children and siblings are
   indices (`Document.nodes`, see `Sources/SetzerSyntax/Document.swift`). Fast,
   little memory, `Sendable`. A convenient tree API sits on top.
-- **Node kinds** are predefined for CommonMark and GFM; extensions register
-  their own kinds by name, so new syntax never needs a fork.
-- **M1 model contract:** define node payloads (heading level, list start and
-  tightness, fence info, decoded literals, link destination/title), source
-  segments and a builder usable from the parser module. Validate ranges and
-  tree indices, including cycles, at the construction boundary. Named kinds
-  alone are not an extensible syntax model; the M0 structs are provisional.
+- **Node kinds** derive from typed built-in payloads. Extensions register their
+  own namespaced kinds and portable attributes without a fork. Add built-in
+  payload cases with their parser implementation.
+- **M1 model contract:** the initial payloads, source segments, cross-module
+  builder and iterative range/tree validation are implemented in
+  [SyntaxTree.md](SyntaxTree.md). List start/delimiter/tightness, built-in
+  container continuation and depth limits are now included. Custom container
+  hooks and link payloads remain subsequent M1/M2 work.
 - **Incremental parsing** (re-parsing only changed top-level blocks) comes
   later and only if measurements show the need.
 
@@ -207,11 +232,14 @@ An extension can register:
 A **profile** is a named list of active extensions with their options.
 comrak's per-extension options are a good model for the switches.
 
-The current `Profile` stores only a name and activates no syntax. Define the
-registration/options contract in M1 before fixing parser dispatch. Rules need
-deterministic priority, bounded lookahead and progress guarantees. Syntax
-payloads live in `SetzerSyntax`; renderer hooks are supplied to `SetzerHTML`
-by the caller, without a dependency from the parser to the HTML renderer.
+`Profile` now stores ordered extension selections and portable options;
+implementations are supplied separately to the parser. The initial registry
+supports custom leaf-block rules, deterministic priority and checked progress
+and ranges. Unavailable extensions and invalid matches produce diagnostics.
+Leaf rules receive projected lines and cannot consume past a container boundary.
+Custom container/inline hooks and post-processing remain open. The detailed contract
+and callback trust boundary are in [SyntaxTree.md](SyntaxTree.md). Renderer
+hooks stay in `SetzerHTML`, without a parser-to-renderer dependency.
 
 Math: the library produces nodes with the TeX source and nothing else.
 
@@ -303,6 +331,11 @@ source files; source, version and licence go into the file header and into
 - **Rendering:** conformance configuration is separate from safe defaults.
   Test escaping, comments, decoded/obfuscated URL schemes, GFM tag filtering,
   anchors and caller hook trust before Setzkit integration in M3.
+- **Editor analysis:** exact delimiter/finding ranges, native rule selection,
+  legal literal fallbacks, source trivia, zero-length/related ranges and fix
+  preconditions. Setzkit must prove UTF-16 underlines, stale-result rejection,
+  IME/undo protection and accessible problem navigation. See
+  [EditorAnalysis.md](EditorAnalysis.md); these acceptance checks remain open.
 - **Reference comparisons:** a corpus of real documents is compared with
   cmark-gfm; every difference is explained.
 - **Hostile input:** cmark's pathological cases with a time limit.
@@ -322,14 +355,14 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | Milestone | Contents | Done when | Estimate | Status |
 | --- | --- | --- | --- | --- |
 | M0 | Repository, package layout, specification run, benchmark setup, name and gap check | Starting point measured; harness reviewed, reference configurations corrected | 2–3 | **reviewed and corrected** (19 Nov 2026); new reference timings pending |
-| M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | next; not started |
-| M2 | Inline parser: escapes, entities, code spans, emphasis, links/images, autolinks, raw HTML, breaks; complete CommonMark conformance rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; publication only after owner confirmation | 8–12 | |
-| M3 | Safe HTML rendering, block anchors, renderer hooks, position conversion, outline query | Security and position tests pass; Setzkit adapter binds results to snapshot/configuration; integration can start | 3–5 | |
+| M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **in progress**: leaf blocks, nested quotes/lists, lazy continuation, tightness, depth limits and projected extension lines; 299/652 CommonMark and 300/672 GFM examples pass. HTML blocks and complete references remain open |
+| M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | |
+| M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; editor adapter for syntax spans/findings | Security/position/analysis tests pass; Setzkit proves snapshot-bound syntax decoration and diagnostic underlines; integration can start | re-estimate | |
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | |
 | M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Setzkit's corpus complete | 5–8 | |
 | M6 | Speed and hardening: measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met | 5–8 | |
 | M7 | Version 1.0: API review, DocC documentation, release; Setzkit pins the version | Setzkit uses 1.0 | 3–5 | |
-| | **Total** | | **38–59** | |
+| | **Original total before explicit editor-analysis scope** | | **38–59; re-estimate required** | |
 
 After 1.0: further profiles (Obsidian, Pandoc), a Markdown serialiser for
 profile conversions, incremental parsing if measurements call for it.
@@ -377,10 +410,11 @@ profile conversions, incremental parsing if measurements call for it.
 2. **Linux verification.** The package is designed for Linux but has not been
    built there yet (no container tool on the owner's Mac).
 3. **Fuzzing on macOS** with the Xcode toolchain, or only on Linux.
-4. **Setzkit plan alignment.** Its existing product/architecture documents still
-   name Swift Markdown and a micromark/cmark evaluation. Update those at the
-   integration step; this review changes only GMSetzer.
+4. **Editor-analysis delivery estimate and native rule subset.** The explicit
+   syntax/underline/native-lint scope changes M2/M3 work; select and test the
+   first rule subset and revise estimates before scheduling integration.
 
 The M0 findings, corrections and validation are recorded in
-[Review-M0.md](Review-M0.md). Further implementation starts with M1 after
-the owner resumes work; this review does not start that milestone.
+[Review-M0.md](Review-M0.md). M1's first implementation and example trees are
+documented in [SyntaxTree.md](SyntaxTree.md). Next: HTML blocks and complete
+reference-definition syntax, then the remaining extension contract review.

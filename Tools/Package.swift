@@ -22,6 +22,13 @@ let package = Package(
     targets: [
         // Deterministic Markdown documents of a given size.
         .target(name: "BenchmarkCorpus"),
+        .testTarget(
+            name: "ContainerReferenceTests",
+            dependencies: [
+                .product(name: "GMSetzer", package: "GMSetzer"),
+                .product(name: "cmark-gfm", package: "swift-cmark"),
+            ]
+        ),
         .executableTarget(
             name: "ParserBenchmarks",
             dependencies: [
