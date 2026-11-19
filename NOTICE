@@ -1,0 +1,27 @@
+GMSetzer
+Copyright (c) 2026 Markus Müller
+Released under the MIT licence (see LICENSE).
+
+Third-party material
+====================
+
+Test data (not part of the library)
+-----------------------------------
+
+Tests/SetzerSpecTests/Resources/commonmark-0.31.2.json
+  CommonMark Spec 0.31.2, https://spec.commonmark.org/
+  Copyright (c) John MacFarlane
+  Licensed under CC-BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
+
+Tests/SetzerSpecTests/Resources/gfm-0.29.json
+  GitHub Flavored Markdown Spec 0.29-gfm, https://github.github.com/gfm/
+  from test/spec.txt of https://github.com/github/cmark-gfm
+  Copyright (c) John MacFarlane, GitHub
+  Licensed under CC-BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/
+
+Code
+----
+
+When code is ported or adapted from another project, the source and its
+licence are named in the file header and listed here. Only MIT, BSD and
+Apache-2.0 licensed sources are used.
