@@ -133,11 +133,12 @@ extension BlockParser {
                     closeContainers(to: containers.count - 1)
                     continue
                 }
-                if let match = extensionMatch(at: index, interrupting: false) {
+                if let resolved = extensionMatch(at: index, interrupting: false) {
+                    let match = resolved.match
                     beginChild()
                     let end = index + match.consumedLines
                     append(match.data, range: SourceRange(lines[index].range.lowerBound, physicalLines[end - 1].range.upperBound),
-                           segments: match.sourceSegments)
+                           segments: match.sourceSegments, fallbackLiteral: extensionFallback(resolved.lines))
                     touchContainers(through: end - 1)
                     index = end
                     consumedExtension = true

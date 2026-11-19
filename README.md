@@ -69,13 +69,17 @@ let html = HTMLRenderer().render(document)
 ```
 
 `parse(bytes:)` also accepts original UTF-8 bytes, preserving invalid sequences
-in `Document.source` while replacing them in literals. `.gfm` selects its five
+in `Document.source` while replacing them in literals. A leading UTF-8 BOM is
+ignored for syntax recognition but retained in the original bytes and offsets.
+`.gfm` selects its five
 extensions explicitly; until M4 implements them, missing extensions are listed
 in `Document.diagnostics`.
 
 `collectSyntaxDetails: true` optionally retains reference component/marker
 ranges. HTML blocks are escaped and recognised comments omitted by default;
 `allowRawHTML` and `preserveHTMLComments` are explicit renderer options.
+Custom leaf fallbacks retain projected content without quote/list prefixes;
+renderer wrappers preserve built-in list tightness.
 
 ## Development
 
@@ -89,8 +93,8 @@ ranges. HTML blocks are escaped and recognised comments omitted by default;
   SHA-256 checked sources.
 - `python3 -I -m unittest discover -s Scripts` tests the update tools offline.
 - `swift test --package-path Tools --filter ContainerReferenceTests` compares
-  1,985 documents by exact HTML and 1,924 HTML/reference documents by block
-  structure and literal content with pinned cmark in C. These
+  1,985 documents by exact HTML, 1,924 HTML/reference documents by block
+  structure and literal content, and ten BOM cases with pinned cmark in C. These
   development dependencies remain separate from the library.
 - `GMSETZER_SPEC_DIAGNOSTICS=1 swift test --filter SpecTests` also prints each
   mismatching example with source, expected HTML and actual HTML as JSON.

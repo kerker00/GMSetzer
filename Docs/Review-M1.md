@@ -196,3 +196,47 @@ the proven extension/token infrastructure needed by M2; actual GFM, footnotes,
 math, editor diagnostics, parent queries and Setzkit underlines keep their
 documented delivery milestones. Completion of this assessment alone does not
 complete M1 or establish a speed guarantee.
+
+## M1-A implementation follow-up
+
+Implemented on `fix/m1-combinations`, after the assessment above. M1-B through
+M1-D remain open; this step does not start M2.
+
+- **BOM:** skip exactly one UTF-8 BOM at byte zero for first-line recognition,
+  retaining the original bytes/root range and physical-line provenance. Reset
+  indentation columns after the BOM. Preserve later U+FEFF and partial byte
+  sequences; reference component ranges retain the three-byte offset.
+- **Wrappers:** use the same list/item child scheduling for built-in rendering
+  and `wrapChildren`, preserving tight/loose semantics and nested container
+  boundaries. Hooks continue to own wrapper markup and whitespace. No new
+  public hook context is introduced in this correction.
+- **Custom leaves:** retain a projected plain-text fallback separately in
+  `Document.customLeafFallbacks`, keyed by document-local node index. Include
+  delimiters and original line boundaries, remove ancestor prefixes, expand
+  residual tab spaces, replacement-decode invalid bytes/NUL and normalise CRLF/
+  CR to LF. A missing final line ending remains absent. Semantic source
+  segments and original bytes stay intact; simply joining them is not used.
+  The sparse table leaves `Node`/`NodeData` unchanged and is empty for built-in
+  parses. Release validation rejects dangling, built-in or non-leaf owners.
+  Builder `finish` replaces/clears fallback metadata. Hand-built custom leaves
+  without it retain their prior escaped raw-range fallback.
+
+Validation with Swift 6.4.2:
+
+- Six initial combination test functions reproduced the defects before the
+  fixes and passed afterwards. Two more exercise fallback metadata validation,
+  builder snapshot independence and the hand-built-tree compatibility path.
+- All **57 library tests** pass (52 parser/tree tests plus five spec-harness
+  tests); protected baselines remain **339/652** CommonMark and **339/672** GFM.
+- Three Tools tests pass: the original **3,909** cmark comparisons plus **ten
+  leading-BOM combinations**, **3,919** in total. They cover BOM-only, mixed
+  line endings, headings, quotes, lists, tab indentation, code, HTML, references
+  and a second BOM retained as text.
+- The eight combination test functions also pass in an optimised release
+  build (`swift test -c release -debug-info-format none --filter
+  M1CombinationTests`, with redirected caches/scratch and `--disable-sandbox`).
+  Fallback metadata validation remains active in that configuration. Debug
+  symbols were disabled because sandboxed `dsymutil` could not create dSYMs.
+- No full benchmark, Linux/minimum-Swift build, fuzzing or Setzkit editor/device
+  check ran. No new performance or editor-integration claim follows from this
+  correctness result. M1-B remains the next measurement gate.
