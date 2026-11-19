@@ -7,7 +7,8 @@ build). Every entry names the commit, machine and OS. Times are medians (p50).
 
 - **GMSetzer** has separate CommonMark and GFM entries. M1 now parses leaf
   blocks and quote/list containers into a validated syntax tree with source ranges.
-  Inline markup, HTML blocks and GFM rules are still pending; do not compare its
+  HTML blocks and references are now included; inline markup and GFM rules are
+  still pending. Do not compare its
   current timings as equivalent work to a complete parser.
 - **cmark-gfm (C)** has corresponding core and GFM entries. Both enable
   `CMARK_OPT_SOURCEPOS` for inline positions and include parser creation,
@@ -78,3 +79,15 @@ no new full benchmark run or speed claim is recorded here.
 For the next measured entry, record the exact commit and dirty-state/diff,
 Swift version, machine/OS, package lockfile, profile/options, actual UTF-8 byte
 counts (the corpus rounds up to complete blocks), p50 and allocation metrics.
+
+### M1 HTML and references
+
+HTML start/end recognition uses byte scanners; leading reference definitions
+are scanned through original paragraph ranges, without rebuilding or reparsing
+an entire Markdown document. Exact reference metadata is opt-in. Production
+HTML comment filtering and conformance rendering are separate paths, so future
+measurements should distinguish parse, metadata and renderer options.
+
+Both Tools comparison tests pass (1,985 exact-HTML and 1,924 block-structure
+documents), and the benchmark executable builds. No full benchmark run, new
+allocation figure or release speed claim was made for this change.

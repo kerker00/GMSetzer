@@ -8,9 +8,10 @@ wherever Swift runs, including Linux.
 > **Status:** milestone M1 in progress. The first slice implements a validated
 > syntax tree, paragraphs, headings, code, nested block quotes and ordered/bullet
 > lists, including lazy continuation, tightness and depth limits. Custom leaf
-> rules receive projected source lines. HTML blocks, complete references and
-> inline markup are still pending. Current spec passes: 299/652 CommonMark and
-> 300/672 GFM. The repository stays private until
+> rules receive projected source lines. HTML blocks and multiline reference
+> definitions are implemented, with opt-in reference component ranges. Inline
+> markup and editor analysis remain pending. Current spec passes: 339/652
+> CommonMark and 339/672 GFM. The repository stays private until
 > milestone M2 and owner approval.
 
 ## Goals
@@ -40,6 +41,8 @@ wherever Swift runs, including Linux.
   example ranges and remaining M1 work.
 - [Docs/EditorAnalysis.md](Docs/EditorAnalysis.md) – planned syntax, native lint
   and editor-diagnostic contracts and acceptance gates.
+- [Docs/HTMLReferences.md](Docs/HTMLReferences.md) – HTML policies, multiline
+  definitions, opt-in editor provenance and validation.
 - [CONTRIBUTING.md](CONTRIBUTING.md) – workflow and rules.
 
 ## Modules
@@ -65,6 +68,10 @@ in `Document.source` while replacing them in literals. `.gfm` selects its five
 extensions explicitly; until M4 implements them, missing extensions are listed
 in `Document.diagnostics`.
 
+`collectSyntaxDetails: true` optionally retains reference component/marker
+ranges. HTML blocks are escaped and recognised comments omitted by default;
+`allowRawHTML` and `preserveHTMLComments` are explicit renderer options.
+
 ## Development
 
 - `swift test` runs the unit tests and every specification example (652
@@ -77,7 +84,8 @@ in `Document.diagnostics`.
   SHA-256 checked sources.
 - `python3 -I -m unittest discover -s Scripts` tests the update tools offline.
 - `swift test --package-path Tools --filter ContainerReferenceTests` compares
-  1,985 generated plain-text block documents with pinned cmark in C. These
+  1,985 documents by exact HTML and 1,924 HTML/reference documents by block
+  structure and literal content with pinned cmark in C. These
   development dependencies remain separate from the library.
 - `GMSETZER_SPEC_DIAGNOSTICS=1 swift test --filter SpecTests` also prints each
   mismatching example with source, expected HTML and actual HTML as JSON.

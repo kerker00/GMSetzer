@@ -25,6 +25,11 @@ provider can still run independently when it does not consume GMSetzer's tree.
 No new package target/API is claimed by this planning change. Introduce the
 module with its first tested native rules, by the M3 editor-integration gate.
 
+The M1 HTML/reference step now offers specialised optional reference provenance
+through `collectSyntaxDetails` and `ReferenceDefinition.syntax`. This preserves
+exact components and markers for future editor consumers; general syntax spans,
+document diagnostics, UTF-16 underlines and the native rule engine remain planned.
+
 ## Markdown validity and findings
 
 CommonMark has defined literal-text fallbacks for apparently unfinished markup.

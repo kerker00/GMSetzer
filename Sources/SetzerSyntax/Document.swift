@@ -15,10 +15,11 @@ public struct NodeKind: Hashable, Sendable, CustomStringConvertible {
     public static let blockQuote = NodeKind("blockQuote")
     public static let list = NodeKind("list")
     public static let listItem = NodeKind("listItem")
+    public static let htmlBlock = NodeKind("htmlBlock")
 
     public static let builtins: Set<NodeKind> = [
         .document, .paragraph, .heading, .text, .softBreak,
-        .thematicBreak, .codeBlock, .referenceDefinition, .blockQuote, .list, .listItem,
+        .thematicBreak, .codeBlock, .referenceDefinition, .blockQuote, .list, .listItem, .htmlBlock,
     ]
 }
 
@@ -40,11 +41,29 @@ public struct ReferenceDefinition: Hashable, Sendable {
     public let rawLabel: String
     public let rawDestination: String
     public let rawTitle: String?
+    public let syntax: ReferenceSyntax?
 
-    public init(rawLabel: String, rawDestination: String, rawTitle: String? = nil) {
+    public init(rawLabel: String, rawDestination: String, rawTitle: String? = nil, syntax: ReferenceSyntax? = nil) {
         self.rawLabel = rawLabel
         self.rawDestination = rawDestination
         self.rawTitle = rawTitle
+        self.syntax = syntax
+    }
+}
+
+/// Opt-in source-spelled components, not offsets in decoded label/title text.
+/// Empty components retain a zero-length source range for insertion markers.
+public struct ReferenceSyntax: Hashable, Sendable {
+    public let label: [SourceRange]
+    public let destination: [SourceRange]
+    public let title: [SourceRange]
+    public let markers: [SourceRange]
+
+    public init(label: [SourceRange], destination: [SourceRange], title: [SourceRange], markers: [SourceRange]) {
+        self.label = label
+        self.destination = destination
+        self.title = title
+        self.markers = markers
     }
 }
 
@@ -77,6 +96,7 @@ public enum NodeData: Hashable, Sendable {
     case blockQuote
     case list(ListAttributes)
     case listItem
+    case htmlBlock(HTMLBlock)
     case custom(kind: NodeKind, role: NodeRole, attributes: [String: SyntaxValue])
 
     public var kind: NodeKind {
@@ -92,6 +112,7 @@ public enum NodeData: Hashable, Sendable {
         case .blockQuote: .blockQuote
         case .list: .list
         case .listItem: .listItem
+        case .htmlBlock: .htmlBlock
         case .custom(let kind, _, _): kind
         }
     }
@@ -187,6 +208,17 @@ public struct Document: Sendable {
                     throw DocumentError.invalidSegments(node: index)
                 }
                 previousEnd = segment.upperBound
+            }
+            if case .referenceDefinition(let reference) = node.data, let syntax = reference.syntax {
+                for ranges in [syntax.label, syntax.destination, syntax.title, syntax.markers] {
+                    var end = node.range.lowerBound
+                    for range in ranges {
+                        guard node.range.contains(range), range.lowerBound >= end else {
+                            throw DocumentError.invalidSegments(node: index)
+                        }
+                        end = range.upperBound
+                    }
+                }
             }
             for target in [node.firstChild, node.nextSibling].compactMap({ $0 }) {
                 guard nodes.indices.contains(target) else {

@@ -31,6 +31,7 @@ renderer hooks and custom kinds; they do not replace typed built-in payloads.
 | `thematicBreak` | None | Horizontal rule |
 | `codeBlock(info:literal:)` | None | Optional fence info and literal code |
 | `referenceDefinition` | None | Raw label, destination and optional title; emits no HTML |
+| `htmlBlock(HTMLBlock)` | None | CommonMark start/end class and normalised literal; escaped by default |
 | `blockQuote` | Block nodes | Quoted blocks, including nested containers |
 | `list(ListAttributes)` | List items only | Bullet marker or ordered start/delimiter, plus tightness |
 | `listItem` | Block nodes | Item content; its range includes its own marker |
@@ -201,9 +202,11 @@ claiming implemented GFM support.
 ## Rendering
 
 `SetzerHTML` imports only `SetzerSyntax`. Rendering and validation use iterative
-traversal, including for deeply nested custom trees. Current built-in text,
-code and info strings are HTML-escaped. Raw HTML is currently ordinary escaped
-text because HTML block/inline recognition is not implemented yet.
+traversal, including for deeply nested custom trees. Built-in text/code/info
+strings are HTML-escaped. Recognised HTML blocks are escaped and their comments
+omitted by default; raw output and comment preservation are separate explicit
+options. Inline raw HTML recognition remains M2 work. See
+[HTMLReferences.md](HTMLReferences.md) for exact policies.
 
 Hooks are keyed by kind. They can replace a node with caller-supplied HTML,
 wrap rendered children, or return nil for normal rendering. **Hook output is
@@ -216,12 +219,12 @@ are off by default, so source anchors do not change conformance comparisons.
 
 This implementation supports block quotes, ordered/bullet lists and lazy
 continuation, as well as paragraphs, ATX/setext headings, thematic breaks,
-fenced/indented code, simple single-line reference definitions and literal
+fenced/indented code, all seven HTML block classes, multiline reference definitions and literal
 text/soft breaks. It deliberately does not claim all examples in those spec
 sections: inline escapes/entities and code info decoding belong to M2.
 
-Remaining M1 work covers complete HTML blocks and reference-definition syntax.
-Custom container continuation hooks remain a separate extension-API step.
+Remaining M1 work is final acceptance/API review, including the custom container
+continuation hook scope and annotation/diagnostic contract.
 M2 adds inline payloads/rules and reference decoding/case folding. M3 completes
 position queries, outline, renderer safety options and integration. GFM and the
 additional dialect extensions retain their planned milestones.
@@ -231,13 +234,17 @@ document-diagnostic/fix model in M2, then native analysis and a diagnostic
 underline integration proof in M3. Current `ParseDiagnostic` is infrastructure
 reporting; do not present every such condition as an error in document text.
 
-Validation: all 37 library Swift Testing tests pass with Swift 6.4.2, including the
+`collectSyntaxDetails: true` currently adds `ReferenceDefinition.syntax` with
+exact component/marker ranges, including zero-length locations. It is optional;
+the general syntax-span collection and editor diagnostics are not implemented.
+
+Validation: all 49 library Swift Testing tests pass with Swift 6.4.2, including the
 three documented trees, invalid topology/extension results, mixed line endings,
 UTF-8/NUL handling, concurrent snapshots and short adversarial-input smoke
-tests. The protected exact-HTML baseline is 299/652 CommonMark and 300/672 GFM.
-A separate Tools test compares 1,985 deterministic plain-text block documents
-against pinned cmark; all agree. Of the CommonMark block-quote/list-item/list
-section examples, only 308/309 remain open because they require raw HTML
-comments. These counts do not claim implemented inline or GFM extensions.
+tests. The protected exact-HTML baseline is 339/652 CommonMark and 339/672 GFM.
+Tools compare 1,985 documents by exact HTML and 1,924 HTML/reference documents
+by block depth/properties/literals against pinned cmark; all agree. The block
+quote/list sections now pass including their HTML-comment cases. These counts
+do not claim implemented inline or GFM extensions.
 The benchmark executable builds against this API. New release timings, Linux
 verification and a build using the minimum Swift 6.2 toolchain remain pending.

@@ -31,7 +31,9 @@ struct SpecTests {
     /// Runs the examples and returns the numbers of the passing ones.
     static func passingExamples(_ examples: [Example], profile: Profile) -> [Int] {
         let parser = MarkdownParser(profile: profile)
-        let renderer = HTMLRenderer()
+        // Trusted fixtures explicitly request specification output. Production
+        // rendering retains escaped raw HTML and omitted comments by default.
+        let renderer = HTMLRenderer(allowRawHTML: true, preserveHTMLComments: true)
         let diagnose = ProcessInfo.processInfo.environment["GMSETZER_SPEC_DIAGNOSTICS"] == "1"
         return examples.compactMap { example in
             let actual = renderer.render(parser.parse(example.markdown))
@@ -91,5 +93,20 @@ struct SpecTests {
         #expect(taskLists.map(\.example) == [279, 280])
         #expect(taskLists.allSatisfy { $0.html.contains("type=\"checkbox\"") })
         #expect(examples.contains { $0.extension == "tagfilter" })
+    }
+
+    @Test func referenceDefinitionSectionsHaveTheRequiredBlockShapes() throws {
+        let expected = [192: 1, 193: 1, 194: 1, 195: 1, 196: 1, 197: 0, 198: 1, 199: 0,
+                        200: 1, 201: 0, 202: 1, 203: 1, 204: 2, 205: 1, 206: 1, 207: 1,
+                        208: 1, 209: 0, 210: 1, 211: 0, 212: 0, 213: 0, 214: 1, 215: 1,
+                        216: 1, 217: 3, 218: 1]
+        for example in try Self.examples("commonmark-0.31.2") where expected[example.example] != nil {
+            let document = MarkdownParser(collectSyntaxDetails: true).parse(example.markdown)
+            let references = document.nodes.filter { $0.kind == .referenceDefinition }
+            #expect(references.count == expected[example.example], "Reference block shape in example \(example.example)")
+            for node in references {
+                if case .referenceDefinition(let reference) = node.data { #expect(reference.syntax != nil) }
+            }
+        }
     }
 }
