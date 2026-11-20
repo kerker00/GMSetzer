@@ -8,20 +8,17 @@ wherever Swift runs, including Linux.
 > **Status, 20 November 2026:** M1–M4 are merged in `main`, including
 > M3 editor services (PR #12, `651af17`), their measurements (PR #13,
 > `c5f9a0b`) and GFM (PR #14, `e163e6f`). All 652 CommonMark 0.31.2 and
-> 672 pinned GFM specification examples pass by exact HTML. The first
-> source-only release, v0.4.0, and macOS/Linux CI are prepared on a separate
-> release branch; they are not yet merged, tagged or published.
+> 672 pinned GFM specification examples pass by exact HTML. The source-only
+> v0.4.0 release preparation and macOS/Linux CI are merged in PR #16 (`6a0eb8e`).
 
 Requires **Swift 6.2 or later**. The current provisional Apple minimums are
 macOS 15, iOS 18 and visionOS 2; Linux is supported. The repository is private
-and GitHub read access is required. After the first version tag is published,
-consumers can pin it through Swift Package Manager; no binary release assets
-or package registry are required.
+and GitHub read access is required. Consumers pin version tags through Swift
+Package Manager; no binary release assets or package registry are required.
 
 ## Installation
 
-Version **0.4.0 is being prepared** as the first source-only preview release.
-After its `v0.4.0` tag is published, add it with Swift Package Manager:
+Pin the **0.4.0 preview release** with Swift Package Manager:
 
 ```swift
 .package(url: "https://github.com/kerker00/GMSetzer.git", exact: "0.4.0")

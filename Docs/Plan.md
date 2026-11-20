@@ -5,9 +5,10 @@ reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
 
-The M4 follow-ups are merged in PR #15 (`1473d49`); its merged documentation
-branch has been removed. Source-only v0.4.0 and macOS/Linux CI are prepared
-on `release/0.4.0`; review, merge, tagging and publication remain pending.
+The M4 follow-ups are merged in PR #15 (`1473d49`). The source-only v0.4.0
+release preparation and macOS/Linux CI are merged in PR #16 (`6a0eb8e`);
+their merged branches are cleaned up. The owner authorised tagging and
+publication on 20 November 2026, after successful automated release checks.
 See [Releasing](Releasing.md) for the process and the
 [preparation checks](Validation/Release/0.4.0.md) for executed evidence.
 
@@ -408,9 +409,9 @@ profile conversions, incremental parsing if measurements call for it.
   releases and publishing anything happens only after the owner's explicit
   confirmation right before the step.
 - **CI:** the owner authorised macOS/Linux CI and source-only release
-  preparation on 20 November 2026. Implementation is on `release/0.4.0` and
-  is not yet merged into `main`. It adds Swift 6.2 tests, optimized builds and
-  offline script tests; successful version-tag checks create a source-only
+  preparation on 20 November 2026; implementation is in `main` since PR #16
+  (`6a0eb8e`). It runs Swift 6.2 tests, optimized builds and offline script
+  tests; successful version-tag checks create a source-only
   release draft. See [Releasing](Releasing.md).
 - **Versioning:** SemVer. Before 1.0 the API may change; afterwards only with a
   major version.
@@ -515,11 +516,11 @@ before or alongside M5:
    consumers translate by key.
 2. **Versioned release for consumers.** Setzkit depends on a local path
    checkout, so it uses whatever branch is checked out; during integration
-   that was M4 from the then unmerged PR #14. Source-only `v0.4.0` and its
-   macOS/Linux CI are prepared on `release/0.4.0`; merge, tagging and
-   publication remain pending. GitHub will provide ZIP/tar.gz archives, with
-   no binary assets. Consumers can pin the version tag through Swift Package
-   Manager. Tagging and publishing still require the owner's confirmation.
+   that was M4 from the then unmerged PR #14. Source-only `v0.4.0` preparation
+   and macOS/Linux CI are merged in PR #16 (`6a0eb8e`). The owner authorised
+   tagging and publication after the automated checks. GitHub provides
+   ZIP/tar.gz archives, with no binary assets. Consumer version pinning follows
+   publication and belongs in the consumer repository.
 3. **Container marker tokens.** Syntax tokens cover inline delimiters and
    leaf markers but not block-quote `>` or list markers, so a consumer cannot
    replace its own syntax colouring with GMSetzer's without losing those
