@@ -1,0 +1,141 @@
+{
+  "date": "2026-11-20",
+  "base_commit": "34cbe317cbd2b18b3087441c4846c6ee0eb66d16",
+  "branch": "feature/m2-inlines",
+  "status": "M2 technical acceptance passed; owner review/merge pending",
+  "source_digest_sha256": "556ef4bcf64c27e526021546ef6f1f7a735608553c7fc5e29eb4f07ca98b4c66",
+  "benchmark_source_manifest": "benchmark-final-source-hashes.json",
+  "source_note": "Uncommitted validation snapshot, captured by content hashes before the local implementation commit.",
+  "tests": {
+    "macos_arm64_swift_6_4_2_debug": 96,
+    "macos_arm64_swift_6_4_2_release": 96,
+    "macos_arm64_swift_6_2_matching_runtime_sdk_14_4": 96,
+    "linux_x86_64_swift_6_4_2_glibc_2_44": 96,
+    "python": 17,
+    "tools_test_functions": 5,
+    "c_reference_comparisons": 4786
+  },
+  "specs": {
+    "commonmark": {
+      "passing": 652,
+      "total": 652,
+      "previous_protected_retained": 339
+    },
+    "gfm": {
+      "passing": 641,
+      "total": 672,
+      "previous_protected_retained": 339
+    }
+  },
+  "fixture_sha256": {
+    "commonmark-0.31.2.json": "d431b29d97b6f73e69d547109cf5081578fac931e72afe95639ebe766c1b2a20",
+    "gfm-0.29.json": "b562336deb8cbb5634c95c2744c62706f48a1cdd83973ab8b101f9cbc7c3ef56"
+  },
+  "linux_source_archive_sha256": "df4250b5d42bc02f6a6f57f797ac17b742b70fe8da98f5b68a06b9698f99aa4b",
+  "benchmark_runs": [
+    {
+      "file": "full-benchmark.md",
+      "cases": 48,
+      "m2_gate": "failed"
+    },
+    {
+      "file": "benchmark-after-reuse.md",
+      "cases": 48,
+      "m2_gate": "failed"
+    },
+    {
+      "file": "benchmark-capacity.md",
+      "cases": 48,
+      "m2_gate": "passed, including selected rules"
+    },
+    {
+      "file": "benchmark-empty-selection.md",
+      "cases": 0,
+      "m2_gate": "not validation; filter corrected"
+    },
+    {
+      "file": "benchmark-final.md",
+      "cases": 30,
+      "m2_gate": "passed on exact final source, including selected rules"
+    }
+  ],
+  "gates": {
+    "budget-final.json": {
+      "passed": true,
+      "scope": "Current configured parser; GFM ratios remain informational until full GFM conformance. M2 has a separate frozen additional-work gate."
+    },
+    "m2-budget-final.json": {
+      "passed": true,
+      "scope": "CommonMark, annotations off; total parse delta includes all new work, not isolated inline attribution. GFM remains a later acceptance gate."
+    },
+    "m2-selected-inline-final.json": {
+      "passed": true,
+      "scope": "CommonMark, annotations off; total parse delta includes all new work, not isolated inline attribution. GFM remains a later acceptance gate."
+    },
+    "m2-selected-registry-final.json": {
+      "passed": true,
+      "scope": "CommonMark, annotations off; total parse delta includes all new work, not isolated inline attribution. GFM remains a later acceptance gate."
+    }
+  },
+  "frozen_allowance_ms": {
+    "100 KB": 0.5,
+    "1 MB": 8,
+    "5 MB": 40
+  },
+  "cleanup": {
+    "local_branches_removed": [
+      "perf/block-parser-hot-paths",
+      "feature/m1-acceptance",
+      "refactor/m1-block-phases",
+      "build/m1-portability"
+    ],
+    "remote_branches_removed_with_explicit_owner_approval": 4,
+    "clean_worktrees_removed": 3,
+    "unrelated_detached_worktree": "retained",
+    "linux_task_directory_removed": true
+  },
+  "limits": [
+    "No Linux/Swift 6.2 full-suite claim",
+    "No fresh M2 static-ARM64 runtime claim",
+    "No minimum Apple-OS or Setzkit/device acceptance",
+    "GFM extensions/version differences remain M4 work",
+    "M3 native rules, positions and editor adapter remain open",
+    "M6 full fuzzing/hostile-input coverage remains open"
+  ],
+  "artifacts_sha256": {
+    "README.md": "0fae3c230ef1280c49eab68b08cb7797f0c90cf70db5d3c9a07ee37a5ae6fdf4",
+    "benchmark-after-reuse-source-hashes.json": "2933284c5496f0718c9c218d469d22ed862a423aafbfc6e23ee8b08e139872c9",
+    "benchmark-after-reuse.md": "f157d65b9b6fed53747ea32cd2f1eba6acbb5d2546b1eda83df51ab33d63d1de",
+    "benchmark-capacity-source-hashes.json": "55c266508d6c0cd07b977d76c1b2e1824129c0a65c19bf0206d0fab6be32c82f",
+    "benchmark-capacity.md": "fdb36121fe424e156bbf3b212d4631fd5481d2d8c1d2d8148bc4984498102d86",
+    "benchmark-empty-selection.md": "5958923a8d13b6032ead2923c6f1061780d07696275a4aabc908fabbaf8f6be7",
+    "benchmark-final-source-hashes.json": "0f4a4c40763071b5963f20147f4b51fff9f29bdf94471316203956cc8ae6b777",
+    "benchmark-final.md": "ad9bd7d6a852a2d0d3c4b59be4129176b0c166df07c7e0d3193535e01227ea47",
+    "benchmark-source-hashes.json": "f8772120706b4ad466c81296880c095b13c668a61052121e3da21d9916fd8a76",
+    "budget-after-reuse.json": "a0c6c671bae2400b82f81f3f0e213acf2e4494820f2c2a784352aa4af22ffb5b",
+    "budget-capacity.json": "d18bae96bf31ecdf4e1b3fa30ebdff69ef12bb1feb9229c0336fad4fea0fe781",
+    "budget-final.json": "5ba98f4f595c7ba6ba09e4f719f195b7ea6e8a7f32bb64e97eb571762139ea7f",
+    "budget.json": "8e5e6bda3a3db7cb8b01162ca47dc2f9d4b6d206f09c51dcf831aa16a3a295da",
+    "confirmation-cases.txt": "9e7341b175ed83adc83421d0985e09be8bbe8e16903f4ef6222467f78f218810",
+    "full-benchmark.md": "fa7b15691862b1e857347957b4ae2b5124d4def3275f5b1db49059f5727c7291",
+    "linux-environment.txt": "02993ea92c1a94fcda4da119f5833c90cff9ccaefd950c06e296534f381144d1",
+    "linux-swift64.txt": "7defdfc1488f05ae7958b2b34183a58fcd8ec1a5367ba185c056d107cea9536b",
+    "m2-budget-after-reuse.json": "530fc7373d6b1a77db7c047e1f466bcaa8782eb2df545544b85036ffd3c34b3b",
+    "m2-budget-capacity.json": "26232d3133b3ae022f3e7d44b52e6b8e8818ca6bbe57ee27c682525d57086bc4",
+    "m2-budget-final.json": "f3e023cec00c85ecaaae15af8f08e6b2182212535ffe8a23e03a1049a951b330",
+    "m2-budget.json": "73433b13f5e80282031080dcf7d278d4ecdce455c76836cb81c8c206dea94124",
+    "m2-selected-inline-after-reuse.json": "40b69ad623281042945da45eecf5e3375b5e2d6e030054278852f725e910ac60",
+    "m2-selected-inline-capacity.json": "437cb6bd5956f0723662e1e673c4aa6952e7e91fe56fdba3c419fb389e84c43e",
+    "m2-selected-inline-final.json": "317e5afa215bba45c7122b5b1b75c528ef993fb982ab33b54699afe6e47e6438",
+    "m2-selected-registry-after-reuse.json": "0780aab2e4bb93e33f6bf1535c67b89b7270132294c35f35be168cb2ca9f744d",
+    "m2-selected-registry-capacity.json": "8dd033bdbb3d579f3e0bee385da58a15eb43febbc0c51af6e085b2707e7d5920",
+    "m2-selected-registry-final.json": "fcc2d235a1dd6c2a11e6b8d1abea564e2a4899f0bfe59b3e6b42d20414cdb6cb",
+    "mac-release.txt": "cff78c60b0013702300df2807597e0ba0d5d9cb23690488a9fc3461a2d6b05cc",
+    "mac-swift62.txt": "17333c6dfe5465d3ec7b498823733fd2321801173de42286dd9115faf286ae0d",
+    "mac-swift64.txt": "7192f965073606884382d24eaecbd2ba3a111f66dedca3602390575efc3848fe",
+    "python.txt": "d028419549439218bba1804a887449be9b2e76a87cfa6ed19a63e6dbc4e99dc8",
+    "reference.txt": "edf7cd7d64e410a464f48d8ed80e32907b2cb250f8942d34f497fc95067319fd",
+    "short-timing.txt": "1195021313e7f81c25f151dbd644f1942101689c30e88788d82564d89958bda1",
+    "timing-probe.swift": "59bad75f358f074326ee858a743399457a7dd0a5ae688482b95ce78f2ca3d035"
+  }
+}

@@ -1,6 +1,6 @@
 # Editor syntax services and lint analysis
 
-Decision: 19 November 2026. **Required for version 1.0; planned, not implemented.**
+Decision: 19 November 2026; M2 update: 20 November 2026. **Portable syntax tokens and diagnostic/fix values implemented; native rules and the editor adapter remain M3 work.**
 GMSetzer is also the syntax and native Markdown-analysis engine for Setzkit.
 The existing tree/source ranges are prerequisites, not a finished editor or
 linter. `MarkdownParser.configurationIssues` reports configuration failures
@@ -18,19 +18,20 @@ resource-limit conditions; it does not yet implement document lint findings.
 | Suggested fixes | Explicit edits with original ranges and expected source text, when justified | Validate snapshot/configuration and apply only on user action through `EditTransaction` |
 
 `SetzerAnalysis` will depend on `SetzerSyntax`, not UI, the HTML renderer or an
-additional parser. `SetzerSyntax` will own portable diagnostic/span/fix values.
+additional parser. `SetzerSyntax` owns portable diagnostic/span/fix values.
 The parser must not depend on the analysis module. Native analysis reuses an
 existing parse; it must not parse the same snapshot again. A separate text-only
 provider can still run independently when it does not consume GMSetzer's tree.
 
-No new package target/API is claimed by this planning change. Introduce the
+M2 introduces the portable value API without adding an analysis package target. Introduce the
 module with its first tested native rules, by the M3 editor-integration gate.
 
 M1-C provides an optional generic `Document.tokens` table through
-`collectSyntaxDetails`: source role/range and owning node. It currently collects
-reference components/markers and custom block roles. `referenceSyntax(for:)`
+`collectSyntaxDetails`: source role/range and owning node. It collects reference and fence components, inline delimiters/link parts,
+escapes/entities, raw HTML and custom roles. `referenceSyntax(for:)`
 provides a convenience view. `DocumentIndex` owns snapshot-bound parents and
-ancestors. Inline roles, document lint findings, offset queries, UTF-16 underlines
+ancestors. Portable `DocumentDiagnostic`/`DiagnosticReport` and suggested edit/fix values
+are implemented. Actual lint findings, offset queries, UTF-16 underlines
 and the native rule engine remain planned. See [ExtensionContracts.md](ExtensionContracts.md)
 and the current [M1 acceptance record](M1Acceptance.md).
 
@@ -62,7 +63,7 @@ syntax semantics of the GMSetzer preview.
 
 ## Diagnostic and span contract
 
-The future public values must be immutable and `Sendable`:
+M2 implements immutable, `Sendable` values in `DocumentDiagnostic.swift`:
 
 - Stable provider and rule/code identifiers, category, severity, and a message
   key plus structured arguments/default text. Setzkit owns localized UI wording.
@@ -131,3 +132,27 @@ Required Setzkit acceptance: correct TextKit ranges, stale-result rejection,
 IME/undo protection, overlapping decorations, optional linting, accessible
 navigation and explicit fix transactions. These checks are **open**; existing
 block/spec tests are not evidence that editor diagnostics are implemented.
+
+## Implemented portable contract (M2)
+
+`DocumentDiagnostic` carries provider/code, category/severity, a message key,
+structured `SyntaxValue` arguments/default text, an explicit source/physical-line/
+document location, related locations and advisory fixes. Empty ranges are
+preserved. `DiagnosticReport` validates all findings against its exact byte
+snapshot and stores provider version, dialect and configuration identity.
+Ordering is source offset (document first), descending severity, code/message
+key, then stable provider emission order for equal keys. The editor still adds
+its session/full-text stamp and rejects stale results before presentation.
+
+`SuggestedEdit` uses expected/replacement UTF-8 bytes, so malformed original
+bytes are preserved rather than silently repaired. `SuggestedFix` sorts edits,
+rejects invalid expected lengths/overlap and ambiguous insertion boundaries,
+validates expected original bytes before any application, and can return a new
+byte snapshot without touching an editor or filesystem. Matching only the
+edited substrings is not a full snapshot precondition: Setzkit must also check
+its full source/configuration stamp before applying the chosen transaction.
+
+No parser lint rules, automatic fixes, suppression compatibility or Setzkit
+underlines are claimed. Legal unmatched markup continues as literal syntax
+without document findings. Validation and remaining gates are in
+[M2Inlines.md](M2Inlines.md).

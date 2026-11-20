@@ -97,10 +97,15 @@ public struct ParserLimits: Hashable, Sendable {
     /// Counts quote, list and item nodes; lists require two slots. Parsing is
     /// iterative, and the limit bounds prefix work per physical source line.
     public let maximumContainerDepth: Int
+    /// Recursive child projections from trusted inline callbacks have a separate
+    /// conservative bound; built-in delimiters/links use an iterative controller.
+    public let maximumInlineExtensionDepth: Int
 
-    public init(maximumContainerDepth: Int = 128) {
+    public init(maximumContainerDepth: Int = 128, maximumInlineExtensionDepth: Int = 16) {
         precondition((1...256).contains(maximumContainerDepth), "container depth must be between 1 and 256")
+        precondition((1...32).contains(maximumInlineExtensionDepth), "inline extension depth must be between 1 and 32")
         self.maximumContainerDepth = maximumContainerDepth
+        self.maximumInlineExtensionDepth = maximumInlineExtensionDepth
     }
 }
 
@@ -158,14 +163,18 @@ public struct MarkdownExtension: Sendable {
     public var identifier: String { descriptor.identifier }
     public let blockRules: [BlockRule]
     public let transforms: [BlockTransform]
+    public let inlineRules: [InlineRule]
+    public let postInlineTransforms: [BlockTransform]
 
-    public init(_ identifier: String, nodeKinds: Set<NodeKind>, options: [String: ExtensionOption] = [:], blockRules: [BlockRule] = [], transforms: [BlockTransform] = []) {
-        self.init(descriptor: ExtensionDescriptor(identifier, nodeKinds: nodeKinds, options: options), blockRules: blockRules, transforms: transforms)
+    public init(_ identifier: String, nodeKinds: Set<NodeKind>, options: [String: ExtensionOption] = [:], blockRules: [BlockRule] = [], transforms: [BlockTransform] = [], inlineRules: [InlineRule] = [], postInlineTransforms: [BlockTransform] = []) {
+        self.init(descriptor: ExtensionDescriptor(identifier, nodeKinds: nodeKinds, options: options), blockRules: blockRules, transforms: transforms, inlineRules: inlineRules, postInlineTransforms: postInlineTransforms)
     }
 
-    public init(descriptor: ExtensionDescriptor, blockRules: [BlockRule] = [], transforms: [BlockTransform] = []) {
+    public init(descriptor: ExtensionDescriptor, blockRules: [BlockRule] = [], transforms: [BlockTransform] = [], inlineRules: [InlineRule] = [], postInlineTransforms: [BlockTransform] = []) {
         self.descriptor = descriptor
         self.blockRules = blockRules
         self.transforms = transforms
+        self.inlineRules = inlineRules
+        self.postInlineTransforms = postInlineTransforms
     }
 }

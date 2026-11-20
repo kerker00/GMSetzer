@@ -94,7 +94,7 @@ def evaluate(results, baseline=None, regression_percent=None):
                     failures.append("regression tolerance exceeded: " + gm.name)
             rows.append(row)
     return dict(cases=rows, failures=failures,
-                scope="Current block parser only; passing does not prove complete inline/GFM performance.")
+                scope="Current configured parser; GFM ratios remain informational until full GFM conformance. M2 has a separate frozen additional-work gate.")
 
 
 def main():

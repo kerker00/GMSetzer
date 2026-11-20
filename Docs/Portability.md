@@ -113,3 +113,16 @@ Linux ARM64 with Swift 6.2. No new VM/container or tool installation was used.
 The earlier ARM64 execution evidence remains historical; this update does not
 claim another ARM64 runtime run, a full Linux Swift 6.2 suite or minimum Apple
 OS runtime checks. No Span/UTF8Span platform availability requirement changed.
+
+
+## M2 verification (20 November 2026)
+
+The M2 source snapshot in [M2Inlines.md](M2Inlines.md) passes **96 Swift tests**
+on macOS/ARM64 with Swift 6.4.2 in debug/release, on macOS with the same Swift
+6.2/SDK/Testing setup described above, and on the owner's existing Linux/x86-64
+host with Swift 6.4.2/glibc 2.44. Only requested sources/tests were transferred
+after explicit approval; no replacement execution environment was created.
+The core still uses the standard library only. This update does not claim a
+fresh M2 static-ARM64 execution, Linux/Swift 6.2 suite, minimum Apple-OS run or
+Setzkit/device integration. Raw output and source hashes are in
+[Validation/M2](Validation/M2/).

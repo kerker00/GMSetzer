@@ -1,6 +1,6 @@
-# Syntax tree contract — M1 blocks and containers
+# Syntax tree contract — blocks and CommonMark inlines
 
-Status: M1-C contract updated on 20 November 2026. This is the contract for the current
+Status: M2 contract updated on 20 November 2026; technical acceptance passed, owner review/merge pending. This is the contract for the current
 Swift values, with explicit extension points for the remaining parser phases.
 The Markdown input language is governed by CommonMark and the pinned GFM
 fixtures. There is no ANTLR grammar or generated parser/runtime dependency.
@@ -28,8 +28,13 @@ renderer hooks and custom kinds; they do not replace typed built-in payloads.
 | `document` | Block nodes | Root covering the entire original input |
 | `paragraph` | Inline nodes | A leaf block's inline content |
 | `heading(level:)` | Inline nodes | ATX/setext heading, level 1 through 6 |
-| `text(String)` | None | Literal text, currently without inline markup decoding |
+| `text(String)` | None | Decoded text; source range retains escapes/entities |
 | `softBreak` | None | A physical line break between inline content lines |
+| `hardBreak` | None | Backslash or two-space line break |
+| `code(String)` | None | Normalised inline code literal |
+| `emphasis`, `strong` | Inline nodes | Resolved CommonMark delimiter span |
+| `link(destination:title:)`, `image(destination:title:)` | Inline nodes | Decoded destination/title and label/alt children |
+| `htmlInline(String)` | None | Source HTML with normalised line endings; escaped by default |
 | `thematicBreak` | None | Horizontal rule |
 | `codeBlock(info:literal:)` | None | Optional fence info and literal code |
 | `referenceDefinition` | None | Raw label, destination and optional title; emits no HTML |
@@ -274,8 +279,8 @@ M2 adds inline payloads/rules and reference decoding/case folding. M3 completes
 position queries, outline, renderer safety options and integration. GFM and the
 additional dialect extensions retain their planned milestones.
 
-The editor-analysis contract adds opt-in delimiter spans and a future portable
-document-diagnostic/fix model in M2, then native analysis and a diagnostic
+M2 implements opt-in delimiter spans and the portable document-diagnostic/fix
+model, then native analysis and a diagnostic
 underline integration proof in M3. Current `ParseDiagnostic` is infrastructure
 reporting; do not present every such condition as an error in document text.
 
@@ -284,13 +289,15 @@ table, with exact source roles, node owners and zero-length locations.
 `referenceSyntax(for:)` offers a reference-component view over that table.
 `DocumentIndex` provides opt-in, snapshot-owned parents and ancestors; offset
 search and editor diagnostics remain M3 work. The implemented registry,
-container/transform boundary, hook context and internal inline draft are
+container/transform boundary and hook context were established in M1-C; the
+inline draft has been replaced by the active M2 controller. Those contracts are
 specified in [ExtensionContracts.md](ExtensionContracts.md).
 
 Historical M1-A validation: all 57 library Swift Testing tests pass with Swift 6.4.2, including the
 three documented trees, invalid topology/extension results, mixed line endings,
 UTF-8/NUL handling, concurrent snapshots and short adversarial-input smoke
-tests. The protected exact-HTML baseline is 339/652 CommonMark and 339/672 GFM.
+tests. At M1 acceptance the protected exact-HTML baseline was 339/652 CommonMark
+and 339/672 GFM; M2 now protects 652 and 641 respectively.
 Eight combination tests add BOM/offset, wrapper/container and projected fallback
 coverage, including fallback metadata validation and immutable builder snapshots.
 Tools compare 1,985 documents by exact HTML, 1,924 HTML/reference documents
@@ -308,3 +315,25 @@ suite coverage and minimum Apple OS runtime checks remain open.
 
 The current M1-C/M1-D verification and acceptance decision superseding the
 historical counts above are recorded in [M1Acceptance.md](M1Acceptance.md).
+
+## M2 inline provenance and findings
+
+Inline syntax nodes include opening/closing delimiters and link syntax in their
+range. Their source segments exclude stripped container prefixes, while CRLF
+is retained as its original two bytes. Semantic code/text/destination strings
+are not source slices. Optional tokens include `core.emphasis.open/close`,
+`core.code.open/content/close`, `core.escape`, `core.entity`, `core.break`,
+`core.link.open/label/close/destination/title/reference/marker`, `core.html`,
+and `core.fence.open/info/close`, plus extension-owned roles. Adjacent source
+pieces are coalesced; disjoint components emit separate tokens. Empty link
+components/fence info remain zero-length tokens. Off mode keeps `tokens == nil`.
+Inline paragraphs without syntax reuse the block phase's text nodes.
+
+`DocumentDiagnostic`, `DiagnosticReport`, related locations/messages and
+`SuggestedFix`/`SuggestedEdit` are portable values in `SetzerSyntax`. Findings
+remain separate from parser runtime/configuration issues and do not enlarge
+`Document`. Reports retain exact source, provider/version, dialect and explicit
+configuration identity. Fixes validate original bytes and reject overlap,
+ambiguous insertion boundaries and stale preconditions. M3 supplies native
+rules, position conversion and the actual editor transaction adapter. See
+[M2Inlines.md](M2Inlines.md) and [EditorAnalysis.md](EditorAnalysis.md).

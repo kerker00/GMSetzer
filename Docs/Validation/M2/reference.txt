@@ -1,0 +1,73 @@
+warning: '--skip-update' option is deprecated and will be removed in a future release
+Building for debugging...
+[Computing dependencies]
+[Using on-disk description]
+[14 / 68] cmark-gfm-extensions
+[26 / 117] RealModule
+[29 / 117] MallocInterposerC
+[42 / 122] ArgumentParser
+[49 / 131] SetzerSyntax
+[55 / 134] SetzerSyntax
+[58 / 132]
+[68 / 129] SetzerHTML
+[77 / 138] Histogram
+[82 / 128] SetzerParser
+[86 / 120] SetzerParser
+[91 / 128] SetzerParser
+[93 / 128] SetzerParser
+[97 / 128] ArgumentParser
+[98 / 130] SystemPackage
+[100 / 129] SetzerParser
+[102 / 140]
+[109 / 140] Benchmark
+[110 / 140] Benchmark
+[111 / 140] Benchmark
+[113 / 136] Benchmark
+[114 / 135] SetzerParser
+[122 / 143] SetzerExtensions
+[129 / 148] GMSetzer
+[132 / 152] BenchmarkCorpus
+[134 / 154] BenchmarkCorpus
+[140 / 156] SetzerParser
+[147 / 158] BenchmarkCorpusTests-product
+[154 / 165] ParserBenchmarks-product
+[159 / 171] BenchmarkCorpusTests-product
+[165 / 175] ParserBenchmarks-product
+[167 / 175] ParserBenchmarks-product
+[172 / 175] BenchmarkCorpusTests-product
+[174 / 178] ContainerReferenceTests-product
+Build complete! (11,96 secs)
+Test Suite 'All tests' started at 2026-11-20 12:37:07.239.
+Test Suite 'All tests' passed at 2026-11-20 12:37:07.241.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.002) seconds
+Test Suite 'All tests' started at 2026-11-20 12:37:07.360.
+Test Suite 'All tests' passed at 2026-11-20 12:37:07.361.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ContainerReferenceTests started.
+◇ Suite InlineReferenceTests started.
+◇ Test generatedContainerCombinationsMatchCmark() started.
+◇ Test generatedHTMLAndReferenceBlocksMatchCmark() started.
+◇ Test leadingBOMCombinationsMatchCmark() started.
+◇ Test generatedInlineDocumentsMatchPinnedCmark() started.
+✔ Test leadingBOMCombinationsMatchCmark() passed after 0.002 seconds.
+Inline oracle: 867 exact C comparisons
+✔ Test generatedInlineDocumentsMatchPinnedCmark() passed after 0.092 seconds.
+✔ Suite InlineReferenceTests passed after 0.092 seconds.
+✔ Test generatedHTMLAndReferenceBlocksMatchCmark() passed after 0.142 seconds.
+✔ Test generatedContainerCombinationsMatchCmark() passed after 0.168 seconds.
+✔ Suite ContainerReferenceTests passed after 0.168 seconds.
+✔ Test run with 4 tests in 2 suites passed after 0.168 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite BenchmarkCorpusTests started.
+◇ Test annotationWorkloadActuallyCollectsOptionalSyntax(_:) started.
+◇ Test case passing 1 argument bytes → 1000000 to annotationWorkloadActuallyCollectsOptionalSyntax(_:) started.
+◇ Test case passing 1 argument bytes → 5000000 to annotationWorkloadActuallyCollectsOptionalSyntax(_:) started.
+◇ Test case passing 1 argument bytes → 100000 to annotationWorkloadActuallyCollectsOptionalSyntax(_:) started.
+✔ Test annotationWorkloadActuallyCollectsOptionalSyntax(_:) with 3 test cases passed after 23.308 seconds.
+✔ Suite BenchmarkCorpusTests passed after 23.308 seconds.
+✔ Test run with 1 test in 1 suite passed after 23.308 seconds.

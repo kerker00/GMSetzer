@@ -38,6 +38,8 @@ internal struct RuleRegistry: Sendable {
     let issues: [ConfigurationIssue]
     /// First bytes for which an active custom rule may interrupt a paragraph.
     let interruptTriggers: ByteSet
+    var inlineRules: [ActiveInlineRule] = []
+    var postInlineTransforms: [ActiveTransform] = []
 
     func contains(_ rule: CoreBlockRule) -> Bool { enabled & rule.bit != 0 }
     @inline(__always)
@@ -66,7 +68,7 @@ internal struct RuleRegistry: Sendable {
         var claimedRules = Set<String>()
         var known = Set(CoreBlockRule.allCases.map(\.rawValue))
         for item in extensions {
-            for identifier in item.blockRules.map(\.identifier) + item.transforms.map(\.identifier) {
+            for identifier in item.blockRules.map(\.identifier) + item.transforms.map(\.identifier) + item.inlineRules.map(\.identifier) + item.postInlineTransforms.map(\.identifier) {
                 known.insert(Self.qualified(identifier, owner: item.identifier))
             }
         }
@@ -124,6 +126,31 @@ internal struct RuleRegistry: Sendable {
                 custom.append(ActiveRule(rule: rule, options: options, order: custom.count,
                     descriptor: descriptor, identifier: identifier))
             }
+            for rule in implementation.inlineRules {
+                let identifier = Self.qualified(rule.identifier, owner: descriptor.identifier)
+                guard Self.validIdentifier(identifier), descriptor.owns(identifier) else {
+                    issues.append(ConfigurationIssue(.namespaceViolation, identifier: identifier)); continue
+                }
+                guard claimedRules.insert(identifier).inserted else {
+                    issues.append(ConfigurationIssue(.duplicateIdentifier, identifier: identifier)); continue
+                }
+                if !profile.disabledRules.contains(identifier) {
+                    inlineRules.append(ActiveInlineRule(rule: rule, identifier: identifier, descriptor: descriptor,
+                                                        options: options, order: inlineRules.count))
+                }
+            }
+            for rule in implementation.postInlineTransforms {
+                let identifier = Self.qualified(rule.identifier, owner: descriptor.identifier)
+                guard Self.validIdentifier(identifier), descriptor.owns(identifier) else {
+                    issues.append(ConfigurationIssue(.namespaceViolation, identifier: identifier)); continue
+                }
+                guard claimedRules.insert(identifier).inserted else {
+                    issues.append(ConfigurationIssue(.duplicateIdentifier, identifier: identifier)); continue
+                }
+                if !profile.disabledRules.contains(identifier) {
+                    postInlineTransforms.append(ActiveTransform(identifier: identifier, descriptor: descriptor, rule: rule))
+                }
+            }
             for rule in implementation.transforms {
                 let identifier = Self.qualified(rule.identifier, owner: descriptor.identifier)
                 guard Self.validIdentifier(identifier), descriptor.owns(identifier) else {
@@ -149,7 +176,7 @@ internal struct RuleRegistry: Sendable {
         func identifier(_ entry: RegisteredBlockRule) -> String {
             switch entry { case .core(let rule): rule.rawValue; case .custom(let index): custom[index].identifier }
         }
-        let orderable = Set(opening.map(identifier) + leaves.map(\.rawValue))
+        let orderable = Set(opening.map(identifier) + leaves.map(\.rawValue) + inlineRules.map(\.identifier))
         for identifier in profile.ruleOrder {
             guard orderable.contains(identifier) else {
                 issues.append(ConfigurationIssue(.unknownRule, identifier: identifier)); continue
@@ -170,6 +197,12 @@ internal struct RuleRegistry: Sendable {
                 let right = ranks[$1.element.rawValue] ?? Int.max
                 return left == right ? $0.offset < $1.offset : left < right
             }.map(\.element)
+        }
+        inlineRules.sort {
+            let left = ranks[$0.identifier] ?? Int.max
+            let right = ranks[$1.identifier] ?? Int.max
+            if left != right { return left < right }
+            return $0.rule.priority == $1.rule.priority ? $0.order < $1.order : $0.rule.priority > $1.rule.priority
         }
         self.opening = opening
         self.leaves = leaves

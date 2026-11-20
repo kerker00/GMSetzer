@@ -136,10 +136,10 @@ internal struct ReferenceScanner {
         for byte in label.utf8 {
             guard byte < 0x80 else {
                 return label.unicodeScalars.count <= 999
-                    && label.unicodeScalars.contains(where: { !$0.properties.isWhitespace })
+                    && label.unicodeScalars.contains(where: { ![UInt32(9), 10, 13, 32].contains($0.value) })
             }
             scalars += 1
-            if !(byte == 32 || (9...13).contains(byte)) { visible = true }
+            if ![UInt8(9), 10, 13, 32].contains(byte) { visible = true }
         }
         return scalars <= 999 && visible
     }

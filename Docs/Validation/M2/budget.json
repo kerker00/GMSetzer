@@ -1,0 +1,78 @@
+{
+  "cases": [
+    {
+      "profile": "CommonMark",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 3.33,
+      "c_ms": 1.7650000000000001,
+      "ratio": 1.886685552407932,
+      "limit_ms": 3.5300000000000002,
+      "remaining_ms": 0.20000000000000018,
+      "budget_passed": true
+    },
+    {
+      "profile": "CommonMark",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 34.996,
+      "c_ms": 19.35,
+      "ratio": 1.808578811369509,
+      "limit_ms": 38.7,
+      "remaining_ms": 3.7040000000000006,
+      "budget_passed": true
+    },
+    {
+      "profile": "CommonMark",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 177.603,
+      "c_ms": 97.845,
+      "ratio": 1.8151464050283612,
+      "limit_ms": 195.69,
+      "remaining_ms": 18.08699999999999,
+      "budget_passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 3.369,
+      "c_ms": 3.24,
+      "ratio": 1.0398148148148147,
+      "limit_ms": 6.48,
+      "remaining_ms": 3.111,
+      "budget_passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 34.57,
+      "c_ms": 38.011,
+      "ratio": 0.9094735734392675,
+      "limit_ms": 60.0,
+      "remaining_ms": 25.43,
+      "budget_passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 182.714,
+      "c_ms": 201.196,
+      "ratio": 0.9081393268255831,
+      "limit_ms": 300.0,
+      "remaining_ms": 117.286,
+      "budget_passed": true
+    }
+  ],
+  "failures": [],
+  "scope": "Current block parser only; passing does not prove complete inline/GFM performance."
+}

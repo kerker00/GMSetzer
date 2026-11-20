@@ -1,8 +1,9 @@
 # M1 HTML blocks and reference definitions
 
 Implemented on 19 November 2026 on `feature/m1-html-references`, building on the
-M1 foundation. Inline parsing, general syntax spans, UTF-16 conversion and the
-native analysis module remain later work.
+M1 foundation. M2 adds CommonMark inlines, exact lexical spans and decoded
+reference lookup; UTF-16 conversion and native analysis remain M3 work. See
+[M2Inlines.md](M2Inlines.md) for current functional/acceptance status.
 
 ## HTML blocks
 
@@ -31,8 +32,8 @@ let specHTML = HTMLRenderer(allowRawHTML: true, preserveHTMLComments: true)
 
 Raw HTML permission and comment preservation are independent options; hooks
 still supply trusted caller HTML. Raw block output is not rewritten to add
-source-anchor attributes. Inline raw HTML and its safety behavior remain M2
-work. Existing source anchors apply to the supported generated block elements.
+source-anchor attributes. M2 handles inline raw HTML with the same explicit HTML/comment options,
+and generated links/images with decoded URL-scheme checks. Existing source anchors apply to the supported generated block elements.
 
 ## Reference definitions
 
@@ -41,14 +42,13 @@ destinations and titles may use their specified continuation lines; blank lines
 or a new containing block cannot be crossed. Quoted titles can span lines.
 Malformed next-line title candidates fall back to a complete destination line,
 leaving the candidate as paragraph content. Malformed same-line titles invalidate
-that definition. Labels allow at most 999 Unicode scalars, need non-whitespace
-content, and do not allow unescaped nested brackets.
+that definition. Labels allow at most 999 Unicode scalars, need a character other than a space/tab/line ending, and do not allow unescaped nested brackets.
 
-Every definition is retained as a node, including duplicates, for later reference
-resolution and analysis. The first-definition-wins lookup and Unicode case
-folding are M2 work. Raw component text has paragraph indentation/container
-prefixes removed and line endings normalised, but escapes/entities are not yet
-decoded. Original spelling remains in `Document.source` and node segments.
+Every definition is retained as a node, including duplicates. M2 resolves
+references with first-definition-wins lookup, Unicode full folding and collapse of ASCII label
+spaces/tabs/line endings. Raw component text has paragraph indentation/container
+prefixes removed and line endings normalised. The payload keeps escapes and
+entities source-spelled; inline lookup decodes destination/title values once. Original spelling remains in `Document.source` and node segments.
 
 Definitions emit no HTML and do not create phantom visible children that make
 a list loose. A setext candidate with only definitions before it stays paragraph
@@ -85,9 +85,9 @@ metadata outside its definition node.
   New release timings, Linux and the minimum Swift 6.2 toolchain remain unverified.
 
 This was the initial HTML/reference evidence. The subsequent M1-C contracts
-and final acceptance matrix are recorded in [M1Acceptance.md](M1Acceptance.md). M2 still implements
-all inline syntax, entity/escape decoding, reference lookup and general syntax
-spans. `EditorAnalysis.md` remains the authority for the later editor/lint gate.
+and final acceptance matrix are recorded in [M1Acceptance.md](M1Acceptance.md).
+M2 now implements inline syntax, entity/escape decoding, reference lookup and
+opt-in syntax spans; its technical acceptance passed on the M2 branch. `EditorAnalysis.md` remains the authority for the later editor/lint gate.
 
 M1-C now implements custom parsed children, validated configuration and generic
 tokens. The current acceptance matrix and outstanding M2/M3 boundaries are in

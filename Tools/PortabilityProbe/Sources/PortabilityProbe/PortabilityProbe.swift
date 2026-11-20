@@ -32,7 +32,7 @@ struct PortabilityProbe {
         }
         let resources = URL(fileURLWithPath: CommandLine.arguments[1], isDirectory: true)
         let baseline = try load(Baseline.self, resources, "baseline.json")
-        let renderer = HTMLRenderer(allowRawHTML: true, preserveHTMLComments: true)
+        let renderer = HTMLRenderer.conformance
         for (name, count, profile, protected) in [
             ("commonmark-0.31.2.json", 652, Profile.commonMark, baseline.commonmark),
             ("gfm-0.29.json", 672, Profile.gfm, baseline.gfm),

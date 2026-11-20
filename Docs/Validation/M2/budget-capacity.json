@@ -1,0 +1,78 @@
+{
+  "cases": [
+    {
+      "profile": "CommonMark",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 2.777,
+      "c_ms": 1.7650000000000001,
+      "ratio": 1.573371104815864,
+      "limit_ms": 3.5300000000000002,
+      "remaining_ms": 0.7530000000000001,
+      "budget_passed": true
+    },
+    {
+      "profile": "CommonMark",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 29.557000000000002,
+      "c_ms": 20.955000000000002,
+      "ratio": 1.410498687664042,
+      "limit_ms": 41.910000000000004,
+      "remaining_ms": 12.353000000000002,
+      "budget_passed": true
+    },
+    {
+      "profile": "CommonMark",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 156.5,
+      "c_ms": 98.501,
+      "ratio": 1.5888163571943432,
+      "limit_ms": 197.002,
+      "remaining_ms": 40.50200000000001,
+      "budget_passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 2.763,
+      "c_ms": 3.1350000000000002,
+      "ratio": 0.8813397129186602,
+      "limit_ms": 6.2700000000000005,
+      "remaining_ms": 3.5070000000000006,
+      "budget_passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 30.605,
+      "c_ms": 38.371,
+      "ratio": 0.7976075682155794,
+      "limit_ms": 60.0,
+      "remaining_ms": 29.395,
+      "budget_passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 151.257,
+      "c_ms": 201.982,
+      "ratio": 0.7488637601370419,
+      "limit_ms": 300.0,
+      "remaining_ms": 148.743,
+      "budget_passed": true
+    }
+  ],
+  "failures": [],
+  "scope": "Current configured parser; GFM ratios remain informational until full GFM conformance. M2 has a separate frozen additional-work gate."
+}

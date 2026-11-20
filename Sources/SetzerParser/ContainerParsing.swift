@@ -490,12 +490,10 @@ extension BlockParser {
             var end = active.indices.upperBound
             let removal: Int
             let info: String?
-            let indented: Bool
-            if case .fenced(let fence) = active.kind { removal = fence.indent; info = fence.info.map(decode); indented = false }
+            if case .fenced(let fence) = active.kind { removal = fence.indent; info = fence.info.map(decode) }
             else {
                 removal = 4
                 info = nil
-                indented = true
                 while end > active.indices.lowerBound && isBlank(end - 1) { end -= 1 }
                 if end < active.indices.upperBound,
                    let parent = containers.indices.last { containers[parent].pendingBlank = true }
@@ -508,17 +506,24 @@ extension BlockParser {
             var segments: [SourceRange] = []
             segments.reserveCapacity(codeLines.count)
             for index in codeLines {
-                if indented && isBlank(index) {
-                    literal.append(10)
-                    segments.append(lines[index].range)
-                } else {
-                    segments.append(appendCodeContent(index, removing: removal, to: &literal))
-                }
+                segments.append(appendCodeContent(index, removing: removal, to: &literal))
             }
             let endLine = closingLine ?? codeLines.last ?? active.start
-            append(.codeBlock(info: info, literal: String(decoding: literal, as: UTF8.self)),
+            let owner = append(.codeBlock(info: info, literal: String(decoding: literal, as: UTF8.self)),
                    range: SourceRange(lines[active.start].range.lowerBound, lines[endLine].range.upperBound),
                    segments: segments, to: active.parent)
+            if collectSyntaxDetails, case .fenced(let fence) = active.kind {
+                let opening = indentation(active.start).offset
+                builder.record(SyntaxToken("core.fence.open", range: SourceRange(opening, opening + fence.count), owner: owner))
+                let infoRange = trimmed(opening + fence.count, lines[active.start].contentRange.upperBound)
+                builder.record(SyntaxToken("core.fence.info", range: infoRange, owner: owner))
+                if let closingLine {
+                    let closing = indentation(closingLine).offset
+                    var end = closing
+                    while end < lines[closingLine].contentRange.upperBound && source[end] == fence.marker { end += 1 }
+                    builder.record(SyntaxToken("core.fence.close", range: SourceRange(closing, end), owner: owner))
+                }
+            }
         case .html(let kind):
             let segments = active.indices.map { lines[$0].range }
             var bytes: [UInt8] = []
