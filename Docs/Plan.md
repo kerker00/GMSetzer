@@ -1,6 +1,6 @@
 # GMSetzer – Plan and Requirements
 
-**Status: 19 November 2026, M1 block implementations present, including HTML and multiline references; final acceptance/API review open.** This document is the
+**Status: 20 November 2026, M1 technical acceptance passed on the cumulative acceptance branch; owner merge pending, M2 not started.** This document is the
 reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
@@ -355,7 +355,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | Milestone | Contents | Done when | Estimate | Status |
 | --- | --- | --- | --- | --- |
 | M0 | Repository, package layout, specification run, benchmark setup, name and gap check | Starting point measured; harness reviewed, reference configurations corrected | 2–3 | **reviewed and corrected** (19 Nov 2026); new reference timings pending |
-| M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **reviewed; acceptance open**: M1-A merged in PR #4 (`51efee6`); M1-B measurements, checked validation optimisation and local budget gate implemented. 57 tests and 3,919 reference comparisons pass; 339/652 CommonMark and 339/672 GFM examples pass. [Review-M1](Review-M1.md) tracks the completed block-phase split, remaining M1-C extension/storage proof and M1-D invariant/hardening acceptance before M2 |
+| M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **technical acceptance passed; merge pending**: M1-A merged in PR #4 (`51efee6`); M1-B measurements, checked validation optimisation and local budget gate implemented. 70 library tests, 3,919 reference comparisons and 13 Python tests pass; protected baselines remain 339/652 CommonMark and 339/672 GFM. [M1Acceptance](M1Acceptance.md) records the M1-C contracts, M1-D audit, portability matrix and fixed M2 budget |
 | M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | |
 | M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; editor adapter for syntax spans/findings | Security/position/analysis tests pass; Setzkit proves snapshot-bound syntax decoration and diagnostic underlines; integration can start | re-estimate | |
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | |
@@ -404,19 +404,19 @@ profile conversions, incremental parsing if measurements call for it.
 
 The block-loop decomposition has moved to the beginning of M1-C, before shared
 registry dispatch; its implemented boundaries and verification are in
-[BlockPhases.md](BlockPhases.md). Remaining M1-D work includes the builder
-invariant/`try!` audit and final acceptance, not a second decomposition.
+[BlockPhases.md](BlockPhases.md). The M1-D builder invariant/`try!` audit and technical acceptance are now recorded
+in [M1Acceptance.md](M1Acceptance.md); no second decomposition is required.
 
 1. **Minimum platform and Swift versions.** The manifest requires Swift tools
    6.2 and provisionally macOS 15, iOS 18 and visionOS 2. Swift 6.2 now builds
-   all library modules for macOS and Linux ARM64; all 57 macOS tests pass with
+   all library modules for macOS and Linux ARM64; all 70 macOS tests pass with
    a compatible SDK/testing runtime. Compile probes confirm that `Span` and
    an unsafe-buffer bridge support macOS 15, while direct `Array.span` and
    `UTF8Span` require macOS 26. Minimum Apple OS runtime checks remain open;
    keep the byte-buffer path. See [Portability.md](Portability.md).
 2. **Linux verification coverage.** The initial static ARM64 probe retains all
    protected IDs across 1,324 spec inputs plus targeted checks. The extracted
-   phases now pass all 57 tests on Linux x86-64/glibc with Swift 6.4.2 through
+   current contracts pass all 70 tests on Linux x86-64/glibc with Swift 6.4.2 through
    an existing SSH host, and cross-build for static ARM64 with Swift 6.2.
    A full Linux suite on Swift 6.2 remains open; its static SDK lacks `Testing`.
 3. **Fuzzing on macOS** with the Xcode toolchain, or only on Linux.
@@ -438,18 +438,22 @@ block baseline passes its measured budgets; completed inline/GFM performance
 is not established. M1-B is merged in PR #5 (`7c0f4ea`); the Setzkit-side
 documentation alignment is merged in Setzkit PR #22 (`39e5fd0`).
 
-The agreed order before M2 is now: verify Linux and Swift 6.2 first; split the
-block-parser main loop at the start of M1-C, before introducing shared rule
-dispatch; then prove extension/storage contracts with an explicit inline
-budget; finally complete the remaining M1-D checks and accept M1. The current
-core baseline leaves 0.724 ms at 100 KB and 11.223 ms at 1 MB for all additional
-parse work, not exclusively inlines. M1-C must measure remaining string/segment
-costs and establish a tested budget rather than assume that this reserve is
-sufficient. Existing measurement-series
-authorization remains valid; otherwise follow the full-benchmark owner rule.
+The agreed pre-M2 sequence is technically complete: portability, phase split,
+shared extension/storage proof, fixed inline allowance and M1-D acceptance.
+[M1Acceptance.md](M1Acceptance.md) records all results and the remaining platform
+combinations without claiming editor/device checks. M1-C contracts and the
+internal inline draft are in [ExtensionContracts.md](ExtensionContracts.md).
+The cumulative PR also carries the phase extraction from PR #8, merged into
+its former base branch after PR #7 had already reached main. Owner merge is
+pending; M2 implementation has not started.
 
-M1-C implementation and M1-D invariant policy are described in
-[ExtensionContracts.md](ExtensionContracts.md). The acceptance branch carries
-the block-phase extraction merged into the former portability branch after its
-main merge. Final tests, timings and the M2 inline allowance are pending the
-[M1 acceptance receipt](M1Acceptance.md); no M2 work has started.
+The frozen CommonMark baseline leaves 1.048 / 15.286 / 69.207 ms total headroom
+at 100 KB / 1 MB / 5 MB. M2 receives a fixed **0.5 / 8 / 40 ms** allowance for
+all additional parse work, checked by `Scripts/check_m2_budget.py` against a
+hashed baseline. A positive reserve remains at every size. Selected rule
+callbacks, new validation and allocation costs count inside this allowance.
+String/segment reconstruction and optional parent-index costs are measured;
+there is no assumed saving from a future lazy/pool representation. The GFM
+ratios remain informational until the actual extensions are implemented.
+Existing measurement-series authorization remains valid; otherwise follow the
+full-benchmark owner rule.

@@ -1,0 +1,5 @@
+Build complete! (1,18 secs)
+commonmark: 339/652 examples pass (339 protected)
+gfm: 339/672 examples pass (339 protected)
+✔ Test run with 5 tests in 1 suite passed after 0.035 seconds.
+✔ Test run with 65 tests in 12 suites passed after 0.080 seconds.

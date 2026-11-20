@@ -103,3 +103,13 @@ implementation needs an explicit lifetime/availability contract and measurements
 before replacing it. This verification does not itself introduce spans or
 change the public API. Next: split the block loop before registry work, then
 prove the M1-C extension/storage contracts and inline budget.
+
+## M1-C/M1-D acceptance update
+
+The [M1 acceptance record](M1Acceptance.md) repeats the full **70-test** suite
+with Swift 6.4.2 macOS debug/release, Swift 6.2 macOS and Swift 6.4.2 on the
+existing Linux x86-64/glibc host. All five modules also cross-build for static
+Linux ARM64 with Swift 6.2. No new VM/container or tool installation was used.
+The earlier ARM64 execution evidence remains historical; this update does not
+claim another ARM64 runtime run, a full Linux Swift 6.2 suite or minimum Apple
+OS runtime checks. No Span/UTF8Span platform availability requirement changed.

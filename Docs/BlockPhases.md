@@ -66,3 +66,8 @@ The [receipt](Validation/BlockPhases/receipt.json),
 [budget report](Validation/BlockPhases/budget.json) and test summaries alongside
 them retain source/artifact hashes and toolchain/architecture scope. Private
 SSH connection details are not part of the evidence.
+
+The subsequent M1-C implementation uses these phases for the shared resolved
+registry. [ExtensionContracts.md](ExtensionContracts.md) records configuration,
+custom parsed children, transforms, token/index storage and the completed
+M1-D invariant audit. Final verification is in [M1Acceptance.md](M1Acceptance.md).

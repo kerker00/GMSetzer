@@ -20,7 +20,7 @@ rejects invalid option values. Unknown options are ignored after reporting;
 a valid default survives an invalid supplied value. Invalid configuration never
 becomes an editor underline at `0..<0`.
 
-Identifiers use nonempty ASCII components separated by dots; component bytes
+Extension and rule identifiers use nonempty ASCII components separated by dots; component bytes
 are letters, digits, underscores or hyphens. `core` is reserved. Short rule IDs
 are qualified once with the extension ID; fully qualified IDs must belong to
 that namespace. Custom kinds must be declared and owned. Duplicate selections,
@@ -152,3 +152,14 @@ acceptance retains this explicit fail-fast policy; it does not claim memory
 isolation from caller code. Byte helpers guard cursor bounds and tab/line-ending
 projection; existing deterministic arbitrary-byte, prefix-heavy, long-delimiter
 and maximum-depth cases run in debug/release and on the Linux host.
+
+## Pre-1.0 migration
+
+- Supply `nodeKinds` (and option schemas when used) when constructing a
+  `MarkdownExtension`, or share an explicit descriptor.
+- Inspect `parser.configurationIssues`/`validated()` instead of the removed
+  configuration cases in `ParseDiagnostic.Code`.
+- Replace `definition.syntax` with `document.referenceSyntax(for: nodeIndex)`
+  or consume the generic `document.tokens` directly.
+- Copy `tokens` together with nodes/source/diagnostics/fallbacks when rebuilding
+  an annotated document, and call `clearFallback(for:)` for explicit removal.

@@ -5,7 +5,7 @@ Markdown with switchable extensions, exact source positions and an HTML
 renderer. No C, no Rust, no JavaScript, no runtime dependencies — it builds
 wherever Swift runs, including Linux.
 
-> **Status:** milestone M1 in progress. The first slice implements a validated
+> **Status:** M1 technical acceptance passed; cumulative PR/owner merge pending. The first slice implements a validated
 > syntax tree, paragraphs, headings, code, nested block quotes and ordered/bullet
 > lists, including lazy continuation, tightness and depth limits. Custom block
 > rules receive projected source lines and optional core-parsed children. HTML blocks and multiline reference
@@ -39,10 +39,12 @@ wherever Swift runs, including Linux.
 - [Docs/Portability.md](Docs/Portability.md) – Swift 6.2 tests, Linux ARM64
   execution evidence, SDK selection, span availability and remaining coverage.
 - [Docs/Review-M0.md](Docs/Review-M0.md) – review findings and corrections.
+- [Docs/M1Acceptance.md](Docs/M1Acceptance.md) – technical decision, measured
+  M2 allowance, portability matrix and acceptance evidence.
 - [Docs/Review-M1.md](Docs/Review-M1.md) – M1 architecture, code, QA and
   extensibility review with recommendations before M2.
 - [Docs/SyntaxTree.md](Docs/SyntaxTree.md) – implemented tree/extension contract,
-  example ranges and remaining M1 work.
+  example ranges and the implemented block contracts.
 - [Docs/ExtensionContracts.md](Docs/ExtensionContracts.md) – shared configuration,
   container/transform probes, token ownership, hook context and the inline API draft.
 - [Docs/BlockPhases.md](Docs/BlockPhases.md) – extracted block-phase boundaries,
@@ -63,8 +65,9 @@ wherever Swift runs, including Linux.
 | `SetzerHTML` | Block HTML rendering, source anchors, escaping and comment policy | Inline rendering and URL safety |
 | `GMSetzer` | Imports the four implemented modules above | Optional analysis module with its first tested rules |
 
-M1 is not accepted yet. The [M1 review](Docs/Review-M1.md) defines the
-correctness, measurement, architecture and refactoring gates before M2.
+The [M1 acceptance record](Docs/M1Acceptance.md) closes the review work with
+70 library tests, 3,919 C comparisons and a fixed M2 parse budget. Owner merge
+is pending. Actual inlines, complete GFM and editor integration remain M2–M5.
 
 ```swift
 import GMSetzer
