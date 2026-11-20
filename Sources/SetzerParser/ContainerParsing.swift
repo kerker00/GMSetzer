@@ -43,7 +43,7 @@ internal struct OpenLeaf {
 extension BlockParser {
     mutating func parse() -> Document {
         var index = 0
-        while index < physicalLines.count {
+        while index < lines.count {
             let matched = matchOpenContainers(at: index)
             if continueOpenLeaf(at: index, matchedContainers: matched) {
                 index += 1
@@ -74,7 +74,7 @@ extension BlockParser {
 
     /// Project the current physical line through the still-open containers.
     private mutating func matchOpenContainers(at index: Int) -> Int {
-        var view = physicalLines[index]
+        var view = lines[index]  // still physical; see BlockParser.lines
         var matched = 0
         let leafParent = leaf?.parent
         for position in containers.indices {
@@ -193,7 +193,7 @@ extension BlockParser {
                         let match = resolved.match
                         beginChild()
                         let end = index + match.consumedLines
-                        let range = SourceRange(lines[index].range.lowerBound, physicalLines[end - 1].range.upperBound)
+                        let range = SourceRange(lines[index].range.lowerBound, lines[end - 1].range.upperBound)
                         let owner = append(match.data, range: range, segments: match.sourceSegments,
                             fallbackLiteral: match.children == nil ? extensionFallback(resolved.lines) : nil)
                         for token in match.tokens { builder.record(SyntaxToken(token.role, range: token.range, owner: owner)) }
@@ -356,7 +356,9 @@ extension BlockParser {
     }
 
     mutating func touchContainers(through index: Int) {
-        for position in containers.indices { containers[position].end = physicalLines[index].range.upperBound }
+        // Projection keeps a line's upper bound, so any table entry works.
+        let end = lines[index].range.upperBound
+        for position in containers.indices { containers[position].end = end }
     }
 
     /// Blank separation matters at the list item's direct-child boundary;

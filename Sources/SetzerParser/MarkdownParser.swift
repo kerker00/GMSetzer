@@ -47,7 +47,10 @@ internal struct ActiveRule: Sendable {
 
 internal struct BlockParser {
     let source: [UInt8]
-    let physicalLines: [SourceLine]
+    /// One table for physical and projected lines. Line `i` is replaced by
+    /// its projection only when the main loop reaches it, and the loop never
+    /// revisits a line, so every later entry is still the physical line.
+    /// A single table avoids copying all lines on the first projection.
     var lines: [SourceLine]
     let limits: ParserLimits
     let collectSyntaxDetails: Bool
@@ -61,15 +64,14 @@ internal struct BlockParser {
     init(source: [UInt8], registry: RuleRegistry, limits: ParserLimits, collectSyntaxDetails: Bool,
          projectedLines: [SourceLine]? = nil, extensionDepth: Int = 0) {
         self.source = source
-        self.physicalLines = projectedLines ?? Self.scanLines(source)
+        self.lines = projectedLines ?? Self.scanLines(source)
         self.extensionDepth = extensionDepth
-        self.lines = self.physicalLines
         self.limits = limits
         self.collectSyntaxDetails = collectSyntaxDetails
         self.builder = DocumentBuilder(source: source, collectSyntaxDetails: collectSyntaxDetails)
         // Typical documents have one to two nodes per line; reserving one per
         // line avoids most regrowth without holding much unused capacity.
-        self.builder.reserveCapacity(physicalLines.count + 1)
+        self.builder.reserveCapacity(lines.count + 1)
         self.registry = registry
     }
 
@@ -288,7 +290,9 @@ internal struct BlockParser {
             if let trigger = active.rule.trigger,
                (first == lines[index].contentRange.upperBound || source[first] != trigger) { return nil }
             let source = self.source
-            let physicalLines = self.physicalLines
+            // Lines after `index` are still physical (see `lines`). The snapshot
+            // shares storage and is released before the next projection.
+            let physicalLines = self.lines
             let prefixes = containers.prefix(prefixCount ?? containers.count).map(\.prefix)
             let currentLine = lines[index]
             let context = BlockContext(source: source, lineIndex: index, options: active.options,
@@ -318,7 +322,7 @@ internal struct BlockParser {
                 }
             }
             if valid {
-                let range = SourceRange(lines[index].range.lowerBound, physicalLines[index + match.consumedLines - 1].range.upperBound)
+                let range = SourceRange(lines[index].range.lowerBound, lines[index + match.consumedLines - 1].range.upperBound)
                 valid = match.tokens.allSatisfy { active.descriptor.owns($0.role) && range.contains($0.range) }
                     && match.diagnostics.allSatisfy {
                         if case .extensionFinding(let owner, _, _) = $0.code {
