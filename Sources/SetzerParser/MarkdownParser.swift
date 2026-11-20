@@ -4,16 +4,25 @@ public import SetzerSyntax
 /// Inline markup and editor analysis follow; see Docs/SyntaxTree.md.
 public struct MarkdownParser: Sendable {
     public let profile: Profile
-    private let extensions: [MarkdownExtension]
+    private let registry: RuleRegistry
+    internal var resolvedTransforms: [ActiveTransform] { registry.transforms }
+    public var configurationIssues: [ConfigurationIssue] { registry.issues }
     public let limits: ParserLimits
     public let collectSyntaxDetails: Bool
 
     public init(profile: Profile = .commonMark, extensions: [MarkdownExtension] = [], limits: ParserLimits = ParserLimits(),
                 collectSyntaxDetails: Bool = false) {
         self.profile = profile
-        self.extensions = extensions
+        self.registry = RuleRegistry(profile: profile, extensions: extensions)
         self.limits = limits
         self.collectSyntaxDetails = collectSyntaxDetails
+    }
+
+    /// Strict consumers can reject configuration; tolerant consumers still get
+    /// a deterministic core/literal parse and inspect configurationIssues once.
+    public func validated() throws -> MarkdownParser {
+        if !configurationIssues.isEmpty { throw ConfigurationError(configurationIssues) }
+        return self
     }
 
     public func parse(_ text: String) -> Document { parse(bytes: Array(text.utf8)) }
@@ -22,16 +31,18 @@ public struct MarkdownParser: Sendable {
     /// UTF-8 replacement decoding; NUL becomes U+FFFD. A leading UTF-8 BOM is
     /// ignored as syntax, but remains in the source and its original offsets.
     public func parse(bytes: [UInt8]) -> Document {
-        var parser = BlockParser(source: bytes, profile: profile, extensions: extensions, limits: limits,
+        var parser = BlockParser(source: bytes, registry: registry, limits: limits,
                                  collectSyntaxDetails: collectSyntaxDetails)
-        return parser.parse()
+        return applyTransforms(to: parser.parse())
     }
 }
 
-internal struct ActiveRule {
+internal struct ActiveRule: Sendable {
     let rule: BlockRule
     let options: [String: SyntaxValue]
     let order: Int
+    let descriptor: ExtensionDescriptor
+    let identifier: String
 }
 
 internal struct BlockParser {
@@ -40,51 +51,31 @@ internal struct BlockParser {
     var lines: [SourceLine]
     let limits: ParserLimits
     let collectSyntaxDetails: Bool
+    let extensionDepth: Int
     var containers: [OpenContainer] = []
     var leaf: OpenLeaf?
     var builder: DocumentBuilder
-    var rules: [ActiveRule] = []
+    let registry: RuleRegistry
+    var rules: [ActiveRule] { registry.custom }
 
-    init(source: [UInt8], profile: Profile, extensions: [MarkdownExtension], limits: ParserLimits, collectSyntaxDetails: Bool) {
+    init(source: [UInt8], registry: RuleRegistry, limits: ParserLimits, collectSyntaxDetails: Bool,
+         projectedLines: [SourceLine]? = nil, extensionDepth: Int = 0) {
         self.source = source
-        self.physicalLines = Self.scanLines(source)
+        self.physicalLines = projectedLines ?? Self.scanLines(source)
+        self.extensionDepth = extensionDepth
         self.lines = self.physicalLines
         self.limits = limits
         self.collectSyntaxDetails = collectSyntaxDetails
-        self.builder = DocumentBuilder(source: source)
-        var registry: [String: MarkdownExtension] = [:]
-        for item in extensions {
-            if registry[item.identifier] != nil {
-                builder.report(ParseDiagnostic(.duplicateRegistration(item.identifier), range: SourceRange(0, 0)))
-            } else { registry[item.identifier] = item }
-        }
-        var selected = Set<String>()
-        for selection in profile.extensions {
-            guard selected.insert(selection.identifier).inserted else {
-                builder.report(ParseDiagnostic(.duplicateRegistration(selection.identifier), range: SourceRange(0, 0)))
-                continue
-            }
-            guard let implementation = registry[selection.identifier] else {
-                builder.report(ParseDiagnostic(.unsupportedExtension(selection.identifier), range: SourceRange(0, 0)))
-                continue
-            }
-            var seen = Set<String>()
-            for rule in implementation.blockRules {
-                guard seen.insert(rule.identifier).inserted else {
-                    builder.report(ParseDiagnostic(.duplicateRegistration(rule.identifier), range: SourceRange(0, 0)))
-                    continue
-                }
-                rules.append(ActiveRule(rule: rule, options: selection.options, order: rules.count))
-            }
-        }
-        rules.sort {
-            $0.rule.priority == $1.rule.priority ? $0.order < $1.order : $0.rule.priority > $1.rule.priority
-        }
+        self.builder = DocumentBuilder(source: source, collectSyntaxDetails: collectSyntaxDetails)
+        self.registry = registry
     }
 
     @discardableResult
     mutating func append(_ data: NodeData, range: SourceRange, segments: [SourceRange] = [],
                          fallbackLiteral: String? = nil, to parent: Int? = nil) -> Int {
+        // M1-D audit: parent is root, a previously appended open container, or
+        // a just-appended leaf/import parent. Callbacks cannot supply indices.
+        // A failure is a parser defect; do not silently replace its snapshot.
         try! builder.append(data, range: range, sourceSegments: segments, fallbackLiteral: fallbackLiteral,
                             to: parent ?? containers.last?.node ?? 0)
     }
@@ -223,15 +214,21 @@ internal struct BlockParser {
                 String(repeating: " ", count: cursor.virtual) + decode(SourceRange(cursor.offset, line.contentRange.upperBound)) + "\n")
     }
 
-    mutating func extensionMatch(at index: Int, interrupting: Bool, prefixCount: Int? = nil)
+    mutating func extensionMatch(at index: Int, interrupting: Bool, prefixCount: Int? = nil, candidate: ActiveRule? = nil)
         -> (match: BlockMatch, lines: [SourceLine])? {
         let indent = indentation(index)
         guard indent.columns <= 3 else { return nil }
         let first = indent.offset
-        for active in rules {
-            if interrupting && !active.rule.interruptsParagraph { continue }
+        if candidate == nil {
+            for active in rules {
+                if let match = extensionMatch(at: index, interrupting: interrupting, prefixCount: prefixCount, candidate: active) { return match }
+            }
+            return nil
+        }
+        if let active = candidate {
+            if interrupting && !active.rule.interruptsParagraph { return nil }
             if let trigger = active.rule.trigger,
-               (first == lines[index].contentRange.upperBound || source[first] != trigger) { continue }
+               (first == lines[index].contentRange.upperBound || source[first] != trigger) { return nil }
             let source = self.source
             let physicalLines = self.physicalLines
             let prefixes = containers.prefix(prefixCount ?? containers.count).map(\.prefix)
@@ -242,10 +239,10 @@ internal struct BlockParser {
                 if target == index { return currentLine }
                 return Self.project(physicalLines[target], source: source, prefixes: prefixes)
             })
-            guard let match = active.rule.match(context) else { continue }
+            guard let match = active.rule.match(context) else { return nil }
             var valid = match.consumedLines > 0 && match.consumedLines <= lines.count - index
             if case .custom(let kind, .block, _) = match.data {
-                valid = valid && !kind.name.isEmpty && !NodeKind.builtins.contains(kind)
+                valid = valid && active.descriptor.nodeKinds.contains(kind) && active.descriptor.owns(kind.name)
             } else { valid = false }
             var projected: [SourceLine] = []
             if valid {
@@ -262,8 +259,31 @@ internal struct BlockParser {
                     previousEnd = segment.upperBound
                 }
             }
+            if valid {
+                let range = SourceRange(lines[index].range.lowerBound, physicalLines[index + match.consumedLines - 1].range.upperBound)
+                valid = match.tokens.allSatisfy { active.descriptor.owns($0.role) && range.contains($0.range) }
+                    && match.diagnostics.allSatisfy {
+                        if case .extensionFinding(let owner, _, _) = $0.code {
+                            return owner == active.descriptor.identifier && range.contains($0.range)
+                        }
+                        return false
+                    }
+                if let children = match.children {
+                    // Only suffix projections of this match's physical lines.
+                    // Views can only be produced by core projection helpers.
+                    var position = 0
+                    for child in children {
+                        while position < projected.count && projected[position].physicalRange != child.physicalRange { position += 1 }
+                        guard position < projected.count,
+                              projected[position].range.contains(child.range),
+                              child.contentRange.upperBound == projected[position].contentRange.upperBound,
+                              child.column >= projected[position].column else { valid = false; break }
+                        position += 1
+                    }
+                }
+            }
             if valid { return (match, projected) }
-            builder.report(ParseDiagnostic(.invalidExtensionResult(active.rule.identifier), range: lines[index].range))
+            builder.report(ParseDiagnostic(.invalidExtensionResult(active.identifier), range: lines[index].range))
         }
         return nil
     }

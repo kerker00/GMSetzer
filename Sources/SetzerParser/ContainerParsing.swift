@@ -63,6 +63,9 @@ extension BlockParser {
         }
         finishLeaf()
         closeContainers(to: 0)
+        // M1-D audit: callbacks are validated before mutation; append/import
+        // preserves topology and source order. Keep full release validation:
+        // a failed invariant must surface as a parser bug, never hidden recovery.
         return try! builder.build()
     }
 
@@ -100,7 +103,7 @@ extension BlockParser {
                     return true
                 }
             case .paragraph:
-                if let level = setextLevel(index) {
+                if registry.contains(.setextHeading), let level = setextLevel(index) {
                     touchContainers(through: index)
                     guard let parent = leaf?.parent else { return false }
                     if !finishLeaf(headingLevel: level, closingLine: index) {
@@ -148,10 +151,10 @@ extension BlockParser {
 
     /// Retain the existing extension/quote/list precedence and depth fallback.
     private mutating func openContainers(at index: Int) -> ContainerOpening {
-        while true {
+        opening: while true {
             // A list without an open item accepts only a compatible marker.
             if let last = containers.last, case .list(let style) = last.kind {
-                if let marker = listMarker(index, interrupting: false), !thematicBreak(index),
+                if let marker = listMarker(index, interrupting: false), !(registry.contains(.thematicBreak) && thematicBreak(index)),
                    Self.sameList(style, marker.style) {
                     guard hasRoom(for: 1, at: index) else {
                         closeContainers(to: containers.count - 1)
@@ -167,34 +170,58 @@ extension BlockParser {
                 closeContainers(to: containers.count - 1)
                 continue
             }
-            if let resolved = extensionMatch(at: index, interrupting: false) {
-                let match = resolved.match
-                beginChild()
-                let end = index + match.consumedLines
-                append(match.data, range: SourceRange(lines[index].range.lowerBound, physicalLines[end - 1].range.upperBound),
-                       segments: match.sourceSegments, fallbackLiteral: extensionFallback(resolved.lines))
-                touchContainers(through: end - 1)
-                return .consumed(nextLine: end)
-            }
-            if let content = Self.quoteContent(lines[index], source: source) {
-                guard hasRoom(for: 1, at: index) else { return .startLeaf(depthLimited: true) }
-                beginChild()
-                let start = lines[index].range.lowerBound
-                let node = append(.blockQuote, range: SourceRange(start, start))
-                containers.append(OpenContainer(node: node, kind: .quote, start: start, end: lines[index].range.upperBound))
-                lines[index] = content
-                if isBlank(index) { break }
-                continue
-            }
-            if !thematicBreak(index), let marker = listMarker(index, interrupting: false) {
-                guard hasRoom(for: 2, at: index) else { return .startLeaf(depthLimited: true) }
-                beginChild()
-                let start = lines[index].range.lowerBound
-                let node = append(.list(ListAttributes(style: marker.style)), range: SourceRange(start, start))
-                containers.append(OpenContainer(node: node, kind: .list(marker.style), start: start, end: lines[index].range.upperBound))
-                // Next iteration opens the first item through the same path
-                // used for subsequent siblings.
-                continue
+            for entry in registry.opening {
+                switch entry {
+                case .custom(let rule):
+                    if let resolved = extensionMatch(at: index, interrupting: false, candidate: rule) {
+                        let match = resolved.match
+                        beginChild()
+                        let end = index + match.consumedLines
+                        let range = SourceRange(lines[index].range.lowerBound, physicalLines[end - 1].range.upperBound)
+                        let owner = append(match.data, range: range, segments: match.sourceSegments,
+                            fallbackLiteral: match.children == nil ? extensionFallback(resolved.lines) : nil)
+                        for token in match.tokens { builder.record(SyntaxToken(token.role, range: token.range, owner: owner)) }
+                        for diagnostic in match.diagnostics { builder.report(diagnostic) }
+                        if let children = match.children, !children.isEmpty {
+                            if extensionDepth + containers.count + 1 < limits.maximumContainerDepth {
+                                var parser = BlockParser(source: source, registry: registry, limits: limits,
+                                    collectSyntaxDetails: collectSyntaxDetails, projectedLines: children,
+                                    extensionDepth: extensionDepth + containers.count + 1)
+                                appendChildren(parser.parse(), to: owner)
+                            } else {
+                                builder.report(ParseDiagnostic(.nestingLimitExceeded(limits.maximumContainerDepth), range: range))
+                                // Keep overflow syntax as literal inline content in the custom container.
+                                append(.text(extensionFallback(children)), range: range, to: owner)
+                            }
+                        }
+                        touchContainers(through: end - 1)
+                        return .consumed(nextLine: end)
+                    }
+                case .core(.blockQuote):
+                    if let content = Self.quoteContent(lines[index], source: source) {
+                        guard hasRoom(for: 1, at: index) else { return .startLeaf(depthLimited: true) }
+                        beginChild()
+                        let start = lines[index].range.lowerBound
+                        let node = append(.blockQuote, range: SourceRange(start, start))
+                        containers.append(OpenContainer(node: node, kind: .quote, start: start, end: lines[index].range.upperBound))
+                        lines[index] = content
+                        if isBlank(index) { return .startLeaf(depthLimited: false) }
+                        continue opening
+                    }
+                case .core(.list):
+                    if !(registry.contains(.thematicBreak) && thematicBreak(index)),
+                       let marker = listMarker(index, interrupting: false) {
+                        guard hasRoom(for: 2, at: index) else { return .startLeaf(depthLimited: true) }
+                        beginChild()
+                        let start = lines[index].range.lowerBound
+                        let node = append(.list(ListAttributes(style: marker.style)), range: SourceRange(start, start))
+                        containers.append(OpenContainer(node: node, kind: .list(marker.style), start: start, end: lines[index].range.upperBound))
+                        // Next iteration opens the first item through the same path
+                        // used for subsequent siblings.
+                        continue opening
+                    }
+                case .core: break
+                }
             }
             break
         }
@@ -203,41 +230,77 @@ extension BlockParser {
 
     private mutating func startLeaf(at index: Int, depthLimited: Bool) {
         let parent = containers.last?.node ?? 0
-        if !depthLimited && indentation(index).columns >= 4 {
-            beginChild()
-            leaf = OpenLeaf(kind: .indented, parent: parent, start: index, indices: [index])
-        } else if !depthLimited, let fence = openingFence(index) {
-            beginChild()
-            leaf = OpenLeaf(kind: .fenced(fence), parent: parent, start: index, indices: [])
-        } else if !depthLimited, let heading = atxHeading(index) {
-            beginChild()
-            let node = append(.heading(level: heading.level), range: lines[index].range,
-                              segments: heading.content.isEmpty ? [] : [heading.content])
-            appendText(heading.content, to: node)
-        } else if !depthLimited && thematicBreak(index) {
-            beginChild()
-            append(.thematicBreak, range: lines[index].range)
-        } else if !depthLimited, let kind = htmlBlockStart(index, interrupting: false) {
-            beginChild()
-            leaf = OpenLeaf(kind: .html(kind), parent: parent, start: index, indices: [index])
-            if endsHTMLBlock(index, kind: kind) { finishLeaf() }
-        } else {
-            leaf = OpenLeaf(kind: .paragraph, parent: parent, start: index, indices: [index])
+        if !depthLimited {
+            for rule in registry.leaves {
+                switch rule {
+                case .indentedCode where indentation(index).columns >= 4:
+                    beginChild()
+                    leaf = OpenLeaf(kind: .indented, parent: parent, start: index, indices: [index])
+                    return
+                case .fencedCode:
+                    if let fence = openingFence(index) {
+                        beginChild()
+                        leaf = OpenLeaf(kind: .fenced(fence), parent: parent, start: index, indices: [])
+                        return
+                    }
+                case .atxHeading:
+                    if let heading = atxHeading(index) {
+                        beginChild()
+                        let node = append(.heading(level: heading.level), range: lines[index].range,
+                            segments: heading.content.isEmpty ? [] : [heading.content])
+                        appendText(heading.content, to: node)
+                        return
+                    }
+                case .thematicBreak where thematicBreak(index):
+                    beginChild()
+                    append(.thematicBreak, range: lines[index].range)
+                    return
+                case .htmlBlock:
+                    if let kind = htmlBlockStart(index, interrupting: false) {
+                        beginChild()
+                        leaf = OpenLeaf(kind: .html(kind), parent: parent, start: index, indices: [index])
+                        if endsHTMLBlock(index, kind: kind) { finishLeaf() }
+                        return
+                    }
+                default: break
+                }
+            }
         }
+        leaf = OpenLeaf(kind: .paragraph, parent: parent, start: index, indices: [index])
     }
 
     mutating func interruptsParagraph(_ index: Int, matchedContainers: Int) -> Bool {
-        if atxHeading(index) != nil || openingFence(index) != nil || thematicBreak(index) { return true }
-        if Self.quoteContent(lines[index], source: source) != nil { return true }
-        if htmlBlockStart(index, interrupting: matchedContainers == containers.count) != nil { return true }
+        if (registry.contains(.atxHeading) && atxHeading(index) != nil) ||
+           (registry.contains(.fencedCode) && openingFence(index) != nil) ||
+           (registry.contains(.thematicBreak) && thematicBreak(index)) { return true }
+        if registry.contains(.blockQuote), Self.quoteContent(lines[index], source: source) != nil { return true }
+        if registry.contains(.htmlBlock), htmlBlockStart(index, interrupting: matchedContainers == containers.count) != nil { return true }
         // At an unmatched outer container this begins a new block there; it
         // does not interrupt that outer container's existing paragraph.
-        if listMarker(index, interrupting: matchedContainers == containers.count) != nil { return true }
+        if registry.contains(.list), listMarker(index, interrupting: matchedContainers == containers.count) != nil { return true }
         return extensionMatch(at: index, interrupting: true, prefixCount: matchedContainers) != nil
     }
 
+    /// Import a fully validated subtree without copying or rebasing source bytes.
+    /// Builder insertion order is preorder, so each parent exists before its child.
+    private mutating func appendChildren(_ document: Document, to owner: Int) {
+        var pending = document.children(of: 0).reversed().map { ($0, owner) }
+        var owners: [Int: Int] = [:]
+        while let (index, parent) = pending.popLast() {
+            let node = document.nodes[index]
+            let target = append(node.data, range: node.range, segments: node.sourceSegments,
+                fallbackLiteral: document.customLeafFallbacks[index], to: parent)
+            owners[index] = target
+            for child in document.children(of: index).reversed() { pending.append((child, target)) }
+        }
+        for token in document.tokens ?? [] {
+            if let target = owners[token.owner] { builder.record(SyntaxToken(token.role, range: token.range, owner: target)) }
+        }
+        for diagnostic in document.diagnostics { builder.report(diagnostic) }
+    }
+
     mutating func hasRoom(for count: Int, at index: Int) -> Bool {
-        guard containers.count + count <= limits.maximumContainerDepth else {
+        guard extensionDepth + containers.count + count <= limits.maximumContainerDepth else {
             builder.report(ParseDiagnostic(.nestingLimitExceeded(limits.maximumContainerDepth), range: lines[index].range))
             return false
         }
@@ -280,6 +343,7 @@ extension BlockParser {
                 data = .listItem
                 endsBlank = container.pendingBlank || container.lastChildEndsBlank
             }
+            // Only nodes returned by append enter containers; root never does.
             try! builder.finish(container.node, data: data, range: SourceRange(container.start, container.end))
             if let parent = containers.indices.last { containers[parent].lastChildEndsBlank = endsBlank }
         }
@@ -297,12 +361,18 @@ extension BlockParser {
             let scanner = ReferenceScanner(source: source, content: allSegments,
                 endings: active.indices.map { lines[$0].range.upperBound }, collectSyntax: collectSyntaxDetails)
             var firstContent = 0
-            while let reference = scanner.parse(at: firstContent) {
+            while registry.contains(.referenceDefinition), let reference = scanner.parse(at: firstContent) {
                 let first = active.indices[reference.firstLine]
                 let last = active.indices[reference.endLine - 1]
-                append(.referenceDefinition(reference.definition),
+                let owner = append(.referenceDefinition(reference.definition),
                        range: SourceRange(lines[first].range.lowerBound, lines[last].range.upperBound),
                        segments: active.indices[reference.firstLine..<reference.endLine].map { lines[$0].range }, to: active.parent)
+                if let syntax = reference.syntax {
+                    for (role, ranges) in [("label", syntax.label), ("destination", syntax.destination),
+                                           ("title", syntax.title), ("marker", syntax.markers)] {
+                        for range in ranges { builder.record(SyntaxToken("core.reference." + role, range: range, owner: owner)) }
+                    }
+                }
                 firstContent = reference.endLine
             }
             guard firstContent < active.indices.count else { return false }

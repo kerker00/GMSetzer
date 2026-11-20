@@ -62,7 +62,7 @@ struct PortabilityProbe {
             try check(wrapped.render(document) == HTMLRenderer().render(document), "List wrapper semantics")
         }
         let custom = NodeKind("probe.leaf")
-        let implementation = MarkdownExtension("probe", blockRules: [BlockRule("twoLines", trigger: 58) { context in
+        let implementation = MarkdownExtension("probe", nodeKinds: [NodeKind("probe.leaf")], blockRules: [BlockRule("twoLines", trigger: 58) { context in
             guard let next = context.line(at: context.lineIndex + 1) else { return nil }
             return BlockMatch(consumedLines: 2, data: .custom(kind: custom, role: .block, attributes: [:]),
                               sourceSegments: [next.contentRange])

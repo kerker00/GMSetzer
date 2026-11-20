@@ -15,11 +15,9 @@ struct BenchmarkCorpusTests {
             return nil
         }
         #expect(!definitions.isEmpty)
-        #expect(definitions.allSatisfy { $0.syntax != nil })
-        #expect(plain.nodes.allSatisfy { node in
-            if case .referenceDefinition(let value) = node.data { return value.syntax == nil }
-            return true
-        })
+        #expect(annotated.tokens?.isEmpty == false)
+        #expect(plain.tokens == nil)
+        #expect(annotated.nodes == plain.nodes)
         #expect(HTMLRenderer().render(plain) == HTMLRenderer().render(annotated))
         #expect(annotated.diagnostics.isEmpty)
         #expect(annotated.source == Array(text.utf8))

@@ -31,9 +31,9 @@ struct ReferenceDefinitionTests {
         let plain = MarkdownParser().parse(text)
         let detailed = MarkdownParser(collectSyntaxDetails: true).parse(text)
         guard case .referenceDefinition(let reference) = detailed.nodes[2].data,
-              case .referenceDefinition(let simple) = plain.nodes[2].data,
-              let syntax = reference.syntax else { Issue.record("Expected reference details"); return }
-        #expect(simple.syntax == nil)
+              case .referenceDefinition = plain.nodes[2].data,
+              let syntax = detailed.referenceSyntax(for: 2) else { Issue.record("Expected reference details"); return }
+        #expect(plain.tokens == nil)
         #expect(reference.rawLabel == "α")
         #expect(reference.rawDestination == "")
         #expect(reference.rawTitle == "t")
@@ -47,10 +47,9 @@ struct ReferenceDefinitionTests {
     }
 
     @Test func metadataValidationRejectsRangesOutsideDefinition() {
-        let syntax = ReferenceSyntax(label: [SourceRange(0, 10)], destination: [], title: [], markers: [])
-        #expect(throws: DocumentError.invalidSegments(node: 1)) {
+        #expect(throws: DocumentError.invalidToken(0)) {
             try Document(source: [], nodes: [Node(data: .document, range: SourceRange(0, 0), firstChild: 1),
-                Node(data: .referenceDefinition(ReferenceDefinition(rawLabel: "x", rawDestination: "", syntax: syntax)), range: SourceRange(0, 0))])
+                Node(data: .referenceDefinition(ReferenceDefinition(rawLabel: "x", rawDestination: "")), range: SourceRange(0, 0))], tokens: [SyntaxToken("core.reference.label", range: SourceRange(0, 10), owner: 1)])
         }
     }
 
@@ -68,8 +67,8 @@ struct ReferenceDefinitionTests {
         guard case .referenceDefinition(let definition) = document.nodes[1].data else { Issue.record("Expected reference"); return }
         #expect(document.source == bytes)
         #expect(definition.rawLabel == "��")
-        #expect(definition.syntax?.label == [SourceRange(1, 3)])
-        #expect(definition.syntax?.destination == [SourceRange(7, 7)])
+        #expect(document.referenceSyntax(for: 1)?.label == [SourceRange(1, 3)])
+        #expect(document.referenceSyntax(for: 1)?.destination == [SourceRange(7, 7)])
         #expect(document.nodes[1].range == SourceRange(0, 10))
     }
 }

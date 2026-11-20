@@ -447,3 +447,9 @@ parse work, not exclusively inlines. M1-C must measure remaining string/segment
 costs and establish a tested budget rather than assume that this reserve is
 sufficient. Existing measurement-series
 authorization remains valid; otherwise follow the full-benchmark owner rule.
+
+M1-C implementation and M1-D invariant policy are described in
+[ExtensionContracts.md](ExtensionContracts.md). The acceptance branch carries
+the block-phase extraction merged into the former portability branch after its
+main merge. Final tests, timings and the M2 inline allowance are pending the
+[M1 acceptance receipt](M1Acceptance.md); no M2 work has started.
