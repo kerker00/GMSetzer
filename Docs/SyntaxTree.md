@@ -366,7 +366,8 @@ no metadata headings, inline nodes or reference definitions are created.
 
 ## M5 named footnotes
 
-The unreleased [footnote step](Footnotes.md) supplies custom block containers
+The [footnote step](Footnotes.md), merged in PR #20 (`a6a2da6`) and not yet
+in a versioned release, supplies custom block containers
 `footnotes.definition` with parsed Markdown children and custom inline leaves
 `footnotes.reference`. Raw labels, optional number/occurrence attributes and
 owned marker tokens retain snapshot provenance. Nodes stay in source order;

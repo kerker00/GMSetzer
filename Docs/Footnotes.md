@@ -1,7 +1,7 @@
 # M5 named footnotes
 
-Implemented on `feature/m5-footnotes`, based on `db077dd` after front matter
-merged in PR #19. Not yet merged or released. This is a separate M5 step;
+Merged in PR #20 (`a6a2da6`), based on `db077dd` after front matter
+merged in PR #19. Not yet in a versioned release. This is a separate M5 step;
 math, alerts and callouts remain open. No runtime dependency, new core node
 case or change to strict CommonMark/GFM selections is introduced.
 
@@ -177,7 +177,9 @@ module-cache paths outside the repository. Counts are 168 library tests and
 corpus test added by this step. Every environment retains 652/652 CommonMark
 and 672/672 GFM protected examples. No fixture or baseline ID changed.
 
-The minimum-version macOS/Linux CI jobs remain pending for this PR. Unchanged
-Python scripts were not rerun locally. No fresh reference-tool comparisons,
+PR CI passes on macOS and Linux with Swift 6.2, including the Python script
+checks and both release builds. Merged-main CI also passes on both hosts. The merged branch is removed locally and remotely; no
+additional worktrees existed. Unchanged Python scripts were not rerun locally.
+No fresh reference-tool comparisons,
 benchmark series or consumer UI/device checks were run; no performance claim,
 consumer integration or versioned release is implied.

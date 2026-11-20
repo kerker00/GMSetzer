@@ -1,7 +1,8 @@
 # Extension and storage contracts — M1-C and M2
 
 This is the implemented block and inline contract, including the M2 controller
-and opt-in [M5 footnote support](Footnotes.md) on the unreleased footnote branch.
+and opt-in [M5 footnote support](Footnotes.md), merged in PR #20 (`a6a2da6`)
+and not yet in a versioned release.
 Alerts and math remain planned. The small rules in `ContainerExtensionTests`, `TransformTests` and
 `InlineExtensionTests` are architecture probes, not feature-conformance tests.
 

@@ -460,7 +460,7 @@ regression check, not a speed measurement.
 
 ## M5 named footnotes (development)
 
-`feature/m5-footnotes` prepares a definition lookup once per document before
+Merged PR #20 (`a6a2da6`) prepares a definition lookup once per document before
 inline parsing. Label scans have a fixed byte/scalar bound. Cited-note ordering
 uses a work queue and visits each cited definition body once, so cyclic notes
 do not cause recursive expansion. HTML composition reuses one contextual tree
