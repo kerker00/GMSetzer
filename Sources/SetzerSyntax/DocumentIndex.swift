@@ -32,6 +32,48 @@ public struct DocumentIndex: Sendable {
         }
     }
     private static func build<Word: FixedWidthInteger & SignedInteger>(_ document: Document) -> ([Word], [Word], [Word]) {
+        sequentialBuild(document) ?? linkedBuild(document)
+    }
+
+    /// Fast path for trees whose parents and earlier siblings precede each
+    /// node, as every builder append produces: reads the node array strictly
+    /// in order instead of chasing sibling links through it. Ascending child
+    /// indices then equal sibling order. Returns nil for any other layout.
+    private static func sequentialBuild<Word: FixedWidthInteger & SignedInteger>(_ document: Document) -> ([Word], [Word], [Word])? {
+        let count = document.nodes.count
+        var parents = [Word](repeating: -1, count: count)
+        var starts = [Word](repeating: 0, count: count + 1)
+        let ordered = document.nodes.withUnsafeBufferPointer { nodes -> Bool in
+            for index in 0..<count {
+                let parent = parents[index]
+                if index > 0 {
+                    guard parent >= 0 else { return false }
+                    starts[Int(parent) + 1] += 1
+                }
+                if let child = nodes[index].firstChild {
+                    guard child > index else { return false }
+                    parents[child] = Word(index)
+                }
+                if let sibling = nodes[index].nextSibling {
+                    guard sibling > index else { return false }
+                    parents[sibling] = parent
+                }
+            }
+            return true
+        }
+        guard ordered else { return nil }
+        for index in 0..<count { starts[index + 1] += starts[index] }
+        var cursors = starts
+        var children = [Word](repeating: 0, count: count - 1)
+        for index in 1..<max(1, count) {
+            let parent = Int(parents[index])
+            children[Int(cursors[parent])] = Word(index)
+            cursors[parent] += 1
+        }
+        return (parents, starts, children)
+    }
+
+    private static func linkedBuild<Word: FixedWidthInteger & SignedInteger>(_ document: Document) -> ([Word], [Word], [Word]) {
         let count = document.nodes.count
         var parents = [Word](repeating: -1, count: count)
         var starts = [Word](repeating: 0, count: count + 1)

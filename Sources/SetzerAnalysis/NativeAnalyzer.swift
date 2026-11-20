@@ -30,6 +30,29 @@ public struct NativeAnalysisConfiguration: Hashable, Sendable {
 
 public enum NativeAnalysisError: Error, Equatable, Sendable { case invalidSuppression }
 
+/// Whitespace-collapsed UTF-8 identity of a heading title. ASCII titles are
+/// collapsed byte-wise with exactly the ASCII members of Character.isWhitespace
+/// (HT, LF, VT, FF, CR, space); any other title uses Character segmentation.
+private func headingKey(_ title: String) -> [UInt8] {
+    var key: [UInt8] = []
+    var ascii = true
+    title.utf8.withContiguousStorageIfAvailable { bytes in
+        key.reserveCapacity(bytes.count)
+        var pendingSpace = false
+        for byte in bytes {
+            guard byte < 0x80 else { ascii = false; return }
+            if byte == 32 || (9...13).contains(byte) {
+                pendingSpace = !key.isEmpty
+            } else {
+                if pendingSpace { key.append(32); pendingSpace = false }
+                key.append(byte)
+            }
+        }
+    } ?? { ascii = false }()
+    if ascii { return key }
+    return Array(title.split(whereSeparator: { $0.isWhitespace }).joined(separator: " ").utf8)
+}
+
 /// Pure analysis of an existing parse; no parser, UI, files or renderer.
 public enum NativeAnalyzer {
     public static let provider = "gmsetzer.native"
@@ -95,7 +118,7 @@ public enum NativeAnalyzer {
                     // Case-sensitive decoded text, whitespace collapsed, byte-exact
                     // Unicode identity. No canonical/case-fold compatibility claim.
                     if configuration.rules.contains(.duplicateHeading) {
-                        let key = Array(document.plainText(of: index).split(whereSeparator: { $0.isWhitespace }).joined(separator: " ").utf8)
+                        let key = headingKey(document.plainText(of: index))
                         guard !key.isEmpty else { continue }
                         if let first = seen[key] {
                             try emit(.duplicateHeading, range: range, text: "Heading repeats an earlier heading.",
@@ -105,31 +128,36 @@ public enum NativeAnalyzer {
                 }
             }
             if configuration.rules.contains(.trailingWhitespace) {
-                var start = 0
-                while start < document.source.count {
-                    var end = start
-                    while end < document.source.count, document.source[end] != 10, document.source[end] != 13 { end += 1 }
-                    var trim = end
-                    while trim > start, document.source[trim - 1] == 32 || document.source[trim - 1] == 9 { trim -= 1 }
-                    if trim < end {
-                        let range = SourceRange(trim, end)
-                        while excludedCursor < excluded.count, excluded[excludedCursor].upperBound <= trim { excludedCursor += 1 }
-                        while breakCursor < hardBreaks.count, hardBreaks[breakCursor].upperBound <= trim { breakCursor += 1 }
-                        let hardBreak = breakCursor < hardBreaks.count && hardBreaks[breakCursor].lowerBound < end
-                        let protected = excludedCursor < excluded.count && excluded[excludedCursor].lowerBound < end
-                        while proseCursor < prose.count, prose[proseCursor].upperBound < end { proseCursor += 1 }
-                        // Restrict fixes to prose/heading trivia. In particular,
-                        // whitespace after an empty list marker can be syntax.
-                        let inProse = proseCursor < prose.count && prose[proseCursor].lowerBound < trim && end <= prose[proseCursor].upperBound
-                        if inProse && !hardBreak && !protected {
-                            let fix = try SuggestedFix(message: DiagnosticMessage("gmsetzer.remove-trailing-whitespace", defaultText: "Remove trailing whitespace."),
-                                edits: [SuggestedEdit(range: range, expected: Array(document.source[trim..<end]), replacement: [])])
-                            try emit(.trailingWhitespace, range: range, text: "Trailing whitespace has no Markdown meaning.", fixes: [fix])
-                        }
+                let source = document.source
+                // Find terminators word-at-a-time; only lines ending in a
+                // space or tab are inspected further.
+                var candidates: [(trim: Int, end: Int)] = []
+                source.withUnsafeBufferPointer { buffer in
+                    var start = 0
+                    while start <= buffer.count {
+                        let end = LineTerminators.next(in: buffer, from: start) ?? buffer.count
+                        var trim = end
+                        while trim > start, buffer[trim - 1] == 32 || buffer[trim - 1] == 9 { trim -= 1 }
+                        if trim < end { candidates.append((trim, end)) }
+                        guard end < buffer.count else { break }
+                        start = end + (buffer[end] == 13 && end + 1 < buffer.count && buffer[end + 1] == 10 ? 2 : 1)
                     }
-                    if end < document.source.count, document.source[end] == 13,
-                       end + 1 < document.source.count, document.source[end + 1] == 10 { end += 1 }
-                    start = end + 1
+                }
+                for (trim, end) in candidates {
+                    let range = SourceRange(trim, end)
+                    while excludedCursor < excluded.count, excluded[excludedCursor].upperBound <= trim { excludedCursor += 1 }
+                    while breakCursor < hardBreaks.count, hardBreaks[breakCursor].upperBound <= trim { breakCursor += 1 }
+                    let hardBreak = breakCursor < hardBreaks.count && hardBreaks[breakCursor].lowerBound < end
+                    let protected = excludedCursor < excluded.count && excluded[excludedCursor].lowerBound < end
+                    while proseCursor < prose.count, prose[proseCursor].upperBound < end { proseCursor += 1 }
+                    // Restrict fixes to prose/heading trivia. In particular,
+                    // whitespace after an empty list marker can be syntax.
+                    let inProse = proseCursor < prose.count && prose[proseCursor].lowerBound < trim && end <= prose[proseCursor].upperBound
+                    if inProse && !hardBreak && !protected {
+                        let fix = try SuggestedFix(message: DiagnosticMessage("gmsetzer.remove-trailing-whitespace", defaultText: "Remove trailing whitespace."),
+                            edits: [SuggestedEdit(range: range, expected: Array(source[trim..<end]), replacement: [])])
+                        try emit(.trailingWhitespace, range: range, text: "Trailing whitespace has no Markdown meaning.", fixes: [fix])
+                    }
                 }
             }
         }
