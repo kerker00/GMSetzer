@@ -3,6 +3,14 @@
 Start with [Docs/Plan.md](Docs/Plan.md): it explains what the library must do,
 the decisions behind it and the order of work.
 
+## Library boundary
+
+Keep public types and current documentation independent of any consumer.
+Application-specific adapters, session/revision models, UI and device test
+reports belong in the consuming repository. Runtime library targets depend
+only on this package's own modules and the Swift standard library; no sibling
+checkout may be required. Preserve historical validation records as history.
+
 ## Workflow
 
 1. Create a feature branch from `main` (`feature/m1-blocks`, `fix/…`).

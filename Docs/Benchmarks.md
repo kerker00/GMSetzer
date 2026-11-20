@@ -357,7 +357,7 @@ remaining M3/device/M6 coverage. All prior block measurements above are history.
 
 ## M3 measurement boundary (20 November 2026)
 
-M3 adds optional source/tree indexes, native analysis and the Setzkit adapter;
+M3 adds optional source/tree indexes and native analysis;
 these are not covered by M2 timings. No full benchmark series was run for this
 change. Fresh parse + annotation + position-index + analysis/decoration timings
 remain pending owner authorization. The protected conformance path and full

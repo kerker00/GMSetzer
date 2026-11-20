@@ -20,7 +20,7 @@ new change and inherited work are described accurately.
 Record the validation actually performed: commands, test counts, protected spec
 IDs, reference comparisons and any benchmark configuration. State missing
 evidence, such as Linux, the minimum supported Swift version, fresh timings or
-Setzkit editor/device checks. Do not run full benchmarks or long tests solely to
+consumer editor/device checks. Do not run full benchmarks or long tests solely to
 fill a documentation entry; follow the owner's existing authorization.
 
 ## Update only the affected documents
@@ -32,9 +32,9 @@ fill a documentation entry; follow the owner's existing authorization.
 - `Docs/SyntaxTree.md`, `Docs/HTMLReferences.md` and `Docs/EditorAnalysis.md`,
   when present: maintain the affected tree, parsing, source-range or analysis
   contracts and their validation evidence. Keep planned APIs labelled planned.
-  For Setzkit analysis, distinguish parser syntax details from diagnostics,
+  For consumer analysis integration, distinguish parser syntax details from diagnostics,
   linting and UTF-16 editor ranges; library tests do not prove editor underlines
-  or device behavior. Coordinate any required Setzkit documentation change in
+  or device behavior. Coordinate any required consumer documentation change in
   its repository rather than claiming integration is finished here.
 - [README.md](../../../README.md): update public examples, supported behavior
   and limitations when the user-facing API or project status changes.

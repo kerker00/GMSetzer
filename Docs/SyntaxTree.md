@@ -1,6 +1,6 @@
 # Syntax tree contract — blocks and CommonMark inlines
 
-Status: M2 merged in PR #11; M3 service contracts updated on 20 November 2026, implemented locally with review/manual acceptance open. This is the contract for the current
+Status: M2 merged in PR #11; M3 service contracts updated on 20 November 2026, implemented locally with review open. This is the contract for the current
 Swift values, with explicit extension points for the remaining parser phases.
 The Markdown input language is governed by CommonMark and the pinned GFM
 fixtures. There is no ANTLR grammar or generated parser/runtime dependency.
@@ -16,7 +16,7 @@ original marker/trivia provenance as the remaining block/inline payloads grow.
 diagnostics, optional generic `tokens`, plus sparse `customLeafFallbacks` keyed
 by custom leaf index. It is
 `Sendable`. Root index is always zero; indices belong to
-one document snapshot, not to later parses. Setzkit owns snapshot revisions
+one document snapshot, not to later parses. Consumers own snapshot revisions
 and configuration fingerprints outside this module.
 
 `Node.data` is a typed `NodeData` enum. `Node.kind` is derived from it, so a

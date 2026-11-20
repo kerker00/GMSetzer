@@ -6,6 +6,11 @@ describes the workflow.
 
 ## Always
 
+- Keep public APIs and current documentation consumer-neutral. Application
+  adapters, session/revision types, UI and device acceptance belong in the
+  consuming repository. No consumer checkout may be needed to build, test or
+  release this package.
+
 - Keep the library targets free of runtime dependencies and of Foundation in
   the core; everything must build on Linux.
 - Keep every specification example ID recorded in

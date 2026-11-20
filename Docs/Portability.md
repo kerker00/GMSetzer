@@ -124,5 +124,5 @@ host with Swift 6.4.2/glibc 2.44. Only requested sources/tests were transferred
 after explicit approval; no replacement execution environment was created.
 The core still uses the standard library only. This update does not claim a
 fresh M2 static-ARM64 execution, Linux/Swift 6.2 suite, minimum Apple-OS run or
-Setzkit/device integration. Raw output and source hashes are in
+consumer UI/device integration. Raw output and source hashes are in
 [Validation/M2](Validation/M2/).

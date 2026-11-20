@@ -10,9 +10,21 @@ wherever Swift runs, including Linux.
 > 641/672 pinned GFM examples pass. Blocks and inlines retain original UTF-8
 > ranges, with optional lexical tokens and custom inline rules. Portable
 > diagnostic/fix values, position conversion, outline and three optional native
-> rules are implemented. M3 has an automated Setzkit adapter proof; review and
-> manual/device acceptance remain open. M2 performance gates pass; publication remains
-> a separate owner decision.
+> rules are implemented; M3 review remains open. M2 performance gates pass;
+> publication remains a separate owner decision.
+
+## Independence
+
+GMSetzer is a standalone MIT-licensed Swift package for editors, command-line
+utilities, servers and other Markdown consumers. Every library target depends
+only on modules inside this package. No consumer checkout, application session,
+UI framework or editor implementation is needed to build or use it.
+
+Public APIs exchange original UTF-8 bytes, immutable syntax trees, portable
+positions, diagnostic reports and advisory edits. A consumer owns revision
+identity, scheduling, localization, UI ranges and undo/IME integration in its
+own adapter. The library never imports that adapter. Application integration
+and device acceptance do not determine this package's API or release readiness.
 
 ## Goals
 
@@ -69,9 +81,8 @@ wherever Swift runs, including Linux.
 | `GMSetzer` | Imports the five implemented modules above | Additional convenience APIs |
 
 M1 acceptance is merged in PR #9 and block hot-path optimisation in PR #10.
-M2 adds CommonMark inlines and 867 exact C comparisons. Complete GFM and
-production Setzkit rollout remain M4 and post-proof M3 work respectively; the fixed M2 timing
-allowance is unchanged.
+M2 adds CommonMark inlines and 867 exact C comparisons. Complete GFM remains
+M4 work; the fixed M2 timing allowance is unchanged.
 
 ```swift
 import GMSetzer
@@ -130,7 +141,7 @@ GMSetzer is released under the [MIT licence](LICENSE). Third-party material
 and its licences are listed in [NOTICE](NOTICE); the specification examples
 used as test data are licensed CC-BY-SA 4.0 and are not part of the library.
 
-M3 service contracts, the native rule catalogue and editor-proof limits are in
+M3 service contracts, the native rule catalogue and validation limits are in
 [Docs/M3EditorServices.md](Docs/M3EditorServices.md).
 
 ```swift
