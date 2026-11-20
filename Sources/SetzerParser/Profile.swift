@@ -66,6 +66,9 @@ public struct BlockContext: Sendable {
     /// and projected child parsers. Rules still validate their exact spelling
     /// and indentation; a leading UTF-8 BOM does not change this flag.
     public let isDocumentStart: Bool
+    /// The immediate core parent is a newly opened quote on this physical
+    /// line, with no children yet. Header rules still validate exact spelling.
+    public let isBlockQuoteStart: Bool
     public let options: [String: SyntaxValue]
     public let line: SourceLine
     public let lineCount: Int

@@ -164,6 +164,21 @@ struct SpecTests {
         }
     }
 
+    @Test func unselectedAdmonitionsAndComposedRendererPreserveEverySpecification() throws {
+        for (name, gfm) in [("commonmark-0.31.2", false), ("gfm-0.29", true)] {
+            for example in try Self.examples(name) {
+                let profile = gfm ? Self.gfmProfile(for: example) : .commonMark
+                let plain = MarkdownParser(profile: profile, collectSyntaxDetails: true).parse(example.markdown)
+                let supplied = MarkdownParser(profile: profile, extensions: [Alert.implementation, Callout.implementation],
+                    collectSyntaxDetails: true).parse(example.markdown)
+                #expect(supplied.nodes == plain.nodes, "\(name) example \(example.example)")
+                #expect(supplied.tokens == plain.tokens && supplied.diagnostics == plain.diagnostics)
+                #expect(AdmonitionHTML.renderer(.conformance).render(supplied) == example.html,
+                    "\(name) example \(example.example)")
+            }
+        }
+    }
+
     @Test func unselectedMathPreservesEverySpecification() throws {
         for (name, gfm) in [("commonmark-0.31.2", false), ("gfm-0.29", true)] {
             for example in try Self.examples(name) {

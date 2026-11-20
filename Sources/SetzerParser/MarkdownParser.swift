@@ -311,8 +311,15 @@ internal struct BlockParser {
             let physicalLines = self.lines
             let prefixes = containers.prefix(prefixCount ?? containers.count).map(\.prefix)
             let currentLine = lines[index]
+            let quoteStart: Bool
+            if let container = containers.last, case .quote = container.kind {
+                quoteStart = container.childCount == 0
+                    && container.start >= currentLine.physicalRange.lowerBound
+                    && container.start < currentLine.physicalRange.upperBound
+            } else { quoteStart = false }
             let context = BlockContext(source: source, lineIndex: index,
                                        isDocumentStart: index == 0 && extensionDepth == 0 && containers.isEmpty,
+                                       isBlockQuoteStart: quoteStart,
                                        options: active.options,
                                        line: currentLine, lineCount: physicalLines.count, project: { target in
                 guard target >= index && physicalLines.indices.contains(target) else { return nil }

@@ -59,3 +59,8 @@ The math step separately supplies `Math.implementation` without selecting it
 for all 1,324 examples, comparing complete nodes, tokens, diagnostics and exact
 conformance HTML. Math grammar and combinations are tested with original
 project strings outside the upstream fixtures. No protected ID is changed.
+
+The alert/callout step supplies both implementations without selecting them
+for all 1,324 examples, comparing nodes/tokens/diagnostics and conformance HTML
+through the composed admonition renderer. Feature and all-M5 combination tests
+use original project strings. The protected fixture data and IDs are unchanged.

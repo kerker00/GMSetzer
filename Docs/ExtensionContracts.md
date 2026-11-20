@@ -5,7 +5,9 @@ and opt-in [M5 footnote support](Footnotes.md), merged in PR #20 (`a6a2da6`)
 and not yet in a versioned release.
 The [math step](Math.md), merged in PR #21 (`6f166b7`), uses prepared complete inline matches,
 a display-block rule and a post-inline code-fence transform. TeX is opaque;
-there is no new parser API or dependency. Alerts and callouts remain planned.
+that step adds no parser API or dependency. The unreleased
+[alert/callout step](Admonitions.md) adds quote-start header rules, wrapping
+transforms and composed HTML.
 The small rules in `ContainerExtensionTests`, `TransformTests` and
 `InlineExtensionTests` are architecture probes, not feature-conformance tests.
 
@@ -78,11 +80,21 @@ context property does not change existing rule selection or precedence.
 
 ## Transform and renderer boundaries
 
+`BlockContext.isBlockQuoteStart` identifies a new immediate core quote on its
+first physical line with no children. Alert/callout header rules use this signal
+to reserve only the marker line before paragraph/setext/table recognition;
+normal body parsing starts on the following line. Wrapping removes the internal
+header before inlines. See [Admonitions](Admonitions.md) for grammar, temporary
+header kinds, overlap precedence and phase-disable behavior.
+
 `BlockTransform` runs once after block parsing and before inline resolution
 when registered in `transforms`. It returns a validated `Document` with identical source bytes and the
 same syntax-collection mode. Introduced custom kinds must be declared by its
 descriptor; introduced tokens must use its namespace. Existing foreign nodes
-and tokens may be retained. A thrown or invalid result preserves the previous
+and tokens may be retained. Rebuilding may remap a foreign token to a new
+validated owner while retaining its role/range. A multiset check rejects new
+foreign spellings and counts exceeding the input; own-namespace annotations
+remain extension-controlled. A thrown or invalid result preserves the previous
 tree and records an invalid runtime extension result. This is distinct from
 configuration validation. A transform must update semantic text and provenance
 together; the alert probe removes its marker from the first text projection.

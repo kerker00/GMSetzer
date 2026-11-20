@@ -17,6 +17,12 @@ public struct HTMLRendererContext: Sendable {
     /// as the built-in renderer, including when their ancestors are wrapped.
     public let tightItem: Bool
     public let tree: DocumentIndex
+    fileprivate let renderer: HTMLRenderer
+    /// Package composition renders title inlines with all currently active
+    /// hooks (including footnote calls), sharing this snapshot's tree index.
+    package func renderChildren(of index: Int) -> String {
+        renderer.renderChildren(tree.document, of: index, tree: tree)
+    }
     public var node: Node { tree.document.nodes[index] }
     public var parent: Int? { tree.parent(of: index) }
     public var ancestors: [Int] { Array(tree.ancestors(of: index)) }
@@ -73,6 +79,13 @@ public struct HTMLRenderer: Sendable {
             contextualHooks: contextualHooks.filter { additional[$0.key] == nil })
     }
 
+    package func addingContextualHooks(_ additional: [NodeKind: ContextualHTMLRendererHook]) -> HTMLRenderer {
+        HTMLRenderer(includeSourceRanges: includeSourceRanges, sourceAnchorPrefix: sourceAnchorPrefix,
+            allowRawHTML: allowRawHTML, preserveHTMLComments: preserveHTMLComments,
+            allowUnsafeURLs: allowUnsafeURLs, allowedURLSchemes: allowedURLSchemes,
+            hooks: hooks, contextualHooks: contextualHooks.merging(additional) { _, replacement in replacement })
+    }
+
     package func render(_ document: Document, tree: DocumentIndex) -> String {
         render(document, events: [.enter(0)], tree: tree)
     }
@@ -92,7 +105,8 @@ public struct HTMLRenderer: Sendable {
             case .enter(let index, let tightItem):
                 let node = document.nodes[index]
                 let contextual = tree.flatMap { tree in
-                    contextualHooks[node.kind]?(HTMLRendererContext(index: index, anchorPrefix: sourceAnchorPrefix, tightItem: tightItem, tree: tree))
+                    contextualHooks[node.kind]?(HTMLRendererContext(index: index, anchorPrefix: sourceAnchorPrefix,
+                        tightItem: tightItem, tree: tree, renderer: self))
                 }
                 if let directive = contextual ?? hooks[node.kind]?(node, document) {
                     switch directive {

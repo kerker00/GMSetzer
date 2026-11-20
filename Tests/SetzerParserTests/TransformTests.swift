@@ -34,6 +34,47 @@ struct TransformTests {
         #expect(!disabled.parse("> [!NOTE] body\n").nodes.contains { $0.kind == Self.kind })
     }
 
+    @Test func rebuiltTreesMayRemapForeignOwnersButCannotForgeSpellingOrDuplicateTokens() throws {
+        let kind = NodeKind("test.marker")
+        for mode in 0..<4 {
+            let implementation = MarkdownExtension("test", nodeKinds: [kind], transforms: [BlockTransform("rebuild") { document in
+                var builder = DocumentBuilder(source: document.source, collectSyntaxDetails: true)
+                builder.renderingPolicy = document.renderingPolicy
+                try builder.append(.custom(kind: kind, role: .block, attributes: [:]), range: SourceRange(0, 0), fallbackLiteral: "")
+                var mapped = [Int](repeating: 0, count: document.nodes.count)
+                var pending = document.children(of: 0).reversed().map { ($0, 0) }
+                while let (old, parent) = pending.popLast() {
+                    let node = document.nodes[old]
+                    let new = try builder.append(node.data, range: node.range, sourceSegments: node.sourceSegments,
+                        fallbackLiteral: document.customLeafFallbacks[old], to: parent)
+                    mapped[old] = new
+                    for child in document.children(of: old).reversed() { pending.append((child, new)) }
+                }
+                for token in document.tokens ?? [] {
+                    builder.record(SyntaxToken(token.role, range: token.range, owner: mapped[token.owner]))
+                }
+                if let first = document.tokens?.first {
+                    if mode == 1 { builder.record(SyntaxToken(first.role, range: first.range, owner: mapped[first.owner])) }
+                    if mode == 2 { builder.record(SyntaxToken("core.invented", range: first.range, owner: mapped[first.owner])) }
+                    if mode == 3 { builder.record(SyntaxToken(first.role, range: SourceRange(0, 1), owner: mapped[first.owner])) }
+                }
+                return try builder.build()
+            }])
+            let parser = try MarkdownParser(profile: Profile(name: "test", extensions: [ExtensionConfiguration("test")]),
+                extensions: [implementation], collectSyntaxDetails: true).validated()
+            let document = parser.parse("> text\n")
+            #expect(HTMLRenderer().render(document) == "<blockquote>\n<p>text</p>\n</blockquote>\n")
+            if mode == 0 {
+                #expect(document.diagnostics.isEmpty)
+                #expect(document.tokens?.first?.owner == 2)
+                #expect(document.nodes[2].kind == .blockQuote)
+            } else {
+                #expect(document.diagnostics.map(\.code) == [.invalidExtensionResult("test.rebuild")])
+                #expect(!document.nodes.contains { $0.kind == kind })
+            }
+        }
+    }
+
     @Test func rejectedOrThrowingTransformsKeepThePreviousSnapshot() {
         enum ProbeError: Error { case rejected }
         for mode in 0..<3 {

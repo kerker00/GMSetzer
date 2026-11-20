@@ -34,7 +34,11 @@ numbering and a separate HTML renderer with backlinks on `main`; see
 Merged PR #21 (`6f166b7`) adds opaque inline/display/fenced TeX on `main`
 with exact provenance and caller-owned rendering; see [Math](Docs/Math.md).
 PR and merged-main CI pass on macOS and Linux.
-Alerts and callouts remain planned.
+
+Unreleased work on `feature/m5-alerts-callouts` adds GitHub-style alerts and
+Obsidian-style callouts with parsed titles, folding and an optional HTML
+recipe; see [Admonitions](Docs/Admonitions.md). This implements the remaining
+declared M5 syntax; CI, review and merge remain pending.
 
 Requires **Swift 6.2 or later**. The current provisional Apple minimums are
 macOS 15, iOS 18 and visionOS 2; Linux is supported. The repository is public
@@ -75,7 +79,7 @@ and device acceptance do not determine this package's API or release readiness.
 - **Extensible:** shipped CommonMark and GFM profiles, independently selectable
   GFM features, custom block/inline rules and transforms. The first M5
   steps add raw YAML/TOML front matter, named footnotes and opaque TeX syntax
-  on `main`. Alerts, callouts and further dialects
+  on `main`; the next branch implements alerts and callouts. Further dialects
   follow separately.
 - **Positions:** every node knows its source range in UTF-8 bytes;
   conversion to lines, columns and UTF-16 offsets for text views.
@@ -132,17 +136,17 @@ and device acceptance do not determine this package's API or release readiness.
 ## Modules
 
 M5 selection/rendering examples are documented in [FrontMatter](Docs/FrontMatter.md),
-[Footnotes](Docs/Footnotes.md) and [Math](Docs/Math.md); these additions are
-not part of v0.4.0.
+[Footnotes](Docs/Footnotes.md), [Math](Docs/Math.md) and
+[Admonitions](Docs/Admonitions.md); these additions are not part of v0.4.0.
 
 | Module | Implemented | Planned |
 | --- | --- | --- |
 | `SetzerSyntax` | Validated block/inline tree, source ranges/tokens, parent/offset/outline index, position conversion, diagnostic/fix values | Additional query conveniences |
 | `SetzerParser` | Block/inline parser, custom rules/children, pre/post transforms and profiles | Additional dialect syntax |
-| `SetzerExtensions` | GFM profile; raw YAML/TOML front matter; named footnotes; opaque TeX (unreleased) | Alerts and callouts |
+| `SetzerExtensions` | GFM profile; raw YAML/TOML front matter; named footnotes; opaque TeX; alerts/callouts on the unreleased M5 branch | Further dialects |
 | `SetzerHTML` | CommonMark and GFM HTML, source anchors, escaping, comment policy, tag filter and decoded URL checks | – |
 | `SetzerAnalysis` | Three optional native rules over the existing document | Broader rule catalogue |
-| `GMSetzer` | Imports the five modules above; composed footnote HTML renderer (unreleased) | Additional convenience APIs |
+| `GMSetzer` | Imports the five modules above; composed footnote HTML and unreleased admonition HTML recipe | Additional convenience APIs |
 
 M1 acceptance is merged in PR #9 and block hot-path optimisation in PR #10.
 M2 adds CommonMark inlines and 867 exact C comparisons. M4 adds GFM as typed
