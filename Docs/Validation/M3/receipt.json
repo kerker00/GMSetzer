@@ -1,0 +1,137 @@
+{
+  "date": "2026-11-20",
+  "branch": "feature/m3-editor-services",
+  "gmsetzerBase": "021f1103805186b691dc4725172c37243ee33736",
+  "snapshotAlgorithm": "SHA-256 of canonical sorted compact JSON mapping relative Package.swift, Sources and Tests paths to SHA-256 file digests; documentation excluded",
+  "gmsetzer": {
+    "sha256": "467641f3fc946a4a6045be38dc990044a4f06e1bd53ffb6a28d3de471012b963",
+    "files": {
+      "Package.swift": "346f8bb999e3cf632d2ffda5516708f7285a75d1566ced8fa4ff08d04989faf7",
+      "Sources/GMSetzer/GMSetzer.swift": "9a3debebd1be48c9f9484edc39aea9833e8ce827baf6819b2f0eaab5f531f1a2",
+      "Sources/SetzerAnalysis/NativeAnalyzer.swift": "827648ac11ab72b830b98dc1146e266196711727829b066943558d0e25c38101",
+      "Sources/SetzerExtensions/Extensions.swift": "c2c6a4d13321c273d81d13319fb862c0ad4626355687615fa772d9e4e034d32a",
+      "Sources/SetzerHTML/HTMLComments.swift": "1b14a2d9b16a37b92f78128288fb9dd6d4f509f8b48859411be25028afb6a3ba",
+      "Sources/SetzerHTML/HTMLRenderer.swift": "74ae4efe3070a40a3a2b7792210f23cf25dc6a8f4c0d87cc8e514cc262cb2143",
+      "Sources/SetzerParser/BlockTransform.swift": "5c8dca97d49774fbb95fb4c6519ff6dde940c22abddff49a1c6235620b587851",
+      "Sources/SetzerParser/ContainerParsing.swift": "e6bc8336f15496b779e35e9817c8cec3415cf72767b9826179d54d8730618888",
+      "Sources/SetzerParser/HTMLBlocks.swift": "135fb0544903f76b7bc6810bd02738bc965eee744ad9e23af7074bc8499da848",
+      "Sources/SetzerParser/InlineDecoding.swift": "41671efb235185aa04b93aaf7c91ab6bb6d85978dc66aef9017ac737e3259381",
+      "Sources/SetzerParser/InlineExtensions.swift": "a05279622a454e0ca1b2a2f948410b648bd6e3b0dabf4490d236c350690bc9c7",
+      "Sources/SetzerParser/InlineLinks.swift": "ad2927d6aac1d9234b28a6a624be397d31081dd05a4d5781367959ebf1292187",
+      "Sources/SetzerParser/InlineParser.swift": "29ec35dcae39a911a0bf891d97304a225618e79ad6c5d5a5ade33b4bf04f3361",
+      "Sources/SetzerParser/InlinePhase.swift": "220b358f30691c34803f08b50ffdbfefc338ae821331b9275320690026501db7",
+      "Sources/SetzerParser/InlineRule.swift": "28c18779b7360b682d209b9db399365c8172525537caa8df84a4a17d0bc7fea3",
+      "Sources/SetzerParser/InlineTables.swift": "4efdccb56eb518e631939153541ec4291eb209e4ea5be5a96bfd44a2edb51062",
+      "Sources/SetzerParser/MarkdownParser.swift": "0e78a67d1b7e7e09a2f85950e2d7b9ea449ba3053c9417d4afbe0b332717542a",
+      "Sources/SetzerParser/Profile.swift": "77b48c60ed4bb71ecd5889ceb6886c67a482e06e686bbb67b8a0f9cdde366af9",
+      "Sources/SetzerParser/ReferenceDefinitions.swift": "f44d21348b8235cf36b74ed08f2b5e1fabc678d30ca5fc0ec38a9fcac9bfa188",
+      "Sources/SetzerParser/RuleRegistry.swift": "5d445ca1ef953176988d21410bee5ebcd7d0f6c483a29dd1921e4e957e0ed97c",
+      "Sources/SetzerParser/SourceCursor.swift": "bc7b8342bc9738b4c0ac6e45bd13ce23521b99a82a1fd151ed3881efb27d563a",
+      "Sources/SetzerSyntax/Document.swift": "40a5c04b2a0b3c0b5d8a4047e0f640ed54b3af94a87c700a2d7f68ac60f32230",
+      "Sources/SetzerSyntax/DocumentDiagnostic.swift": "8e7041b9f7357993a89f191ce1e5bde1ceb532ffe9958d975a2ad657cc528853",
+      "Sources/SetzerSyntax/DocumentIndex.swift": "fe0a9a7b9cab7d5453a9e4e136e21f52e65a311f69491fb0213f2970159ef4a8",
+      "Sources/SetzerSyntax/ExtensionDescriptor.swift": "d7620b9aa850c4cdd5fd65e845069acdcd42f5c15c9a54d0cd52ccf96f0b305d",
+      "Sources/SetzerSyntax/HTMLBlock.swift": "5e1f0febf1ef80e8ec824d79055a8791c75a398ff201597362a1db7d0169586c",
+      "Sources/SetzerSyntax/SourceIndex.swift": "99691affc0015c348c98c04a250595d7dfca18486da08954110279667b5c41f6",
+      "Sources/SetzerSyntax/SourceRange.swift": "8c4ff9c38677252c2642da6ff0824b613fdeb4b311b98859388fe92c74902460",
+      "Sources/SetzerSyntax/SyntaxToken.swift": "d2028656d614538e83fff7241cefd6d358a0c520865b9dcf03686438fae321b6",
+      "Tests/SetzerParserTests/ContainerExtensionTests.swift": "e7275efae2dc59cc9e1d6816938057deb8ac53ec817f8a40e1f7bc312f930c8c",
+      "Tests/SetzerParserTests/ContainerTests.swift": "5c9aa3e9d8fdf3544eaa59da45a62dba945151dcc48b1a950df9d8ee23f8f5bf",
+      "Tests/SetzerParserTests/DiagnosticTests.swift": "6d359857be8e2adc23da7830ef5f61600dcb146092a4303eac9145dbcdfbac92",
+      "Tests/SetzerParserTests/DocumentTests.swift": "342e4298d7aea04542fdf436652d9f309c663a3f3ff0ad797f6efbf83e6f68f8",
+      "Tests/SetzerParserTests/ExtensionTests.swift": "299e8d380d40e7ddd2c0b7ab9956175978022760f8905f9bf343058365af1c4a",
+      "Tests/SetzerParserTests/HTMLBlockTests.swift": "02bb05579b8bdaab35e62680a633849b07ddbcff9955758dc68380314006ed95",
+      "Tests/SetzerParserTests/HTMLSecurityTests.swift": "426988592631fecd9d501483c73289ea7820e65cfe4c6fda184736fd95c03ab9",
+      "Tests/SetzerParserTests/InlineExtensionTests.swift": "2c39b04a2496cfecb8d55a2a70d36cbe0f3c3d2d9f2da911bc48d437c848db21",
+      "Tests/SetzerParserTests/InlineTests.swift": "778190696d6dd22d49de184372fbf762f313c152d439048dfca68194f0b2e9cd",
+      "Tests/SetzerParserTests/LeafBlockTests.swift": "7f570ab9648ed2b09fc00408db9057a3a197c32728cceb7385c14ff9292a41e8",
+      "Tests/SetzerParserTests/M1CombinationTests.swift": "13132d92bed9e376cc7c920cbd144898bf7bbe850321bfa90b5d08f3c5612f44",
+      "Tests/SetzerParserTests/NativeAnalysisTests.swift": "a369799966489702cc063c73fad03f42566715eeaf5e75cef44e045ef5380866",
+      "Tests/SetzerParserTests/ReferenceDefinitionTests.swift": "8cdb91816bfd6136ea41d4fab8f7e55bb2b9e3474c7b393629b0c1a3fc3d3e68",
+      "Tests/SetzerParserTests/RegistryTests.swift": "0a3156e3d9818fc115ae02d08a341c544ebb4b227abd022a97ad702546995781",
+      "Tests/SetzerParserTests/SourceIndexTests.swift": "a5aff9fbe1a1f9fae901bec878ed359db19733a7fa0798f59793bd83e55e91cc",
+      "Tests/SetzerParserTests/SyntaxTreeTests.swift": "d16de49f27961bd2c37be5b7b93565cf580495655846b8e5203730a7542e0ff7",
+      "Tests/SetzerParserTests/TransformTests.swift": "94dbc598e22ab68f83f2997af5f935896eeadd7aee54e3c6848ce470564cb022",
+      "Tests/SetzerSpecTests/HTMLNormalization.swift": "e088f2402b6585e927e75b23aa9080cd6de424e0a7bbae17357db0b815c5ae57",
+      "Tests/SetzerSpecTests/HTMLNormalizationTests.swift": "d18d0f5536fecd38cfa57620d37119cc73d43829ccdbec9b89f6927555557033",
+      "Tests/SetzerSpecTests/Resources/README.md": "9c6f691a0cb40c3cc3b5ebdc11bd2f9099dad0020a89d9218ad00d0e77f616a6",
+      "Tests/SetzerSpecTests/Resources/baseline.json": "0cce8557c6e4fc9b8cfd637af7cf54d1801fc72b59e6dfc1c170f01d29f8d0fb",
+      "Tests/SetzerSpecTests/Resources/commonmark-0.31.2.json": "d431b29d97b6f73e69d547109cf5081578fac931e72afe95639ebe766c1b2a20",
+      "Tests/SetzerSpecTests/Resources/gfm-0.29.json": "b562336deb8cbb5634c95c2744c62706f48a1cdd83973ab8b101f9cbc7c3ef56",
+      "Tests/SetzerSpecTests/SpecTests.swift": "2a66e20952e28c16616451fb77b2b24c17cf6085c02d5ceda4c68621346003db"
+    }
+  },
+  "protectedSpecIDs": {
+    "commonmark": 652,
+    "gfm": 641
+  },
+  "environment": {
+    "macOS": "27.0.1 arm64, Xcode 27.2, Apple Swift 6.4.2",
+    "minimumSwift": "Swift 6.2 release toolchain with matching Testing runtime and CLT macOS 14.4 SDK",
+    "linux": "Linux 7.3.3 x86_64, Swift 6.4.2, glibc 2.44"
+  },
+  "runs": [
+    {
+      "name": "macOS Swift 6.4.2 debug",
+      "exitCode": 0,
+      "testExecutables": [
+        7,
+        99
+      ],
+      "totalTests": 106,
+      "command": "swift test --disable-sandbox",
+      "resultLines": [
+        "✔ Test run with 7 tests in 2 suites passed after 0.052 seconds.",
+        "✔ Test run with 99 tests in 17 suites passed after 0.254 seconds."
+      ]
+    },
+    {
+      "name": "macOS Swift 6.4.2 release",
+      "exitCode": 0,
+      "testExecutables": [
+        7,
+        99
+      ],
+      "totalTests": 106,
+      "command": "swift test -c release -debug-info-format none --disable-sandbox",
+      "resultLines": [
+        "✔ Test run with 7 tests in 2 suites passed after 0.014 seconds.",
+        "✔ Test run with 99 tests in 17 suites passed after 0.107 seconds."
+      ]
+    },
+    {
+      "name": "macOS Swift 6.2",
+      "exitCode": 0,
+      "testExecutables": [
+        106
+      ],
+      "totalTests": 106,
+      "command": "Swift 6.2 swift test --disable-sandbox --disable-xctest --sdk <CLT macOS 14.4 SDK>; -I/-L/rpath use the matching Swift 6.2 Testing runtime",
+      "resultLines": [
+        "✔ Test run with 106 tests in 19 suites passed after 0.303 seconds."
+      ]
+    },
+    {
+      "name": "Linux x86_64 Swift 6.4.2",
+      "exitCode": 0,
+      "testExecutables": [
+        7,
+        99
+      ],
+      "totalTests": 106,
+      "command": "swift test; only Package.swift/Sources/Tests exported into an own temporary directory on the existing host; removed afterwards",
+      "resultLines": [
+        "✔ Test run with 7 tests in 2 suites passed after 0.068 seconds.",
+        "✔ Test run with 99 tests in 17 suites passed after 0.952 seconds."
+      ]
+    }
+  ],
+  "commandEnvironment": "Local runs redirect Clang/module/SwiftPM caches and scratch output to own temporary directories. No new container or VM. Temporary Linux directory removed.",
+  "limits": [
+    "No fresh benchmarks",
+    "No release or publication performed",
+    "Application-specific UI, lifecycle and device acceptance are outside the library package"
+  ],
+  "originalValidationSnapshotSHA256": "cc5cb7f38597e1e28751ebe05703dc9d958f7e4bb7f29250067789672de92742",
+  "snapshotNormalization": "Finder .DS_Store metadata excluded from the portable manifest; source, test and fixture bytes are unchanged from validation."
+}

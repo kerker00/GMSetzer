@@ -1,158 +1,130 @@
 # Editor syntax services and lint analysis
 
-Decision: 19 November 2026; M2 update: 20 November 2026. **Portable syntax tokens and diagnostic/fix values implemented; native rules and the editor adapter remain M3 work.**
-GMSetzer is also the syntax and native Markdown-analysis engine for Setzkit.
-The existing tree/source ranges are prerequisites, not a finished editor or
-linter. `MarkdownParser.configurationIssues` reports configuration failures
-without source locations. `ParseDiagnostic` reports runtime extension and
-resource-limit conditions; it does not yet implement document lint findings.
+20 November 2026. **Portable positions, syntax tokens, diagnostic/fix values and
+three optional native rules are implemented; M3 review remains open.**
+GMSetzer supplies reusable syntax and analysis services for any Markdown
+consumer. Application adapters and UI acceptance belong in the consuming
+repository and do not gate this library's release.
 
 ## Responsibilities
 
-| Service | GMSetzer | Setzkit |
+| Service | GMSetzer | Consumer |
 | --- | --- | --- |
-| Parsing and syntax checking | Dialect-aware tree, original source and precisely located document diagnostics where a rule applies | Supply immutable snapshot and effective dialect; schedule background work |
-| Syntax highlighting | Optional source-spelled syntax spans: role/kind and exact UTF-8 ranges, including delimiters and link parts | Resolve roles through themes and convert ranges to TextKit UTF-16 coordinates |
-| Native linting | Optional `SetzerAnalysis` module: deterministic rules over the same `Document`, source and effective rule configuration | Activation, configuration resolution, localized presentation, problem list and underlines |
-| Other analyzers | Portable values and extension points; no filesystem, editor or network access | Provide workspace snapshots or additional providers through existing ports |
-| Suggested fixes | Explicit edits with original ranges and expected source text, when justified | Validate snapshot/configuration and apply only on user action through `EditTransaction` |
+| Parsing | Dialect-aware immutable tree and original source | Supply source and effective dialect; schedule work |
+| Syntax highlighting | Optional semantic roles and exact UTF-8 lexical ranges | Choose theme and presentation; convert portable ranges to platform coordinates |
+| Native linting | Optional `SetzerAnalysis` rules over an existing `Document` | Activation, configuration resolution and localized presentation |
+| Other analyzers | Portable findings and advisory edits | Supply authorized context or coordinate additional providers |
+| Suggested fixes | Expected original bytes, replacements and validated edit sets | Choose whether to apply; validate current source/configuration and apply atomically |
 
-`SetzerAnalysis` will depend on `SetzerSyntax`, not UI, the HTML renderer or an
-additional parser. `SetzerSyntax` owns portable diagnostic/span/fix values.
-The parser must not depend on the analysis module. Native analysis reuses an
-existing parse; it must not parse the same snapshot again. A separate text-only
-provider can still run independently when it does not consume GMSetzer's tree.
+Library targets depend only on other modules in this package and the Swift
+standard library. Public types contain no application session, revision,
+transaction, UI framework or editor implementation. `SetzerAnalysis` depends
+only on `SetzerSyntax`; it does not import a parser or renderer and never
+reparses the supplied document. `SetzerSyntax` owns portable span, diagnostic
+and fix values. Engines do not access files, networks or a live editor.
 
-M2 introduces the portable value API without adding an analysis package target. Introduce the
-module with its first tested native rules, by the M3 editor-integration gate.
+## Syntax and document findings
 
-M1-C provides an optional generic `Document.tokens` table through
-`collectSyntaxDetails`: source role/range and owning node. It collects reference and fence components, inline delimiters/link parts,
-escapes/entities, raw HTML and custom roles. `referenceSyntax(for:)`
-provides a convenience view. `DocumentIndex` owns snapshot-bound parents and
-ancestors. Portable `DocumentDiagnostic`/`DiagnosticReport` and suggested edit/fix values
-are implemented. Actual lint findings, offset queries, UTF-16 underlines
-and the native rule engine remain planned. See [ExtensionContracts.md](ExtensionContracts.md)
-and the current [M1 acceptance record](M1Acceptance.md).
+`MarkdownParser(collectSyntaxDetails: true)` fills the optional `Document.tokens`
+table with role, owning node and original UTF-8 range. It covers reference and
+fence components, inline delimiters/link parts, escapes/entities, raw HTML and
+custom roles. `referenceSyntax(for:)` offers a reference-component view.
+`DocumentIndex` supplies parents/ancestors, boundary-aware offset queries and
+heading outline. `SourceIndex` converts original byte positions/ranges to
+portable UTF-16 offsets/ranges or one-based lines/scalar columns.
 
-## Markdown validity and findings
+AST bounds alone are insufficient for exact syntax decoration. A container's
+broad range must not be presented as a lexical marker. Semantic content ranges
+and lexical token ranges are distinct. Preserve zero-length locations and
+original trivia. No colors, Foundation ranges or UI framework types enter the
+library; omitted syntax collection avoids its optional storage cost.
 
-CommonMark has defined literal-text fallbacks for apparently unfinished markup.
-An unmatched emphasis marker, unknown syntax or an unclosed fence is therefore
-not automatically a parser error. Possible accidental markup can be an
-explicit, configurable lint rule; it must not change the parse or invalidate a
-conforming document. Disabled extensions follow the selected dialect and do
-not produce false syntax errors merely because another dialect recognises them.
+CommonMark defines literal-text fallbacks for apparently unfinished markup.
+An unmatched emphasis marker, unknown syntax or unclosed fence is not
+automatically a syntax error. Optional lint rules must not change the parse or
+invalidate conforming Markdown. Disabled extensions do not produce errors merely
+because another dialect recognizes them.
 
-Separate document findings from provider/configuration failures and resource
-limits. An unavailable extension or internal analyzer failure must not become a
-red underline on arbitrary user text. Parsing and saving remain available when
-optional linting is off or fails.
+`MarkdownParser.configurationIssues` reports configuration failures without
+source locations. `ParseDiagnostic` reports extension/resource-limit conditions.
+Neither is automatically a document lint finding or an arbitrary red underline.
+Native analysis uses the separate `DocumentDiagnostic` and `DiagnosticReport`
+values. Provider failures and invalid configuration are distinct from findings.
 
-The first native rule catalogue must name supported rule IDs, options, scope
-and examples. Candidates include skipped heading levels, inconsistent list
-markers, duplicate headings and trailing whitespace, with code/HTML/extension
-contexts respected. Text/trivia rules use original source, not rendered HTML
-or decoded literals. Native rule IDs use a `gmsetzer.` namespace.
+## Native rules and configuration
 
-The existing markdownlint plan becomes an optional compatibility/provider path.
-Do not claim full markdownlint rule, configuration or suppression compatibility
-without an explicit supported matrix and comparison tests. If retained, that
-provider uses the same snapshot and diagnostic adapter; it does not define the
-syntax semantics of the GMSetzer preview.
+`SetzerAnalysis` provides `NativeAnalyzer.analyze(_:dialect:configuration:)`
+using the existing document. The enabled rule set defaults to empty. The M3
+catalogue names `gmsetzer.heading-level`, `gmsetzer.duplicate-heading` and
+`gmsetzer.trailing-whitespace`; scope, examples, exclusions and fixes are in
+[M3EditorServices.md](M3EditorServices.md). Text/trivia rules inspect original
+bytes, not HTML or decoded literals. Code, HTML, reference and unknown custom
+contexts are respected; semantic hard-break whitespace is retained.
 
-## Diagnostic and span contract
+`NativeAnalysisConfiguration.identity` deterministically identifies effective
+rules and explicit `NativeSuppression` source scopes. Suppressions apply only
+to fully contained primary findings of the named rule. They do not alter the
+parse or heading history. Invalid ranges and empty dialect identity produce
+provider/configuration errors, not text findings. No markdownlint rule,
+configuration or inline suppression-language compatibility is claimed.
 
-M2 implements immutable, `Sendable` values in `DocumentDiagnostic.swift`:
+## Portable diagnostic and edit values
 
-- Stable provider and rule/code identifiers, category, severity, and a message
-  key plus structured arguments/default text. Setzkit owns localized UI wording.
-- A precise primary `SourceRange`, optional related ranges, or an explicit
-  document/line-level finding when no exact span exists. Use the offending
-  marker/token where possible, rather than underlining its entire block.
-- Zero-length insertion locations are retained as such. The editor can use a
-  caret/gutter marker; it must not invent a range on a neighbouring character.
-- Optional suggested edits, including expected original text. Multiple edits
-  must have valid, non-overlapping source ranges; an ambiguous finding has no fix.
-- Deterministic ordering and explicit effective dialect/rule configuration.
-  Setzkit binds results to session, full text stamp, parser/provider version and
-  configuration fingerprint; diagnostic IDs are never identities across edits.
+`DocumentDiagnostic` carries a provider/code, category/severity, message key,
+structured arguments/default text, primary location, related locations and
+optional advisory fixes. A location is an original `SourceRange`, physical-line
+start or explicit document scope. Empty source ranges are caret/insertion
+locations; consumers must not widen them to neighboring characters.
 
-AST node bounds alone are insufficient for syntax decoration. The parser must
-retain opt-in lexical spans for opening/closing delimiters, fence markers and
-info, link labels/destinations/titles and extension syntax, while keeping
-original trivia available. A container's broad range must not be presented as
-an exact token range. Omitted annotation collection should avoid its memory
-cost for callers such as Quick Look. Roles are semantic; no colors, NSRange,
-AppKit or UIKit types enter GMSetzer.
-
-UTF-8 to UTF-16 conversion uses the exact immutable snapshot and the boundary
-policy in `SyntaxTree.md`. No guessed scalar rounding or conversion from decoded
-content. A marker after emoji, combining text, CRLF or stripped container
-prefixes must select the original intended bytes and UTF-16 code units.
-
-## Editor behavior
-
-Setzkit applies syntax roles and diagnostic underlines as temporary decoration,
-without changing text, dirty state or undo history. Linting remains off by
-default and configurable per app/project/document as specified by Setzkit.
-Syntax highlighting and optional document checks have separate activation.
-
-A late result after typing, undo, reopen or a dialect/rule change is rejected
-unless its full input stamp still matches. Native typing is never blocked by
-parsing/linting. Debounce/cancellation are scheduler concerns; no promise of
-instant interruption of arbitrary extension callbacks. Defer intersecting
-updates while IME marked text is active. Overlapping syntax/search/diagnostic
-roles need deterministic composition; native selection/IME has priority.
-
-Findings remain accessible through a problem list/VoiceOver and text/severity
-labels, not color alone. Fixes are advisory and apply only through Setzkit's
-strict transaction path; stale fixes are rejected and recomputed.
-
-## Acceptance and milestones
-
-- **Remaining M1:** review which marker/trivia provenance is required by editor
-  spans and analyses while completing HTML/reference blocks. Keep parser
-  infrastructure diagnostics distinct from future document findings.
-- **M2:** implement exact inline and delimiter spans and the portable diagnostic
-  contract; test legal literal fallbacks and dialect-specific behavior.
-- **M3:** ship position conversion, optional analysis module with a named native
-  rule subset, and a Setzkit adapter proof for syntax roles and diagnostic
-  underlines. Rendering alone no longer satisfies this integration gate.
-- **M4/M5:** cover GFM/additional extension spans, rule context and suppressions;
-  opt-in rule profiles must follow the active dialect.
-- **M6/M7:** measure parse + optional annotation + analysis costs separately;
-  review public analysis API, limits and documentation before 1.0.
-
-Required library tests: precise finding/delimiter spans, Unicode/CRLF and nested
-prefixes, invalid-byte policy, related/zero-length ranges, rules on/off,
-configuration determinism, suppression scope, excluded code contexts, edit
-preconditions, and configuration failures separated from document findings.
-Required Setzkit acceptance: correct TextKit ranges, stale-result rejection,
-IME/undo protection, overlapping decorations, optional linting, accessible
-navigation and explicit fix transactions. These checks are **open**; existing
-block/spec tests are not evidence that editor diagnostics are implemented.
-
-## Implemented portable contract (M2)
-
-`DocumentDiagnostic` carries provider/code, category/severity, a message key,
-structured `SyntaxValue` arguments/default text, an explicit source/physical-line/
-document location, related locations and advisory fixes. Empty ranges are
-preserved. `DiagnosticReport` validates all findings against its exact byte
-snapshot and stores provider version, dialect and configuration identity.
+`DiagnosticReport` owns the exact source bytes and records provider version,
+dialect and configuration identity. It validates findings against that source.
 Ordering is source offset (document first), descending severity, code/message
-key, then stable provider emission order for equal keys. The editor still adds
-its session/full-text stamp and rejects stale results before presentation.
+key, then stable emission order. Node indices and finding indices are local to
+this result, never identities across edits. Consumers choose their own revision
+or content identity outside the library; there is no required session-ID or
+revision type.
 
-`SuggestedEdit` uses expected/replacement UTF-8 bytes, so malformed original
-bytes are preserved rather than silently repaired. `SuggestedFix` sorts edits,
-rejects invalid expected lengths/overlap and ambiguous insertion boundaries,
-validates expected original bytes before any application, and can return a new
-byte snapshot without touching an editor or filesystem. Matching only the
-edited substrings is not a full snapshot precondition: Setzkit must also check
-its full source/configuration stamp before applying the chosen transaction.
+`SuggestedEdit` stores original-byte ranges, expected bytes and replacement
+bytes, preserving malformed UTF-8. `SuggestedFix` sorts edits and rejects invalid
+expected lengths, overlap and ambiguous insertion boundaries. All expected
+bytes are checked before `applying(to:)` returns a replacement snapshot. It
+never mutates an editor, filesystem or application model.
 
-No parser lint rules, automatic fixes, suppression compatibility or Setzkit
-underlines are claimed. Legal unmatched markup continues as literal syntax
-without document findings. Validation and remaining gates are in
-[M2Inlines.md](M2Inlines.md).
+Matching only edited substrings is not a full revision precondition. A consumer
+must ensure that the source/configuration used for a chosen fix is still current.
+An interactive application applies edits through its own atomic undo/composition-
+safe path; a command-line consumer can use the pure byte operation directly.
+Platform editing APIs may impose stricter grapheme boundaries. Such consumers
+reject unsupported edits rather than rounding or silently widening a range.
+
+## Consumer adapter guidance
+
+A consumer can wrap a result with its own immutable revision/content identity,
+parser/provider versions, dialect and configuration fingerprint. It rejects late
+results after text/configuration changes. UTF-16 conversion must use the same
+original byte snapshot: scalar, replacement-subpart, surrogate and CRLF interiors
+are rejected, never rounded. This preserves intended locations after emoji,
+combining text, RTL/CJK, malformed bytes or stripped container prefixes.
+
+Interactive consumers schedule parsing off their input path, apply temporary
+syntax/diagnostic decorations without text or undo mutations, defer conflicting
+updates during marked-text composition, and compose overlapping syntax/search/
+diagnostic presentation deterministically. Selection and IME retain priority.
+Accessible navigation exposes message and severity as well as color. Fixes are
+explicit user choices. These are consumer responsibilities, not UI implementations
+or platform types supplied by GMSetzer.
+
+## Validation and remaining milestones
+
+Library tests cover exact delimiter/finding ranges, Unicode/CRLF and nested
+prefixes, malformed bytes, related/empty locations, rules on/off, deterministic
+configuration, suppression scope, excluded contexts and edit preconditions.
+The M3 matrix passes 106 tests across macOS debug/release, minimum Swift 6.2 and
+Linux Swift 6.4.2. Evidence is in [M3EditorServices.md](M3EditorServices.md) and
+`Validation/M3/receipt.json`. No source/API change accompanies the consumer-
+independence documentation clarification.
+
+M4/M5 add GFM/extension-specific spans and rule contexts. M6/M7 measure optional
+annotation/index/analysis costs separately and review the public API before 1.0.
+Consumer UI/device test reports remain in their own repositories; a green library
+suite does not claim that any particular editor integration works.

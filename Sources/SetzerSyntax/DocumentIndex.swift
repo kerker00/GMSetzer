@@ -1,33 +1,131 @@
-/// Optional O(nodes) parent table. It owns the immutable snapshot so indices
-/// cannot accidentally be resolved against a newer document. This is not an
-/// offset-search index; boundary-aware position queries belong to M3.
+/// Optional snapshot-owned CSR index: one parent table, one child-offset table
+/// and one flat child table. The common representation uses three Int32 arrays;
+/// documents beyond Int32 capacity transparently use native-width tables.
 public struct DocumentIndex: Sendable {
     public let document: Document
-    private let parents: [Int?]
+    fileprivate enum Tables: Sendable {
+        case compact(parents: [Int32], starts: [Int32], children: [Int32])
+        case wide(parents: [Int], starts: [Int], children: [Int])
+        func parent(_ index: Int) -> Int {
+            switch self { case .compact(let p, _, _): Int(p[index]); case .wide(let p, _, _): p[index] }
+        }
+        func bounds(_ index: Int) -> Range<Int> {
+            switch self {
+            case .compact(_, let s, _): Int(s[index])..<Int(s[index + 1])
+            case .wide(_, let s, _): s[index]..<s[index + 1]
+            }
+        }
+        func child(_ offset: Int) -> Int {
+            switch self { case .compact(_, _, let c): Int(c[offset]); case .wide(_, _, let c): c[offset] }
+        }
+    }
+    private let tables: Tables
 
     public init(_ document: Document) {
         self.document = document
-        var parents = [Int?](repeating: nil, count: document.nodes.count)
-        for (parent, node) in document.nodes.enumerated() {
-            var child = node.firstChild
+        if document.nodes.count <= Int32.max {
+            let (p, s, c): ([Int32], [Int32], [Int32]) = Self.build(document)
+            tables = .compact(parents: p, starts: s, children: c)
+        } else {
+            let (p, s, c): ([Int], [Int], [Int]) = Self.build(document)
+            tables = .wide(parents: p, starts: s, children: c)
+        }
+    }
+    private static func build<Word: FixedWidthInteger & SignedInteger>(_ document: Document) -> ([Word], [Word], [Word]) {
+        let count = document.nodes.count
+        var parents = [Word](repeating: -1, count: count)
+        var starts = [Word](repeating: 0, count: count + 1)
+        for parent in 0..<count {
+            var child = document.nodes[parent].firstChild
+            while let index = child { starts[parent + 1] += 1; child = document.nodes[index].nextSibling }
+        }
+        for index in 0..<count { starts[index + 1] += starts[index] }
+        var children = [Word](repeating: 0, count: count - 1)
+        for parent in 0..<count {
+            var cursor = Int(starts[parent]), child = document.nodes[parent].firstChild
             while let index = child {
-                parents[index] = parent
-                child = document.nodes[index].nextSibling
+                children[cursor] = Word(index); parents[index] = Word(parent)
+                cursor += 1; child = document.nodes[index].nextSibling
             }
         }
-        self.parents = parents
+        return (parents, starts, children)
     }
 
-    /// nil for the root or an index outside this snapshot.
     public func parent(of index: Int) -> Int? {
-        parents.indices.contains(index) ? parents[index] : nil
+        guard document.nodes.indices.contains(index) else { return nil }
+        let parent = tables.parent(index)
+        return parent < 0 ? nil : parent
     }
 
-    /// Nearest parent first; excludes the queried node.
-    public func ancestors(of index: Int) -> [Int] {
-        var result: [Int] = []
-        var next = parent(of: index)
-        while let index = next { result.append(index); next = parent(of: index) }
+    /// Nearest parent first, excluding the node. Iteration allocates no array.
+    public func ancestors(of index: Int) -> Ancestors { Ancestors(tables: tables, next: parent(of: index)) }
+    public struct Ancestors: Sequence, Sendable {
+        fileprivate let tables: Tables
+        fileprivate let next: Int?
+        public func makeIterator() -> Iterator { Iterator(tables: tables, current: next) }
+        public struct Iterator: IteratorProtocol {
+            fileprivate let tables: Tables
+            fileprivate var current: Int?
+            public mutating func next() -> Int? {
+                guard let result = current else { return nil }
+                let parent = tables.parent(result)
+                current = parent < 0 ? nil : parent
+                return result
+            }
+        }
+    }
+
+    /// Deepest nonempty node at a valid source boundary. Downstream uses
+    /// [start,end), upstream (start,end]. Downstream EOF/upstream BOF return
+    /// the root; empty nodes never capture a caret.
+    public func node(atUTF8Offset offset: Int, affinity: SourceAffinity = .downstream) -> Int? {
+        guard SourceIndex.isBoundary(offset, in: document.source) else { return nil }
+        var current = 0
+        while true {
+            let siblings = tables.bounds(current)
+            var low = siblings.lowerBound, high = siblings.upperBound
+            while low < high {
+                let mid = (low + high) / 2
+                let end = document.nodes[tables.child(mid)].range.upperBound
+                if affinity == .downstream ? end <= offset : end < offset { low = mid + 1 }
+                else { high = mid }
+            }
+            var found: Int?
+            while low < siblings.upperBound {
+                let candidate = tables.child(low), range = document.nodes[candidate].range
+                if range.lowerBound > offset { break }
+                if !range.isEmpty && (affinity == .downstream
+                    ? range.lowerBound <= offset && offset < range.upperBound
+                    : range.lowerBound < offset && offset <= range.upperBound) { found = candidate; break }
+                low += 1
+            }
+            guard let found else { return current }
+            current = found
+        }
+    }
+
+    /// Global source-order headings, including quotes, lists and custom block
+    /// containers. Parent headings can cross container boundaries. Paragraph
+    /// inlines are never visited. Text/code/image labels form the plain title.
+    public func outline() -> [OutlineEntry] {
+        var result: [OutlineEntry] = [], headings: [(level: Int, node: Int)] = []
+        for index in DocumentTraversal(document, blocksOnly: true) {
+            guard case .heading(let level) = document.nodes[index].data else { continue }
+            while let last = headings.last, last.level >= level { headings.removeLast() }
+            result.append(OutlineEntry(node: index, level: level, title: plainText(of: index),
+                                       range: document.nodes[index].range, parentHeading: headings.last?.node))
+            headings.append((level, index))
+        }
         return result
     }
+    public func plainText(of index: Int) -> String { document.plainText(of: index) }
+}
+
+public enum SourceAffinity: Sendable { case downstream, upstream }
+public struct OutlineEntry: Hashable, Sendable {
+    public let node: Int
+    public let level: Int
+    public let title: String
+    public let range: SourceRange
+    public let parentHeading: Int?
 }

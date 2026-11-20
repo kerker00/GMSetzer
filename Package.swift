@@ -23,6 +23,7 @@ let package = Package(
         .library(name: "SetzerParser", targets: ["SetzerParser"]),
         .library(name: "SetzerExtensions", targets: ["SetzerExtensions"]),
         .library(name: "SetzerHTML", targets: ["SetzerHTML"]),
+        .library(name: "SetzerAnalysis", targets: ["SetzerAnalysis"]),
     ],
     targets: [
         // Syntax tree, source ranges, position conversion, outline queries.
@@ -33,8 +34,9 @@ let package = Package(
         .target(name: "SetzerExtensions", dependencies: ["SetzerParser", "SetzerSyntax"], swiftSettings: strict),
         // HTML renderer with block anchors and safe defaults.
         .target(name: "SetzerHTML", dependencies: ["SetzerSyntax"], swiftSettings: strict),
+        .target(name: "SetzerAnalysis", dependencies: ["SetzerSyntax"], swiftSettings: strict),
         // Convenience module re-exporting the above.
-        .target(name: "GMSetzer", dependencies: ["SetzerSyntax", "SetzerParser", "SetzerExtensions", "SetzerHTML"], swiftSettings: strict),
+        .target(name: "GMSetzer", dependencies: ["SetzerSyntax", "SetzerParser", "SetzerExtensions", "SetzerHTML", "SetzerAnalysis"], swiftSettings: strict),
 
         .testTarget(name: "SetzerParserTests", dependencies: ["GMSetzer"], swiftSettings: strict),
         // Runs every example of the CommonMark and GFM specifications.

@@ -1,6 +1,6 @@
 # Syntax tree contract — blocks and CommonMark inlines
 
-Status: M2 contract updated on 20 November 2026; technical acceptance passed, owner review/merge pending. This is the contract for the current
+Status: M2 merged in PR #11; M3 service contracts updated on 20 November 2026, implemented locally with review open. This is the contract for the current
 Swift values, with explicit extension points for the remaining parser phases.
 The Markdown input language is governed by CommonMark and the pinned GFM
 fixtures. There is no ANTLR grammar or generated parser/runtime dependency.
@@ -16,7 +16,7 @@ original marker/trivia provenance as the remaining block/inline payloads grow.
 diagnostics, optional generic `tokens`, plus sparse `customLeafFallbacks` keyed
 by custom leaf index. It is
 `Sendable`. Root index is always zero; indices belong to
-one document snapshot, not to later parses. Setzkit owns snapshot revisions
+one document snapshot, not to later parses. Consumers own snapshot revisions
 and configuration fingerprints outside this module.
 
 `Node.data` is a typed `NodeData` enum. `Node.kind` is derived from it, so a
@@ -108,11 +108,11 @@ malformed returned ranges or consumption counts do not reach that boundary.
   The `String` entry point feeds its UTF-8 bytes into the same path.
 
 Tabs advance to the next four-column stop for block indentation. Position
-conversion will use zero-based UTF-16 offsets and one-based lines/Unicode
+conversion uses zero-based UTF-16 offsets and one-based lines/Unicode
 scalar columns (a tab counts as one scalar, separately from visual indentation).
 Offsets inside a UTF-8 scalar, a replacement-decoding subpart or a CRLF pair
-will be rejected, so conversions cannot silently round source locations.
-The converter is still M3 work. No source-to-rendered-character map is implied
+are rejected, so conversions cannot silently round source locations.
+M3 implements the optional `SourceIndex`; see [M3EditorServices](M3EditorServices.md). No source-to-rendered-character map is implied
 by these provenance segments.
 
 Example input: `## A\n\none\ntwo\n` (14 bytes).
@@ -287,8 +287,7 @@ reporting; do not present every such condition as an error in document text.
 `collectSyntaxDetails: true` collects the optional generic `Document.tokens`
 table, with exact source roles, node owners and zero-length locations.
 `referenceSyntax(for:)` offers a reference-component view over that table.
-`DocumentIndex` provides opt-in, snapshot-owned parents and ancestors; offset
-search and editor diagnostics remain M3 work. The implemented registry,
+`DocumentIndex` provides opt-in, snapshot-owned parents/ancestors, boundary-aware caret queries and a heading outline. M3 also implements `SourceIndex` and native analysis; editor/device acceptance remains separate. The implemented registry,
 container/transform boundary and hook context were established in M1-C; the
 inline draft has been replaced by the active M2 controller. Those contracts are
 specified in [ExtensionContracts.md](ExtensionContracts.md).

@@ -2,7 +2,7 @@
 
 20 November 2026. Functional implementation on `feature/m2-inlines`, based on
 `main` at `34cbe31` (PR #10). M1 acceptance was merged in PR #9 (`61fcb95`).
-**M2 technical acceptance passed on this branch; owner review/merge is pending.** No publication or Setzkit integration is implied.
+**M2 merged in [PR #11](https://github.com/kerker00/GMSetzer/pull/11), merge commit `021f110`.** No publication or application integration is implied.
 
 ## Parsing and tree
 
@@ -125,7 +125,7 @@ snapshot/configuration check. Tests cover stale fixes, invalid bytes,
 zero-length/related ranges and CRLF line boundaries.
 
 Native lint rules, suppressions, UTF-16 conversion, accessible problem navigation
-and Setzkit's stale-result/IME/undo-safe transaction adapter remain M3 work.
+and consumer stale-result/IME/undo-safe transaction adapters remain M3 work.
 
 ## Validation
 
@@ -213,3 +213,7 @@ no open dependent PRs. Their four local branches and three clean worktrees
 were removed; the unrelated detached scratch worktree was retained. Remote
 cleanup completed after explicit owner approval, using SHA-bound leases. No M2 branch push,
 PR creation, tag, release or publication is included in this implementation.
+
+M3 follow-up (20 November 2026): positions, native analysis and portable consumer
+integration APIs are now implemented locally; see [M3EditorServices](M3EditorServices.md).
+The limitations above describe the M2 acceptance scope.

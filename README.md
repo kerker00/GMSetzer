@@ -5,13 +5,26 @@ Markdown with switchable extensions, exact source positions and an HTML
 renderer. No C, no Rust, no JavaScript, no runtime dependencies — it builds
 wherever Swift runs, including Linux.
 
-> **Status:** M2 technical acceptance passed on `feature/m2-inlines`, based on
+> **Status:** M2 merged in PR #11 (`021f110`), based on
 > merged PRs #9/#10. All 652 CommonMark 0.31.2 examples pass by exact HTML;
 > 641/672 pinned GFM examples pass. Blocks and inlines retain original UTF-8
 > ranges, with optional lexical tokens and custom inline rules. Portable
-> diagnostic/fix values are implemented; native lint and editor integration
-> remain M3 work. Core and selected-rule performance gates pass; owner review/merge is pending. Publication remains
-> a separate owner decision.
+> diagnostic/fix values, position conversion, outline and three optional native
+> rules are implemented; M3 review remains open. M2 performance gates pass;
+> publication remains a separate owner decision.
+
+## Independence
+
+GMSetzer is a standalone MIT-licensed Swift package for editors, command-line
+utilities, servers and other Markdown consumers. Every library target depends
+only on modules inside this package. No consumer checkout, application session,
+UI framework or editor implementation is needed to build or use it.
+
+Public APIs exchange original UTF-8 bytes, immutable syntax trees, portable
+positions, diagnostic reports and advisory edits. A consumer owns revision
+identity, scheduling, localization, UI ranges and undo/IME integration in its
+own adapter. The library never imports that adapter. Application integration
+and device acceptance do not determine this package's API or release readiness.
 
 ## Goals
 
@@ -60,16 +73,16 @@ wherever Swift runs, including Linux.
 
 | Module | Implemented | Planned |
 | --- | --- | --- |
-| `SetzerSyntax` | Validated block/inline tree, source ranges/tokens, parent index, diagnostic/fix values | Position conversion, outline queries |
+| `SetzerSyntax` | Validated block/inline tree, source ranges/tokens, parent/offset/outline index, position conversion, diagnostic/fix values | Additional query conveniences |
 | `SetzerParser` | Block/inline parser, custom rules/children, pre/post transforms and profiles | Additional dialect syntax |
 | `SetzerExtensions` | GFM profile selections | GFM rule implementations, footnotes, front matter, math, alerts and callouts |
 | `SetzerHTML` | CommonMark HTML, source anchors, escaping, comment policy and decoded URL checks | GFM tag filtering |
-| `GMSetzer` | Imports the four implemented modules above | Optional analysis module with its first tested rules |
+| `SetzerAnalysis` | Three optional native rules over the existing document | Broader rule catalogue |
+| `GMSetzer` | Imports the five implemented modules above | Additional convenience APIs |
 
 M1 acceptance is merged in PR #9 and block hot-path optimisation in PR #10.
-M2 adds CommonMark inlines and 867 exact C comparisons. Complete GFM and
-Setzkit integration remain M4 and M3 work respectively; the fixed M2 timing
-allowance is unchanged.
+M2 adds CommonMark inlines and 867 exact C comparisons. Complete GFM remains
+M4 work; the fixed M2 timing allowance is unchanged.
 
 ```swift
 import GMSetzer
@@ -89,7 +102,7 @@ in `MarkdownParser.configurationIssues`; `validated()` rejects them.
 `collectSyntaxDetails: true` optionally collects `Document.tokens`, including
 reference/fence components, inline delimiters, link parts, escapes/entities,
 raw HTML and extension roles. `referenceSyntax(for:)` is a
-convenience view. `DocumentIndex` provides snapshot-bound parents/ancestors. HTML blocks are escaped and recognised comments omitted by default;
+convenience view. `DocumentIndex` provides snapshot-bound parents/ancestors, caret queries and heading outline. `SourceIndex` converts original-byte ranges to UTF-16 without rounding. HTML blocks are escaped and recognised comments omitted by default;
 `allowRawHTML` and `preserveHTMLComments` are explicit renderer options.
 Dangerous decoded URL schemes are neutralised even with raw HTML enabled.
 `HTMLRenderer.conformance` explicitly permits raw HTML, comments and unsafe URLs
@@ -127,3 +140,14 @@ renderer wrappers preserve built-in list tightness.
 GMSetzer is released under the [MIT licence](LICENSE). Third-party material
 and its licences are listed in [NOTICE](NOTICE); the specification examples
 used as test data are licensed CC-BY-SA 4.0 and are not part of the library.
+
+M3 service contracts, the native rule catalogue and validation limits are in
+[Docs/M3EditorServices.md](Docs/M3EditorServices.md).
+
+```swift
+let positions = SourceIndex(document)
+let utf16Range = positions.utf16Range(for: document.root.range)
+let outline = DocumentIndex(document).outline()
+let report = try NativeAnalyzer.analyze(document, dialect: .commonMark,
+    configuration: NativeAnalysisConfiguration(rules: [.headingLevel]))
+```

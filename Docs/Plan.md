@@ -1,20 +1,21 @@
 # GMSetzer – Plan and Requirements
 
-**Status: 20 November 2026, M1 and block optimisation merged (PRs #9/#10); M2 technical acceptance passed on `feature/m2-inlines`, owner review/merge pending.** This document is the
+**Status: 20 November 2026, M1 and block optimisation merged (PRs #9/#10); M2 merged in PR #11 (`021f110`); M3 portable library services implemented locally; [review](Review-M3.md) done and corrections applied; push/PR and fresh M3 measurements open.** This document is the
 reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
 
-GMSetzer is developed for [Setzkit](#setzkit), a native Markdown editor for
-macOS, iPadOS and iOS, but it is a general-purpose library. Nothing in its
-API refers to Setzkit.
+GMSetzer is an independent, general-purpose Markdown library intended for
+open-source use under the MIT licence. Editors, command-line tools, servers
+and extensions use the same public APIs. No particular application, checkout
+or UI framework is required to build, test or release it.
 
 ## Contents
 
 1. [Why GMSetzer exists](#why)
 2. [Decisions](#decisions)
 3. [Requirements](#requirements)
-4. [What Setzkit needs from the library](#setzkit)
+4. [Portable services for consumers](#consumer-services)
 5. [Architecture](#architecture)
 6. [Extensions and profiles](#extensions)
 7. [Learning from other parsers](#learning)
@@ -29,7 +30,7 @@ API refers to Setzkit.
 
 ## 1. Why GMSetzer exists
 
-Setzkit needs a parser that handles CommonMark, the complete GFM, footnotes,
+GMSetzer provides a parser designed to handle CommonMark, the complete GFM, footnotes,
 front matter, inline and block math, and alerts and callouts. It must offer
 switchable dialect profiles and exact source positions, run fast on an
 iPhone and inside a Quick Look extension, and come under a permissive
@@ -56,16 +57,15 @@ All taken by the project owner on 19 November 2026.
 
 | Decision | Reason / consequence |
 | --- | --- |
-| Write an own parser in pure Swift instead of using comrak, micromark or swift-markdown | Full control over extensions, positions and speed; no extra toolchain; useful beyond Setzkit |
+| Write an own parser in pure Swift instead of using comrak, micromark or swift-markdown | Full control over extensions, positions and speed; no extra toolchain; reusable across independent applications |
 | Learn from existing parsers as much as possible and do it better, faster and more complete | Algorithms and tests are taken over deliberately, under the licence rules in [section 7](#learning) |
-| Own repository from the first line of code | The parser is testable without Setzkit from day one |
+| Own repository from the first line of code | The parser is independently buildable and testable from day one |
 | Name **GMSetzer** | Family name with GMSnagNav; a *Setzer* is a typesetter. No collision found in a search |
 | Repository private until milestone M2, then public | Publishing is a separate step that the owner confirms explicitly |
 | MIT licence | Permissive, usable in commercial and open source apps |
 | Linux supported | The core uses only the Swift standard library |
 | No runtime dependencies in the library | Tool and test dependencies live in the separate package `Tools/` |
-| No interim parser in Setzkit | Setzkit starts rendering when GMSetzer reaches M3 |
-| Math is recognised, not rendered | The library stays free of JavaScript; the caller converts TeX through a renderer hook (Setzkit uses Temml to produce MathML) |
+| Math is recognised, not rendered | The library stays free of JavaScript; the caller converts TeX through a renderer hook |
 
 <a id="requirements"></a>
 
@@ -99,7 +99,7 @@ All taken by the project owner on 19 November 2026.
   can include quote/list prefixes and line endings; it is not necessarily the
   decoded text rendered for that node. Non-contiguous content needs source
   segments. The conventions for tabs, CRLF, empty nodes and offsets inside
-  scalars are defined in [SyntaxTree.md](SyntaxTree.md); conversion follows in M3.
+  scalars are defined in [SyntaxTree.md](SyntaxTree.md); conversion is implemented in M3 (see [M3EditorServices](M3EditorServices.md)).
 - **Speed.** Measured with the benchmarks in `Tools/` (see
   [Benchmarks.md](Benchmarks.md)):
 
@@ -134,22 +134,22 @@ All taken by the project owner on 19 November 2026.
   fixtures; safe-default rendering has separate tests. Escaping source HTML
   does not sanitise HTML returned by a caller's renderer hook.
 
-<a id="setzkit"></a>
+<a id="consumer-services"></a>
 
-## 4. What Setzkit needs from the library
+## 4. Portable services for consumers
 
-Setzkit is the first user. Its needs shape the API, but every one of them is
-useful to other apps as well.
+The library exposes platform-neutral values and operations. Consumers choose
+their own application architecture, revision model and presentation adapter.
 
 | Need | Why |
 | --- | --- |
 | Exact UTF-16 ranges for every node | The editor (TextKit 2) highlights, folds and links syntax in `NSRange` terms |
 | Block anchors in the HTML (source line or byte offset on block elements) | Scroll synchronisation between editor and preview |
 | An outline query (headings and blocks with ranges and levels) | Folding, a breadcrumb of the current section and an outline overview all read the same model |
-| Switchable extensions and named profiles | Setzkit lets the user choose a dialect per app, project or document; changing the profile never changes the file |
+| Switchable extensions and named profiles | Consumers choose the effective dialect; changing the profile never changes the file |
 | A renderer hook per node kind | Math becomes MathML through Temml, code blocks get syntax highlighting, Mermaid diagrams are rendered elsewhere |
 | Speed on the iPhone and in a Quick Look extension | Large documents (up to 5 MB) must stay usable; Quick Look runs with tight limits and without JavaScript |
-| `Sendable` results | The Setzkit adapter associates background parse results with their snapshot revision, dialect and configuration; GMSetzer does not import app-specific revision types |
+| `Sendable` results | Consumers associate background parse results with their own revision, dialect and configuration; GMSetzer does not import app-specific revision types |
 | Safe HTML by default | Previews and exports never run active content from documents |
 | Syntax roles and document findings | Theme-based highlighting and precise underline/caret/gutter locations in TextKit; preserve delimiters and original trivia |
 | Native lint rules over the same parse | Optional checks reuse GMSetzer's dialect semantics and source, with provider/rule IDs, severity, related ranges and advisory fixes |
@@ -159,11 +159,11 @@ useful to other apps as well.
 The original position requirements were necessary but did not define complete
 syntax-checking and lint services. The owner confirmed these uses on
 19 November 2026. [EditorAnalysis.md](EditorAnalysis.md) now specifies them,
-including source-spelled syntax spans, a future optional analysis module,
+including source-spelled syntax spans, the optional analysis module,
 revision-bound UTF-16 underlines, diagnostics versus parser/provider failures,
 rule profiles and strict suggested-fix transactions.
 
-This is a planned contract. Current `ParseDiagnostic` covers infrastructure
+The M3 native subset and portable position APIs are implemented. Application-specific UI and device acceptance belong to consumer repositories. `ParseDiagnostic` covers infrastructure
 conditions, not a finished linter. CommonMark literal fallbacks are not syntax
 errors by default. Markdownlint remains an optional compatibility/provider
 path; equivalence is not assumed for native rules.
@@ -171,6 +171,21 @@ path; equivalence is not assumed for native rules.
 <a id="architecture"></a>
 
 ## 5. Architecture
+
+### Independence boundary
+
+Public APIs must remain consumer-neutral. The package has no reverse dependency
+on an application, sibling checkout, editor implementation or UI framework.
+Library targets use only the Swift standard library and other targets in this
+package. Tests and tools may use their separately declared dependencies.
+
+The API boundary consists of source bytes, immutable trees, portable positions,
+syntax roles, diagnostics and advisory edits. Consumer session IDs, revision
+counters, scheduling, localization, color/theme resolution, undo transactions
+and platform rendering remain in adapters owned by the consuming repository.
+Application-specific test reports and device acceptance belong there as well.
+Library milestones and public API stability are evaluated independently of any
+single consumer. Publication remains a separate owner-confirmed action.
 
 ### Modules
 
@@ -180,12 +195,11 @@ path; equivalence is not assumed for native rules.
 | `SetzerParser` | Block and inline parser, extension API, profiles | `SetzerSyntax` |
 | `SetzerExtensions` | GFM, footnotes, front matter, math, alerts and callouts | `SetzerParser`, `SetzerSyntax` |
 | `SetzerHTML` | HTML renderer, block anchors, escaping and URL checks, renderer hooks | `SetzerSyntax` |
-| `SetzerAnalysis` (planned) | Optional native rules over existing tree/source; portable findings and suggested edits | `SetzerSyntax` |
+| `SetzerAnalysis` | Optional native rules over existing tree/source; portable findings and suggested edits | `SetzerSyntax` |
 | `GMSetzer` | Re-exports all of the above | all |
 
 Portable syntax-span/diagnostic/fix values belong in `SetzerSyntax`.
-`SetzerAnalysis` is not implemented or a package target yet; introduce it with
-its first tested rules. The parser remains independent of analysis and HTML.
+`SetzerAnalysis` implements the three opt-in native rules in [M3EditorServices](M3EditorServices.md). The parser remains independent of analysis and HTML.
 
 ### Approach
 
@@ -331,12 +345,12 @@ source files; source, version and licence go into the file header and into
   combining characters, CJK and right-to-left text.
 - **Rendering:** conformance configuration is separate from safe defaults.
   Test escaping, comments, decoded/obfuscated URL schemes, GFM tag filtering,
-  anchors and caller hook trust before Setzkit integration in M3.
+  anchors and caller hook trust as part of the M3 library gate.
 - **Editor analysis:** exact delimiter/finding ranges, native rule selection,
   legal literal fallbacks, source trivia, zero-length/related ranges and fix
-  preconditions. Setzkit must prove UTF-16 underlines, stale-result rejection,
-  IME/undo protection and accessible problem navigation. See
-  [EditorAnalysis.md](EditorAnalysis.md); these acceptance checks remain open.
+  preconditions. Consumers test their own UI range conversion, stale-result
+  rejection, IME/undo protection and accessible navigation in their repositories.
+  Those application checks do not gate this library; see [EditorAnalysis.md](EditorAnalysis.md).
 - **Reference comparisons:** a corpus of real documents is compared with
   cmark-gfm; every difference is explained.
 - **Hostile input:** cmark's pathological cases with a time limit.
@@ -357,12 +371,12 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | --- | --- | --- | --- | --- |
 | M0 | Repository, package layout, specification run, benchmark setup, name and gap check | Starting point measured; harness reviewed, reference configurations corrected | 2–3 | **reviewed and corrected** (19 Nov 2026); new reference timings pending |
 | M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **merged in PR #9 (`61fcb95`)**: M1-A merged in PR #4 (`51efee6`); M1-B measurements, checked validation optimisation and local budget gate implemented. At M1 acceptance, 70 library tests, 3,919 reference comparisons and 13 Python tests passed; its protected baselines were 339/652 CommonMark and 339/672 GFM. [M1Acceptance](M1Acceptance.md) records the M1-C contracts, M1-D audit, portability matrix and fixed M2 budget |
-| M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | **technical acceptance passed; review/merge pending**: 652/652 exact CommonMark, 641/672 GFM; 96 Swift tests across macOS/Swift 6.2/release/Linux, 17 Python checks and 4,786 C comparisons pass. Final core and selected-rule cases pass both unchanged budget gates. See [M2Inlines](M2Inlines.md) |
-| M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; editor adapter for syntax spans/findings | Security/position/analysis tests pass; Setzkit proves snapshot-bound syntax decoration and diagnostic underlines; integration can start | re-estimate | |
+| M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | **merged in PR #11 (`021f110`)**: 652/652 exact CommonMark, 641/672 GFM; 96 Swift tests across macOS/Swift 6.2/release/Linux, 17 Python checks and 4,786 C comparisons pass. Final core and selected-rule cases pass both unchanged budget gates. See [M2Inlines](M2Inlines.md) |
+| M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; portable syntax/finding APIs | Security/position/analysis tests and standalone package validation pass; application adapters remain outside this package | re-estimate | **implemented locally; reviewed, corrections applied**: exact position/outline queries, safe configurable URL scheme allowlist/anchors and three optional native rules. 106 library tests passed across macOS/debug/release/Swift 6.2/Linux; after the [review](Review-M3.md) corrections 108 pass on macOS (Swift 6.2/Linux not re-run) with byte-identical differential results. Fresh index/analysis timings pending. See [M3EditorServices](M3EditorServices.md) |
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | |
-| M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Setzkit's corpus complete | 5–8 | |
+| M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Declared extension fixtures and profile/combination tests pass | 5–8 | |
 | M6 | Speed and hardening: measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met | 5–8 | |
-| M7 | Version 1.0: API review, DocC documentation, release; Setzkit pins the version | Setzkit uses 1.0 | 3–5 | |
+| M7 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | 3–5 | |
 | | **Original total before explicit editor-analysis scope** | | **38–59; re-estimate required** | |
 
 After 1.0: further profiles (Obsidian, Pandoc), a Markdown serialiser for
@@ -396,7 +410,7 @@ profile conversions, incremental parsing if measurements call for it.
 | Swift code ends up slower than C | Byte buffer instead of `String`, flat tree, measurements from M1 on; limit "at most twice cmark-gfm" |
 | Hostile input blocks an app | Linear algorithms following the spec appendix, pathological tests, fuzzing, depth limits |
 | Maintenance load | Clear scope for 1.0; profiles one at a time afterwards |
-| Setzkit waits for the library (accepted) | Setzkit works on parser-independent parts meanwhile; M3 is the earliest point of use |
+| Application-specific scope leaks into the library | Keep application adapters, UI, session identity and device acceptance in consumer repositories |
 | Licence mistakes when taking over code | MIT/BSD/Apache-2.0 only, origin in file headers, `NOTICE` kept up to date; GPL/LGPL excluded |
 
 <a id="open"></a>
@@ -436,8 +450,7 @@ validation. M1-A fixes the three reproduced defects and is merged in PR #4.
 M1-B records two authorised full runs, a checked validation optimisation and a
 local performance gate in [M1Measurements.md](M1Measurements.md). The current
 block baseline passes its measured budgets; completed inline/GFM performance
-is not established. M1-B is merged in PR #5 (`7c0f4ea`); the Setzkit-side
-documentation alignment is merged in Setzkit PR #22 (`39e5fd0`).
+is not established. M1-B is merged in PR #5 (`7c0f4ea`).
 
 The agreed pre-M2 sequence is technically complete: portability, phase split,
 shared extension/storage proof, fixed inline allowance and M1-D acceptance.
@@ -447,7 +460,7 @@ combinations without claiming editor/device checks. M1-C contracts and the now i
 The cumulative PR also carries the phase extraction from PR #8, merged into
 its former base branch after PR #7 had already reached main. The owner merged that work in PR #9 (`61fcb95`) and the block optimisation
 in PR #10 (`34cbe31`). M2 builds on that main revision. Functional checks and the frozen core/selected-rule performance gates pass;
-owner review and merge remain pending.
+PR #11 merged at `021f110`; the verified M2 branch was removed locally and remotely.
 
 The frozen CommonMark baseline leaves 1.048 / 15.286 / 69.207 ms total headroom
 at 100 KB / 1 MB / 5 MB. M2 receives a fixed **0.5 / 8 / 40 ms** allowance for
@@ -472,3 +485,5 @@ nested-strong semantics. No fixture or protected ID was removed. The latest
 functional, source-span, diagnostic, portability and timing evidence is in
 [M2Inlines.md](M2Inlines.md); M2 technical acceptance uses the full/focused package-benchmark series and
 unchanged gate inputs, not a short timing probe.
+
+Current next work: push and open the M3 PR, measure the optional indexes and native analysis, then continue M4. Consumer scheduling, dependency pinning and device acceptance belong to consumer repositories. No new benchmark series or publication was performed in M3.
