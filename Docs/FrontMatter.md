@@ -131,8 +131,8 @@ nine specification tests (18 tests added by this step). Each environment
 retains 652/652 CommonMark and 672/672 GFM examples, including all protected
 IDs. The additional unselected-extension check compares all 1,324 examples.
 
-PR CI passes on Linux/Swift 6.2; macOS CI and merged-main CI are still
-pending at this documentation update. The merged branch is removed locally
-and remotely. Python scripts are unchanged and were not rerun locally. No new
+PR and merged-main CI pass on macOS/Swift 6.2.3 and Linux/Swift 6.2. The merged
+branch is removed locally and remotely. Python scripts are unchanged and were
+not rerun locally. No new
 reference-tool comparisons, benchmark series or consumer UI/device checks
 were run; these results imply no fresh performance claim or consumer adoption.

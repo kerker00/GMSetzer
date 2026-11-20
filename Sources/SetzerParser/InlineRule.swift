@@ -61,14 +61,28 @@ public struct InlineMatch: Sendable {
 }
 
 public struct InlineRule: Sendable {
+    public typealias Matcher = @Sendable (InlineContext) -> InlineMatch?
     public let identifier: String
     public let trigger: UInt8
     public let priority: Int
-    public let match: @Sendable (InlineContext) -> InlineMatch?
+    /// Explicit opt-in to complete `[` matches outside an open link/image
+    /// bracket. Ordinary rules retain protected core bracket dispatch.
+    public let allowsBracketSyntax: Bool
+    public let match: Matcher
+    /// Called once per document after block transforms, before any inlines.
+    /// The returned matcher can share a snapshot's immutable lookup tables.
+    public let prepare: (@Sendable (Document) -> Matcher)?
 
-    public init(_ identifier: String, trigger: UInt8, priority: Int = 0,
-                match: @escaping @Sendable (InlineContext) -> InlineMatch?) {
-        self.identifier = identifier; self.trigger = trigger; self.priority = priority; self.match = match
+    public init(_ identifier: String, trigger: UInt8, priority: Int = 0, allowsBracketSyntax: Bool = false,
+                match: @escaping Matcher) {
+        self.identifier = identifier; self.trigger = trigger; self.priority = priority
+        self.allowsBracketSyntax = allowsBracketSyntax; self.match = match; self.prepare = nil
+    }
+
+    public init(_ identifier: String, trigger: UInt8, priority: Int = 0, allowsBracketSyntax: Bool = false,
+                prepare: @escaping @Sendable (Document) -> Matcher) {
+        self.identifier = identifier; self.trigger = trigger; self.priority = priority
+        self.allowsBracketSyntax = allowsBracketSyntax; self.match = { _ in nil }; self.prepare = prepare
     }
 }
 
@@ -78,4 +92,5 @@ internal struct ActiveInlineRule: Sendable {
     let descriptor: ExtensionDescriptor
     let options: [String: SyntaxValue]
     let order: Int
+    var matcher: InlineRule.Matcher?
 }

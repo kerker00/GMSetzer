@@ -1,7 +1,7 @@
 /// Central development version for parser and native-provider result identity.
 /// Bump together with behavior changes; this is not a published release tag.
 public enum GMSetzerVersion {
-    public static let current = "0.5.0-dev.1"
+    public static let current = "0.5.0-dev.2"
 }
 
 /// Extensible dialect identity. Configuration remains the parser's separate

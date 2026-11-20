@@ -457,3 +457,15 @@ CommonMark/GFM selections remain unchanged. No fresh benchmark series or
 reference comparison was run; existing timings do not establish this step's
 runtime or allocation cost. The large dangling-opener case is a functional
 regression check, not a speed measurement.
+
+## M5 named footnotes (development)
+
+`feature/m5-footnotes` prepares a definition lookup once per document before
+inline parsing. Label scans have a fixed byte/scalar bound. Cited-note ordering
+uses a work queue and visits each cited definition body once, so cyclic notes
+do not cause recursive expansion. HTML composition reuses one contextual tree
+index across the body and appended notes. These are algorithm descriptions,
+not measured speed guarantees. The 1,000-call and depth-limit tests are
+functional checks. No new benchmark series, allocation measurement or reference
+comparison was run for `0.5.0-dev.2`; historical timings do not establish the
+cost of selected footnotes or the supporting parser/renderer changes.

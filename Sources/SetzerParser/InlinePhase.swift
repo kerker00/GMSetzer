@@ -14,7 +14,12 @@ extension MarkdownParser {
         }
         var triggers = ByteSet()
         for active in resolvedInlineRules { triggers.insert(active.rule.trigger) }
-        let inlineRules = Dictionary(grouping: resolvedInlineRules, by: { $0.rule.trigger })
+        let preparedRules = resolvedInlineRules.map { active in
+            var prepared = active
+            prepared.matcher = active.rule.prepare?(document) ?? active.rule.match
+            return prepared
+        }
+        let inlineRules = Dictionary(grouping: preparedRules, by: { $0.rule.trigger })
         var builder = DocumentBuilder(source: document.source, collectSyntaxDetails: document.tokens != nil)
         builder.reserveCapacity(document.nodes.count * 3)
         for diagnostic in document.diagnostics { builder.report(diagnostic) }

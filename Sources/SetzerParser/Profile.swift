@@ -84,6 +84,20 @@ public struct BlockContext: Sendable {
         return cursor.view
     }
 
+    /// Drop a byte-counted prefix that contains no tabs, retaining original
+    /// byte columns and line endings. Supports Unicode and invalid UTF-8;
+    /// the rule chooses its own syntax boundary. Use droppingIndentation for tabs.
+    public func droppingBytes(_ count: Int, from line: SourceLine) -> SourceLine? {
+        guard count >= 0, line.virtualIndentation == 0,
+              line.contentRange.count >= count, line.contentRange.upperBound <= source.count else { return nil }
+        var cursor = SourceCursor(line: line)
+        for _ in 0..<count {
+            guard let byte = cursor.byte(source), byte != 9 else { return nil }
+            cursor.advanceASCII()
+        }
+        return cursor.view
+    }
+
     /// Remove up to columns of indentation using physical four-column tabs.
     public func droppingIndentation(_ columns: Int, from line: SourceLine) -> SourceLine? {
         guard columns >= 0, line.contentRange.upperBound <= source.count else { return nil }

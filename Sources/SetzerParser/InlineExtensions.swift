@@ -19,7 +19,7 @@ extension InlineParser {
         case nested(SourceRange, owner: Int)
     }
 
-    mutating func customMatch() -> CustomStep {
+    mutating func customMatch(bracket: Bool = false) -> CustomStep {
         guard let candidates = rules[bytes[cursor]] else { return .unmatched }
         if cursor >= customRunEnd || bytes[cursor] != customRunMarker {
             customRunMarker = bytes[cursor]
@@ -32,13 +32,18 @@ extension InlineParser {
         let canOpen = !whitespace(after) && (!punctuation(after) || whitespace(before) || punctuation(before))
         let canClose = !whitespace(before) && (!punctuation(before) || whitespace(after) || punctuation(after))
         for active in candidates {
+            if bracket && !active.rule.allowsBracketSyntax { continue }
             let eligible = customOpeners.filter {
                 $0.identifier == active.identifier && $0.bracketDepth == brackets.count
             }.map(\.handle)
             let context = InlineContext(source: source, input: bytes, offset: cursor, options: active.options,
                 canOpen: canOpen, canClose: canClose, runLength: end - cursor, openers: eligible, projection: input)
-            guard let match = active.rule.match(context) else { continue }
-            guard accepts(match, context: context, active: active) else {
+            guard let match = (active.matcher ?? active.rule.match)(context) else { continue }
+            let completeBracket: Bool
+            if bracket {
+                if case .none = match.delimiter { completeBracket = true } else { completeBracket = false }
+            } else { completeBracket = true }
+            guard completeBracket, accepts(match, context: context, active: active) else {
                 diagnostics.append(ParseDiagnostic(.invalidExtensionResult(active.identifier), range: input.range(cursor, end)))
                 continue
             }
