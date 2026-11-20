@@ -36,6 +36,8 @@ wherever Swift runs, including Linux.
 - [Docs/Plan.md](Docs/Plan.md) – requirements, decisions, architecture,
   milestones and licence rules. Start here.
 - [Docs/Benchmarks.md](Docs/Benchmarks.md) – measurements against cmark-gfm.
+- [Docs/Portability.md](Docs/Portability.md) – Swift 6.2 tests, Linux ARM64
+  execution evidence, SDK selection, span availability and remaining coverage.
 - [Docs/Review-M0.md](Docs/Review-M0.md) – review findings and corrections.
 - [Docs/Review-M1.md](Docs/Review-M1.md) – M1 architecture, code, QA and
   extensibility review with recommendations before M2.

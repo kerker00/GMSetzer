@@ -1,0 +1,24 @@
+Build complete! (17.90s)
+↳ Testing Library Version: 6.2 (3fdabe5392108d8)
+↳ Target Platform: arm64-apple-macosx
+◇ Suite ContainerTests started.
+◇ Suite LeafBlockTests started.
+◇ Suite SpecTests started.
+◇ Suite ReferenceDefinitionTests started.
+◇ Suite M1CombinationTests started.
+◇ Suite DocumentTests started.
+◇ Suite ExtensionTests started.
+◇ Suite SyntaxTreeTests started.
+◇ Suite HTMLBlockTests started.
+✔ Suite ReferenceDefinitionTests passed after 0.013 seconds.
+✔ Suite DocumentTests passed after 0.014 seconds.
+✔ Suite ExtensionTests passed after 0.013 seconds.
+✔ Suite M1CombinationTests passed after 0.014 seconds.
+✔ Suite HTMLBlockTests passed after 0.013 seconds.
+✔ Suite SyntaxTreeTests passed after 0.017 seconds.
+✔ Suite LeafBlockTests passed after 0.044 seconds.
+commonmark: 339/652 examples pass (339 protected)
+gfm: 339/672 examples pass (339 protected)
+✔ Suite SpecTests passed after 0.050 seconds.
+✔ Suite ContainerTests passed after 0.081 seconds.
+✔ Test run with 57 tests in 9 suites passed after 0.081 seconds.
