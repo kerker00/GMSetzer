@@ -1,0 +1,6 @@
+Build complete! (14.41s)
+↳ Testing Library Version: 6.2 (3fdabe5392108d8)
+↳ Target Platform: arm64-apple-macosx
+commonmark: 339/652 examples pass (339 protected)
+gfm: 339/672 examples pass (339 protected)
+✔ Test run with 57 tests in 9 suites passed after 0.086 seconds.

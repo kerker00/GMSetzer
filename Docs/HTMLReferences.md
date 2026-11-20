@@ -56,11 +56,12 @@ text, rather than becoming an empty heading or a new list item.
 
 ## Opt-in editor provenance
 
-`MarkdownParser(collectSyntaxDetails: true)` fills `ReferenceDefinition.syntax`:
-ordered label/destination/title source segments and bracket/colon/angle/quote
-marker ranges. The default leaves this metadata nil and does not allocate those
-component arrays. This is the first specialised provenance API, not a complete
-syntax-highlighting service or document linter.
+`MarkdownParser(collectSyntaxDetails: true)` fills `Document.tokens` with
+reference component/marker roles and owning node indices. Use
+`document.referenceSyntax(for: nodeIndex)` for the ordered label/destination/
+title and bracket/colon/angle/quote view. The default keeps the generic table
+nil. These source roles are not a complete syntax-highlighting service or
+linter; the M1-C storage contract is in [ExtensionContracts.md](ExtensionContracts.md).
 
 All ranges address original bytes. Container prefixes, CRLF and replacement
 UTF-8 decoding never shift them; empty components retain zero-length ranges.
@@ -68,7 +69,7 @@ For `> [α]: <>\r\n> "t"\r\n`, the label is `[3, 5)`, the empty destination
 `[9, 9)`, and the title `[15, 16)`. Tests validate these exact values and reject
 metadata outside its definition node.
 
-## Validation and remaining boundary
+## Initial HTML/reference verification (historical)
 
 - 49 library Swift Testing tests pass: original tree/container checks, HTML
   classes/rendering policies, multiline references, exact metadata and all 27
@@ -83,8 +84,12 @@ metadata outside its definition node.
 - Short malformed-byte/prefix/depth tests pass; the benchmark executable builds.
   New release timings, Linux and the minimum Swift 6.2 toolchain remain unverified.
 
-M1's block implementations are present. Its final acceptance/API review remains
-open; custom container-extension hooks and the broader annotation/diagnostic
-contract must be reviewed before treating M1 as complete. M2 still implements
+This was the initial HTML/reference evidence. The subsequent M1-C contracts
+and final acceptance matrix are recorded in [M1Acceptance.md](M1Acceptance.md). M2 still implements
 all inline syntax, entity/escape decoding, reference lookup and general syntax
 spans. `EditorAnalysis.md` remains the authority for the later editor/lint gate.
+
+M1-C now implements custom parsed children, validated configuration and generic
+tokens. The current acceptance matrix and outstanding M2/M3 boundaries are in
+[M1Acceptance.md](M1Acceptance.md); the preceding test counts are the historical
+HTML/reference implementation evidence.

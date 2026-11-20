@@ -1,6 +1,6 @@
 # Syntax tree contract — M1 blocks and containers
 
-Status: implemented on 19 November 2026. This is the contract for the current
+Status: M1-C contract updated on 20 November 2026. This is the contract for the current
 Swift values, with explicit extension points for the remaining parser phases.
 The Markdown input language is governed by CommonMark and the pinned GFM
 fixtures. There is no ANTLR grammar or generated parser/runtime dependency.
@@ -13,7 +13,8 @@ original marker/trivia provenance as the remaining block/inline payloads grow.
 ## Values and construction
 
 `Document` owns the original `[UInt8]`, an immutable `[Node]` and parse
-diagnostics, plus sparse `customLeafFallbacks` keyed by custom leaf index. It is
+diagnostics, optional generic `tokens`, plus sparse `customLeafFallbacks` keyed
+by custom leaf index. It is
 `Sendable`. Root index is always zero; indices belong to
 one document snapshot, not to later parses. Setzkit owns snapshot revisions
 and configuration fingerprints outside this module.
@@ -54,8 +55,8 @@ root/ranges, indices, content models, heading levels, list markers/starts, segme
 custom kind names, repeated nodes, overlapping siblings or unreachable nodes.
 Fallback entries must refer to existing custom nodes without children;
 otherwise validation throws `DocumentError.invalidFallback(node:)`. Builder
-`append` accepts an optional `fallbackLiteral`; `finish` replaces it, clearing
-any prior entry when omitted. Built-in-only documents keep the table empty.
+`append` accepts an optional `fallbackLiteral`; `finish` replaces it when
+supplied and preserves it when omitted. `clearFallback(for:)` explicitly removes it. Built-in-only documents keep the table empty.
 Only zero is a document root. Siblings follow non-overlapping source order;
 children stay within their parent. Empty ranges are allowed. Custom extension
 names should use a namespace such as `example.notice`.
@@ -175,25 +176,27 @@ and loose lists retain their own paragraph tags.
 Quotes, lists and items each consume a slot, so opening a new list requires two
 slots. At the limit the remaining syntax is kept as escaped paragraph text and
 `nestingLimitExceeded` is reported. The parser, validator and renderer are
-iterative; the fixed ceiling also bounds prefix work per input line. No release
-performance target is established by the current tests.
+iterative for built-ins; custom child parsing uses bounded recursive calls over
+projected views, counting custom and built-in containers against the same limit.
+No release performance target is established by correctness tests alone.
 
 ## Profiles and extension rules
 
 `Profile` is a hashable name and ordered `[ExtensionConfiguration]`, including
 portable options. `MarkdownExtension` supplies code separately to
 `MarkdownParser(profile:extensions:)`; registration alone does not activate
-syntax. Missing implementations and duplicate identifiers produce diagnostics.
+syntax. Missing implementations, duplicate identifiers, unknown options/rules
+and namespace violations become `MarkdownParser.configurationIssues`, separate
+from source findings. `validated()` throws if any are present.
 Keep parser/registry versions in the caller's configuration fingerprint: a
 profile hash does not identify callback implementation code.
 
-The initial API implements **custom leaf-block rules**. Higher numeric priority
-runs first; ties use profile order and then registration order within the
-extension. Custom rules run before built-in starts at block boundaries. The
-trigger, when present, matches the first non-space/tab byte at up to three
-columns of indentation. Blank lines are
-handled by the core, and code-block content never invokes extension callbacks.
-An interrupting rule can end a paragraph, after built-in setext/start checks.
+The registry implements leaf blocks, optional core-parsed child projections and
+post-block transforms. Descriptors declare versions, owned kinds and option
+schemas in `SetzerSyntax`. Default priority/profile order is preserved;
+`disabledRules` and `ruleOrder` configure shared core/custom rule identities
+within fixed phases. [ExtensionContracts.md](ExtensionContracts.md) defines the
+exact phases, validation and draft inline boundary.
 
 Callbacks receive an immutable current line and their selected options.
 `BlockContext.line(at:)` projects following physical lines through the active
@@ -242,12 +245,17 @@ bytes as before. Copy fallback metadata when reconstructing such a document.
 paragraph separators and omission of non-rendered reference definitions.
 Nested quotes and lists retain their own paragraph/tightness rules. Hooks own
 their opening/closing markup and whitespace; a list-item hook must include any
-desired newline in its opening markup. Full hook-context APIs remain M1-C work.
+desired newline in its opening markup. Contextual hooks additionally receive
+node identity, parent/ancestors and tight-item state through an opt-in index.
 
 Optional `data-source-start`/`data-source-end` block attributes
 are off by default, so source anchors do not change conformance comparisons.
 
 ## Current boundary and next work
+
+The internal block driver is split into container matching, leaf continuation,
+container opening and leaf starts; [BlockPhases.md](BlockPhases.md) records the
+ordering/progress contract. M1-C extends those boundaries with the resolved registry.
 
 This implementation supports block quotes, ordered/bullet lists and lazy
 continuation, as well as paragraphs, ATX/setext headings, thematic breaks,
@@ -257,9 +265,9 @@ sections: inline escapes/entities and code info decoding belong to M2.
 
 M1-A fixes leading BOMs, wrapper tightness and custom-leaf fallback projection.
 M1-B records comparable measurements and checked validation improvements.
-Remaining M1 work is extension/storage proof and final refactor/acceptance,
-including the custom container continuation hook scope and
-annotation/diagnostic contract; see [Review-M1.md](Review-M1.md).
+M1-C implements/proves extension and storage contracts; M1-D audits the builder
+invariants and hardening checks. The current acceptance decision and measured
+inline allowance are in [M1Acceptance.md](M1Acceptance.md).
 M2 adds inline payloads/rules and reference decoding/case folding. M3 completes
 position queries, outline, renderer safety options and integration. GFM and the
 additional dialect extensions retain their planned milestones.
@@ -269,11 +277,15 @@ document-diagnostic/fix model in M2, then native analysis and a diagnostic
 underline integration proof in M3. Current `ParseDiagnostic` is infrastructure
 reporting; do not present every such condition as an error in document text.
 
-`collectSyntaxDetails: true` currently adds `ReferenceDefinition.syntax` with
-exact component/marker ranges, including zero-length locations. It is optional;
-the general syntax-span collection and editor diagnostics are not implemented.
+`collectSyntaxDetails: true` collects the optional generic `Document.tokens`
+table, with exact source roles, node owners and zero-length locations.
+`referenceSyntax(for:)` offers a reference-component view over that table.
+`DocumentIndex` provides opt-in, snapshot-owned parents and ancestors; offset
+search and editor diagnostics remain M3 work. The implemented registry,
+container/transform boundary, hook context and internal inline draft are
+specified in [ExtensionContracts.md](ExtensionContracts.md).
 
-Validation: all 57 library Swift Testing tests pass with Swift 6.4.2, including the
+Historical M1-A validation: all 57 library Swift Testing tests pass with Swift 6.4.2, including the
 three documented trees, invalid topology/extension results, mixed line endings,
 UTF-8/NUL handling, concurrent snapshots and short adversarial-input smoke
 tests. The protected exact-HTML baseline is 339/652 CommonMark and 339/672 GFM.
@@ -288,5 +300,9 @@ The measured M1-B release baseline and annotation cost are in
 [Benchmarks.md](Benchmarks.md#m1-b-measured-baseline-and-checked-validation).
 Subsequent [portability verification](Portability.md) builds with Swift 6.2,
 passes all 57 macOS tests with a compatible SDK, and executes the protected spec
-baseline plus targeted checks on static Linux ARM64. The full Linux Swift
-Testing/glibc/x86-64 matrix and minimum Apple OS runtime checks remain open.
+baseline plus targeted checks on static Linux ARM64. The phase extraction also
+passes all 57 tests on Linux x86-64/glibc with Swift 6.4.2. Full Linux Swift 6.2
+suite coverage and minimum Apple OS runtime checks remain open.
+
+The current M1-C/M1-D verification and acceptance decision superseding the
+historical counts above are recorded in [M1Acceptance.md](M1Acceptance.md).

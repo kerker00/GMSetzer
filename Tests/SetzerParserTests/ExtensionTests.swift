@@ -3,7 +3,7 @@ import Testing
 
 struct ExtensionTests {
     static let kind = NodeKind("example.notice")
-    static let implementation = MarkdownExtension("example", blockRules: [
+    static let implementation = MarkdownExtension("example", nodeKinds: [Self.kind], options: ["title": ExtensionOption(.string)], blockRules: [
         BlockRule("notice", trigger: 58, interruptsParagraph: true) { context in
             let content = context.line.contentRange
             guard context.source[content.lowerBound..<content.upperBound].starts(with: [58, 58, 58]) else { return nil }
@@ -36,7 +36,7 @@ struct ExtensionTests {
 
     @Test func prioritiesThenProfileOrderDetermineRuleSelection() {
         func implementation(_ id: String, priority: Int) -> MarkdownExtension {
-            MarkdownExtension(id, blockRules: [BlockRule(id, priority: priority) { _ in
+            MarkdownExtension(id, nodeKinds: [NodeKind(id)], blockRules: [BlockRule(id, priority: priority) { _ in
                 BlockMatch(consumedLines: 1, data: .custom(kind: NodeKind(id), role: .block, attributes: [:]))
             }])
         }
@@ -50,7 +50,7 @@ struct ExtensionTests {
 
     @Test(arguments: [0, -1, Int.max])
     func invalidConsumptionFallsBackWithoutLosingSource(_ count: Int) {
-        let implementation = MarkdownExtension("broken", blockRules: [BlockRule("broken") { _ in
+        let implementation = MarkdownExtension("broken", nodeKinds: [NodeKind("broken.notice")], blockRules: [BlockRule("broken") { _ in
             BlockMatch(consumedLines: count, data: .custom(kind: Self.kind, role: .block, attributes: [:]))
         }])
         let parser = MarkdownParser(profile: Profile(name: "test", extensions: [ExtensionConfiguration("broken")]), extensions: [implementation])
@@ -66,7 +66,7 @@ struct ExtensionTests {
             BlockMatch(consumedLines: 1, data: .custom(kind: Self.kind, role: .inline, attributes: [:])),
             BlockMatch(consumedLines: 1, data: .custom(kind: Self.kind, role: .block, attributes: [:]), sourceSegments: [SourceRange(0, 100)]),
         ] {
-            let implementation = MarkdownExtension("broken", blockRules: [BlockRule("broken") { _ in match }])
+            let implementation = MarkdownExtension("broken", nodeKinds: [NodeKind("broken.notice")], blockRules: [BlockRule("broken") { _ in match }])
             let document = MarkdownParser(profile: Profile(name: "test", extensions: [ExtensionConfiguration("broken")]),
                                           extensions: [implementation]).parse("text")
             #expect(document.diagnostics.map(\.code) == [.invalidExtensionResult("broken")])
@@ -75,10 +75,13 @@ struct ExtensionTests {
     }
 
     @Test func unavailableAndDuplicateRegistrationsAreVisible() {
-        let unavailable = MarkdownParser(profile: Profile(name: "test", extensions: [ExtensionConfiguration("missing")])).parse("")
-        #expect(unavailable.diagnostics.map(\.code) == [.unsupportedExtension("missing")])
-        let duplicate = MarkdownParser(extensions: [Self.implementation, Self.implementation]).parse("")
-        #expect(duplicate.diagnostics.map(\.code) == [.duplicateRegistration("example")])
+        let unavailable = MarkdownParser(profile: Profile(name: "test", extensions: [ExtensionConfiguration("missing")]))
+        #expect(unavailable.configurationIssues.map(\.code) == [.unavailableExtension])
+        #expect(unavailable.parse("").diagnostics.isEmpty)
+        #expect(throws: ConfigurationError.self) { try unavailable.validated() }
+        let duplicate = MarkdownParser(extensions: [Self.implementation, Self.implementation])
+        #expect(duplicate.configurationIssues.map(\.code) == [.duplicateIdentifier])
+        #expect(duplicate.parse("").diagnostics.isEmpty)
     }
 
     @Test func hooksCanWrapChildrenWithoutIntroducingParserDependencies() throws {
@@ -90,7 +93,7 @@ struct ExtensionTests {
     }
 
     @Test func multilineRulesSeeProjectedLinesInsideContainers() {
-        let implementation = MarkdownExtension("example", blockRules: [BlockRule("twoLines", trigger: 58) { context in
+        let implementation = MarkdownExtension("example", nodeKinds: [Self.kind], blockRules: [BlockRule("twoLines", trigger: 58) { context in
             guard let next = context.line(at: context.lineIndex + 1) else { return nil }
             let bytes = context.source[next.contentRange.lowerBound..<next.contentRange.upperBound]
             return BlockMatch(consumedLines: 2,
@@ -110,12 +113,12 @@ struct ExtensionTests {
     }
 
     @Test func multilineRuleCannotConsumePastAContainerBoundary() {
-        let implementation = MarkdownExtension("example", blockRules: [BlockRule("broken", trigger: 58) { _ in
+        let implementation = MarkdownExtension("example", nodeKinds: [Self.kind], blockRules: [BlockRule("broken", trigger: 58) { _ in
             BlockMatch(consumedLines: 2, data: .custom(kind: Self.kind, role: .block, attributes: [:]))
         }])
         let parser = MarkdownParser(profile: Profile(name: "example", extensions: [ExtensionConfiguration("example")]), extensions: [implementation])
         let document = parser.parse("- :::\n- next\n")
-        #expect(document.diagnostics.map(\.code) == [.invalidExtensionResult("broken")])
+        #expect(document.diagnostics.map(\.code) == [.invalidExtensionResult("example.broken")])
         #expect(HTMLRenderer().render(document) == "<ul>\n<li>:::</li>\n<li>next</li>\n</ul>\n")
     }
 }

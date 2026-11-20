@@ -41,13 +41,11 @@ public struct ReferenceDefinition: Hashable, Sendable {
     public let rawLabel: String
     public let rawDestination: String
     public let rawTitle: String?
-    public let syntax: ReferenceSyntax?
 
-    public init(rawLabel: String, rawDestination: String, rawTitle: String? = nil, syntax: ReferenceSyntax? = nil) {
+    public init(rawLabel: String, rawDestination: String, rawTitle: String? = nil) {
         self.rawLabel = rawLabel
         self.rawDestination = rawDestination
         self.rawTitle = rawTitle
-        self.syntax = syntax
     }
 }
 
@@ -170,13 +168,14 @@ public enum DocumentError: Error, Equatable, Sendable {
     case unorderedSiblings(node: Int)
     case invalidParent(Int)
     case invalidFallback(node: Int)
+    case invalidToken(Int)
+    case invalidDiagnostic(Int)
 }
 
 public struct ParseDiagnostic: Hashable, Sendable {
     public enum Code: Hashable, Sendable {
-        case unsupportedExtension(String)
-        case duplicateRegistration(String)
         case invalidExtensionResult(String)
+        case extensionFinding(owner: String, code: String, message: String)
         case nestingLimitExceeded(Int)
     }
     public let code: Code
@@ -192,14 +191,16 @@ public struct ParseDiagnostic: Hashable, Sendable {
 public struct Document: Sendable {
     public let source: [UInt8]
     public let nodes: [Node]
-    public let diagnostics: [ParseDiagnostic]
+    public private(set) var diagnostics: [ParseDiagnostic]
+    /// nil means syntax collection was disabled; [] is a collected empty table.
+    public let tokens: [SyntaxToken]?
     /// Projected, replacement-decoded text for unknown custom leaves. Kept
     /// separately so built-in nodes and semantic source segments do not grow.
     /// Values are plain text; renderers must escape them.
     public let customLeafFallbacks: [Int: String]
 
     public init(source: [UInt8], nodes: [Node], diagnostics: [ParseDiagnostic] = [],
-                customLeafFallbacks: [Int: String] = [:]) throws {
+                customLeafFallbacks: [Int: String] = [:], tokens: [SyntaxToken]? = nil) throws {
         guard let root = nodes.first, root.data == .document,
               root.range == SourceRange(0, source.count), root.nextSibling == nil else {
             throw DocumentError.invalidRoot
@@ -214,17 +215,6 @@ public struct Document: Sendable {
                     throw DocumentError.invalidSegments(node: index)
                 }
                 previousEnd = segment.upperBound
-            }
-            if case .referenceDefinition(let reference) = node.data, let syntax = reference.syntax {
-                for ranges in [syntax.label, syntax.destination, syntax.title, syntax.markers] {
-                    var end = node.range.lowerBound
-                    for range in ranges {
-                        guard node.range.contains(range), range.lowerBound >= end else {
-                            throw DocumentError.invalidSegments(node: index)
-                        }
-                        end = range.upperBound
-                    }
-                }
             }
             if let target = node.firstChild, !nodes.indices.contains(target) {
                 throw DocumentError.invalidIndex(node: index, target: target)
@@ -287,7 +277,30 @@ public struct Document: Sendable {
         self.source = source
         self.nodes = nodes
         self.diagnostics = diagnostics
+        if let tokens {
+            for (index, token) in tokens.enumerated() {
+                guard !token.role.isEmpty, nodes.indices.contains(token.owner),
+                      nodes[token.owner].range.contains(token.range) else {
+                    throw DocumentError.invalidToken(index)
+                }
+            }
+        }
+        for (index, diagnostic) in diagnostics.enumerated() where diagnostic.range.upperBound > source.count {
+            throw DocumentError.invalidDiagnostic(index)
+        }
+        self.tokens = tokens
         self.customLeafFallbacks = customLeafFallbacks
+    }
+
+    /// Preserve the already validated snapshot on a rejected runtime transform.
+    package func reportingInvalidExtension(_ identifier: String) -> Document {
+        var copy = self
+        copy.appendRuntimeIssue(identifier)
+        return copy
+    }
+
+    private mutating func appendRuntimeIssue(_ identifier: String) {
+        diagnostics.append(ParseDiagnostic(.invalidExtensionResult(identifier), range: root.range))
     }
 
     public var root: Node { nodes[0] }
@@ -313,8 +326,10 @@ public struct DocumentBuilder: Sendable {
     private var lastChildren: [Int?]
     private var diagnostics: [ParseDiagnostic] = []
     private var customLeafFallbacks: [Int: String] = [:]
+    private var tokens: [SyntaxToken]?
 
-    public init(source: [UInt8]) {
+    public init(source: [UInt8], collectSyntaxDetails: Bool = false) {
+        self.tokens = collectSyntaxDetails ? [] : nil
         self.source = source
         self.nodes = [Node(data: .document, range: SourceRange(0, source.count))]
         self.lastChildren = [nil]
@@ -339,19 +354,26 @@ public struct DocumentBuilder: Sendable {
 
     public mutating func report(_ diagnostic: ParseDiagnostic) { diagnostics.append(diagnostic) }
 
+    /// A no-op when collection is disabled. Ownership/ranges are checked at build.
+    public mutating func record(_ token: SyntaxToken) { tokens?.append(token) }
+
+    /// Explicit removal avoids finish() silently losing projected text.
+    public mutating func clearFallback(for index: Int) { customLeafFallbacks[index] = nil }
+
     /// Complete an open block while retaining its topology. Validation occurs
     /// at build(), before an immutable Document can escape the builder.
-    /// Replaces fallback metadata too; nil clears a previous fallback.
+    /// A supplied fallback replaces metadata; omission preserves it. Use
+    /// clearFallback(for:) when changing a custom leaf into a container.
     public mutating func finish(_ index: Int, data: NodeData, range: SourceRange,
                                 sourceSegments: [SourceRange] = [], fallbackLiteral: String? = nil) throws {
         guard index > 0 && nodes.indices.contains(index) else { throw DocumentError.invalidParent(index) }
         let old = nodes[index]
         nodes[index] = Node(data: data, range: range, sourceSegments: sourceSegments,
                             firstChild: old.firstChild, nextSibling: old.nextSibling)
-        customLeafFallbacks[index] = fallbackLiteral
+        if let fallbackLiteral { customLeafFallbacks[index] = fallbackLiteral }
     }
 
     public func build() throws -> Document {
-        try Document(source: source, nodes: nodes, diagnostics: diagnostics, customLeafFallbacks: customLeafFallbacks)
+        try Document(source: source, nodes: nodes, diagnostics: diagnostics, customLeafFallbacks: customLeafFallbacks, tokens: tokens)
     }
 }

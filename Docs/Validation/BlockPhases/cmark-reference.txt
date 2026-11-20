@@ -1,0 +1,4 @@
+Build complete! (20,47 secs)
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 3 tests in 1 suite passed after 0.146 seconds.

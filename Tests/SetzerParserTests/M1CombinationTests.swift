@@ -16,20 +16,16 @@ struct M1CombinationTests {
         #expect(document.root.range == SourceRange(0, bytes.count))
         #expect(HTMLRenderer().render(document) == HTMLRenderer().render(plain))
         #expect(document.nodes.count == plain.nodes.count)
+        #expect(document.tokens == plain.tokens?.map {
+            SyntaxToken($0.role, range: SourceRange($0.range.lowerBound + 3, $0.range.upperBound + 3), owner: $0.owner)
+        })
         for (node, original) in zip(document.nodes.dropFirst(), plain.nodes.dropFirst()) {
             #expect(node.kind == original.kind)
             #expect(node.range == SourceRange(original.range.lowerBound + 3, original.range.upperBound + 3))
             #expect(node.sourceSegments == original.sourceSegments.map {
                 SourceRange($0.lowerBound + 3, $0.upperBound + 3)
             })
-            if case .referenceDefinition(let actual) = node.data,
-               case .referenceDefinition(let expected) = original.data {
-                for (ranges, originals) in zip(
-                    [actual.syntax?.label, actual.syntax?.destination, actual.syntax?.title, actual.syntax?.markers],
-                    [expected.syntax?.label, expected.syntax?.destination, expected.syntax?.title, expected.syntax?.markers]) {
-                    #expect(ranges == originals?.map { SourceRange($0.lowerBound + 3, $0.upperBound + 3) })
-                }
-            }
+
         }
     }
 
@@ -95,7 +91,7 @@ struct M1CombinationTests {
     static let customKind = NodeKind("example.twoLines")
 
     static func customParser(semanticSegments: Bool = true) -> MarkdownParser {
-        let implementation = MarkdownExtension("example", blockRules: [
+        let implementation = MarkdownExtension("example", nodeKinds: [NodeKind("example.twoLines")], blockRules: [
             BlockRule("twoLines", trigger: 58) { context in
                 guard let next = context.line(at: context.lineIndex + 1) else { return nil }
                 return BlockMatch(consumedLines: 2,
@@ -138,6 +134,7 @@ struct M1CombinationTests {
         try builder.finish(custom, data: first.nodes[custom].data, range: SourceRange(0, 3), fallbackLiteral: "")
         #expect(HTMLRenderer().render(try builder.build()) == "")
         #expect(HTMLRenderer().render(first) == "&lt;&amp;&gt;")
+        builder.clearFallback(for: custom)
         try builder.finish(custom, data: .thematicBreak, range: SourceRange(0, 3))
         let changed = try builder.build()
         #expect(changed.customLeafFallbacks.isEmpty)

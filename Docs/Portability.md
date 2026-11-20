@@ -1,8 +1,10 @@
 # Minimum toolchain and Linux verification
 
-Verified on 20 November 2026 before the M1-C API work. The library sources and
-runtime dependency graph are unchanged from `7c0f4ea` (merged M1-B).
-The development probe/runner are recorded in `34ba92b`.
+Initial verification on 20 November 2026 uses library sources from `7c0f4ea`
+(merged M1-B); the development probe/runner are recorded in `34ba92b`.
+The subsequent [block-phase extraction](BlockPhases.md) at `4c4fd46` adds a
+complete Linux/x86-64 suite and repeats minimum-toolchain builds/tests. The
+runtime dependency graph and deployment targets remain unchanged.
 
 ## Results and limits
 
@@ -14,13 +16,16 @@ The development probe/runner are recorded in `34ba92b`.
 | Actual Linux execution | Probe passes in a network-free QEMU/Alpine guest, Linux 6.12.115-0-virt |
 | Spec checks inside Linux | All 652 CommonMark and 672 pinned GFM inputs compared; 339/652 and 339/672 exact HTML passes, every protected baseline ID retained |
 | Targeted Linux checks | Original bytes/BOM offsets, tight/loose and nested wrapper rendering, projected fallback/tab/CRLF, invalid UTF-8/NUL, invalid tree/fallback-owner rejection pass |
+| Extracted phases, Linux x86-64/GNU | All 57 Swift Testing tests pass with Swift 6.4.2 and glibc 2.44 on an existing SSH host |
+| Extracted phases, minimum compiler | All 57 macOS tests and the Linux ARM64 cross-build pass with Swift 6.2 |
 
 Evidence: [receipt and artifact/source checksums](Validation/Portability/receipt.json),
 [macOS test summary](Validation/Portability/mac-swift62-summary.txt),
 [Linux boot and probe output](Validation/Portability/linux-aarch64.txt).
-The Linux probe is **not the complete 57-test Swift Testing suite**. The Static
-Linux SDK lacks `Testing`; a full Linux test-framework run remains open, as do
-glibc and x86-64 validation. There is no emulation performance claim. iOS,
+The original Linux ARM64 probe is **not the complete 57-test Swift Testing
+suite**. The Static Linux SDK lacks `Testing`. The subsequent full Linux
+x86-64/glibc run uses Swift 6.4.2; a full Linux suite on the minimum Swift 6.2
+compiler remains open. There is no emulation performance claim. iOS,
 visionOS and the minimum Apple OS runtimes are not verified by these host tests.
 
 ## Toolchain and SDK selection
@@ -98,3 +103,13 @@ implementation needs an explicit lifetime/availability contract and measurements
 before replacing it. This verification does not itself introduce spans or
 change the public API. Next: split the block loop before registry work, then
 prove the M1-C extension/storage contracts and inline budget.
+
+## M1-C/M1-D acceptance update
+
+The [M1 acceptance record](M1Acceptance.md) repeats the full **70-test** suite
+with Swift 6.4.2 macOS debug/release, Swift 6.2 macOS and Swift 6.4.2 on the
+existing Linux x86-64/glibc host. All five modules also cross-build for static
+Linux ARM64 with Swift 6.2. No new VM/container or tool installation was used.
+The earlier ARM64 execution evidence remains historical; this update does not
+claim another ARM64 runtime run, a full Linux Swift 6.2 suite or minimum Apple
+OS runtime checks. No Span/UTF8Span platform availability requirement changed.

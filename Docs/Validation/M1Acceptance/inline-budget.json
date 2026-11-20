@@ -1,0 +1,48 @@
+{
+  "scope": "CommonMark mixed-v1, syntax collection off, same host/toolchain; includes all additional total-parse work in M2",
+  "baseline_file": "m2-baseline.md",
+  "baseline_sha256": "d306bb5e1933a290d4426d9e3dd1d03a70e55ea6a1c7b8a8dee51b0325734354",
+  "additional_parse_ms": {
+    "100 KB": 0.5,
+    "1 MB": 8.0,
+    "5 MB": 40.0
+  },
+  "preflight": [
+    {
+      "size": "100 KB",
+      "gm_ms": 2.468,
+      "c_ms": 1.758,
+      "ratio": 1.40386803185438,
+      "remaining_ms": 1.048,
+      "additional_parse_ms": 0.5,
+      "reserve_ms": 0.548,
+      "c_drift_initial_percent": 0.22805017103761926,
+      "c_drift_full_percent": -7.619548081975824,
+      "regression_m1b_percent": -9.464416727806313
+    },
+    {
+      "size": "1 MB",
+      "gm_ms": 24.592,
+      "c_ms": 19.939,
+      "ratio": 1.2333617533477104,
+      "remaining_ms": 15.286000000000001,
+      "additional_parse_ms": 8.0,
+      "reserve_ms": 7.286000000000001,
+      "c_drift_initial_percent": 5.91766268260292,
+      "c_drift_full_percent": -6.3852763040518346,
+      "regression_m1b_percent": -8.084470192487391
+    },
+    {
+      "size": "5 MB",
+      "gm_ms": 122.683,
+      "c_ms": 95.94500000000001,
+      "ratio": 1.2786804940330396,
+      "remaining_ms": 69.20700000000001,
+      "additional_parse_ms": 40.0,
+      "reserve_ms": 29.207000000000008,
+      "c_drift_initial_percent": -1.1477554889294028,
+      "c_drift_full_percent": -7.516651725899582,
+      "regression_m1b_percent": -12.930263587457958
+    }
+  ]
+}

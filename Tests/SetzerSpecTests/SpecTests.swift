@@ -104,9 +104,8 @@ struct SpecTests {
             let document = MarkdownParser(collectSyntaxDetails: true).parse(example.markdown)
             let references = document.nodes.filter { $0.kind == .referenceDefinition }
             #expect(references.count == expected[example.example], "Reference block shape in example \(example.example)")
-            for node in references {
-                if case .referenceDefinition(let reference) = node.data { #expect(reference.syntax != nil) }
-            }
+            #expect(document.tokens != nil)
+            #expect(document.tokens?.allSatisfy { document.nodes[$0.owner].kind == .referenceDefinition } == true)
         }
     }
 }

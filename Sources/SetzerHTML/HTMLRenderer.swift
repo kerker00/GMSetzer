@@ -8,6 +8,18 @@ public enum HTMLRendering: Sendable {
     case wrapChildren(open: String, close: String)
 }
 
+public struct HTMLRendererContext: Sendable {
+    public let index: Int
+    /// Tight-list paragraphs and list items receive the same scheduling context
+    /// as the built-in renderer, including when their ancestors are wrapped.
+    public let tightItem: Bool
+    public let tree: DocumentIndex
+    public var node: Node { tree.document.nodes[index] }
+    public var parent: Int? { tree.parent(of: index) }
+    public var ancestors: [Int] { tree.ancestors(of: index) }
+}
+
+public typealias ContextualHTMLRendererHook = @Sendable (HTMLRendererContext) -> HTMLRendering?
 public typealias HTMLRendererHook = @Sendable (Node, Document) -> HTMLRendering?
 
 /// Iterative rendering of the currently implemented block tree. Source
@@ -17,19 +29,23 @@ public struct HTMLRenderer: Sendable {
     public let includeSourceRanges: Bool
     public let allowRawHTML: Bool
     public let preserveHTMLComments: Bool
+    private let contextualHooks: [NodeKind: ContextualHTMLRendererHook]
     private let hooks: [NodeKind: HTMLRendererHook]
 
     public init(includeSourceRanges: Bool = false, allowRawHTML: Bool = false,
-                preserveHTMLComments: Bool = false, hooks: [NodeKind: HTMLRendererHook] = [:]) {
+                preserveHTMLComments: Bool = false, hooks: [NodeKind: HTMLRendererHook] = [:],
+                contextualHooks: [NodeKind: ContextualHTMLRendererHook] = [:]) {
         self.includeSourceRanges = includeSourceRanges
         self.allowRawHTML = allowRawHTML
         self.preserveHTMLComments = preserveHTMLComments
         self.hooks = hooks
+        self.contextualHooks = contextualHooks
     }
 
     private enum Event { case enter(Int, tightItem: Bool = false), output(String) }
 
     public func render(_ document: Document) -> String {
+        let tree = contextualHooks.isEmpty ? nil : DocumentIndex(document)
         var output = ""
         var pending: [Event] = [.enter(0)]
         while let event = pending.popLast() {
@@ -37,7 +53,10 @@ public struct HTMLRenderer: Sendable {
             case .output(let text): output += text
             case .enter(let index, let tightItem):
                 let node = document.nodes[index]
-                if let directive = hooks[node.kind]?(node, document) {
+                let contextual = tree.flatMap { tree in
+                    contextualHooks[node.kind]?(HTMLRendererContext(index: index, tightItem: tightItem, tree: tree))
+                }
+                if let directive = contextual ?? hooks[node.kind]?(node, document) {
                     switch directive {
                     case .replace(let html): output += html
                     case .wrapChildren(let open, let close):

@@ -8,10 +8,20 @@ findings and recommendations only; no library code was changed.
 
 **Portability follow-up, 20 November 2026:** [Portability.md](Portability.md)
 records a Swift 6.2 build, all 57 macOS tests, and actual static Linux ARM64
-execution retaining every protected spec ID. Full Linux Swift Testing/glibc/
-x86-64 coverage remains open. Compile probes distinguish the back-deployable
+execution retaining every protected spec ID. The subsequent
+[block-phase extraction](BlockPhases.md) passes the full 57-test suite on Linux
+x86-64/glibc with Swift 6.4.2 and the current performance gate. Full Linux
+Swift 6.2 suite coverage remains open. Compile probes distinguish the back-deployable
 Span type/buffer bridge from macOS-26-only Array.span and UTF8Span. These
-results supplement the original findings below; no library source changed.
+results supplement the original findings below. The initial portability proof
+changed no library source; the phase extraction changes internal control flow.
+
+**M1-C/M1-D follow-up, 20 November 2026:** [M1Acceptance.md](M1Acceptance.md)
+records the completed shared configuration/token/container/transform work,
+internal inline draft, parent/hook context, invariant audit, all 70 library
+tests across the stated matrix, 3,919 C comparisons, 13 Python tests and the
+measured fixed M2 allowance. Technical acceptance passed on the cumulative
+branch; owner merge is pending. The findings below remain historical evidence.
 
 ## Summary
 

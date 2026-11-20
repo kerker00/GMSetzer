@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-20",
+  "timezone": "Europe/Berlin",
+  "measured_commit": "e7668b82648454dc7d6bbd6f4e2f5ef0b52af628",
+  "initial_measured_commit": "231ae50cb11060ebd31bc25243b7c048121ed851",
+  "source_hash_algorithm": "SHA256 of sorted tracked paths (NUL terminated) and contents under Package.swift, Sources, Tests and Tools at measured_commit",
+  "source_sha256": "aa8a183b40569cbba590b8e09df21b6acc0723e9133e77f3ecbc6ac371c2e6b3",
+  "source_state": "Measured library, test and benchmark sources match measured_commit. Documentation was being updated; the later Python M2 gate does not change measured code.",
+  "swift_macos": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0",
+  "macos": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434",
+  "hardware": {
+    "cpu": "Apple M2",
+    "physical_cores": 8,
+    "ram_bytes": 17179869184
+  },
+  "configuration": "Release, debug symbols off, p50 wallClock + mallocCountTotal + mallocBytesCount, 5 seconds per case; 42 cases; unchanged mixed-v1/references-v1; C source positions on",
+  "tests": {
+    "library": 70,
+    "protected_commonmark": 339,
+    "commonmark_examples": 652,
+    "protected_gfm": 339,
+    "gfm_examples": 672,
+    "cmark_comparisons": 3919,
+    "tools_test_functions": 4,
+    "python_tests": 13
+  },
+  "platform_matrix": [
+    "macOS Swift 6.4.2 debug/release: all 70 tests",
+    "macOS Swift 6.2 + compatible 14.4 SDK + own Testing runtime: all 70 tests; deployment target macOS 15",
+    "Existing SSH Linux x86_64 host, Swift 6.4.2, glibc 2.44: all 70 tests; task-specific transferred sources/fixtures removed after execution",
+    "Static Linux ARM64 Swift 6.2: all five library modules cross-build; no new runtime execution"
+  ],
+  "limits": [
+    "No new VM/container, install or service change",
+    "No full Linux Swift 6.2 suite or minimum Apple OS runtime execution",
+    "No completed inline/GFM, Setzkit underlines, device tests or native lint proof",
+    "Reconstruction medians are not additive attribution",
+    "Full run C control drift triggered a focused repeat; repeat C drift is within 10% of both initial and full runs at every size"
+  ],
+  "decision": "M1 technical acceptance passed; owner merge pending; M2 not started",
+  "control_repeat": "15-case filtered repeat at the same measured runtime/harness; exact expression in control_filter; no spliced measurements",
+  "control_filter": ".*(CommonMark parse|reference syntax|selected registry parse).*",
+  "m2_baseline": "m2-baseline.md (focused repeat; no spliced measurements)",
+  "artifacts": {
+    "benchmark.md": "0af2275f3c04af1156ae62c1ebb926c308973152826bc303e800a267b39529bb",
+    "budget.json": "7188e3b3ee663cb08772c891e5ee5ec4687bd3638481e225af6ebde415e0773b",
+    "initial-benchmark.md": "a702e8f1e8f2c0970ef1fe83ef05aa5f0a1ff9036a02bffc168da6ab5889517a",
+    "inline-budget.json": "80c7688ec7a1804dd9ae28d1e6f46683193336422d29562ebe5ad588aae5908b",
+    "linux-arm64-swift62-build.txt": "b14420a9f50861a68a6ad35c23cdcddd1933ee49422749f25fd179adc9a134b9",
+    "linux-x86_64.txt": "62969b222fab59b7acb9865fbd22f3e74b5f3c314a3f87d7262aa6ff9fa2a458",
+    "m2-baseline.md": "d306bb5e1933a290d4426d9e3dd1d03a70e55ea6a1c7b8a8dee51b0325734354",
+    "m2-preflight.json": "aa229af3461aecccebbc09ff4deb0e59d5c169227716c313c9535c85415b827d",
+    "mac-swift62.txt": "f71fecea2281c4b222abd6a957b51dcb42d9e9be45f3d0d3b2b48c5d9b6ae9db",
+    "mac-swift64-debug.txt": "485c06024eb7cc1e98491601fbdcd658b313ee64a3bdf54a67455ac3def9dbfa",
+    "mac-swift64-release.txt": "ab40bd5f629dc4feb6c5f6b8d38d275870484f2afd71bf735d5a7a7ddb6e7180",
+    "python.txt": "b9d791b3429acb2e42d59d5ff172146843404aa15e4aa6e9accc7c1e7ab2fbc1",
+    "tools.txt": "32f9e4ec488d1e35f80c07294cb3576c8e22245da9ff4159d679d83d7a533fa4"
+  }
+}

@@ -180,3 +180,49 @@ post-change baseline; repeated measurements are required before interpreting an
 alert as a code regression. Full library tests pass in debug/release, the four
 Tools tests pass (corpus checks and 3,919 C comparisons), and all eight offline
 Python tests pass. Linux, Swift 6.2 and iPhone measurements remain unverified.
+
+### Block-phase extraction countermeasurement
+
+20 November 2026, same Apple M2/8-core/16-GiB host, macOS 27.0.1 and Swift
+6.4.2. Clean measured core `4c4fd46`; the 30-case release harness, actual byte
+counts/corpora and allocation metrics are unchanged. Output uses microseconds.
+All six parse budgets and the frozen M1-B 10% regression alert pass.
+
+Core p50 values are **2.615 / 26.132 / 132.514 ms** (100 KB / 1 MB / 5 MB),
+with C ratios **1.500 / 1.397 / 1.387**. This is a structural refactor; the small
+timing differences are not claimed as a speed improvement. Remaining total
+headroom is **0.871 / 11.290 / 58.588 ms** for future work, with the same
+incomplete-inline/GFM and phase-attribution caveats.
+
+[Raw output](Validation/BlockPhases/benchmark.md),
+[gate report](Validation/BlockPhases/budget.json) and
+[receipt](Validation/BlockPhases/receipt.json) retain the measurement and test
+scope. Linux tests and cross-builds are correctness checks, not Linux timings.
+
+### M1-C/M1-D acceptance measurements
+
+The [M1 acceptance](M1Acceptance.md#performance-decision-and-m2-gate) retains a
+36-case initial run, the 42-case static-token-role countermeasurement and a
+15-case control repeat at the same runtime/harness revision. All six full-run
+budgets and the frozen M1-B 10% alert pass. Cross-run C drift triggered the
+focused repeat rather than a speed claim based on unlike conditions.
+
+The frozen core repeat measures **2.468 / 24.592 / 122.683 ms** at 100 KB /
+1 MB / 5 MB, with corresponding source-positioned C times **1.758 / 19.939 /
+95.945 ms**. Remaining total headroom is **1.048 / 15.286 / 69.207 ms**.
+The fixed M2 additional-total-parse allowance is **0.5 / 8 / 40 ms**; the
+separate `Scripts/check_m2_budget.py` verifies its hashed baseline, independent
+size limits, total ceilings, matching inputs and C-control stability.
+
+At 1 MB the focused reference workload takes **25.919 ms off / 32.506 ms on**.
+Static token roles reduce rounded annotation allocation counts from 318 K to
+227 K. The selected no-op registry takes 26.345 ms versus 24.592 ms core;
+its overhead is included when assessing selected rules. Full-run isolated
+text/segment reconstruction takes 1.665 / 4.542 ms and the optional parent
+index takes 0.289 ms (one allocation). These microbenchmarks are not additive
+parser attribution or proof of savings from a different storage model.
+
+[Raw exports, gate reports and hashed receipt](Validation/M1Acceptance/receipt.json)
+retain the complete evidence. GFM remains informational until M4, and full
+inline annotations need another measurement after M2. This is not an end-to-end
+CommonMark/GFM performance guarantee or an iPhone/Linux timing result.

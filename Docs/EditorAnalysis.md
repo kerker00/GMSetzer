@@ -3,8 +3,9 @@
 Decision: 19 November 2026. **Required for version 1.0; planned, not implemented.**
 GMSetzer is also the syntax and native Markdown-analysis engine for Setzkit.
 The existing tree/source ranges are prerequisites, not a finished editor or
-linter. The current `ParseDiagnostic` reports configuration, extension and
-resource-limit problems; it does not yet implement document lint findings.
+linter. `MarkdownParser.configurationIssues` reports configuration failures
+without source locations. `ParseDiagnostic` reports runtime extension and
+resource-limit conditions; it does not yet implement document lint findings.
 
 ## Responsibilities
 
@@ -25,10 +26,13 @@ provider can still run independently when it does not consume GMSetzer's tree.
 No new package target/API is claimed by this planning change. Introduce the
 module with its first tested native rules, by the M3 editor-integration gate.
 
-The M1 HTML/reference step now offers specialised optional reference provenance
-through `collectSyntaxDetails` and `ReferenceDefinition.syntax`. This preserves
-exact components and markers for future editor consumers; general syntax spans,
-document diagnostics, UTF-16 underlines and the native rule engine remain planned.
+M1-C provides an optional generic `Document.tokens` table through
+`collectSyntaxDetails`: source role/range and owning node. It currently collects
+reference components/markers and custom block roles. `referenceSyntax(for:)`
+provides a convenience view. `DocumentIndex` owns snapshot-bound parents and
+ancestors. Inline roles, document lint findings, offset queries, UTF-16 underlines
+and the native rule engine remain planned. See [ExtensionContracts.md](ExtensionContracts.md)
+and the current [M1 acceptance record](M1Acceptance.md).
 
 ## Markdown validity and findings
 

@@ -5,11 +5,11 @@ Markdown with switchable extensions, exact source positions and an HTML
 renderer. No C, no Rust, no JavaScript, no runtime dependencies — it builds
 wherever Swift runs, including Linux.
 
-> **Status:** milestone M1 in progress. The first slice implements a validated
+> **Status:** M1 technical acceptance passed; cumulative PR/owner merge pending. The first slice implements a validated
 > syntax tree, paragraphs, headings, code, nested block quotes and ordered/bullet
-> lists, including lazy continuation, tightness and depth limits. Custom leaf
-> rules receive projected source lines. HTML blocks and multiline reference
-> definitions are implemented, with opt-in reference component ranges. Inline
+> lists, including lazy continuation, tightness and depth limits. Custom block
+> rules receive projected source lines and optional core-parsed children. HTML blocks and multiline reference
+> definitions are implemented, with an opt-in generic token table. Inline
 > markup and editor analysis remain pending. Current spec passes: 339/652
 > CommonMark and 339/672 GFM. The repository stays private until
 > milestone M2 and owner approval.
@@ -39,10 +39,16 @@ wherever Swift runs, including Linux.
 - [Docs/Portability.md](Docs/Portability.md) – Swift 6.2 tests, Linux ARM64
   execution evidence, SDK selection, span availability and remaining coverage.
 - [Docs/Review-M0.md](Docs/Review-M0.md) – review findings and corrections.
+- [Docs/M1Acceptance.md](Docs/M1Acceptance.md) – technical decision, measured
+  M2 allowance, portability matrix and acceptance evidence.
 - [Docs/Review-M1.md](Docs/Review-M1.md) – M1 architecture, code, QA and
   extensibility review with recommendations before M2.
 - [Docs/SyntaxTree.md](Docs/SyntaxTree.md) – implemented tree/extension contract,
-  example ranges and remaining M1 work.
+  example ranges and the implemented block contracts.
+- [Docs/ExtensionContracts.md](Docs/ExtensionContracts.md) – shared configuration,
+  container/transform probes, token ownership, hook context and the inline API draft.
+- [Docs/BlockPhases.md](Docs/BlockPhases.md) – extracted block-phase boundaries,
+  full Linux regression suite and performance countermeasurement before registry work.
 - [Docs/EditorAnalysis.md](Docs/EditorAnalysis.md) – planned syntax, native lint
   and editor-diagnostic contracts and acceptance gates.
 - [Docs/HTMLReferences.md](Docs/HTMLReferences.md) – HTML policies, multiline
@@ -53,14 +59,15 @@ wherever Swift runs, including Linux.
 
 | Module | Implemented | Planned |
 | --- | --- | --- |
-| `SetzerSyntax` | Validated syntax tree, original-byte source ranges and segments | Generic optional syntax spans, position conversion, outline queries |
-| `SetzerParser` | Block parser, custom leaf rules, ordered profiles | Inline parser, container/transform hooks, validated shared configuration |
+| `SetzerSyntax` | Validated tree, source ranges/segments, optional tokens and parent index | Position conversion, outline queries |
+| `SetzerParser` | Block parser, custom children/transforms, validated registry and profiles | Inline parser and promotion of the inline API draft |
 | `SetzerExtensions` | GFM profile selections | GFM rule implementations, footnotes, front matter, math, alerts and callouts |
 | `SetzerHTML` | Block HTML rendering, source anchors, escaping and comment policy | Inline rendering and URL safety |
 | `GMSetzer` | Imports the four implemented modules above | Optional analysis module with its first tested rules |
 
-M1 is not accepted yet. The [M1 review](Docs/Review-M1.md) defines the
-correctness, measurement, architecture and refactoring gates before M2.
+The [M1 acceptance record](Docs/M1Acceptance.md) closes the review work with
+70 library tests, 3,919 C comparisons and a fixed M2 parse budget. Owner merge
+is pending. Actual inlines, complete GFM and editor integration remain M2–M5.
 
 ```swift
 import GMSetzer
@@ -75,10 +82,11 @@ in `Document.source` while replacing them in literals. A leading UTF-8 BOM is
 ignored for syntax recognition but retained in the original bytes and offsets.
 `.gfm` selects its five
 extensions explicitly; until M4 implements them, missing extensions are listed
-in `Document.diagnostics`.
+in `MarkdownParser.configurationIssues`; `validated()` rejects them.
 
-`collectSyntaxDetails: true` optionally retains reference component/marker
-ranges. HTML blocks are escaped and recognised comments omitted by default;
+`collectSyntaxDetails: true` optionally collects `Document.tokens`, including
+reference components/markers and extension roles. `referenceSyntax(for:)` is a
+convenience view. `DocumentIndex` provides snapshot-bound parents/ancestors. HTML blocks are escaped and recognised comments omitted by default;
 `allowRawHTML` and `preserveHTMLComments` are explicit renderer options.
 Custom leaf fallbacks retain projected content without quote/list prefixes;
 renderer wrappers preserve built-in list tightness.

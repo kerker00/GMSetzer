@@ -61,6 +61,33 @@ let benchmarks: @Sendable () -> Void = {
         Benchmark("GMSetzer render \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
             for _ in benchmark.scaledIterations { blackHole(renderer.render(document)) }
         }
+        // Isolated reconstruction probes. These are additive microbenchmarks,
+        // not an attribution or a subtraction from total parser timings.
+        let textRanges = document.nodes.filter { $0.kind == .text }.map(\.range)
+        Benchmark("GMSetzer text reconstruction \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            for _ in benchmark.scaledIterations {
+                blackHole(textRanges.map { String(decoding: document.source[$0.lowerBound..<$0.upperBound], as: UTF8.self) })
+            }
+        }
+        let segments = document.nodes.map(\.sourceSegments)
+        Benchmark("GMSetzer segment reconstruction \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            for _ in benchmark.scaledIterations {
+                // Iterating/re-appending forces distinct arrays rather than COW copies.
+                blackHole(segments.map { ranges -> [GMSetzer.SourceRange] in
+                    var copy: [GMSetzer.SourceRange] = []
+                    copy.reserveCapacity(ranges.count)
+                    for range in ranges { copy.append(range) }
+                    return copy
+                })
+            }
+        }
+        let registryParser = Corpus.registryParser()
+        Benchmark("GMSetzer selected registry parse \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            for _ in benchmark.scaledIterations { blackHole(registryParser.parse(text)) }
+        }
+        Benchmark("GMSetzer parent index \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            for _ in benchmark.scaledIterations { blackHole(DocumentIndex(document)) }
+        }
         let referenceText = Corpus.referenceDocument(bytes: bytes)
         for collect in [false, true] {
             let parser = MarkdownParser(collectSyntaxDetails: collect)

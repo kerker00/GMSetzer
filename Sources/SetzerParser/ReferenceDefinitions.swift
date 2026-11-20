@@ -8,6 +8,7 @@ internal struct ReferenceScanner {
         var offset: Int
     }
     struct Match {
+        let syntax: ReferenceSyntax?
         let definition: ReferenceDefinition
         let firstLine: Int
         let endLine: Int
@@ -164,7 +165,7 @@ internal struct ReferenceScanner {
             destination: segments(destinationStart, destinationEnd),
             title: titleBounds.map { segments($0.0, $0.1) } ?? [], markers: markers) : nil
         let definition = ReferenceDefinition(rawLabel: label, rawDestination: text(destinationStart, destinationEnd),
-            rawTitle: titleBounds.map { text($0.0, $0.1) }, syntax: syntax)
-        return Match(definition: definition, firstLine: line, endLine: min(endLine, content.count))
+            rawTitle: titleBounds.map { text($0.0, $0.1) })
+        return Match(syntax: syntax, definition: definition, firstLine: line, endLine: min(endLine, content.count))
     }
 }

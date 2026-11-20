@@ -15,10 +15,15 @@ public struct ExtensionConfiguration: Hashable, Sendable {
 public struct Profile: Hashable, Sendable {
     public let name: String
     public let extensions: [ExtensionConfiguration]
+    public let disabledRules: Set<String>
+    /// Explicit precedence within opening/leaf phases; unspecified rules keep default order.
+    public let ruleOrder: [String]
 
-    public init(name: String, extensions: [ExtensionConfiguration] = []) {
+    public init(name: String, extensions: [ExtensionConfiguration] = [], disabledRules: Set<String> = [], ruleOrder: [String] = []) {
         self.name = name
         self.extensions = extensions
+        self.disabledRules = disabledRules
+        self.ruleOrder = ruleOrder
     }
 
     public static let commonMark = Profile(name: "commonmark")
@@ -62,6 +67,27 @@ public struct BlockContext: Sendable {
     public let lineCount: Int
     internal let project: @Sendable (Int) -> SourceLine?
 
+    /// Drop a syntax prefix made of ASCII bytes, retaining original columns,
+    /// line endings and any remaining partial-tab indentation.
+    public func droppingASCII(_ count: Int, from line: SourceLine) -> SourceLine? {
+        guard count >= 0, line.virtualIndentation == 0,
+              line.contentRange.count >= count, line.contentRange.upperBound <= source.count else { return nil }
+        var cursor = SourceCursor(source: source, line: line)
+        for _ in 0..<count {
+            guard let byte = cursor.byte, byte < 128, byte != 9 else { return nil }
+            cursor.advanceASCII()
+        }
+        return cursor.view
+    }
+
+    /// Remove up to columns of indentation using physical four-column tabs.
+    public func droppingIndentation(_ columns: Int, from line: SourceLine) -> SourceLine? {
+        guard columns >= 0, line.contentRange.upperBound <= source.count else { return nil }
+        var cursor = SourceCursor(source: source, line: line)
+        guard cursor.consumeIndentation(columns) == columns else { return nil }
+        return cursor.view
+    }
+
     /// Returns nil at EOF or a container boundary. Multi-line rules must stay
     /// within the current quote/item, including on blank continuation lines.
     public func line(at index: Int) -> SourceLine? { project(index) }
@@ -78,18 +104,33 @@ public struct ParserLimits: Hashable, Sendable {
     }
 }
 
-/// The first extension hook supports custom leaf blocks. Container continuation,
-/// inline delimiters and post-processing will be added with those parser phases.
+/// A complete block match. Optional projected child lines are parsed by the
+/// core in the same source snapshot. The callback determines enter/continue/
+/// finish and must stop at enclosing container boundaries.
 public struct BlockMatch: Sendable {
     public let consumedLines: Int
     public let data: NodeData
     public let sourceSegments: [SourceRange]
+    public let children: [SourceLine]?
+    public let tokens: [BlockToken]
+    public let diagnostics: [ParseDiagnostic]
 
-    public init(consumedLines: Int, data: NodeData, sourceSegments: [SourceRange] = []) {
+    public init(consumedLines: Int, data: NodeData, sourceSegments: [SourceRange] = [],
+                children: [SourceLine]? = nil, tokens: [BlockToken] = [], diagnostics: [ParseDiagnostic] = []) {
         self.consumedLines = consumedLines
         self.data = data
         self.sourceSegments = sourceSegments
+        self.children = children
+        self.tokens = tokens
+        self.diagnostics = diagnostics
     }
+}
+
+/// Token ownership is assigned to the matched block after validation.
+public struct BlockToken: Hashable, Sendable {
+    public let role: String
+    public let range: SourceRange
+    public init(_ role: String, range: SourceRange) { self.role = role; self.range = range }
 }
 
 public struct BlockRule: Sendable {
@@ -113,11 +154,18 @@ public struct BlockRule: Sendable {
 }
 
 public struct MarkdownExtension: Sendable {
-    public let identifier: String
+    public let descriptor: ExtensionDescriptor
+    public var identifier: String { descriptor.identifier }
     public let blockRules: [BlockRule]
+    public let transforms: [BlockTransform]
 
-    public init(_ identifier: String, blockRules: [BlockRule]) {
-        self.identifier = identifier
+    public init(_ identifier: String, nodeKinds: Set<NodeKind>, options: [String: ExtensionOption] = [:], blockRules: [BlockRule] = [], transforms: [BlockTransform] = []) {
+        self.init(descriptor: ExtensionDescriptor(identifier, nodeKinds: nodeKinds, options: options), blockRules: blockRules, transforms: transforms)
+    }
+
+    public init(descriptor: ExtensionDescriptor, blockRules: [BlockRule] = [], transforms: [BlockTransform] = []) {
+        self.descriptor = descriptor
         self.blockRules = blockRules
+        self.transforms = transforms
     }
 }
