@@ -43,5 +43,6 @@ checkout may be required. Preserve historical validation records as history.
   origin in the file header and licence in `NOTICE`. Never GPL or LGPL code.
 - Every bug fix comes with a regression test.
 - The owner authorised macOS/Linux CI and source-only release preparation on
-  20 November 2026. Releases, tags and making the repository public still
+  20 November 2026. See [Releasing](Docs/Releasing.md) for checks and the draft
+  release process. Releases, tags and making the repository public still
   require the owner's explicit confirmation before the step.

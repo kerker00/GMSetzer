@@ -18,6 +18,21 @@ and GitHub read access is required. After the first version tag is published,
 consumers can pin it through Swift Package Manager; no binary release assets
 or package registry are required.
 
+## Installation
+
+Version **0.4.0 is being prepared** as the first source-only preview release.
+After its `v0.4.0` tag is published, add it with Swift Package Manager:
+
+```swift
+.package(url: "https://github.com/kerker00/GMSetzer.git", exact: "0.4.0")
+```
+
+Add `.product(name: "GMSetzer", package: "GMSetzer")` to your target's
+dependencies. APIs may change before 1.0. GitHub provides source ZIP and tar.gz
+archives; no binary assets are uploaded. See the
+[release notes](Docs/Releases/0.4.0.md) and
+[release process](Docs/Releasing.md) for scope, checks and publication steps.
+
 ## Independence
 
 GMSetzer is a standalone MIT-licensed Swift package for editors, command-line
