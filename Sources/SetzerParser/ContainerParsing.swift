@@ -368,9 +368,9 @@ extension BlockParser {
                        range: SourceRange(lines[first].range.lowerBound, lines[last].range.upperBound),
                        segments: active.indices[reference.firstLine..<reference.endLine].map { lines[$0].range }, to: active.parent)
                 if let syntax = reference.syntax {
-                    for (role, ranges) in [("label", syntax.label), ("destination", syntax.destination),
-                                           ("title", syntax.title), ("marker", syntax.markers)] {
-                        for range in ranges { builder.record(SyntaxToken("core.reference." + role, range: range, owner: owner)) }
+                    for (role, ranges) in [("core.reference.label", syntax.label), ("core.reference.destination", syntax.destination),
+                                           ("core.reference.title", syntax.title), ("core.reference.marker", syntax.markers)] {
+                        for range in ranges { builder.record(SyntaxToken(role, range: range, owner: owner)) }
                     }
                 }
                 firstContent = reference.endLine
