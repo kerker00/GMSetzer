@@ -355,14 +355,59 @@ excludes allocation interposition, document destruction and C controls; it is
 diagnostic only. See [M2Inlines.md](M2Inlines.md) for commands, validation and
 remaining M3/device/M6 coverage. All prior block measurements above are history.
 
-## M3 measurement boundary (20 November 2026)
+## M3 editor services (20 November 2026)
 
-M3 adds optional source/tree indexes and native analysis;
-these are not covered by M2 timings. No full benchmark series was run for this
-change. Fresh parse + annotation + position-index + analysis/decoration timings
-remain pending owner authorization. The protected conformance path and full
-Document validation remain intact; no lazy-text API change was introduced.
-The [M3 review](Review-M3.md) corrections (CSR tree tables, ASCII-run position
-scan, analysis without a position index) change the code to be measured but not
-its results; their timings are part of the pending M3 measurements.
-See [M3EditorServices](M3EditorServices.md).
+M3 adds optional source/tree indexes and native analysis, which M2 timings do
+not cover. Two owner-authorised filtered package-benchmark runs measured them
+on the same Apple M2 host with
+`swift package --package-path Tools benchmark run --target ParserBenchmarks
+--filter "GMSetzer (position index|10k|outline|native analysis|editor snapshot|parent index|CommonMark parse).*"
+--filter "Swift String UTF-16.*" --format markdown --time-units microseconds --no-progress`:
+the [initial run](BenchmarkData/m3-services/initial-run.md) on merged `651af17`
+and the [optimised run](BenchmarkData/m3-services/optimised-run.md) after the
+service optimisations below. The `multibyte-v1` corpus is mostly non-ASCII
+prose (CJK, Cyrillic, Hebrew, umlauts, emoji) so the ASCII fast path cannot
+apply. Query cases use 10,000 evenly spread offsets per iteration. The editor
+snapshot is parse + `DocumentIndex` + `SourceIndex` + outline + analysis with
+all rules. Values are p50 in milliseconds.
+
+| Case | 100 KB initial | 100 KB optimised | 1 MB initial | 1 MB optimised | 5 MB initial | 5 MB optimised |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| CommonMark parse (reference) | 2.697 | 2.728 | 28.033 | 27.607 | 147.456 | 148.898 |
+| `SourceIndex`, mixed-v1 | 0.062 | 0.063 | 0.620 | 0.633 | 3.119 | 3.160 |
+| `SourceIndex`, multibyte-v1 | 0.195 | 0.192 | 1.944 | 1.968 | 9.757 | 9.880 |
+| Swift `String.utf16.count`, multibyte-v1 (context) | 0.195 | 0.200 | 1.977 | 2.019 | 9.765 | 10.166 |
+| `DocumentIndex` | 0.076 | 0.081 | 1.000 | 0.786 | 17.744 | 6.611 |
+| 10k position round trips | 4.911 | 2.290 | 5.415 | 2.888 | 5.693 | 3.084 |
+| 10k caret queries | 0.899 | 0.921 | 1.300 | 1.332 | 2.863 | 2.922 |
+| Outline | 0.034 | 0.031 | 0.333 | 0.317 | 1.952 | 2.439 † |
+| Native analysis, all rules | 0.578 | 0.308 | 5.816 | 3.129 | 29.360 | 16.228 |
+| Editor snapshot | 3.482 | 3.246 | 37.454 | 34.275 | 199.885 | 175.636 |
+
+Parse timings match the M2 record (28.230 ms at 1 MB), so M3 adds no parse
+cost. Queries allocate nothing; `SourceIndex` and `DocumentIndex` build with
+three to four allocations at every size. At 1 MB the isolated services sum to
+4.9 ms (analysis 3.1, `DocumentIndex` 0.8, `SourceIndex` 0.6, outline 0.3 ms);
+the combined snapshot exceeds the parse by 6.7 ms (24%), as each service there
+works on a freshly parsed, cache-cold document. The mixed corpus repeats its headings, so duplicate-heading
+reports 3,648 findings per MB; finding construction dominates that rule.
+
+Optimisations, each verified byte-identical against `275a69b` by the
+differential probe over 2,958 documents:
+
+- `DocumentIndex` reads nodes in index order when parents and earlier siblings
+  precede each node (every builder append does), instead of chasing sibling
+  links through 75 MB of 128-byte nodes at 5 MB; other layouts use the linked
+  build. 5 MB drops from 17.7 to 6.6 ms.
+- Position queries skip ASCII runs word-at-a-time from their checkpoint:
+  round trips are 46–53% faster.
+- Duplicate-heading keys of ASCII titles are collapsed byte-wise; other titles
+  keep Character segmentation. Trailing-whitespace finds line ends with the
+  shared SWAR `LineTerminators`, now a package type in `SetzerSyntax`.
+
+† The optimised run included a traversal change that copied the node array
+handle per step. A local release probe showed it slowed the 5 MB outline
+(2.07 → 2.6 ms) without helping analysis, so it was reverted before commit;
+the probe then measured 1.92–2.10 ms. The archived optimised export still
+contains the reverted variant for outline and analysis; other cases do not use
+the traversal.

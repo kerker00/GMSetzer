@@ -59,4 +59,23 @@ public enum Corpus {
         let unit = referenceBlock.utf8.count
         return String(repeating: referenceBlock, count: max(1, (bytes + unit - 1) / unit))
     }
+
+    /// Mostly non-ASCII prose for position-index workloads, where the ASCII
+    /// fast path cannot apply. Separate from the mixed corpus by design.
+    public static let multibyteBlock = """
+    # 見出しと Überschrift
+
+    日本語の段落にはテキストが続き、Umlaute äöüß und Emoji 😀🚀 erscheinen.
+    Кириллица и עברית стоят рядом с 中文文本，每行都很长。
+
+    - 項目 одна
+    - 項目 zwei 😀
+
+
+    """
+
+    public static func multibyteDocument(bytes: Int) -> String {
+        let unit = multibyteBlock.utf8.count
+        return String(repeating: multibyteBlock, count: max(1, (bytes + unit - 1) / unit))
+    }
 }

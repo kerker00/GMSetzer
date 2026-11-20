@@ -1,8 +1,9 @@
 # M3 editor services
 
-20 November 2026. Implementation on `feature/m3-editor-services`, after M2
+20 November 2026. Implemented after M2
 merged in [PR #11](https://github.com/kerker00/GMSetzer/pull/11) (`021f110`).
-Portable library services are implemented; review/merge remains open.
+Portable library services were reviewed ([Review-M3](Review-M3.md)) and merged
+in [PR #12](https://github.com/kerker00/GMSetzer/pull/12) (`651af17`).
 Application-specific adapters and device acceptance live in consumer repositories.
 This repository remains private; publication is a separate owner decision.
 
@@ -136,7 +137,10 @@ standalone-build and dependency/import audit evidence is recorded separately in
 `Validation/M3/independence.json`. Consumer-specific integration reports are kept
 in the consuming repository.
 
-Fresh performance measurements remain pending. M2 timings do not measure the
-optional indexes, native analysis or a consumer's presentation work. Full tree
+Performance of the indexes, queries, outline and analysis is recorded in
+[Benchmarks](Benchmarks.md#m3-editor-services-20-november-2026): at 1 MB the
+optional services add 4.9 ms in isolation and 6.7 ms in a combined snapshot
+to a 27.6 ms parse, and queries allocate
+nothing. A consumer's presentation work is not measured here. Full tree
 validation and eager public text values remain intact. Library review and
 owner-confirmed publication remain separate steps.
