@@ -26,10 +26,7 @@ public enum CoreBlockRule: String, CaseIterable, Sendable {
 
 internal enum RegisteredBlockRule: Sendable {
     case core(CoreBlockRule)
-    case custom(ActiveRule)
-    var identifier: String {
-        switch self { case .core(let rule): rule.rawValue; case .custom(let rule): rule.identifier }
-    }
+    case custom(Int)
 }
 
 internal struct RuleRegistry: Sendable {
@@ -139,13 +136,16 @@ internal struct RuleRegistry: Sendable {
         self.transforms = transforms
         custom.sort { $0.rule.priority == $1.rule.priority ? $0.order < $1.order : $0.rule.priority > $1.rule.priority }
         self.custom = custom
-        var opening: [RegisteredBlockRule] = custom.map { .custom($0) } + Self.core.opening.filter {
+        var opening: [RegisteredBlockRule] = custom.indices.map { .custom($0) } + Self.core.opening.filter {
             if case .core(let rule) = $0 { return !profile.disabledRules.contains(rule.rawValue) }
             return true
         }
         var leaves = Self.core.leaves.filter { !profile.disabledRules.contains($0.rawValue) }
         var ranks: [String: Int] = [:]
-        let orderable = Set(opening.map(\.identifier) + leaves.map(\.rawValue))
+        func identifier(_ entry: RegisteredBlockRule) -> String {
+            switch entry { case .core(let rule): rule.rawValue; case .custom(let index): custom[index].identifier }
+        }
+        let orderable = Set(opening.map(identifier) + leaves.map(\.rawValue))
         for identifier in profile.ruleOrder {
             guard orderable.contains(identifier) else {
                 issues.append(ConfigurationIssue(.unknownRule, identifier: identifier)); continue
@@ -157,8 +157,8 @@ internal struct RuleRegistry: Sendable {
         }
         if !ranks.isEmpty {
             opening = opening.enumerated().sorted {
-                let left = ranks[$0.element.identifier] ?? Int.max
-                let right = ranks[$1.element.identifier] ?? Int.max
+                let left = ranks[identifier($0.element)] ?? Int.max
+                let right = ranks[identifier($1.element)] ?? Int.max
                 return left == right ? $0.offset < $1.offset : left < right
             }.map(\.element)
             leaves = leaves.enumerated().sorted {

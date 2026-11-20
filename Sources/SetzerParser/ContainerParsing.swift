@@ -172,8 +172,8 @@ extension BlockParser {
             }
             for entry in registry.opening {
                 switch entry {
-                case .custom(let rule):
-                    if let resolved = extensionMatch(at: index, interrupting: false, candidate: rule) {
+                case .custom(let ruleIndex):
+                    if let resolved = extensionMatch(at: index, interrupting: false, candidate: registry.custom[ruleIndex]) {
                         let match = resolved.match
                         beginChild()
                         let end = index + match.consumedLines
