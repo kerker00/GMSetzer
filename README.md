@@ -43,6 +43,8 @@ wherever Swift runs, including Linux.
   extensibility review with recommendations before M2.
 - [Docs/SyntaxTree.md](Docs/SyntaxTree.md) – implemented tree/extension contract,
   example ranges and remaining M1 work.
+- [Docs/BlockPhases.md](Docs/BlockPhases.md) – extracted block-phase boundaries,
+  full Linux regression suite and performance countermeasurement before registry work.
 - [Docs/EditorAnalysis.md](Docs/EditorAnalysis.md) – planned syntax, native lint
   and editor-diagnostic contracts and acceptance gates.
 - [Docs/HTMLReferences.md](Docs/HTMLReferences.md) – HTML policies, multiline

@@ -180,3 +180,21 @@ post-change baseline; repeated measurements are required before interpreting an
 alert as a code regression. Full library tests pass in debug/release, the four
 Tools tests pass (corpus checks and 3,919 C comparisons), and all eight offline
 Python tests pass. Linux, Swift 6.2 and iPhone measurements remain unverified.
+
+### Block-phase extraction countermeasurement
+
+20 November 2026, same Apple M2/8-core/16-GiB host, macOS 27.0.1 and Swift
+6.4.2. Clean measured core `4c4fd46`; the 30-case release harness, actual byte
+counts/corpora and allocation metrics are unchanged. Output uses microseconds.
+All six parse budgets and the frozen M1-B 10% regression alert pass.
+
+Core p50 values are **2.615 / 26.132 / 132.514 ms** (100 KB / 1 MB / 5 MB),
+with C ratios **1.500 / 1.397 / 1.387**. This is a structural refactor; the small
+timing differences are not claimed as a speed improvement. Remaining total
+headroom is **0.871 / 11.290 / 58.588 ms** for future work, with the same
+incomplete-inline/GFM and phase-attribution caveats.
+
+[Raw output](Validation/BlockPhases/benchmark.md),
+[gate report](Validation/BlockPhases/budget.json) and
+[receipt](Validation/BlockPhases/receipt.json) retain the measurement and test
+scope. Linux tests and cross-builds are correctness checks, not Linux timings.

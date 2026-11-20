@@ -292,5 +292,6 @@ The measured M1-B release baseline and annotation cost are in
 [Benchmarks.md](Benchmarks.md#m1-b-measured-baseline-and-checked-validation).
 Subsequent [portability verification](Portability.md) builds with Swift 6.2,
 passes all 57 macOS tests with a compatible SDK, and executes the protected spec
-baseline plus targeted checks on static Linux ARM64. The full Linux Swift
-Testing/glibc/x86-64 matrix and minimum Apple OS runtime checks remain open.
+baseline plus targeted checks on static Linux ARM64. The phase extraction also
+passes all 57 tests on Linux x86-64/glibc with Swift 6.4.2. Full Linux Swift 6.2
+suite coverage and minimum Apple OS runtime checks remain open.

@@ -1,0 +1,9 @@
+Build complete! (10,80 secs)
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64e-apple-macos14.0
+commonmark: 339/652 examples pass (339 protected)
+gfm: 339/672 examples pass (339 protected)
+✔ Test run with 5 tests in 1 suite passed after 0.011 seconds.
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 52 tests in 8 suites passed after 0.013 seconds.
