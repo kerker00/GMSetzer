@@ -61,14 +61,17 @@ Use an exact version for deliberate updates during pre-1.0 development.
 
 ## 0.5.0 preparation
 
-`release/0.5.0` prepares the source-only M5 preview after
-[functional acceptance](M5Acceptance.md). It proposes result identity `0.5.0`,
+PR #23 (`2d8ecef`) merges the source-only M5 preview preparation after
+[functional acceptance](M5Acceptance.md). It sets result identity `0.5.0` and adds
 [version-specific notes](Releases/0.5.0.md) and
 [executed preparation evidence](Validation/Release/0.5.0.md). Workflows,
 products, dependencies and protected fixtures are unchanged.
 
-The latest published version remains 0.4.0 until the preparation is merged,
-the owner confirms an exact tag commit, tag-triggered CI succeeds and the
-owner confirms publishing the resulting draft. Resolving a preparation commit
-through SwiftPM proves source-package consumption, not that an exact 0.5.0
-version tag exists. No tag or release is created by the preparation PR.
+The latest published version remains 0.4.0. Preparation is merged; publication
+still requires owner confirmation of an exact tag commit, successful tag CI and
+confirmation of the resulting draft. Resolving a preparation commit through
+SwiftPM proves source-package consumption, not that an exact 0.5.0 version
+tag exists. No tag or release was created by the preparation PR.
+
+The intended source-only preview keeps GitHub's two automatic source archives;
+no binary uploads are added.

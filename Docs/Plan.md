@@ -79,11 +79,13 @@ existed. [M5 functional acceptance](M5Acceptance.md) is complete against the
 declared fixtures/profile/combination criteria. Release preparation and M6
 remain separate; no tag or release is created. See [Admonitions](Admonitions.md).
 
-**0.5.0 preparation:** `release/0.5.0` proposes result identity `0.5.0` and
+**0.5.0 preparation merged:** PR #23 (`2d8ecef`) sets result identity `0.5.0` and adds
 [versioned notes](Releases/0.5.0.md), based on merged M5 acceptance. The latest
 published version remains 0.4.0. Candidate checks are recorded in
-[Validation/Release/0.5.0](Validation/Release/0.5.0.md); preparation review/merge,
-tag-triggered CI and owner-confirmed publication remain pending. No workflow
+[Validation/Release/0.5.0](Validation/Release/0.5.0.md). PR CI passes on both
+hosts; merged-main CI also passes on both hosts. The preparation branch is removed
+locally and remotely; no additional worktrees existed. Owner-confirmed tagging,
+tag-triggered CI and publication remain pending. No workflow
 or manifest change is needed.
 
 GMSetzer is an independent, general-purpose Markdown library intended for
@@ -613,8 +615,8 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: review/merge of `release/0.5.0` under [Releasing](Releasing.md),
-then owner-confirmed tagging and publication after successful release CI.
+Current next work: owner-confirmed tagging of the merged 0.5.0 preparation
+and publication after successful release CI, under [Releasing](Releasing.md).
 M6 performance/hardening and any versioned publication remain separate work.
 Front matter is merged in PR #19 and named footnotes in PR #20.
 Localization and container markers are merged;

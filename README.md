@@ -10,7 +10,7 @@ wherever Swift runs, including Linux.
 > Merged-main CI passes 227 Swift tests, all 652 CommonMark and 672 GFM examples,
 > 17 Python tests and optimized builds on macOS/Linux. The latest published
 > source-only preview remains [v0.4.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.4.0).
-> `release/0.5.0` prepares the next preview; it has no published tag or release.
+> PR #23 (`2d8ecef`) merges the 0.5.0 preparation; its tag/release remain pending.
 
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented
@@ -38,7 +38,7 @@ Merged PR #22 (`c9543fe`) adds GitHub-style alerts and
 Obsidian-style callouts with parsed titles, folding and an optional HTML
 recipe; see [Admonitions](Docs/Admonitions.md). PR and merged-main CI pass
 on macOS and Linux. [M5 functional acceptance](Docs/M5Acceptance.md) is
-complete. The `release/0.5.0` branch prepares the next preview with
+complete. Merged PR #23 (`2d8ecef`) prepares the next preview with
 [release notes](Docs/Releases/0.5.0.md), candidate identity `0.5.0` and
 [preparation checks](Docs/Validation/Release/0.5.0.md). Publication remains pending.
 
