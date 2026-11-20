@@ -296,3 +296,21 @@ library tests pass in debug/release, and all four Tools tests pass (including
 3,919 C comparisons). M1-C extension/storage proof and M1-D final acceptance
 remain open. Linux, the minimum toolchain, completed inline/GFM and iPhone
 performance are not established here.
+
+## Post-merge sequence and cleanup
+
+M1-B is merged as PR #5 (`7c0f4ea`). Setzkit's documentation correction is
+merged as its PR #22 (`39e5fd0`). After verifying both local and remote tips
+against current `main` and excluding open dependent PRs, remove the completed
+`perf/m1-measurement-gate`, `docs/review-m1` and Setzkit's
+`docs/gmsetzer-merge-status` branches. The clean benchmark worktree is removed.
+The previously uncommitted workflow files are preserved together in commit
+`0abbe1b` on `chore/project-skills`; no work is discarded.
+
+The owner revised the remaining sequence: portability checks first; decompose
+the block loop at the beginning of M1-C so registry work does not require a
+second refactor; then prove the APIs/storage choices with a numeric inline
+budget, followed by the remaining M1-D acceptance. Current total headroom is
+0.724 ms at 100 KB and 11.223 ms at 1 MB. It covers all future parse costs;
+measure text-string/segment overhead before assigning an inline allowance.
+Linux/Swift 6.2 evidence, API proofs and M1 acceptance remain open.

@@ -14,10 +14,15 @@ describes the workflow.
 - Follow the licence rules in Plan section 7 when taking over code or tests:
   MIT, BSD or Apache-2.0 only, origin in the file header, licence in `NOTICE`;
   never GPL or LGPL.
-- After finishing a milestone or a change of scope, update Docs/Plan.md
-  (status column of the milestones) and, for speed-relevant work,
-  Docs/Benchmarks.md.
+- For every feature, fix or review correction, follow
+  [feature-docs](.claude/skills/feature-docs/SKILL.md) and include the affected
+  documentation with the implementation.
+- After a confirmed PR merge, follow
+  [branch-cleanup](.claude/skills/branch-cleanup/SKILL.md): verify and remove
+  merged branches and clean worktrees, then record the merged state.
 - Ask before running the full benchmarks or long test runs, before pushing,
   before opening pull requests, and always before publishing anything:
   making the repository public, tags, releases. The owner merges.
+- Existing session authorization remains valid. The standing authorization
+  in `branch-cleanup` covers verified branch deletion without another prompt.
 - No CI workflows unless the owner asks for them.

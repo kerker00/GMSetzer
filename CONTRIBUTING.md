@@ -14,9 +14,13 @@ the decisions behind it and the order of work.
    prepare the benchmarks (`cd Tools && swift package benchmark`) and record
    measurements in [Docs/Benchmarks.md](Docs/Benchmarks.md); obtain the owner's
    confirmation before full benchmark runs or long test runs.
-4. Update [Docs/Plan.md](Docs/Plan.md) when a milestone, a decision or a
-   requirement changes.
+4. Follow [feature-docs](.claude/skills/feature-docs/SKILL.md) to update the
+   affected documentation with the implementation, including milestone,
+   contract and validation changes.
 5. Open a pull request against `main`. The owner merges.
+6. After a confirmed merge, follow
+   [branch-cleanup](.claude/skills/branch-cleanup/SKILL.md) to verify and remove
+   merged branches and clean worktrees, and record the merged state.
 
 ## Rules
 
