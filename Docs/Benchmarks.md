@@ -446,3 +446,14 @@ still has `tokens == nil`. Semantic and exact-HTML parity tests are not timing
 or allocation measurements. No fresh benchmark series was run; the historical
 M4 timings above do not establish the cost of these changes. New measurements
 remain pending before making a performance claim for this development version.
+
+## M5 raw front matter (development)
+
+`feature/m5-front-matter` supplies an optional custom-block implementation.
+Only the original document-start context can scan for a closing delimiter;
+later candidate lines reject immediately, including after a dangling opener.
+The extension preserves raw content without YAML/TOML deserialisation. Strict
+CommonMark/GFM selections remain unchanged. No fresh benchmark series or
+reference comparison was run; existing timings do not establish this step's
+runtime or allocation cost. The large dangling-opener case is a functional
+regression check, not a speed measurement.

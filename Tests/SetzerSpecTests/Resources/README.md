@@ -43,3 +43,8 @@ The marker-token step also runs all 1,324 examples with syntax collection on
 and off. It requires identical semantic nodes/source segments, diagnostics,
 source and fallback metadata, exact annotated HTML and no duplicated container
 markers. This adds provenance coverage without changing fixtures or baseline IDs.
+
+The first M5 step also supplies `FrontMatter.implementation` without selecting
+it for every example. Nodes, tokens, diagnostics and exact HTML must remain
+identical to the strict CommonMark/GFM parser. Front matter itself is tested
+separately with original project-authored examples, not by changing spec data.

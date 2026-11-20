@@ -311,7 +311,9 @@ internal struct BlockParser {
             let physicalLines = self.lines
             let prefixes = containers.prefix(prefixCount ?? containers.count).map(\.prefix)
             let currentLine = lines[index]
-            let context = BlockContext(source: source, lineIndex: index, options: active.options,
+            let context = BlockContext(source: source, lineIndex: index,
+                                       isDocumentStart: index == 0 && extensionDepth == 0 && containers.isEmpty,
+                                       options: active.options,
                                        line: currentLine, lineCount: physicalLines.count, project: { target in
                 guard target >= index && physicalLines.indices.contains(target) else { return nil }
                 if target == index { return currentLine }

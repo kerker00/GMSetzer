@@ -354,3 +354,12 @@ padding or synthetic lazy-line marker is included. Annotation stays opt-in
 and preserves the semantic tree and HTML. See [ContainerMarkers](ContainerMarkers.md)
 for exact source, extension, transform and validation contracts. This addition
 is not yet in a versioned release.
+
+## M5 front matter
+
+The unreleased [front-matter step](FrontMatter.md) uses the custom leaf kind
+`frontmatter.block`, a `format` string attribute and one exact interior source
+segment (including an empty insertion segment for empty metadata). Typed access
+is supplied by `FrontMatter` in `SetzerExtensions`, keeping the syntax layer
+independent. Optional opening/content/closing tokens share the leaf's owner;
+no metadata headings, inline nodes or reference definitions are created.

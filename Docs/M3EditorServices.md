@@ -70,8 +70,8 @@ accesses files/UI/network. `NativeAnalyzer.analyze` takes an existing document,
 `MarkdownDialect` identity (default `.commonMark`; `.gfm` and custom
 non-empty identifiers are possible) and a typed configuration. Rules default to
 an empty set. Provider: `gmsetzer.native`, version `GMSetzerVersion.current`
-(currently `0.5.0-dev` on `main` since PR #18, following PR #17's
-`0.4.1-dev`; neither is a published tag). Findings are style warnings. Analysis walks the tree
+(development identity `0.5.0-dev.1` on the front-matter branch; not a published
+tag). Findings are style warnings. Analysis walks the tree
 once per rule family, keeps protected ranges in source order without sorting,
 validates suppression bounds with the constant-size boundary check (no position
 index) and matches suppressions per rule with a sorted cursor.
