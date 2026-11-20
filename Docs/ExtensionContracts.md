@@ -60,6 +60,15 @@ must stay inside the match. Consumption, payload, segments, child order, tokens
 and diagnostics are validated **before** builder mutation. Invalid matches fall
 back to ordinary parsing with `invalidExtensionResult(qualifiedRuleID)`.
 
+## Original document start
+
+`BlockContext.isDocumentStart` is true only on the original first physical
+line, outside containers and projected child parsers. It is a context signal,
+not a whitespace/fence recognizer. The M5 [front-matter implementation](FrontMatter.md)
+uses it to reject metadata inside quotes, lists or a custom wrapper that
+projects the original first line without stripping bytes. This additive
+context property does not change existing rule selection or precedence.
+
 ## Transform and renderer boundaries
 
 `BlockTransform` runs once after block parsing and before inline resolution

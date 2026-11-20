@@ -148,4 +148,19 @@ struct SpecTests {
             #expect(document.tokens?.filter { $0.role.hasPrefix("core.reference.") }.allSatisfy { document.nodes[$0.owner].kind == .referenceDefinition } == true)
         }
     }
+
+    @Test func unselectedFrontMatterImplementationPreservesEverySpecification() throws {
+        for (name, gfm) in [("commonmark-0.31.2", false), ("gfm-0.29", true)] {
+            for example in try Self.examples(name) {
+                let profile = gfm ? Self.gfmProfile(for: example) : .commonMark
+                let original = MarkdownParser(profile: profile, collectSyntaxDetails: true).parse(example.markdown)
+                let supplied = MarkdownParser(profile: profile, extensions: [FrontMatter.implementation], collectSyntaxDetails: true)
+                    .parse(example.markdown)
+                #expect(supplied.nodes == original.nodes, "\(name) example \(example.example)")
+                #expect(supplied.tokens == original.tokens, "\(name) example \(example.example)")
+                #expect(supplied.diagnostics == original.diagnostics)
+                #expect(HTMLRenderer.conformance.render(supplied) == example.html, "\(name) example \(example.example)")
+            }
+        }
+    }
 }

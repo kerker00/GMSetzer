@@ -62,6 +62,10 @@ public struct SourceLine: Hashable, Sendable {
 public struct BlockContext: Sendable {
     public let source: [UInt8]
     public let lineIndex: Int
+    /// True only at the start of the original document, outside all containers
+    /// and projected child parsers. Rules still validate their exact spelling
+    /// and indentation; a leading UTF-8 BOM does not change this flag.
+    public let isDocumentStart: Bool
     public let options: [String: SyntaxValue]
     public let line: SourceLine
     public let lineCount: Int
