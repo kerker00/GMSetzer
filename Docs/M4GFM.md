@@ -2,8 +2,9 @@
 
 20 November 2026. Implementation on `feature/m4-gfm`, based on `main` after
 the M3 measurements ([PR #13](https://github.com/kerker00/GMSetzer/pull/13),
-`c5f9a0b`). Library and reference tests and the filtered parse benchmark pass;
-review and owner merge are open.
+`c5f9a0b`); merged in [PR #14](https://github.com/kerker00/GMSetzer/pull/14)
+(`e163e6f`). Library and reference tests and the filtered parse benchmark
+pass.
 
 ## Owner decisions
 

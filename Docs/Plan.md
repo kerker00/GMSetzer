@@ -1,6 +1,6 @@
 # GMSetzer – Plan and Requirements
 
-**Status: 20 November 2026, M1 and block optimisation merged (PRs #9/#10); M2 merged in PR #11 (`021f110`); M3 merged in PR #12 (`651af17`) and its measurements in PR #13 (`c5f9a0b`); M4 GFM on `feature/m4-gfm` with 672/672 GFM examples, tests and budget gates passing, review and merge open.** This document is the
+**Status: 20 November 2026, M1 and block optimisation merged (PRs #9/#10); M2 merged in PR #11 (`021f110`); M3 merged in PR #12 (`651af17`) and its measurements in PR #13 (`c5f9a0b`); M4 GFM merged in PR #14 (`e163e6f`) with 672/672 GFM examples; consumer follow-ups below.** This document is the
 reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
@@ -376,7 +376,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **merged in PR #9 (`61fcb95`)**: M1-A merged in PR #4 (`51efee6`); M1-B measurements, checked validation optimisation and local budget gate implemented. At M1 acceptance, 70 library tests, 3,919 reference comparisons and 13 Python tests passed; its protected baselines were 339/652 CommonMark and 339/672 GFM. [M1Acceptance](M1Acceptance.md) records the M1-C contracts, M1-D audit, portability matrix and fixed M2 budget |
 | M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | **merged in PR #11 (`021f110`)**: 652/652 exact CommonMark, 641/672 GFM; 96 Swift tests across macOS/Swift 6.2/release/Linux, 17 Python checks and 4,786 C comparisons pass. Final core and selected-rule cases pass both unchanged budget gates. See [M2Inlines](M2Inlines.md) |
 | M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; portable syntax/finding APIs | Security/position/analysis tests and standalone package validation pass; application adapters remain outside this package | re-estimate | **merged in PR #12 (`651af17`)** after review corrections: exact position/outline queries, safe configurable URL scheme allowlist/anchors and three optional native rules. 106 library tests passed across macOS/debug/release/Swift 6.2/Linux; after the [review](Review-M3.md) corrections 108 pass on macOS (Swift 6.2/Linux not re-run) with byte-identical differential results. Index/analysis timings and optimisations: [Benchmarks](Benchmarks.md#m3-editor-services-20-november-2026). See [M3EditorServices](M3EditorServices.md) |
-| M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | **implemented on `feature/m4-gfm`**: tables, task lists, strikethrough, extended autolinks and tag filter as built-in payloads (owner decision 1A); 672/672 GFM and 652/652 CommonMark; generated documents agree with cmark-gfm. Library and reference tests pass on macOS; GFM parses at 0.88× cmark-gfm and both budget checks pass. Review, Swift 6.2/Linux and merge open. See [M4GFM](M4GFM.md) |
+| M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | **merged in PR #14 (`e163e6f`)**: tables, task lists, strikethrough, extended autolinks and tag filter as built-in payloads (owner decision 1A); 672/672 GFM and 652/652 CommonMark; generated documents agree with cmark-gfm. Library and reference tests pass on macOS; GFM parses at 0.88× cmark-gfm and both budget checks pass. Swift 6.2/Linux not re-run. See [M4GFM](M4GFM.md) |
 | M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Declared extension fixtures and profile/combination tests pass | 5–8 | |
 | M6 | Speed and hardening: measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met | 5–8 | |
 | M7 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | 3–5 | |
@@ -489,4 +489,24 @@ functional, source-span, diagnostic, portability and timing evidence is in
 [M2Inlines.md](M2Inlines.md); M2 technical acceptance uses the full/focused package-benchmark series and
 unchanged gate inputs, not a short timing probe.
 
-Current next work: review and merge of M4 (`feature/m4-gfm`), then M5. Consumer scheduling, dependency pinning and device acceptance belong to consumer repositories. No new benchmark series or publication was performed in M3.
+Open tasks from the first consumer integration (Setzkit, 20 November 2026),
+before or alongside M5:
+
+1. **Localised finding texts.** `NativeAnalyzer` findings and fix titles carry
+   stable message keys (`gmsetzer.*`) and arguments, but only English
+   `defaultText`; Setzkit currently shows the English text. Publish the key and
+   argument catalogue as a documented, stable contract and decide whether the
+   library ships translations (as data, keeping the core Foundation-free) or
+   consumers translate by key.
+2. **Versioned release for consumers.** Setzkit depends on a local path
+   checkout, so it uses whatever branch is checked out; during integration
+   that was M4 from the then unmerged PR #14. Tag a pre-1.0 release after M4
+   so consumers can pin an exact version. Tagging and publishing need the
+   owner's explicit yes immediately before.
+3. **Container marker tokens.** Syntax tokens cover inline delimiters and
+   leaf markers but not block-quote `>` or list markers, so a consumer cannot
+   replace its own syntax colouring with GMSetzer's without losing those
+   roles. Add `core.blockQuote.marker` and `core.list.marker` tokens with
+   exact per-line ranges.
+
+Current next work: the tasks above, then M5. Consumer scheduling, dependency pinning and device acceptance belong to consumer repositories. No new benchmark series or publication was performed in M3.
