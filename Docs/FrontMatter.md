@@ -1,7 +1,7 @@
 # M5 first step: raw YAML and TOML front matter
 
-Implemented on `feature/m5-front-matter`, based on `3abbcc8` after PR #18.
-Not yet merged or released. `FrontMatter` is a real `MarkdownExtension` in
+Merged in PR #19 (`4b0f105`), based on `3abbcc8` after PR #18.
+Not yet in a versioned release. `FrontMatter` is a real `MarkdownExtension` in
 `SetzerExtensions`, using the existing custom-block API. There is no new core
 node case, runtime dependency or YAML/TOML deserialiser. Footnotes, math,
 alerts and callouts remain separate M5 work.
@@ -131,7 +131,8 @@ nine specification tests (18 tests added by this step). Each environment
 retains 652/652 CommonMark and 672/672 GFM examples, including all protected
 IDs. The additional unselected-extension check compares all 1,324 examples.
 
-The macOS/Linux minimum-version CI jobs remain pending until this branch is
-pushed. Python scripts are unchanged and were not rerun locally. No new
+PR CI passes on Linux/Swift 6.2; macOS CI and merged-main CI are still
+pending at this documentation update. The merged branch is removed locally
+and remotely. Python scripts are unchanged and were not rerun locally. No new
 reference-tool comparisons, benchmark series or consumer UI/device checks
 were run; these results imply no fresh performance claim or consumer adoption.

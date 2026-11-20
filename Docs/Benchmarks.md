@@ -449,7 +449,7 @@ remain pending before making a performance claim for this development version.
 
 ## M5 raw front matter (development)
 
-`feature/m5-front-matter` supplies an optional custom-block implementation.
+Merged PR #19 (`4b0f105`) supplies an optional custom-block implementation.
 Only the original document-start context can scan for a closing delimiter;
 later candidate lines reject immediately, including after a dangling opener.
 The extension preserves raw content without YAML/TOML deserialisation. Strict

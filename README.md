@@ -23,8 +23,8 @@ see [ContainerMarkers](Docs/ContainerMarkers.md). Its PR and merged-main CI
 pass on macOS and Linux. These features are not yet in a versioned release;
 the 0.5 extension milestone is being implemented in separate steps.
 
-Unreleased work on `feature/m5-front-matter` adds opt-in raw YAML/TOML front
-matter through the existing extension API; see [FrontMatter](Docs/FrontMatter.md).
+Merged PR #19 (`4b0f105`) adds opt-in raw YAML/TOML front matter on `main`
+through the existing extension API; see [FrontMatter](Docs/FrontMatter.md).
 Footnotes, math, alerts and callouts remain planned.
 
 Requires **Swift 6.2 or later**. The current provisional Apple minimums are
@@ -64,8 +64,8 @@ and device acceptance do not determine this package's API or release readiness.
 
 - **Correct:** every example of CommonMark 0.31.2 and of the GFM spec.
 - **Extensible:** shipped CommonMark and GFM profiles, independently selectable
-  GFM features, custom block/inline rules and transforms. The unreleased M5
-  branch adds raw YAML/TOML front matter; footnotes, math, alerts and callouts
+  GFM features, custom block/inline rules and transforms. The first M5
+  step adds raw YAML/TOML front matter on `main`; footnotes, math, alerts and callouts
   follow separately, with further dialects later.
 - **Positions:** every node knows its source range in UTF-8 bytes;
   conversion to lines, columns and UTF-16 offsets for text views.
@@ -128,7 +128,7 @@ The first M5 extension and its selection/rendering example are documented in
 | --- | --- | --- |
 | `SetzerSyntax` | Validated block/inline tree, source ranges/tokens, parent/offset/outline index, position conversion, diagnostic/fix values | Additional query conveniences |
 | `SetzerParser` | Block/inline parser, custom rules/children, pre/post transforms and profiles | Additional dialect syntax |
-| `SetzerExtensions` | GFM profile; raw YAML/TOML front matter on the unreleased M5 branch | Footnotes, math, alerts and callouts |
+| `SetzerExtensions` | GFM profile; raw YAML/TOML front matter (unreleased) | Footnotes, math, alerts and callouts |
 | `SetzerHTML` | CommonMark and GFM HTML, source anchors, escaping, comment policy, tag filter and decoded URL checks | – |
 | `SetzerAnalysis` | Three optional native rules over the existing document | Broader rule catalogue |
 | `GMSetzer` | Imports the five implemented modules above | Additional convenience APIs |
