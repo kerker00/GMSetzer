@@ -13,7 +13,8 @@ execution retaining every protected spec ID. The subsequent
 x86-64/glibc with Swift 6.4.2 and the current performance gate. Full Linux
 Swift 6.2 suite coverage remains open. Compile probes distinguish the back-deployable
 Span type/buffer bridge from macOS-26-only Array.span and UTF8Span. These
-results supplement the original findings below; no library source changed.
+results supplement the original findings below. The initial portability proof
+changed no library source; the phase extraction changes internal control flow.
 
 ## Summary
 
