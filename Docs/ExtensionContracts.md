@@ -3,7 +3,10 @@
 This is the implemented block and inline contract, including the M2 controller
 and opt-in [M5 footnote support](Footnotes.md), merged in PR #20 (`a6a2da6`)
 and not yet in a versioned release.
-Alerts and math remain planned. The small rules in `ContainerExtensionTests`, `TransformTests` and
+The unreleased [math step](Math.md) uses prepared complete inline matches,
+a display-block rule and a post-inline code-fence transform. TeX is opaque;
+there is no new parser API or dependency. Alerts and callouts remain planned.
+The small rules in `ContainerExtensionTests`, `TransformTests` and
 `InlineExtensionTests` are architecture probes, not feature-conformance tests.
 
 ## Configuration and dispatch

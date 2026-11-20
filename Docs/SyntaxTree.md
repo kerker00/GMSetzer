@@ -378,3 +378,15 @@ the parser extension without changing either module's dependencies.
 The source-order outline includes headings in custom note containers; native
 analysis retains its opaque-custom-content policy. See the feature document
 for the explicit continuation and protected bracket grammar.
+
+## M5 math
+
+The unreleased [math step](Math.md) adds custom leaves `math.inline` and
+`math.block`, with `format` and projected `tex` string attributes. Inline node
+segments retain the complete span; the typed `Math` view removes delimiter
+bytes for content access. Block segments retain exact content provenance,
+including empty insertion ranges and partially consumed tab bytes. Dollar
+blocks parse projected container lines; math code fences reuse the core code
+literal and are converted after inlines. Owned `math.fence.*` / `math.content`
+tokens stay optional. TeX is never parsed into Markdown children or evaluated;
+rendering stays with the caller. No module dependency or core node case changes.

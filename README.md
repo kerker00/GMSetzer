@@ -30,7 +30,10 @@ Its PR and merged-main CI pass on macOS and Linux.
 Merged PR #20 (`a6a2da6`) adds named footnotes, source-spelled tokens,
 numbering and a separate HTML renderer with backlinks on `main`; see
 [Footnotes](Docs/Footnotes.md). PR and merged-main CI pass on macOS and Linux.
-Math, alerts and callouts remain planned.
+
+Unreleased work on `feature/m5-math` adds opaque inline/display/fenced TeX
+with exact provenance and caller-owned rendering; see [Math](Docs/Math.md).
+Alerts and callouts remain planned.
 
 Requires **Swift 6.2 or later**. The current provisional Apple minimums are
 macOS 15, iOS 18 and visionOS 2; Linux is supported. The repository is public
@@ -70,8 +73,9 @@ and device acceptance do not determine this package's API or release readiness.
 - **Correct:** every example of CommonMark 0.31.2 and of the GFM spec.
 - **Extensible:** shipped CommonMark and GFM profiles, independently selectable
   GFM features, custom block/inline rules and transforms. The first M5
-  steps add raw YAML/TOML front matter and named footnotes on `main`. Math,
-  alerts, callouts and further dialects follow separately.
+  steps add raw YAML/TOML front matter and named footnotes on `main`; the next
+  branch implements opaque TeX syntax. Alerts, callouts and further dialects
+  follow separately.
 - **Positions:** every node knows its source range in UTF-8 bytes;
   conversion to lines, columns and UTF-16 offsets for text views.
 - **Fast:** parse time at most twice that of cmark-gfm, aiming for parity,
@@ -126,14 +130,15 @@ and device acceptance do not determine this package's API or release readiness.
 
 ## Modules
 
-M5 selection/rendering examples are documented in [FrontMatter](Docs/FrontMatter.md)
-and [Footnotes](Docs/Footnotes.md); these additions are not part of v0.4.0.
+M5 selection/rendering examples are documented in [FrontMatter](Docs/FrontMatter.md),
+[Footnotes](Docs/Footnotes.md) and [Math](Docs/Math.md); these additions are
+not part of v0.4.0.
 
 | Module | Implemented | Planned |
 | --- | --- | --- |
 | `SetzerSyntax` | Validated block/inline tree, source ranges/tokens, parent/offset/outline index, position conversion, diagnostic/fix values | Additional query conveniences |
 | `SetzerParser` | Block/inline parser, custom rules/children, pre/post transforms and profiles | Additional dialect syntax |
-| `SetzerExtensions` | GFM profile; raw YAML/TOML front matter; named footnotes (unreleased) | Math, alerts and callouts |
+| `SetzerExtensions` | GFM profile; raw YAML/TOML front matter; named footnotes; opaque TeX on the unreleased math branch | Alerts and callouts |
 | `SetzerHTML` | CommonMark and GFM HTML, source anchors, escaping, comment policy, tag filter and decoded URL checks | – |
 | `SetzerAnalysis` | Three optional native rules over the existing document | Broader rule catalogue |
 | `GMSetzer` | Imports the five modules above; composed footnote HTML renderer (unreleased) | Additional convenience APIs |
