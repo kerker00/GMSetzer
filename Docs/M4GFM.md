@@ -1,8 +1,9 @@
 # M4 GitHub Flavored Markdown
 
-20 November 2026. Implementation on `feature/m4-gfm`, based on M3
-([PR #12](https://github.com/kerker00/GMSetzer/pull/12), `651af17`). Review,
-full test matrix and owner merge are open.
+20 November 2026. Implementation on `feature/m4-gfm`, based on `main` after
+the M3 measurements ([PR #13](https://github.com/kerker00/GMSetzer/pull/13),
+`c5f9a0b`). Library and reference tests and the filtered parse benchmark pass;
+review and owner merge are open.
 
 ## Owner decisions
 
@@ -47,7 +48,10 @@ The rules are ported from cmark-gfm's extensions as pinned in swift-cmark
 - **Tables.** A delimiter row (`[|]? marker ([|] marker)* [|]?`, marker
   `:?-+:?`) on a fully matched paragraph continuation line, at most three
   columns indented, after every other block start failed, turns the paragraph's
-  last line into a header with the same cell count. A paragraph that fails this
+  last line into a header with the same cell count. A header that continued
+  the paragraph lazily keeps its whitespace after the matched containers, as
+  cmark-gfm stores lazy lines; a leading space then adds an empty first cell.
+  A paragraph that fails this
   check is never rechecked. Rows continue until a blank line, a lazy line, any
   other block start (including indented code and HTML type 7) or a line that is
   not a row. Short rows are completed with empty, unaligned cells; extra cells
@@ -104,16 +108,40 @@ items like list items; tables contain no headings.
 - **CommonMark unchanged.** The M3 differential probe (2,958 documents:
   positions, caret queries, trees, outline, HTML, analysis) is byte-identical
   to `275a69b` for the CommonMark profile.
-- **Tests.** New `GFMTests` cover switches, ranges, tokens, validation and
-  rendering policy. The full library suite, the Tools reference tests,
-  Swift 6.2 and Linux have not yet been run for this branch.
+- **Tests.** New `GFMTests` cover switches, ranges, tokens, lazy headers,
+  validation and rendering policy. With the owner's approval the library suite
+  (111 tests plus 7 specification tests) and the Tools reference tests (5,
+  including 15,056 generated GFM documents) pass on macOS. Swift 6.2 and Linux
+  have not been run for this branch.
+- **Nested inline rules.** The first full run crashed in a debug build:
+  `InlineExtensionTests` nests a custom rule 32 levels deep, and the larger
+  inline parser pushed each level's stack (about 15 KB in `customMatch` plus
+  `parse`) over the 512 KB of a test thread. `customMatch` now returns a child
+  range instead of recursing, `parse` calls `parseNested`, and the GFM text
+  scan lives outside `parse`. A level now costs about 4.9 KB in a debug build,
+  less than on `main`.
 
 ## Performance
 
-Local release probe, Apple M2, 1 MB mixed corpus, median of 31 parses; not a
-package-benchmark run. CommonMark parses in 24.2–24.8 ms against 23.7–24.4 ms
-on `main` (within 1–2 %). GFM parses in 28.4 ms; the corpus now produces 1,825
-real tables with 10,950 cells, about 20,000 more nodes than before. During
-implementation, moving table state out of the open leaf, counting rows without
-allocation and skipping email scans of runs without `@` reduced GFM from
-37.5 ms. Official measurements and the budget gate are pending.
+An owner-authorised filtered package-benchmark run on the Apple M2 host
+measured parse only
+([raw export](BenchmarkData/m4-gfm/parse-run.md); see
+[Benchmarks](Benchmarks.md#m4-gfm-20-november-2026)). p50 in milliseconds:
+
+| Case | 100 KB | 1 MB | 5 MB |
+| --- | ---: | ---: | ---: |
+| GMSetzer CommonMark | 2.705 | 29.573 | 146.670 |
+| cmark-gfm (C) CommonMark | 1.719 | 18.989 | 96.600 |
+| GMSetzer GFM | 3.224 | 33.194 | 172.360 |
+| cmark-gfm (C) GFM, five extensions | 3.033 | 37.552 | 197.132 |
+
+GFM is 0.88× cmark-gfm at 1 MB and 5 MB; the corpus produces 1,825 real
+tables with 10,950 cells per MB. Both budget checks exit 0
+(`check_benchmark_budget.py`; `check_m2_budget.py` with the frozen M1 baseline:
++0.24 / +4.98 / +23.99 ms against 0.5 / 8 / 40 ms). CommonMark is within the
+M3 record at 100 KB and 5 MB (2.728 / 148.898 ms) and 7 % above it at 1 MB
+(27.607 ms); local release probes of the same code measured 1–2 % against
+`main`, so the 1 MB value is treated as run noise to watch, not as accepted
+cost. During implementation, moving table state out of the open leaf,
+counting rows without allocation and skipping email scans of runs without
+`@` reduced GFM in the local probe from 37.5 to 28.4 ms.

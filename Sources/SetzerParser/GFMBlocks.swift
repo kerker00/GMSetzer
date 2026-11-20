@@ -172,10 +172,16 @@ extension BlockParser {
 
     /// Turn the open paragraph's last line into a table header when `index`
     /// is a matching delimiter row. A failed paragraph is never rechecked.
+    /// Rows start at their first non-space; a lazily continued header line
+    /// keeps its whitespace after the matched containers, as in cmark-gfm.
+    func tableRowStart(_ index: Int) -> Int {
+        index == lazyParagraphLine ? lines[index].contentRange.lowerBound : indentation(index).offset
+    }
+
     mutating func startTable(at index: Int) -> Bool {
         guard let paragraph = leaf, let alignments = tableDelimiterRow(index) else { return false }
         let header = paragraph.indices.upperBound - 1
-        guard countTableCells(indentation(header).offset, lines[header].contentRange.upperBound) == alignments.count else {
+        guard countTableCells(tableRowStart(header), lines[header].contentRange.upperBound) == alignments.count else {
             leaf?.tableChecked = true
             return false
         }
@@ -241,7 +247,7 @@ extension BlockParser {
             let isHeader = index == first
             cells.removeAll(keepingCapacity: true)
             pipes.removeAll(keepingCapacity: true)
-            _ = visitTableRow(indentation(index).offset, lines[index].contentRange.upperBound, leadingPipe: true,
+            _ = visitTableRow(tableRowStart(index), lines[index].contentRange.upperBound, leadingPipe: true,
                               cell: { cells.append($0) }, pipe: { if collect { pipes.append($0) } })
             let row = append(.tableRow(isHeader: isHeader), range: lines[index].range, to: table)
             if collect {

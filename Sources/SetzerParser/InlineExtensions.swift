@@ -10,8 +10,17 @@ extension InlineParser {
         let tokens: [BlockToken]
     }
 
-    mutating func customMatch() -> Bool {
-        guard let candidates = rules[bytes[cursor]] else { return false }
+    /// Outcome of `customMatch`. A match with children returns before they
+    /// are parsed, so the recursion runs through `parse()` and `parseNested`
+    /// only and never keeps the large rule-matching frame on the stack.
+    enum CustomStep {
+        case unmatched
+        case matched
+        case nested(SourceRange, owner: Int)
+    }
+
+    mutating func customMatch() -> CustomStep {
+        guard let candidates = rules[bytes[cursor]] else { return .unmatched }
         if cursor >= customRunEnd || bytes[cursor] != customRunMarker {
             customRunMarker = bytes[cursor]
             customRunEnd = cursor + 1
@@ -47,21 +56,7 @@ extension InlineParser {
                         items[item].firstChild = child
                         diagnostics.append(ParseDiagnostic(.nestingLimitExceeded(maximumDepth), range: input.range(start, cursor)))
                     } else {
-                        var nested = InlineParser(input: input.slice(children), references: references, collectSyntax: collectSyntax,
-                            source: source, rules: rules, triggers: triggers, maximumDepth: maximumDepth, depth: depth + 1)
-                        nested.enableGFM(strikethrough: strikethrough, autolink: autolink)
-                        nested.parse()
-                        let base = items.count
-                        for var child in nested.items {
-                            child.start += children.lowerBound; child.end += children.lowerBound
-                            child.previous = child.previous.map { $0 + base }
-                            child.next = child.next.map { $0 + base }
-                            child.firstChild = child.firstChild.map { $0 + base }
-                            child.tokens = child.tokens.map { ($0.0, $0.1 + children.lowerBound, $0.2 + children.lowerBound) }
-                            items.append(child)
-                        }
-                        items[item].firstChild = nested.first.map { $0 + base }
-                        diagnostics.append(contentsOf: nested.diagnostics)
+                        return .nested(children, owner: item)
                     }
                 } else {
                     items[item].fallback = InlineDecoding.decode(bytes[start..<cursor], escapes: false, entities: false)
@@ -81,9 +76,30 @@ extension InlineParser {
                 unlink(opener.item)
                 customOpeners.removeSubrange(openerIndex...)
             }
-            return true
+            return .matched
         }
-        return false
+        return .unmatched
+    }
+
+    /// Parses a rule's child range with a fresh controller, one recursion
+    /// level per nested match up to `maximumDepth`.
+    @inline(never)
+    mutating func parseNested(_ children: SourceRange, owner: Int) {
+        var nested = InlineParser(input: input.slice(children), references: references, collectSyntax: collectSyntax,
+            source: source, rules: rules, triggers: triggers, maximumDepth: maximumDepth, depth: depth + 1)
+        nested.enableGFM(strikethrough: strikethrough, autolink: autolink)
+        nested.parse()
+        let base = items.count
+        for var child in nested.items {
+            child.start += children.lowerBound; child.end += children.lowerBound
+            child.previous = child.previous.map { $0 + base }
+            child.next = child.next.map { $0 + base }
+            child.firstChild = child.firstChild.map { $0 + base }
+            child.tokens = child.tokens.map { ($0.0, $0.1 + children.lowerBound, $0.2 + children.lowerBound) }
+            items.append(child)
+        }
+        items[owner].firstChild = nested.first.map { $0 + base }
+        diagnostics.append(contentsOf: nested.diagnostics)
     }
 
     func accepts(_ match: InlineMatch, context: InlineContext, active: ActiveInlineRule) -> Bool {

@@ -168,6 +168,7 @@ extension BlockParser {
             }
             // Missing quote/item prefixes may only continue an existing
             // paragraph; they cannot extend a fence, heading or code block.
+            if matchedContainers < containers.count { lazyParagraphLine = index }
             extendLeaf(index)
             touchContainers(through: index)
             return true

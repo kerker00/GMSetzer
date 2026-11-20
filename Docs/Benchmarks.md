@@ -7,8 +7,9 @@ build). Every entry names the commit, machine and OS. Times are medians (p50).
 
 - **GMSetzer** has separate CommonMark and GFM entries. M2 now parses complete
   CommonMark blocks/inlines into a validated source-positioned tree. Historical
-  M1 rows below measured block-only work. GFM extensions remain pending, so
-  its GFM ratios are informational until the M4 conformance gate.
+  M1 rows below measured block-only work. GFM rows before the M4 section
+  measured CommonMark parsing with the GFM selection; from M4 they include
+  all GFM extensions.
 - **cmark-gfm (C)** has corresponding core and GFM entries. Both enable
   `CMARK_OPT_SOURCEPOS` for inline positions and include parser creation,
   parsing and freeing the document. The GFM entry attaches `table`, `tasklist`,
@@ -411,3 +412,26 @@ handle per step. A local release probe showed it slowed the 5 MB outline
 the probe then measured 1.92–2.10 ms. The archived optimised export still
 contains the reverted variant for outline and analysis; other cases do not use
 the traversal.
+
+## M4 GFM (20 November 2026)
+
+An owner-authorised filtered run on the same Apple M2 host measured the
+complete GFM profile for the first time:
+`swift package --package-path Tools benchmark run --target ParserBenchmarks
+--filter "(GMSetzer|cmark-gfm \(C\)) (CommonMark|GFM) parse .*"
+--format markdown --time-units microseconds --no-progress`
+([raw export](BenchmarkData/m4-gfm/parse-run.md)). p50 in milliseconds:
+
+| Case | 100 KB | 1 MB | 5 MB |
+| --- | ---: | ---: | ---: |
+| GMSetzer CommonMark | 2.705 | 29.573 | 146.670 |
+| cmark-gfm (C) CommonMark | 1.719 | 18.989 | 96.600 |
+| GMSetzer GFM | 3.224 | 33.194 | 172.360 |
+| cmark-gfm (C) GFM | 3.033 | 37.552 | 197.132 |
+
+GFM now builds tables, task lists, strikethrough and autolinks (1,825 tables
+per MB of the mixed corpus) and runs at 0.88× cmark-gfm with all five
+extensions at 1 MB and 5 MB. `check_benchmark_budget.py` and
+`check_m2_budget.py` (frozen M1 baseline, 0.5 / 8 / 40 ms allowance) both exit
+0; C control drift is −2.2 / −4.8 / +0.7 %. CommonMark matches the M3 record at
+100 KB and 5 MB and is 7 % above it at 1 MB; see [M4GFM](M4GFM.md#performance).

@@ -86,15 +86,26 @@ struct GFMTests {
         #expect(Self.kinds(parser.parse("[r]: /u\n|a|\n")).contains(.referenceDefinition))
     }
 
+    @Test func lazyHeaderLinesKeepTheirIndentation() {
+        // cmark-gfm keeps a lazy line's whitespace after the matched
+        // containers, so a leading space adds an empty first header cell.
+        let parser = Self.only(.table)
+        #expect(!Self.kinds(parser.parse("> q\n | a |\n> |-|\n")).contains(.table))
+        #expect(HTMLRenderer().render(parser.parse("> q\n | a\n> -|-\n")).contains("<th></th>\n<th>a</th>"))
+        // A fully matched continuation line starts at its first non-space.
+        #expect(Self.kinds(parser.parse("> q\n>  | a |\n> |-|\n")).contains(.table))
+    }
+
     @Test func taskListItemsFollowTheMarkerLine() throws {
         let document = MarkdownParser(profile: .gfm, collectSyntaxDetails: true).parse("- [ ] a\n- [X] b\n\n> - [x] c\n")
         let items = document.nodes.filter { $0.kind == .taskListItem }
         #expect(items.map(\.data) == [.taskListItem(checked: false), .taskListItem(checked: true)])
         #expect(document.tokens?.filter { $0.role == "gfm.tasklist.marker" }.map(\.range) == [SourceRange(2, 5), SourceRange(10, 13)])
         // cmark-gfm matches the checkbox pattern from the physical line start.
-        #expect(document.nodes.contains { $0.data == .text("[x] c") })
+        #expect(document.nodes.filter { $0.kind == .listItem }.count == 1)
         let html = HTMLRenderer().render(document)
         #expect(html.hasPrefix("<ul>\n<li><input disabled=\"\" type=\"checkbox\"> a</li>\n<li><input checked=\"\" disabled=\"\" type=\"checkbox\"> b</li>"))
+        #expect(html.contains("<li>[x] c</li>"))
         // The rest of the marker line is paragraph text, never another block.
         let heading = MarkdownParser(profile: .gfm).parse("- [ ] # not a heading\n")
         #expect(!Self.kinds(heading).contains(.heading))

@@ -465,6 +465,27 @@ internal struct InlineParser {
         }
     }
 
+    /// Kept out of `parse()`: nested custom rules recurse through it, and
+    /// every local of an unoptimised build enlarges each recursion frame.
+    @inline(never)
+    mutating func tryExtendedAutolink() -> Bool {
+        brackets.isEmpty && autolinkCandidate(cursor) && extendedAutolink()
+    }
+
+    /// Advances over plain text when GFM triggers are active.
+    @inline(never)
+    mutating func gfmTextRun() {
+        while cursor < bytes.count {
+            let byte = bytes[cursor]
+            if textStops.contains(byte) {
+                // 'w' and ':' end the run only where an autolink can start.
+                guard (byte == 119 || byte == 58) && !baseStops.contains(byte)
+                        && !(brackets.isEmpty && autolinkCandidate(cursor)) else { break }
+            }
+            cursor += 1
+        }
+    }
+
     mutating func parse() {
         while cursor < bytes.count {
             let start = cursor
@@ -472,8 +493,13 @@ internal struct InlineParser {
             // Custom triggers are resolved by this controller before ordinary text
             // and core emphasis, never from inside a consumed destination/code node.
             if hasCustomRules, triggers.contains(bytes[cursor]), ![UInt8(92), 96, 91, 93, 60].contains(bytes[cursor]),
-               !(bytes[cursor] == 33 && cursor + 1 < bytes.count && bytes[cursor + 1] == 91),
-               customMatch() { continue }
+               !(bytes[cursor] == 33 && cursor + 1 < bytes.count && bytes[cursor + 1] == 91) {
+                switch customMatch() {
+                case .unmatched: break
+                case .matched: continue
+                case .nested(let children, let owner): parseNested(children, owner: owner); continue
+                }
+            }
             switch bytes[cursor] {
             case 92:
                 cursor += 1
@@ -518,18 +544,10 @@ internal struct InlineParser {
                 let item = append(hard ? .hardBreak : .softBreak, markerStart, cursor)
                 if hard { token(item, "core.break", markerStart, cursor) }
             default:
-                if autolink, brackets.isEmpty, autolinkCandidate(cursor), extendedAutolink() { continue }
+                if autolink, tryExtendedAutolink() { continue }
                 cursor += 1
                 if strikethrough || autolink {
-                    while cursor < bytes.count {
-                        let byte = bytes[cursor]
-                        if textStops.contains(byte) {
-                            // 'w' and ':' end the run only where an autolink can start.
-                            guard (byte == 119 || byte == 58) && !baseStops.contains(byte)
-                                    && !(brackets.isEmpty && autolinkCandidate(cursor)) else { break }
-                        }
-                        cursor += 1
-                    }
+                    gfmTextRun()
                 } else {
                     // CommonMark keeps the original single-dispatch loop.
                     while cursor < bytes.count && (!hasCustomRules || !triggers.contains(bytes[cursor])) && !Self.special(bytes[cursor]) { cursor += 1 }

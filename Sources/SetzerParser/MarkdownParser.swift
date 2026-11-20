@@ -64,6 +64,10 @@ internal struct BlockParser {
     /// Line whose remaining content must start a paragraph (after a GFM
     /// task list checkbox); no other leaf start is tried there.
     var forcedParagraphLine = -1
+    /// GFM: the last paragraph line added lazily. cmark-gfm keeps such a line
+    /// from the end of the matched containers, so a table header there keeps
+    /// its leading whitespace.
+    var lazyParagraphLine = -1
     /// State of the open GFM table leaf, if any.
     var openTable: TableState?
     var builder: DocumentBuilder
