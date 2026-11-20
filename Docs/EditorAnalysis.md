@@ -78,7 +78,7 @@ locations; consumers must not widen them to neighboring characters.
 
 Native finding/fix keys and argument schemas are documented in the
 [message catalogue](NativeAnalysisMessages.md). An optional Foundation-free
-English/German lookup is implemented on the unreleased localization branch;
+English/German lookup is merged in PR #17 (`0434ff5`), not yet released;
 the consumer still chooses its language and owns presentation. Analysis
 results retain English defaults and do not depend on a process locale.
 

@@ -17,12 +17,13 @@ v0.4.0 tag was verified on 20 November 2026.
 See [Releasing](Releasing.md) for the process and the
 [preparation checks](Validation/Release/0.4.0.md) for executed evidence.
 
-**In progress after v0.4.0:** `feature/native-analysis-localization` implements
-an optional English/German native finding/fix text catalogue, structured
-heading-level arguments and explicit fallback behavior. This is library work
-only; local validation is complete (123 tests on macOS/Swift 6.4.2, macOS/Swift
-6.2 and Linux/Swift 6.4.2; both host release builds pass). Consumer presentation
-adoption, review, merge and publication remain separate. See
+**Merged after v0.4.0:** PR #17 (`0434ff5`) adds an optional English/German
+native finding/fix text catalogue, structured heading-level arguments and
+explicit fallback behavior. Its merged branch is removed locally and remotely.
+Local validation is complete (123 tests on macOS/Swift 6.4.2, macOS/Swift 6.2
+and Linux/Swift 6.4.2; both host release builds pass). The PR's Linux/Swift 6.2
+CI job passes; hosted macOS CI is queued at branch completion. Consumer
+presentation adoption and a versioned release remain separate. See
 [NativeAnalysisMessages](NativeAnalysisMessages.md).
 
 GMSetzer is an independent, general-purpose Markdown library intended for
@@ -527,8 +528,8 @@ binary assets. Consumer version pinning remains a task in the consumer's own
 repository; it no longer blocks library publication.
 
 1. **Localised finding texts.** `NativeAnalyzer` findings and fix titles carry
-   stable message keys (`gmsetzer.*`). **Implemented on
-   `feature/native-analysis-localization`, not yet merged/released:** the
+   stable message keys (`gmsetzer.*`). **Merged in PR #17 (`0434ff5`), not yet
+   in a versioned release:** the
    library ships optional English/German text lookup as pure Swift data/code
    in `SetzerAnalysis`; the caller selects a language tag explicitly or uses
    its own translations. English defaults are unchanged, heading findings
@@ -543,7 +544,7 @@ repository; it no longer blocks library publication.
    roles. Add `core.blockQuote.marker` and `core.list.marker` tokens with
    exact per-line ranges.
 
-Current next work: review/merge the locally validated localization step, then
-container marker tokens, then M5. Consumer scheduling, dependency pinning and
+Current next work: container marker tokens, then M5. The localization step is
+merged; it does not complete M5's extension scope. Consumer scheduling, dependency pinning and
 device acceptance belong to consumer repositories. No new benchmark series or
 publication is part of this localization change.

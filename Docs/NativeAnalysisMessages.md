@@ -1,7 +1,7 @@
 # Native analysis messages
 
-Implemented on `feature/native-analysis-localization` after v0.4.0; not yet
-merged or released. `SetzerAnalysis` supplies an optional, Foundation-free
+Merged in PR #17 (`0434ff5`) after v0.4.0; not yet in a versioned release.
+`SetzerAnalysis` supplies an optional, Foundation-free
 English/German catalogue for the three native findings and their whitespace
 fix title. Consumers choose the language explicitly or translate the same
 documented keys in their own presentation layer.
@@ -87,6 +87,11 @@ used `--disable-sandbox` and isolated scratch/cache/config/security/module
 directories. Linux ran a source-only copy of this package in a separate
 temporary directory; no consumer checkout or new execution environment was
 needed. Five new tests cover this step; script tests were not repeated because
-no scripts changed. Minimum-version Linux CI, consumer UI adoption and fresh
-benchmark/reference series are not claimed by these local checks. There is no
-new tag or published release.
+no scripts changed. Consumer UI adoption and fresh benchmark/reference series
+are not claimed by these local checks. There is no new tag or published release.
+
+At branch completion, the [PR CI](https://github.com/kerker00/GMSetzer/actions/runs/44785845210)
+Linux/Swift 6.2 job also passes; the GitHub macOS job is queued. The
+[merged-main CI](https://github.com/kerker00/GMSetzer/actions/runs/44786023211)
+is still running. The local macOS runs above are completed evidence and do not
+substitute for a completed GitHub macOS job.

@@ -13,8 +13,8 @@ wherever Swift runs, including Linux.
 > is published; macOS/Linux CI and release preparation are merged in PR #16
 > (`6a0eb8e`). Both platforms pass all 118 Swift tests and 17 Python tests.
 
-Unreleased work on `feature/native-analysis-localization` adds an optional
-English/German lookup for native findings and fix titles, with a documented
+Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
+findings and fix titles on `main`, with a documented
 [message-key/argument catalogue](Docs/NativeAnalysisMessages.md). The v0.4.0
 release still supplies English defaults only.
 
@@ -69,7 +69,7 @@ and device acceptance do not determine this package's API or release readiness.
   skipped heading levels, duplicate headings and trailing whitespace, with
   portable findings and suggested fixes. Analysis is not a complete linter;
   English defaults remain available, with an optional English/German lookup
-  in the unreleased development branch. Block-quote/list marker tokens remain
+  on `main` since PR #17 (not yet in a versioned release). Block-quote/list marker tokens remain
   follow-up work.
 
 ## Documentation
