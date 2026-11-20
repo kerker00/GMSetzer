@@ -21,7 +21,10 @@ struct BenchmarkCorpusTests {
         #expect(HTMLRenderer().render(plain) == HTMLRenderer().render(annotated))
         #expect(annotated.diagnostics.isEmpty)
         #expect(annotated.source == Array(text.utf8))
+        let registryParser = try? Corpus.registryParser().validated()
+        #expect(registryParser != nil)
         let mixed = Corpus.document(bytes: bytes)
+        #expect(registryParser?.parse(mixed).nodes == MarkdownParser().parse(mixed).nodes)
         #expect(mixed.utf8.count >= bytes)
         #expect(mixed.utf8.count < bytes + Corpus.block.utf8.count)
     }

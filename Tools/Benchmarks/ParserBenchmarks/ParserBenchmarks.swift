@@ -81,6 +81,13 @@ let benchmarks: @Sendable () -> Void = {
                 })
             }
         }
+        let registryParser = Corpus.registryParser()
+        Benchmark("GMSetzer selected registry parse \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            for _ in benchmark.scaledIterations { blackHole(registryParser.parse(text)) }
+        }
+        Benchmark("GMSetzer parent index \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            for _ in benchmark.scaledIterations { blackHole(DocumentIndex(document)) }
+        }
         let referenceText = Corpus.referenceDocument(bytes: bytes)
         for collect in [false, true] {
             let parser = MarkdownParser(collectSyntaxDetails: collect)
