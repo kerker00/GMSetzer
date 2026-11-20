@@ -1,5 +1,6 @@
 /// One-based physical line and Unicode-scalar column. A tab counts as one;
-/// combining scalars count separately. This is not a visual caret column.
+/// combining scalars count separately. This is neither a UTF-16 column (as
+/// used by LSP) nor a visual caret column; use utf16Offset for UTF-16 APIs.
 public struct SourcePosition: Hashable, Sendable {
     public let line: Int
     public let column: Int
@@ -21,7 +22,7 @@ public struct UTF16Range: Hashable, Sendable {
 /// Invalid UTF-8 follows Unicode maximal-subpart replacement decoding. CRLF
 /// is one physical newline (two UTF-16 units) with no addressable interior.
 public struct SourceIndex: Sendable {
-    public let source: [UInt8]
+    private let source: [UInt8]
     public let utf16Count: Int
     private struct Checkpoint: Sendable {
         var byte: Int
@@ -29,23 +30,71 @@ public struct SourceIndex: Sendable {
         var line: Int
         var column: Int
     }
-    private let checkpoints: [Checkpoint]
-    public let lineStarts: [Int]
+    private struct StoredPoint<Word: FixedWidthInteger & Sendable>: Sendable {
+        let byte: Word, utf16: Word, line: Word, column: Word
+        init(_ point: Checkpoint) {
+            byte = Word(point.byte); utf16 = Word(point.utf16)
+            line = Word(point.line); column = Word(point.column)
+        }
+        var point: Checkpoint { Checkpoint(byte: Int(byte), utf16: Int(utf16), line: Int(line), column: Int(column)) }
+    }
+    private enum Points: Sendable {
+        case compact([StoredPoint<Int32>]), wide([StoredPoint<Int>])
+        var count: Int { switch self { case .compact(let p): p.count; case .wide(let p): p.count } }
+        subscript(_ index: Int) -> Checkpoint {
+            switch self { case .compact(let p): p[index].point; case .wide(let p): p[index].point }
+        }
+    }
+    private let checkpoints: Points
+    public let lineCount: Int
 
+    /// Owns this document's original byte snapshot. Bare ranges do not carry
+    /// identity: callers must not mix offsets from different snapshots.
+    public init(_ document: Document) { self.init(document.source) }
+
+    /// Raw-byte entry point for consumers that need positions before parsing.
     public init(_ source: [UInt8]) {
         self.source = source
-        var point = Checkpoint(byte: 0, utf16: 0, line: 1, column: 1)
-        var points = [point]
-        var starts = [0]
-        while point.byte < source.count {
-            let newline = source[point.byte] == 10 || source[point.byte] == 13
-            Self.advance(&point, source)
-            if newline { starts.append(point.byte) }
-            if newline || point.byte - points[points.count - 1].byte >= 128 { points.append(point) }
+        if source.count < Int32.max {
+            let (points, end): ([StoredPoint<Int32>], Checkpoint) = Self.build(source)
+            checkpoints = .compact(points); utf16Count = end.utf16; lineCount = end.line
+        } else {
+            let (points, end): ([StoredPoint<Int>], Checkpoint) = Self.build(source)
+            checkpoints = .wide(points); utf16Count = end.utf16; lineCount = end.line
         }
-        self.checkpoints = points
-        self.lineStarts = starts
-        self.utf16Count = point.utf16
+    }
+    private static func build<Word: FixedWidthInteger & Sendable>(_ source: [UInt8]) -> ([StoredPoint<Word>], Checkpoint) {
+        var point = Checkpoint(byte: 0, utf16: 0, line: 1, column: 1)
+        var points = [StoredPoint<Word>(point)]
+        points.reserveCapacity(max(1, source.count / 64))
+        source.withUnsafeBufferPointer { buffer in
+            var previous = 0
+            while point.byte < buffer.count {
+                let end = ByteSearch.asciiRunEnd(in: buffer, from: point.byte, to: previous + min(128, buffer.count - previous))
+                if end > point.byte {
+                    let length = end - point.byte
+                    point.byte = end; point.utf16 += length; point.column += length
+                } else {
+                    advance(&point, source)
+                }
+                if point.column == 1 || point.byte - previous >= 128 {
+                    points.append(StoredPoint(point)); previous = point.byte
+                }
+            }
+        }
+        return (points, point)
+    }
+
+    /// Original byte offset of a one-based physical line, including an empty
+    /// final line. nil for an invalid line; no internal arrays are exposed.
+    public func utf8Offset(ofLine line: Int) -> Int? {
+        guard line > 0, line <= lineCount else { return nil }
+        var low = 0, high = checkpoints.count
+        while low < high {
+            let mid = (low + high) / 2
+            if checkpoints[mid].line < line { low = mid + 1 } else { high = mid }
+        }
+        return checkpoints[low].byte
     }
 
     public func utf16Offset(atUTF8Offset offset: Int) -> Int? { point(atByte: offset)?.utf16 }
@@ -59,7 +108,7 @@ public struct SourceIndex: Sendable {
         return point.utf16 == offset ? point.byte : nil
     }
     public func utf8Offset(at position: SourcePosition) -> Int? {
-        guard position.line > 0, position.line <= lineStarts.count, position.column > 0 else { return nil }
+        guard position.line > 0, position.line <= lineCount, position.column > 0 else { return nil }
         var low = 0, high = checkpoints.count
         while low < high {
             let mid = (low + high) / 2, candidate = checkpoints[mid]
@@ -101,7 +150,7 @@ public struct SourceIndex: Sendable {
     }
     /// UTF-8 decoding needs at most three preceding bytes to establish a
     /// boundary. Tree queries do not need to build the full position index.
-    internal static func isBoundary(_ offset: Int, in bytes: [UInt8]) -> Bool {
+    package static func isBoundary(_ offset: Int, in bytes: [UInt8]) -> Bool {
         guard offset >= 0, offset <= bytes.count else { return false }
         if offset > 0, offset < bytes.count, bytes[offset - 1] == 13, bytes[offset] == 10 { return false }
         for start in max(0, offset - 3)..<offset where (0xC2...0xF4).contains(bytes[start]) {

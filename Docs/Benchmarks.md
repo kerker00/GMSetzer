@@ -362,4 +362,7 @@ these are not covered by M2 timings. No full benchmark series was run for this
 change. Fresh parse + annotation + position-index + analysis/decoration timings
 remain pending owner authorization. The protected conformance path and full
 Document validation remain intact; no lazy-text API change was introduced.
+The [M3 review](Review-M3.md) corrections (CSR tree tables, ASCII-run position
+scan, analysis without a position index) change the code to be measured but not
+its results; their timings are part of the pending M3 measurements.
 See [M3EditorServices](M3EditorServices.md).

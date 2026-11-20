@@ -85,4 +85,32 @@ struct SourceIndexTests {
         let previous = try #require(tree.node(atUTF8Offset: end, affinity: .upstream))
         #expect(previous == outline[0].node || tree.ancestors(of: previous).contains(outline[0].node))
     }
+
+    @Test func lineQueriesAndASCIIRunsAcrossCheckpoints() throws {
+        let text = String(repeating: "a", count: 300) + "ä\r\n" + String(repeating: "b", count: 127) + "\r\r\n\nend"
+        let document = MarkdownParser().parse(text)
+        let index = SourceIndex(document)
+        #expect(index.lineCount == 5)
+        let starts = [0, 304, 432, 434, 435]
+        for (line, start) in starts.enumerated() { #expect(index.utf8Offset(ofLine: line + 1) == start) }
+        #expect(index.utf8Offset(ofLine: 0) == nil)
+        #expect(index.utf8Offset(ofLine: 6) == nil)
+        #expect(SourceIndex([]).lineCount == 1)
+        #expect(SourceIndex(Array("x\n".utf8)).utf8Offset(ofLine: 2) == 2)
+        // Scalar-by-scalar reference across checkpoint boundaries.
+        var utf16 = 0, line = 1, column = 1, offset = 0
+        let bytes = document.source
+        while offset < bytes.count {
+            #expect(index.utf16Offset(atUTF8Offset: offset) == utf16)
+            #expect(index.position(atUTF8Offset: offset) == SourcePosition(line: line, column: column))
+            if bytes[offset] == 13 || bytes[offset] == 10 {
+                let width = bytes[offset] == 13 && offset + 1 < bytes.count && bytes[offset + 1] == 10 ? 2 : 1
+                offset += width; utf16 += width; line += 1; column = 1
+            } else {
+                let width = bytes[offset] < 0x80 ? 1 : 2
+                offset += width; utf16 += 1; column += 1
+            }
+        }
+        #expect(index.utf16Count == utf16)
+    }
 }

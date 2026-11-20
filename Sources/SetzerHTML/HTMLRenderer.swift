@@ -10,14 +10,16 @@ public enum HTMLRendering: Sendable {
 
 public struct HTMLRendererContext: Sendable {
     public let index: Int
-    public let sourceAnchorID: String?
+    fileprivate let anchorPrefix: String?
+    /// Constructed only when a hook requests the identifier.
+    public var sourceAnchorID: String? { anchorPrefix.map { $0 + String(index) } }
     /// Tight-list paragraphs and list items receive the same scheduling context
     /// as the built-in renderer, including when their ancestors are wrapped.
     public let tightItem: Bool
     public let tree: DocumentIndex
     public var node: Node { tree.document.nodes[index] }
     public var parent: Int? { tree.parent(of: index) }
-    public var ancestors: [Int] { tree.ancestors(of: index) }
+    public var ancestors: [Int] { Array(tree.ancestors(of: index)) }
 }
 
 public typealias ContextualHTMLRendererHook = @Sendable (HTMLRendererContext) -> HTMLRendering?
@@ -32,17 +34,21 @@ public struct HTMLRenderer: Sendable {
     public let allowRawHTML: Bool
     public let preserveHTMLComments: Bool
     public let allowUnsafeURLs: Bool
+    public let allowedURLSchemes: Set<HTMLURLScheme>
+    private let escapedAnchorPrefix: String?
     private let contextualHooks: [NodeKind: ContextualHTMLRendererHook]
     private let hooks: [NodeKind: HTMLRendererHook]
 
     public init(includeSourceRanges: Bool = false, sourceAnchorPrefix: String? = nil, allowRawHTML: Bool = false,
-                preserveHTMLComments: Bool = false, allowUnsafeURLs: Bool = false, hooks: [NodeKind: HTMLRendererHook] = [:],
+                preserveHTMLComments: Bool = false, allowUnsafeURLs: Bool = false, allowedURLSchemes: Set<HTMLURLScheme> = [.http, .https, .mailto], hooks: [NodeKind: HTMLRendererHook] = [:],
                 contextualHooks: [NodeKind: ContextualHTMLRendererHook] = [:]) {
         self.includeSourceRanges = includeSourceRanges
         self.sourceAnchorPrefix = sourceAnchorPrefix
+        self.escapedAnchorPrefix = sourceAnchorPrefix.map(Self.escape)
         self.allowRawHTML = allowRawHTML
         self.preserveHTMLComments = preserveHTMLComments
         self.allowUnsafeURLs = allowUnsafeURLs
+        self.allowedURLSchemes = allowedURLSchemes
         self.hooks = hooks
         self.contextualHooks = contextualHooks
     }
@@ -59,7 +65,7 @@ public struct HTMLRenderer: Sendable {
             case .enter(let index, let tightItem):
                 let node = document.nodes[index]
                 let contextual = tree.flatMap { tree in
-                    contextualHooks[node.kind]?(HTMLRendererContext(index: index, sourceAnchorID: sourceAnchorID(forNode: index), tightItem: tightItem, tree: tree))
+                    contextualHooks[node.kind]?(HTMLRendererContext(index: index, anchorPrefix: sourceAnchorPrefix, tightItem: tightItem, tree: tree))
                 }
                 if let directive = contextual ?? hooks[node.kind]?(node, document) {
                     switch directive {
@@ -189,7 +195,8 @@ public struct HTMLRenderer: Sendable {
             if let colon = prefix.firstIndex(of: 58) {
                 let scheme = prefix[..<colon].filter { $0 > 32 && $0 != 127 }
                     .map { (65...90).contains($0) ? $0 + 32 : $0 }
-                if !["http", "https", "mailto"].contains(String(decoding: scheme, as: UTF8.self)) { return "" }
+                guard let name = HTMLURLScheme(rawValue: String(decoding: scheme, as: UTF8.self)),
+                      allowedURLSchemes.contains(name) else { return "" }
             }
         }
         let safe = "-_.+!*(),%#@?=;:/&$~".utf8
@@ -226,7 +233,7 @@ public struct HTMLRenderer: Sendable {
     }
 
     private func anchors(_ node: Node, index: Int) -> String {
-        let id = sourceAnchorID(forNode: index).map { " id=\"\(Self.escape($0))\"" } ?? ""
+        let id = escapedAnchorPrefix.map { " id=\"\($0)\(index)\"" } ?? ""
         return id + (includeSourceRanges ? " data-source-start=\"\(node.range.lowerBound)\" data-source-end=\"\(node.range.upperBound)\"" : "")
     }
 

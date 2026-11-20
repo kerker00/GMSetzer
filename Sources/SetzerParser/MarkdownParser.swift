@@ -368,27 +368,6 @@ internal struct BlockParser {
     }
 }
 
-/// Word-at-a-time search for a NUL byte.
-internal enum ByteSearch {
-    @inline(__always)
-    static func containsZero(_ buffer: UnsafeBufferPointer<UInt8>) -> Bool {
-        let low7: UInt64 = 0x7F7F_7F7F_7F7F_7F7F
-        var offset = 0
-        if let base = buffer.baseAddress {
-            while offset + 8 <= buffer.count {
-                let word = UnsafeRawPointer(base + offset).loadUnaligned(as: UInt64.self)
-                if ~(((word & low7) &+ low7) | word | low7) != 0 { return true }
-                offset += 8
-            }
-        }
-        while offset < buffer.count {
-            if buffer[offset] == 0 { return true }
-            offset += 1
-        }
-        return false
-    }
-}
-
 /// Word-at-a-time search for LF and CR. Each 8-byte word is tested with an
 /// exact zero-byte mask, so plain text costs a few operations per 8 bytes.
 internal enum LineTerminators {

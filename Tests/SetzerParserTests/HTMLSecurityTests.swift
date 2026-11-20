@@ -32,4 +32,18 @@ struct HTMLSecurityTests {
         #expect(hook.render(document).contains("<header>heading</header>"))
         #expect(!HTMLRenderer.conformance.render(document).contains("data-source"))
     }
+
+    @Test func allowedURLSchemesAreExplicitAndValidated() {
+        let document = MarkdownParser().parse("[t](tel:+491) [f](FTP://h/x) [j](javascript:x) [r](a/b:c)")
+        let standard = HTMLRenderer().render(document)
+        #expect(standard.contains("<a href=\"\">t</a>") && standard.contains("<a href=\"\">f</a>"))
+        let extended = HTMLRenderer(allowedURLSchemes: [.https, .tel, .ftp]).render(document)
+        #expect(extended.contains("href=\"tel:+491\""))
+        #expect(extended.contains("href=\"FTP://h/x\""))
+        #expect(extended.contains("<a href=\"\">j</a>"))
+        #expect(extended.contains("href=\"a/b:c\""))
+        #expect(HTMLRenderer(allowedURLSchemes: []).render(MarkdownParser().parse("[x](https://a)")).contains("href=\"\""))
+        #expect(HTMLURLScheme(rawValue: "Web+App")?.rawValue == "web+app")
+        for invalid in ["", "1abc", "a b", "ä", "java:script"] { #expect(HTMLURLScheme(rawValue: invalid) == nil) }
+    }
 }

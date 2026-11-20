@@ -145,9 +145,9 @@ M3 service contracts, the native rule catalogue and validation limits are in
 [Docs/M3EditorServices.md](Docs/M3EditorServices.md).
 
 ```swift
-let positions = SourceIndex(document.source)
+let positions = SourceIndex(document)
 let utf16Range = positions.utf16Range(for: document.root.range)
 let outline = DocumentIndex(document).outline()
-let report = try NativeAnalyzer.analyze(document, dialect: "commonmark",
+let report = try NativeAnalyzer.analyze(document, dialect: .commonMark,
     configuration: NativeAnalysisConfiguration(rules: [.headingLevel]))
 ```

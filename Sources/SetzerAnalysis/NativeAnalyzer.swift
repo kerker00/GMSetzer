@@ -28,66 +28,80 @@ public struct NativeAnalysisConfiguration: Hashable, Sendable {
     }
 }
 
-public enum NativeAnalysisError: Error, Equatable, Sendable { case invalidSuppression, invalidDialect }
+public enum NativeAnalysisError: Error, Equatable, Sendable { case invalidSuppression }
 
 /// Pure analysis of an existing parse; no parser, UI, files or renderer.
 public enum NativeAnalyzer {
     public static let provider = "gmsetzer.native"
-    public static let version = "0.1.0-m3"
+    public static let version = GMSetzerVersion.current
 
-    public static func analyze(_ document: Document, dialect: String,
+    public static func analyze(_ document: Document, dialect: MarkdownDialect = .commonMark,
                                configuration: NativeAnalysisConfiguration = .init()) throws -> DiagnosticReport {
-        guard !dialect.isEmpty else { throw NativeAnalysisError.invalidDialect }
         if configuration.rules.isEmpty && configuration.suppressions.isEmpty {
             return try DiagnosticReport(source: document.source, provider: provider, providerVersion: version,
-                dialect: dialect, configurationID: configuration.identity, findings: [])
+                dialect: dialect.identifier, configurationID: configuration.identity, findings: [])
         }
-        let positions = SourceIndex(document.source)
         for scope in configuration.suppressions {
-            guard positions.utf16Range(for: scope.range) != nil else { throw NativeAnalysisError.invalidSuppression }
+            guard SourceIndex.isBoundary(scope.range.lowerBound, in: document.source),
+                  SourceIndex.isBoundary(scope.range.upperBound, in: document.source) else {
+                throw NativeAnalysisError.invalidSuppression
+            }
+        }
+        var suppressions: [NativeRule: SuppressionCursor] = [:]
+        for scope in configuration.suppressions.sorted(by: {
+            $0.range.lowerBound == $1.range.lowerBound ? $0.range.upperBound < $1.range.upperBound
+                : $0.range.lowerBound < $1.range.lowerBound
+        }) {
+            suppressions[scope.rule, default: SuppressionCursor()].ranges.append(scope.range)
         }
         var findings: [DocumentDiagnostic] = []
         func emit(_ rule: NativeRule, range: SourceRange, text: String,
                   related: [RelatedDiagnosticLocation] = [], fixes: [SuggestedFix] = []) throws {
-            guard !configuration.suppressions.contains(where: { $0.rule == rule && $0.range.contains(range) }) else { return }
+            if suppressions[rule]?.suppresses(range) == true { return }
             findings.append(try DocumentDiagnostic(provider: provider, code: rule.rawValue,
                 category: .style, severity: .warning,
                 message: DiagnosticMessage(rule.rawValue, defaultText: text), location: .source(range),
                 related: related, fixes: fixes))
         }
         if !configuration.rules.isEmpty {
-            let tree = DocumentIndex(document)
-            let excluded = document.nodes.compactMap { node -> SourceRange? in
-                switch node.data {
-                case .codeBlock, .code, .htmlBlock, .htmlInline, .referenceDefinition, .custom: node.range
-                default: nil
+            var excluded: [SourceRange] = [], hardBreaks: [SourceRange] = [], prose: [SourceRange] = []
+            if configuration.rules.contains(.trailingWhitespace) {
+                // Preorder is already source ordered. Merge nested/overlapping
+                // protected ranges while walking once; no scope sorts needed.
+                for index in DocumentTraversal(document, includeCustomContent: false) {
+                    let node = document.nodes[index]
+                    switch node.data {
+                    case .codeBlock, .code, .htmlBlock, .htmlInline, .referenceDefinition, .custom:
+                        if let last = excluded.last, node.range.lowerBound <= last.upperBound {
+                            excluded[excluded.count - 1] = SourceRange(last.lowerBound, max(last.upperBound, node.range.upperBound))
+                        } else { excluded.append(node.range) }
+                    case .hardBreak: hardBreaks.append(node.range)
+                    case .paragraph, .heading: prose.append(node.range)
+                    default: break
+                    }
                 }
-            }.sorted { $0.lowerBound < $1.lowerBound }
-            let hardBreaks = document.nodes.compactMap { node -> SourceRange? in
-                if case .hardBreak = node.data { return node.range }; return nil
-            }.sorted { $0.lowerBound < $1.lowerBound }
-            let prose = document.nodes.compactMap { node -> SourceRange? in
-                switch node.data { case .paragraph, .heading: node.range; default: nil }
-            }.sorted { $0.lowerBound < $1.lowerBound }
+            }
             var excludedCursor = 0, breakCursor = 0, proseCursor = 0
             var previousLevel = 0
             var seen: [[UInt8]: SourceRange] = [:]
-            for entry in tree.outline() {
-                guard !tree.ancestors(of: entry.node).contains(where: {
-                    if case .custom = document.nodes[$0].data { return true }; return false
-                }) else { continue }
-                if configuration.rules.contains(.headingLevel), entry.level > previousLevel + 1 {
-                    try emit(.headingLevel, range: entry.range, text: "Heading skips a level (expected at most \(previousLevel + 1)).")
-                }
-                previousLevel = entry.level
-                // Case-sensitive decoded text, whitespace collapsed, byte-exact
-                // Unicode identity. No canonical/case-fold compatibility claim.
-                let key = Array(entry.title.split(whereSeparator: { $0.isWhitespace }).joined(separator: " ").utf8)
-                if configuration.rules.contains(.duplicateHeading), !key.isEmpty {
-                    if let first = seen[key] {
-                        try emit(.duplicateHeading, range: entry.range, text: "Heading repeats an earlier heading.",
-                                 related: [RelatedDiagnosticLocation(.source(first))])
-                    } else { seen[key] = entry.range }
+            if configuration.rules.contains(.headingLevel) || configuration.rules.contains(.duplicateHeading) {
+                for index in DocumentTraversal(document, blocksOnly: true, includeCustomContent: false) {
+                    guard case .heading(let level) = document.nodes[index].data else { continue }
+                    let range = document.nodes[index].range
+                    if configuration.rules.contains(.headingLevel), level > previousLevel + 1 {
+                        try emit(.headingLevel, range: range, text: "Heading skips a level (expected at most \(previousLevel + 1)).")
+                    }
+                    previousLevel = level
+                    // Case-sensitive decoded text, whitespace collapsed, byte-exact
+                    // Unicode identity. No canonical/case-fold compatibility claim.
+                    if configuration.rules.contains(.duplicateHeading) {
+                        let key = Array(document.plainText(of: index).split(whereSeparator: { $0.isWhitespace }).joined(separator: " ").utf8)
+                        guard !key.isEmpty else { continue }
+                        if let first = seen[key] {
+                            try emit(.duplicateHeading, range: range, text: "Heading repeats an earlier heading.",
+                                     related: [RelatedDiagnosticLocation(.source(first))])
+                        } else { seen[key] = range }
+                    }
                 }
             }
             if configuration.rules.contains(.trailingWhitespace) {
@@ -120,6 +134,21 @@ public enum NativeAnalyzer {
             }
         }
         return try DiagnosticReport(source: document.source, provider: provider, providerVersion: version,
-                                    dialect: dialect, configurationID: configuration.identity, findings: findings)
+                                    dialect: dialect.identifier, configurationID: configuration.identity, findings: findings)
+    }
+}
+
+/// Findings for each rule are emitted in source order. Prefix-maximum end
+/// preserves containment semantics even for nested suppression ranges; scopes
+/// are never unioned (which could suppress a finding crossing two scopes).
+private struct SuppressionCursor {
+    var ranges: [SourceRange] = []
+    var next = 0
+    var maximumEnd = -1
+    mutating func suppresses(_ range: SourceRange) -> Bool {
+        while next < ranges.count, ranges[next].lowerBound <= range.lowerBound {
+            maximumEnd = max(maximumEnd, ranges[next].upperBound); next += 1
+        }
+        return maximumEnd >= range.upperBound
     }
 }
