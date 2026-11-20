@@ -453,7 +453,13 @@ all additional parse work, checked by `Scripts/check_m2_budget.py` against a
 hashed baseline. A positive reserve remains at every size. Selected rule
 callbacks, new validation and allocation costs count inside this allowance.
 String/segment reconstruction and optional parent-index costs are measured;
-there is no assumed saving from a future lazy/pool representation. The GFM
+there is no assumed saving from a future lazy/pool representation.
+The branch `perf/block-parser-hot-paths` makes the block parse about three
+times faster in a local harness, with byte-identical output (see
+[Benchmarks](Benchmarks.md#block-parser-hot-path-optimisation-branch-perfblock-parser-hot-paths)).
+A full package-benchmark run confirms this: CommonMark 1 MB takes 7.385 ms
+against 19.153 ms for source-positioned C, and both budget checks pass. The
+frozen M2 allowance stays unchanged; the gain is reserve. The GFM
 ratios remain informational until the actual extensions are implemented.
 Existing measurement-series authorization remains valid; otherwise follow the
 full-benchmark owner rule.

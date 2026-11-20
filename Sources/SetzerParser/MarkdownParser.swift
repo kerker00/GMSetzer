@@ -47,7 +47,10 @@ internal struct ActiveRule: Sendable {
 
 internal struct BlockParser {
     let source: [UInt8]
-    let physicalLines: [SourceLine]
+    /// One table for physical and projected lines. Line `i` is replaced by
+    /// its projection only when the main loop reaches it, and the loop never
+    /// revisits a line, so every later entry is still the physical line.
+    /// A single table avoids copying all lines on the first projection.
     var lines: [SourceLine]
     let limits: ParserLimits
     let collectSyntaxDetails: Bool
@@ -61,43 +64,59 @@ internal struct BlockParser {
     init(source: [UInt8], registry: RuleRegistry, limits: ParserLimits, collectSyntaxDetails: Bool,
          projectedLines: [SourceLine]? = nil, extensionDepth: Int = 0) {
         self.source = source
-        self.physicalLines = projectedLines ?? Self.scanLines(source)
+        self.lines = projectedLines ?? Self.scanLines(source)
         self.extensionDepth = extensionDepth
-        self.lines = self.physicalLines
         self.limits = limits
         self.collectSyntaxDetails = collectSyntaxDetails
         self.builder = DocumentBuilder(source: source, collectSyntaxDetails: collectSyntaxDetails)
+        // Typical documents have one to two nodes per line. Reserving one and
+        // a half per line avoids regrowth there; array doubling would keep at
+        // least as much spare capacity.
+        self.builder.reserveCapacity(lines.count + lines.count / 2 + 1)
         self.registry = registry
     }
 
     @discardableResult
-    mutating func append(_ data: NodeData, range: SourceRange, segments: [SourceRange] = [],
+    @inline(__always)
+    mutating func append(_ data: consuming NodeData, range: SourceRange, segments: [SourceRange],
+                         fallbackLiteral: String? = nil, to parent: Int? = nil) -> Int {
+        append(data, range: range, segments: SourceSegments(segments), fallbackLiteral: fallbackLiteral, to: parent)
+    }
+
+    @discardableResult
+    @inline(__always)
+    mutating func append(_ data: consuming NodeData, range: SourceRange, segments: SourceSegments = .none,
                          fallbackLiteral: String? = nil, to parent: Int? = nil) -> Int {
         // M1-D audit: parent is root, a previously appended open container, or
         // a just-appended leaf/import parent. Callbacks cannot supply indices.
         // A failure is a parser defect; do not silently replace its snapshot.
-        try! builder.append(data, range: range, sourceSegments: segments, fallbackLiteral: fallbackLiteral,
+        try! builder.append(data, range: range, segments: segments, fallbackLiteral: fallbackLiteral,
                             to: parent ?? containers.last?.node ?? 0)
     }
 
     mutating func appendText(_ range: SourceRange, to parent: Int) {
-        if !range.isEmpty { append(.text(decode(range)), range: range, segments: [range], to: parent) }
+        if !range.isEmpty { append(.text(decode(range)), range: range, segments: .one(range), to: parent) }
     }
 
     static func scanLines(_ bytes: [UInt8]) -> [SourceLine] {
         var result: [SourceLine] = []
-        var start = 0
-        var cursor = 0
-        while cursor < bytes.count {
-            if bytes[cursor] == 10 || bytes[cursor] == 13 {
+        bytes.withUnsafeBufferPointer { buffer in
+            let count = buffer.count
+            // One pass counts line terminators so the line table is allocated
+            // exactly once; the second pass records the lines.
+            result.reserveCapacity(LineTerminators.count(in: buffer) + 1)
+            var start = 0
+            var cursor = 0
+            while let found = LineTerminators.next(in: buffer, from: cursor) {
+                cursor = found
                 let contentEnd = cursor
-                if bytes[cursor] == 13 && cursor + 1 < bytes.count && bytes[cursor + 1] == 10 { cursor += 1 }
+                if buffer[cursor] == 13 && cursor + 1 < count && buffer[cursor + 1] == 10 { cursor += 1 }
                 cursor += 1
                 result.append(SourceLine(start, contentEnd, cursor))
                 start = cursor
-            } else { cursor += 1 }
+            }
+            if start < count { result.append(SourceLine(start, count, count)) }
         }
-        if start < bytes.count { result.append(SourceLine(start, bytes.count, bytes.count)) }
         if bytes.starts(with: [0xEF, 0xBB, 0xBF]), let first = result.first {
             // Keep physicalRange at byte zero, but begin syntax recognition
             // after the BOM with a fresh column for indentation/tab stops.
@@ -111,11 +130,26 @@ internal struct BlockParser {
         (33...47).contains(byte) || (58...64).contains(byte) ||
         (91...96).contains(byte) || (123...126).contains(byte)
     }
-    func isBlank(_ index: Int) -> Bool { source[lines[index].contentRange.lowerBound..<lines[index].contentRange.upperBound].allSatisfy(space) }
+    func isBlank(_ index: Int) -> Bool {
+        let range = lines[index].contentRange
+        var cursor = range.lowerBound
+        while cursor < range.upperBound {
+            let byte = source[cursor]
+            if byte != 32 && byte != 9 { return false }
+            cursor += 1
+        }
+        return true
+    }
 
+    @inline(__always)
     func indentation(_ index: Int) -> (offset: Int, columns: Int) {
-        var cursor = SourceCursor(source: source, line: lines[index])
-        let columns = cursor.skipIndentation()
+        indentation(of: lines[index])
+    }
+
+    @inline(__always)
+    func indentation(of line: SourceLine) -> (offset: Int, columns: Int) {
+        var cursor = SourceCursor(line: line)
+        let columns = cursor.skipIndentation(in: source)
         return (cursor.offset, columns)
     }
 
@@ -128,14 +162,39 @@ internal struct BlockParser {
     }
 
     func decode(_ range: SourceRange) -> String {
-        let bytes = source[range.lowerBound..<range.upperBound]
-        if !bytes.contains(0) { return String(decoding: bytes, as: UTF8.self) }
-        var repaired: [UInt8] = []
-        for byte in bytes {
-            if byte == 0 { repaired.append(contentsOf: [0xEF, 0xBF, 0xBD]) }
-            else { repaired.append(byte) }
+        source.withUnsafeBufferPointer { buffer in
+            let bytes = UnsafeBufferPointer(rebasing: buffer[range.lowerBound..<range.upperBound])
+            if !ByteSearch.containsZero(bytes) { return String(decoding: bytes, as: UTF8.self) }
+            var repaired: [UInt8] = []
+            repaired.reserveCapacity(bytes.count + 8)
+            Self.appendRepaired(bytes, to: &repaired)
+            return String(decoding: repaired, as: UTF8.self)
         }
-        return String(decoding: repaired, as: UTF8.self)
+    }
+
+    /// Append original bytes with NUL replaced by U+FFFD. Multi-line literals
+    /// collect bytes first and decode once; ASCII separators between lines
+    /// end any malformed sequence exactly as separate decoding would.
+    @inline(__always)
+    static func appendRepaired(_ bytes: UnsafeBufferPointer<UInt8>, to output: inout [UInt8]) {
+        var runStart = 0
+        for position in 0..<bytes.count where bytes[position] == 0 {
+            output.append(contentsOf: UnsafeBufferPointer(rebasing: bytes[runStart..<position]))
+            output.append(0xEF); output.append(0xBF); output.append(0xBD)
+            runStart = position + 1
+        }
+        output.append(contentsOf: UnsafeBufferPointer(rebasing: bytes[runStart..<bytes.count]))
+    }
+
+    func appendRepaired(_ range: SourceRange, to output: inout [UInt8]) {
+        source.withUnsafeBufferPointer { buffer in
+            Self.appendRepaired(UnsafeBufferPointer(rebasing: buffer[range.lowerBound..<range.upperBound]), to: &output)
+        }
+    }
+
+    @inline(__always)
+    static func appendSpaces(_ count: Int, to output: inout [UInt8]) {
+        for _ in 0..<count { output.append(32) }
     }
 
     func atxHeading(_ index: Int) -> (level: Int, content: SourceRange)? {
@@ -179,7 +238,9 @@ internal struct BlockParser {
         return count >= 3
     }
 
-    struct Fence { let marker: UInt8; let count: Int; let indent: Int; let info: String? }
+    /// The info string stays a source range until the block is finished,
+    /// so an open leaf holds no reference-counted storage.
+    struct Fence { let marker: UInt8; let count: Int; let indent: Int; let info: SourceRange? }
 
     func openingFence(_ index: Int) -> Fence? {
         let indent = indentation(index)
@@ -193,7 +254,7 @@ internal struct BlockParser {
         let info = trimmed(cursor, end)
         if marker == 96 && source[info.lowerBound..<info.upperBound].contains(96) { return nil }
         return Fence(marker: marker, count: cursor - indent.offset, indent: indent.columns,
-                     info: info.isEmpty ? nil : decode(info))
+                     info: info.isEmpty ? nil : info)
     }
 
     func closesFence(_ index: Int, _ fence: Fence) -> Bool {
@@ -206,12 +267,14 @@ internal struct BlockParser {
     }
 
     /// Original source segments include a partially consumed tab byte.
-    func codeContent(_ index: Int, removing columns: Int) -> (range: SourceRange, literal: String) {
+    func appendCodeContent(_ index: Int, removing columns: Int, to literal: inout [UInt8]) -> SourceRange {
         let line = lines[index]
-        var cursor = SourceCursor(source: source, line: line)
-        cursor.consumeIndentation(columns)
-        return (SourceRange(cursor.view.range.lowerBound, line.range.upperBound),
-                String(repeating: " ", count: cursor.virtual) + decode(SourceRange(cursor.offset, line.contentRange.upperBound)) + "\n")
+        var cursor = SourceCursor(line: line)
+        cursor.consumeIndentation(columns, in: source)
+        Self.appendSpaces(cursor.virtual, to: &literal)
+        appendRepaired(SourceRange(cursor.offset, line.contentRange.upperBound), to: &literal)
+        literal.append(10)
+        return SourceRange(cursor.virtual > 0 ? (cursor.virtualSourceOffset ?? cursor.offset) : cursor.offset, line.range.upperBound)
     }
 
     mutating func extensionMatch(at index: Int, interrupting: Bool, prefixCount: Int? = nil, candidate: ActiveRule? = nil)
@@ -230,7 +293,9 @@ internal struct BlockParser {
             if let trigger = active.rule.trigger,
                (first == lines[index].contentRange.upperBound || source[first] != trigger) { return nil }
             let source = self.source
-            let physicalLines = self.physicalLines
+            // Lines after `index` are still physical (see `lines`). The snapshot
+            // shares storage and is released before the next projection.
+            let physicalLines = self.lines
             let prefixes = containers.prefix(prefixCount ?? containers.count).map(\.prefix)
             let currentLine = lines[index]
             let context = BlockContext(source: source, lineIndex: index, options: active.options,
@@ -260,7 +325,7 @@ internal struct BlockParser {
                 }
             }
             if valid {
-                let range = SourceRange(lines[index].range.lowerBound, physicalLines[index + match.consumedLines - 1].range.upperBound)
+                let range = SourceRange(lines[index].range.lowerBound, lines[index + match.consumedLines - 1].range.upperBound)
                 valid = match.tokens.allSatisfy { active.descriptor.owns($0.role) && range.contains($0.range) }
                     && match.diagnostics.allSatisfy {
                         if case .extensionFinding(let owner, _, _) = $0.code {
@@ -298,5 +363,76 @@ internal struct BlockParser {
             if line.range.upperBound > line.contentRange.upperBound { literal += "\n" }
         }
         return literal
+    }
+}
+
+/// Word-at-a-time search for a NUL byte.
+internal enum ByteSearch {
+    @inline(__always)
+    static func containsZero(_ buffer: UnsafeBufferPointer<UInt8>) -> Bool {
+        let low7: UInt64 = 0x7F7F_7F7F_7F7F_7F7F
+        var offset = 0
+        if let base = buffer.baseAddress {
+            while offset + 8 <= buffer.count {
+                let word = UnsafeRawPointer(base + offset).loadUnaligned(as: UInt64.self)
+                if ~(((word & low7) &+ low7) | word | low7) != 0 { return true }
+                offset += 8
+            }
+        }
+        while offset < buffer.count {
+            if buffer[offset] == 0 { return true }
+            offset += 1
+        }
+        return false
+    }
+}
+
+/// Word-at-a-time search for LF and CR. Each 8-byte word is tested with an
+/// exact zero-byte mask, so plain text costs a few operations per 8 bytes.
+internal enum LineTerminators {
+    private static let low7: UInt64 = 0x7F7F_7F7F_7F7F_7F7F
+    private static let lf: UInt64 = 0x0A0A_0A0A_0A0A_0A0A
+    private static let cr: UInt64 = 0x0D0D_0D0D_0D0D_0D0D
+
+    /// High bit set in exactly the bytes of `value` that are zero; no carry
+    /// crosses byte boundaries, so the mask has no false positives.
+    @inline(__always)
+    private static func zeroBytes(_ value: UInt64) -> UInt64 {
+        ~(((value & low7) &+ low7) | value | low7)
+    }
+
+    @inline(__always)
+    private static func mask(_ buffer: UnsafeBufferPointer<UInt8>, at offset: Int) -> UInt64 {
+        let word = UInt64(littleEndian: UnsafeRawPointer(buffer.baseAddress! + offset).loadUnaligned(as: UInt64.self))
+        return zeroBytes(word ^ lf) | zeroBytes(word ^ cr)
+    }
+
+    static func count(in buffer: UnsafeBufferPointer<UInt8>) -> Int {
+        var total = 0
+        var offset = 0
+        while offset + 8 <= buffer.count {
+            total += mask(buffer, at: offset).nonzeroBitCount
+            offset += 8
+        }
+        while offset < buffer.count {
+            if buffer[offset] == 10 || buffer[offset] == 13 { total += 1 }
+            offset += 1
+        }
+        return total
+    }
+
+    @inline(__always)
+    static func next(in buffer: UnsafeBufferPointer<UInt8>, from start: Int) -> Int? {
+        var offset = start
+        while offset + 8 <= buffer.count {
+            let found = mask(buffer, at: offset)
+            if found != 0 { return offset + found.trailingZeroBitCount >> 3 }
+            offset += 8
+        }
+        while offset < buffer.count {
+            if buffer[offset] == 10 || buffer[offset] == 13 { return offset }
+            offset += 1
+        }
+        return nil
     }
 }

@@ -7,8 +7,51 @@ internal struct ReferenceScanner {
         var line: Int
         var offset: Int
     }
+    /// Source-spelled components as positions; the caller emits tokens in
+    /// label, destination, title, marker order without temporary arrays.
+    struct Syntax {
+        let label: (Position, Position)
+        let destination: (Position, Position)
+        let title: (Position, Position)?
+        let markers: Markers
+    }
+    /// At most seven one-byte markers: [ ] : < > and a title pair.
+    struct Markers {
+        private(set) var count = 0
+        private var offsets: (Int, Int, Int, Int, Int, Int, Int) = (0, 0, 0, 0, 0, 0, 0)
+
+        mutating func append(_ position: Position) {
+            precondition(count < 7, "a reference definition has at most seven markers")
+            switch count {
+            case 0: offsets.0 = position.offset
+            case 1: offsets.1 = position.offset
+            case 2: offsets.2 = position.offset
+            case 3: offsets.3 = position.offset
+            case 4: offsets.4 = position.offset
+            case 5: offsets.5 = position.offset
+            default: offsets.6 = position.offset
+            }
+            count += 1
+        }
+
+        func forEach(_ body: (SourceRange) -> Void) {
+            for index in 0..<count {
+                let offset: Int
+                switch index {
+                case 0: offset = offsets.0
+                case 1: offset = offsets.1
+                case 2: offset = offsets.2
+                case 3: offset = offsets.3
+                case 4: offset = offsets.4
+                case 5: offset = offsets.5
+                default: offset = offsets.6
+                }
+                body(SourceRange(offset, offset + 1))
+            }
+        }
+    }
     struct Match {
-        let syntax: ReferenceSyntax?
+        let syntax: Syntax?
         let definition: ReferenceDefinition
         let firstLine: Int
         let endLine: Int
@@ -51,35 +94,62 @@ internal struct ReferenceScanner {
         advance(&position)
         return true
     }
-    func segments(_ start: Position, _ end: Position) -> [SourceRange] {
-        if start == end { return [SourceRange(start.offset, start.offset)] }
-        var result: [SourceRange] = []
+    /// Per-line source ranges of a component; an empty component yields one
+    /// empty range at its position.
+    func forEachSegment(_ bounds: (Position, Position), _ body: (SourceRange) -> Void) {
+        let (start, end) = bounds
+        if start == end { body(SourceRange(start.offset, start.offset)); return }
         for line in start.line...min(end.line, content.count - 1) {
             let lower = line == start.line ? start.offset : content[line].lowerBound
             let upper = line == end.line ? end.offset : endings[line]
-            if upper > lower { result.append(SourceRange(lower, upper)) }
+            if upper > lower { body(SourceRange(lower, upper)) }
         }
-        return result
     }
+    /// The bytes between two positions, with each passed line end read as
+    /// LF and NUL replaced by U+FFFD. Copies whole line slices at once.
     func text(_ start: Position, _ end: Position) -> String {
-        var position = start
-        var bytes: [UInt8] = []
-        while position != end, let byte = byte(position) {
-            if byte == 0 { bytes.append(contentsOf: [0xEF, 0xBF, 0xBD]) }
-            else { bytes.append(byte) }
-            advance(&position)
+        guard start != end, start.line < content.count else { return "" }
+        let lastLine = min(end.line, content.count - 1)
+        return source.withUnsafeBufferPointer { buffer in
+            if start.line == end.line {
+                let bytes = UnsafeBufferPointer(rebasing: buffer[start.offset..<end.offset])
+                if !bytes.contains(0) { return String(decoding: bytes, as: UTF8.self) }
+            }
+            var bytes: [UInt8] = []
+            for line in start.line...lastLine {
+                let lower = line == start.line ? start.offset : content[line].lowerBound
+                let upper = line == end.line ? end.offset : content[line].upperBound
+                if upper > lower {
+                    BlockParser.appendRepaired(UnsafeBufferPointer(rebasing: buffer[lower..<upper]), to: &bytes)
+                }
+                if line != end.line { bytes.append(10) }
+            }
+            return String(decoding: bytes, as: UTF8.self)
         }
-        return String(decoding: bytes, as: UTF8.self)
     }
-    func marker(_ position: Position, length: Int = 1) -> SourceRange {
-        SourceRange(position.offset, position.offset + length)
+
+    /// Label limits: at most 999 scalars and at least one non-whitespace
+    /// scalar. ASCII labels avoid Unicode property lookups.
+    func acceptsLabel(_ label: String) -> Bool {
+        var scalars = 0
+        var visible = false
+        for byte in label.utf8 {
+            guard byte < 0x80 else {
+                return label.unicodeScalars.count <= 999
+                    && label.unicodeScalars.contains(where: { !$0.properties.isWhitespace })
+            }
+            scalars += 1
+            if !(byte == 32 || (9...13).contains(byte)) { visible = true }
+        }
+        return scalars <= 999 && visible
     }
 
     func parse(at line: Int) -> Match? {
         guard line < content.count else { return nil }
         var cursor = Position(line: line, offset: content[line].lowerBound)
         guard byte(cursor) == 91 else { return nil }
-        var markers = collectSyntax ? [marker(cursor)] : []
+        var markers = Markers()
+        markers.append(cursor)
         advance(&cursor)
         let labelStart = cursor
         var labelBytes = 0
@@ -91,19 +161,18 @@ internal struct ReferenceScanner {
         guard byte(cursor) == 93 else { return nil }
         let labelEnd = cursor
         let label = text(labelStart, labelEnd)
-        guard label.unicodeScalars.count <= 999,
-              label.unicodeScalars.contains(where: { !$0.properties.isWhitespace }) else { return nil }
-        if collectSyntax { markers.append(marker(cursor)) }
+        guard acceptsLabel(label) else { return nil }
+        markers.append(cursor)
         advance(&cursor)
         guard byte(cursor) == 58 else { return nil }
-        if collectSyntax { markers.append(marker(cursor)) }
+        markers.append(cursor)
         advance(&cursor)
         separator(&cursor)
 
         let destinationStart: Position
         let destinationEnd: Position
         if byte(cursor) == 60 {
-            if collectSyntax { markers.append(marker(cursor)) }
+            markers.append(cursor)
             advance(&cursor)
             destinationStart = cursor
             while let byte = byte(cursor), byte != 62 {
@@ -112,7 +181,7 @@ internal struct ReferenceScanner {
             }
             guard byte(cursor) == 62 else { return nil }
             destinationEnd = cursor
-            if collectSyntax { markers.append(marker(cursor)) }
+            markers.append(cursor)
             advance(&cursor)
         } else {
             destinationStart = cursor
@@ -154,16 +223,15 @@ internal struct ReferenceScanner {
                 if byte(titleCursor) == 10 || byte(titleCursor) == nil {
                     titleBounds = (titleStart, titleEnd)
                     endLine = titleCursor.line + 1
-                    if collectSyntax { markers.append(marker(openingPosition)); markers.append(marker(closingPosition)) }
+                    markers.append(openingPosition); markers.append(closingPosition)
                 } else if !titleOnLaterLine { return nil }
             } else if !titleOnLaterLine { return nil }
         } else if hasTrailingText { return nil }
         // Malformed next-line title candidates do not invalidate a complete
         // destination line. They remain paragraph source for the caller.
         if hasTrailingText && titleBounds == nil { return nil }
-        let syntax = collectSyntax ? ReferenceSyntax(label: segments(labelStart, labelEnd),
-            destination: segments(destinationStart, destinationEnd),
-            title: titleBounds.map { segments($0.0, $0.1) } ?? [], markers: markers) : nil
+        let syntax = collectSyntax ? Syntax(label: (labelStart, labelEnd), destination: (destinationStart, destinationEnd),
+            title: titleBounds, markers: markers) : nil
         let definition = ReferenceDefinition(rawLabel: label, rawDestination: text(destinationStart, destinationEnd),
             rawTitle: titleBounds.map { text($0.0, $0.1) })
         return Match(syntax: syntax, definition: definition, firstLine: line, endLine: min(endLine, content.count))

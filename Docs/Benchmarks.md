@@ -226,3 +226,95 @@ parser attribution or proof of savings from a different storage model.
 retain the complete evidence. GFM remains informational until M4, and full
 inline annotations need another measurement after M2. This is not an end-to-end
 CommonMark/GFM performance guarantee or an iPhone/Linux timing result.
+
+### Block parser hot-path optimisation (branch `perf/block-parser-hot-paths`)
+
+Six commits on top of `61fcb95` reduce work in the block parser without
+changing its output or public API:
+
+- `SourceCursor` no longer stores the source array, so it does not retain the
+  snapshot every time a line is inspected.
+- Open leaves record a contiguous line range instead of an index array.
+- Container prefixes are matched without temporary arrays.
+- Paragraph interruption, leaf starts and container openings check the first
+  non-space byte before running a full scanner.
+- Single source segments are stored inline (`SourceSegments`), and
+  `Node.sourceSegments` stays a public array view.
+- Validation reads node and token fields in place.
+- A word-at-a-time scan finds line endings and the NUL check before decoding.
+- Physical and projected lines share one table.
+- Code, HTML and reference texts are copied as line slices and decoded once.
+- Reference syntax tokens are emitted without temporary arrays.
+
+**Measurement method (not a package-benchmark run).** A local release-build
+harness parses the `mixed-v1` corpus and the reference corpus from
+`Tools/Sources/BenchmarkCorpus`. It runs the parser 80 times per case and
+interleaves the `61fcb95` baseline with the branch head in the same session.
+Machine: Apple M2, macOS 27.0.1, Swift 6.4.2. Values are p50 in milliseconds.
+
+| Case | `61fcb95` | Branch | Speed-up |
+| --- | ---: | ---: | ---: |
+| CommonMark 100 KB | 2.08 | 0.66 | 3.1× |
+| CommonMark 1 MB | 21.1 | 6.6 | 3.2× |
+| Selected GFM profile 1 MB | 21.0 | 6.7 | 3.1× |
+| References 1 MB, syntax off | 20.9 | 8.1 | 2.6× |
+| References 1 MB, syntax on | 26.3 | 9.4 | 2.8× |
+
+The harness is a relative comparison only.
+
+**Full package-benchmark run.** The owner authorised a full run, made with
+`swift package --package-path Tools benchmark run --target ParserBenchmarks
+--format markdown --time-units microseconds --no-progress` at commit `4860449`
+on the same machine. The
+[raw export](BenchmarkData/perf-hot-paths/benchmark.md) is archived. Values are
+p50:
+
+| Case | GMSetzer | cmark-gfm (C) | Ratio | Malloc count GMSetzer / C |
+| --- | ---: | ---: | ---: | ---: |
+| CommonMark 100 KB | 0.733 ms | 1.737 ms | 0.42 | |
+| CommonMark 1 MB | 7.385 ms | 19.153 ms | 0.39 | 27 K / 224 K |
+| CommonMark 5 MB | 37.323 ms | 96.010 ms | 0.39 | |
+| GFM selection 1 MB | 7.410 ms | 38.470 ms | 0.19 | 27 K / 431 K |
+| References 1 MB, syntax off / on | 9.454 / 10.453 ms | 13.795 ms | 0.69 / 0.76 | 51 K / 162 K |
+
+At 1 MB, validation takes 0.500 ms and the selected no-op registry takes
+8.946 ms. The HTML renderer takes 19.005 ms, which is now about 2.6 times the
+parse; it is unchanged by this branch.
+
+Both budget checks exit 0:
+
+- `Scripts/check_benchmark_budget.py` with the M1-B 10% regression alert
+  passes all six budgets. All entries are 72–74% faster than
+  `Docs/BenchmarkData/M1-B/after.md`.
+- `Scripts/check_m2_budget.py` with the frozen M1 baseline also passes. C
+  control drift is at most 0.07%. Its "additional" deltas are negative
+  (−85.4 ms at 5 MB).
+
+The frozen baseline and the 0.5 / 8 / 40 ms allowance stay unchanged. The
+faster block parse is reserve, not a larger allowance; any change to the
+allowance is the owner's decision. The C comparison still covers block
+parsing only; cmark also parses inlines.
+
+**Equivalence check.** A differential harness parsed the same inputs with the
+baseline and the branch and compared every node payload, range, segment list,
+child/sibling link, diagnostic, token, fallback literal and rendered HTML. The
+outputs were byte-identical. The inputs were:
+
+- all 1,324 CommonMark and GFM specification examples;
+- 20,000 deterministic fuzz documents, made from block syntax atoms, nested
+  specification examples, BOMs and corrupted bytes;
+- the benchmark corpora.
+
+Each input ran under six configurations, about 128,000 parses in total:
+
+- core and GFM profiles, each with syntax details off and on;
+- two test extensions with projected child lines, paragraph interruption,
+  invalid results and the nesting limit.
+
+**Remaining measured costs** at 1 MB, from experiments that were not kept:
+
+- Decoding one `String` per text node costs about **1.0 ms**. A lazy text
+  representation would change the public `NodeData.text` contract.
+- Full release tree validation costs about **0.6 ms**.
+
+Both are architecture decisions for the owner, not part of this branch.

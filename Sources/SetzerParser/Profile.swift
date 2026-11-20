@@ -72,9 +72,9 @@ public struct BlockContext: Sendable {
     public func droppingASCII(_ count: Int, from line: SourceLine) -> SourceLine? {
         guard count >= 0, line.virtualIndentation == 0,
               line.contentRange.count >= count, line.contentRange.upperBound <= source.count else { return nil }
-        var cursor = SourceCursor(source: source, line: line)
+        var cursor = SourceCursor(line: line)
         for _ in 0..<count {
-            guard let byte = cursor.byte, byte < 128, byte != 9 else { return nil }
+            guard let byte = cursor.byte(source), byte < 128, byte != 9 else { return nil }
             cursor.advanceASCII()
         }
         return cursor.view
@@ -83,8 +83,8 @@ public struct BlockContext: Sendable {
     /// Remove up to columns of indentation using physical four-column tabs.
     public func droppingIndentation(_ columns: Int, from line: SourceLine) -> SourceLine? {
         guard columns >= 0, line.contentRange.upperBound <= source.count else { return nil }
-        var cursor = SourceCursor(source: source, line: line)
-        guard cursor.consumeIndentation(columns) == columns else { return nil }
+        var cursor = SourceCursor(line: line)
+        guard cursor.consumeIndentation(columns, in: source) == columns else { return nil }
         return cursor.view
     }
 

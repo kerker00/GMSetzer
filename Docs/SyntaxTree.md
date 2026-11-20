@@ -92,6 +92,8 @@ malformed returned ranges or consumption counts do not reach that boundary.
 - `sourceSegments` lists ordered, non-overlapping contributing ranges within a
   node. Paragraph/heading segments identify content lines. Code-block segments
   include code line endings, but exclude fences and removed indentation.
+  Nodes store zero or one segment inline and only allocate an array for
+  several; `sourceSegments` builds the public array view on access.
 - A segment is provenance, not a guarantee that slicing it equals the decoded
   literal. Code line endings become LF; a missing final code newline is
   synthesised. A tab partially removed by a container prefix or indentation contributes residual
