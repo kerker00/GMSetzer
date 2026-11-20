@@ -1,6 +1,6 @@
 # GMSetzer – Plan and Requirements
 
-**Status: 20 November 2026, M1 and block optimisation merged (PRs #9/#10); M2 technical acceptance passed on `feature/m2-inlines`, owner review/merge pending.** This document is the
+**Status: 20 November 2026, M1 and block optimisation merged (PRs #9/#10); M2 merged in PR #11 (`021f110`).** This document is the
 reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
@@ -357,7 +357,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | --- | --- | --- | --- | --- |
 | M0 | Repository, package layout, specification run, benchmark setup, name and gap check | Starting point measured; harness reviewed, reference configurations corrected | 2–3 | **reviewed and corrected** (19 Nov 2026); new reference timings pending |
 | M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **merged in PR #9 (`61fcb95`)**: M1-A merged in PR #4 (`51efee6`); M1-B measurements, checked validation optimisation and local budget gate implemented. At M1 acceptance, 70 library tests, 3,919 reference comparisons and 13 Python tests passed; its protected baselines were 339/652 CommonMark and 339/672 GFM. [M1Acceptance](M1Acceptance.md) records the M1-C contracts, M1-D audit, portability matrix and fixed M2 budget |
-| M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | **technical acceptance passed; review/merge pending**: 652/652 exact CommonMark, 641/672 GFM; 96 Swift tests across macOS/Swift 6.2/release/Linux, 17 Python checks and 4,786 C comparisons pass. Final core and selected-rule cases pass both unchanged budget gates. See [M2Inlines](M2Inlines.md) |
+| M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | **merged in PR #11 (`021f110`)**: 652/652 exact CommonMark, 641/672 GFM; 96 Swift tests across macOS/Swift 6.2/release/Linux, 17 Python checks and 4,786 C comparisons pass. Final core and selected-rule cases pass both unchanged budget gates. See [M2Inlines](M2Inlines.md) |
 | M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; editor adapter for syntax spans/findings | Security/position/analysis tests pass; Setzkit proves snapshot-bound syntax decoration and diagnostic underlines; integration can start | re-estimate | |
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | |
 | M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Setzkit's corpus complete | 5–8 | |
@@ -447,7 +447,7 @@ combinations without claiming editor/device checks. M1-C contracts and the now i
 The cumulative PR also carries the phase extraction from PR #8, merged into
 its former base branch after PR #7 had already reached main. The owner merged that work in PR #9 (`61fcb95`) and the block optimisation
 in PR #10 (`34cbe31`). M2 builds on that main revision. Functional checks and the frozen core/selected-rule performance gates pass;
-owner review and merge remain pending.
+PR #11 merged at `021f110`; the verified M2 branch was removed locally and remotely.
 
 The frozen CommonMark baseline leaves 1.048 / 15.286 / 69.207 ms total headroom
 at 100 KB / 1 MB / 5 MB. M2 receives a fixed **0.5 / 8 / 40 ms** allowance for

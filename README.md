@@ -5,12 +5,12 @@ Markdown with switchable extensions, exact source positions and an HTML
 renderer. No C, no Rust, no JavaScript, no runtime dependencies — it builds
 wherever Swift runs, including Linux.
 
-> **Status:** M2 technical acceptance passed on `feature/m2-inlines`, based on
+> **Status:** M2 merged in PR #11 (`021f110`), based on
 > merged PRs #9/#10. All 652 CommonMark 0.31.2 examples pass by exact HTML;
 > 641/672 pinned GFM examples pass. Blocks and inlines retain original UTF-8
 > ranges, with optional lexical tokens and custom inline rules. Portable
 > diagnostic/fix values are implemented; native lint and editor integration
-> remain M3 work. Core and selected-rule performance gates pass; owner review/merge is pending. Publication remains
+> remain M3 work. Core and selected-rule performance gates pass; Publication remains
 > a separate owner decision.
 
 ## Goals

@@ -2,7 +2,7 @@
 
 20 November 2026. Functional implementation on `feature/m2-inlines`, based on
 `main` at `34cbe31` (PR #10). M1 acceptance was merged in PR #9 (`61fcb95`).
-**M2 technical acceptance passed on this branch; owner review/merge is pending.** No publication or Setzkit integration is implied.
+**M2 merged in [PR #11](https://github.com/kerker00/GMSetzer/pull/11), merge commit `021f110`.** No publication or Setzkit integration is implied.
 
 ## Parsing and tree
 
