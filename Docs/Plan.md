@@ -17,6 +17,14 @@ v0.4.0 tag was verified on 20 November 2026.
 See [Releasing](Releasing.md) for the process and the
 [preparation checks](Validation/Release/0.4.0.md) for executed evidence.
 
+**In progress after v0.4.0:** `feature/native-analysis-localization` implements
+an optional English/German native finding/fix text catalogue, structured
+heading-level arguments and explicit fallback behavior. This is library work
+only; local validation is complete (123 tests on macOS/Swift 6.4.2, macOS/Swift
+6.2 and Linux/Swift 6.4.2; both host release builds pass). Consumer presentation
+adoption, review, merge and publication remain separate. See
+[NativeAnalysisMessages](NativeAnalysisMessages.md).
+
 GMSetzer is an independent, general-purpose Markdown library intended for
 open-source use under the MIT licence. Editors, command-line tools, servers
 and extensions use the same public APIs. No particular application, checkout
@@ -519,15 +527,23 @@ binary assets. Consumer version pinning remains a task in the consumer's own
 repository; it no longer blocks library publication.
 
 1. **Localised finding texts.** `NativeAnalyzer` findings and fix titles carry
-   stable message keys (`gmsetzer.*`) and arguments, but only English
-   `defaultText`; Setzkit currently shows the English text. Publish the key and
-   argument catalogue as a documented, stable contract and decide whether the
-   library ships translations (as data, keeping the core Foundation-free) or
-   consumers translate by key.
+   stable message keys (`gmsetzer.*`). **Implemented on
+   `feature/native-analysis-localization`, not yet merged/released:** the
+   library ships optional English/German text lookup as pure Swift data/code
+   in `SetzerAnalysis`; the caller selects a language tag explicitly or uses
+   its own translations. English defaults are unchanged, heading findings
+   additionally expose the integer `maximumLevel`, and unknown keys/languages
+   or invalid required arguments retain `defaultText`. The stable key/argument
+   contract is in [NativeAnalysisMessages](NativeAnalysisMessages.md).
+   Provider/parser development identity is `0.4.1-dev` for the metadata change;
+   this does not create a release tag. Consumer adoption remains separate.
 2. **Container marker tokens.** Syntax tokens cover inline delimiters and
    leaf markers but not block-quote `>` or list markers, so a consumer cannot
    replace its own syntax colouring with GMSetzer's without losing those
    roles. Add `core.blockQuote.marker` and `core.list.marker` tokens with
    exact per-line ranges.
 
-Current next work: the tasks above, then M5. Consumer scheduling, dependency pinning and device acceptance belong to consumer repositories. No new benchmark series or publication was performed in M3.
+Current next work: review/merge the locally validated localization step, then
+container marker tokens, then M5. Consumer scheduling, dependency pinning and
+device acceptance belong to consumer repositories. No new benchmark series or
+publication is part of this localization change.

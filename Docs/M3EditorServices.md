@@ -70,7 +70,7 @@ accesses files/UI/network. `NativeAnalyzer.analyze` takes an existing document,
 `MarkdownDialect` identity (default `.commonMark`; `.gfm` and custom
 non-empty identifiers are possible) and a typed configuration. Rules default to
 an empty set. Provider: `gmsetzer.native`, version `GMSetzerVersion.current`
-(currently `0.1.0-m3`). Findings are style warnings. Analysis walks the tree
+(currently `0.4.1-dev` on the unreleased localization branch). Findings are style warnings. Analysis walks the tree
 once per rule family, keeps protected ranges in source order without sorting,
 validates suppression bounds with the constant-size boundary check (no position
 index) and matches suppressions per rule with a sorted cursor.
@@ -88,6 +88,13 @@ Explicit `NativeSuppression(rule:range:)` values suppress only fully contained
 primary findings of that rule. Suppression does not change heading history.
 Ranges must follow the source boundary policy. No inline comment directive,
 markdownlint compatibility or broader lint catalogue is claimed.
+
+The unreleased `NativeAnalysisMessages.text(for:languageTag:)` lookup supplies
+English/German text for these findings and the whitespace fix title. English
+defaults remain unchanged; heading findings additionally supply the integer
+`maximumLevel` argument. Locale selection and display stay with the consumer.
+See the [stable message catalogue](NativeAnalysisMessages.md) for exact keys,
+argument schemas, v0.4.0 compatibility and fallback behavior.
 
 Configuration identities are deterministic, independent of Set ordering and
 process hashing. Invalid suppressions throw provider errors, never document

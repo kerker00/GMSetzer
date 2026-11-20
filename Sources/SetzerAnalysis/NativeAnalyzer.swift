@@ -78,12 +78,12 @@ public enum NativeAnalyzer {
             suppressions[scope.rule, default: SuppressionCursor()].ranges.append(scope.range)
         }
         var findings: [DocumentDiagnostic] = []
-        func emit(_ rule: NativeRule, range: SourceRange, text: String,
+        func emit(_ rule: NativeRule, range: SourceRange, message: DiagnosticMessage,
                   related: [RelatedDiagnosticLocation] = [], fixes: [SuggestedFix] = []) throws {
             if suppressions[rule]?.suppresses(range) == true { return }
             findings.append(try DocumentDiagnostic(provider: provider, code: rule.rawValue,
                 category: .style, severity: .warning,
-                message: DiagnosticMessage(rule.rawValue, defaultText: text), location: .source(range),
+                message: message, location: .source(range),
                 related: related, fixes: fixes))
         }
         if !configuration.rules.isEmpty {
@@ -112,7 +112,8 @@ public enum NativeAnalyzer {
                     guard case .heading(let level) = document.nodes[index].data else { continue }
                     let range = document.nodes[index].range
                     if configuration.rules.contains(.headingLevel), level > previousLevel + 1 {
-                        try emit(.headingLevel, range: range, text: "Heading skips a level (expected at most \(previousLevel + 1)).")
+                        try emit(.headingLevel, range: range,
+                            message: NativeAnalysisMessages.headingLevel(maximumLevel: previousLevel + 1))
                     }
                     previousLevel = level
                     // Case-sensitive decoded text, whitespace collapsed, byte-exact
@@ -121,7 +122,7 @@ public enum NativeAnalyzer {
                         let key = headingKey(document.plainText(of: index))
                         guard !key.isEmpty else { continue }
                         if let first = seen[key] {
-                            try emit(.duplicateHeading, range: range, text: "Heading repeats an earlier heading.",
+                            try emit(.duplicateHeading, range: range, message: NativeAnalysisMessages.duplicateHeading,
                                      related: [RelatedDiagnosticLocation(.source(first))])
                         } else { seen[key] = range }
                     }
@@ -154,9 +155,10 @@ public enum NativeAnalyzer {
                     // whitespace after an empty list marker can be syntax.
                     let inProse = proseCursor < prose.count && prose[proseCursor].lowerBound < trim && end <= prose[proseCursor].upperBound
                     if inProse && !hardBreak && !protected {
-                        let fix = try SuggestedFix(message: DiagnosticMessage("gmsetzer.remove-trailing-whitespace", defaultText: "Remove trailing whitespace."),
+                        let fix = try SuggestedFix(message: NativeAnalysisMessages.removeTrailingWhitespace,
                             edits: [SuggestedEdit(range: range, expected: Array(source[trim..<end]), replacement: [])])
-                        try emit(.trailingWhitespace, range: range, text: "Trailing whitespace has no Markdown meaning.", fixes: [fix])
+                        try emit(.trailingWhitespace, range: range,
+                            message: NativeAnalysisMessages.trailingWhitespace, fixes: [fix])
                     }
                 }
             }
