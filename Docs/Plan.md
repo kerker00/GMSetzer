@@ -1,6 +1,6 @@
 # GMSetzer – Plan and Requirements
 
-**Status: 20 November 2026, M1 and block optimisation merged (PRs #9/#10); M2 merged in PR #11 (`021f110`).** This document is the
+**Status: 20 November 2026, M1 and block optimisation merged (PRs #9/#10); M2 merged in PR #11 (`021f110`); M3 services and automated Setzkit adapter proof implemented locally, review and manual acceptance open.** This document is the
 reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
@@ -99,7 +99,7 @@ All taken by the project owner on 19 November 2026.
   can include quote/list prefixes and line endings; it is not necessarily the
   decoded text rendered for that node. Non-contiguous content needs source
   segments. The conventions for tabs, CRLF, empty nodes and offsets inside
-  scalars are defined in [SyntaxTree.md](SyntaxTree.md); conversion follows in M3.
+  scalars are defined in [SyntaxTree.md](SyntaxTree.md); conversion is implemented in M3 (see [M3EditorServices](M3EditorServices.md)).
 - **Speed.** Measured with the benchmarks in `Tools/` (see
   [Benchmarks.md](Benchmarks.md)):
 
@@ -163,7 +163,7 @@ including source-spelled syntax spans, a future optional analysis module,
 revision-bound UTF-16 underlines, diagnostics versus parser/provider failures,
 rule profiles and strict suggested-fix transactions.
 
-This is a planned contract. Current `ParseDiagnostic` covers infrastructure
+The M3 native subset and adapter proof are implemented; product/device acceptance remains open. `ParseDiagnostic` covers infrastructure
 conditions, not a finished linter. CommonMark literal fallbacks are not syntax
 errors by default. Markdownlint remains an optional compatibility/provider
 path; equivalence is not assumed for native rules.
@@ -180,12 +180,11 @@ path; equivalence is not assumed for native rules.
 | `SetzerParser` | Block and inline parser, extension API, profiles | `SetzerSyntax` |
 | `SetzerExtensions` | GFM, footnotes, front matter, math, alerts and callouts | `SetzerParser`, `SetzerSyntax` |
 | `SetzerHTML` | HTML renderer, block anchors, escaping and URL checks, renderer hooks | `SetzerSyntax` |
-| `SetzerAnalysis` (planned) | Optional native rules over existing tree/source; portable findings and suggested edits | `SetzerSyntax` |
+| `SetzerAnalysis` | Optional native rules over existing tree/source; portable findings and suggested edits | `SetzerSyntax` |
 | `GMSetzer` | Re-exports all of the above | all |
 
 Portable syntax-span/diagnostic/fix values belong in `SetzerSyntax`.
-`SetzerAnalysis` is not implemented or a package target yet; introduce it with
-its first tested rules. The parser remains independent of analysis and HTML.
+`SetzerAnalysis` implements the three opt-in native rules in [M3EditorServices](M3EditorServices.md). The parser remains independent of analysis and HTML.
 
 ### Approach
 
@@ -358,7 +357,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | M0 | Repository, package layout, specification run, benchmark setup, name and gap check | Starting point measured; harness reviewed, reference configurations corrected | 2–3 | **reviewed and corrected** (19 Nov 2026); new reference timings pending |
 | M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **merged in PR #9 (`61fcb95`)**: M1-A merged in PR #4 (`51efee6`); M1-B measurements, checked validation optimisation and local budget gate implemented. At M1 acceptance, 70 library tests, 3,919 reference comparisons and 13 Python tests passed; its protected baselines were 339/652 CommonMark and 339/672 GFM. [M1Acceptance](M1Acceptance.md) records the M1-C contracts, M1-D audit, portability matrix and fixed M2 budget |
 | M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | **merged in PR #11 (`021f110`)**: 652/652 exact CommonMark, 641/672 GFM; 96 Swift tests across macOS/Swift 6.2/release/Linux, 17 Python checks and 4,786 C comparisons pass. Final core and selected-rule cases pass both unchanged budget gates. See [M2Inlines](M2Inlines.md) |
-| M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; editor adapter for syntax spans/findings | Security/position/analysis tests pass; Setzkit proves snapshot-bound syntax decoration and diagnostic underlines; integration can start | re-estimate | |
+| M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; editor adapter for syntax spans/findings | Security/position/analysis tests pass; Setzkit proves snapshot-bound syntax decoration and diagnostic underlines; integration can start | re-estimate | **implemented locally; review/manual acceptance open**: exact position/outline queries, safe URL allowlist/anchors, three optional native rules and automated macOS TextKit/strict-fix proof in Setzkit. 106 library tests pass across macOS/debug/release/Swift 6.2/Linux; 54 focused Setzkit tests and iOS Simulator app build pass. See [M3EditorServices](M3EditorServices.md) |
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | |
 | M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Setzkit's corpus complete | 5–8 | |
 | M6 | Speed and hardening: measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met | 5–8 | |
@@ -472,3 +471,5 @@ nested-strong semantics. No fixture or protected ID was removed. The latest
 functional, source-span, diagnostic, portability and timing evidence is in
 [M2Inlines.md](M2Inlines.md); M2 technical acceptance uses the full/focused package-benchmark series and
 unchanged gate inputs, not a short timing probe.
+
+Current next work: review the M3 service/adapter branches, perform Setzkit SX01–SX08 on actual editors/devices, decide production scheduling and dependency pinning, then continue M4. No new benchmark series or publication was performed in M3.

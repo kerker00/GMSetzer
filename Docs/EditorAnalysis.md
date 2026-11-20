@@ -1,6 +1,6 @@
 # Editor syntax services and lint analysis
 
-Decision: 19 November 2026; M2 update: 20 November 2026. **Portable syntax tokens and diagnostic/fix values implemented; native rules and the editor adapter remain M3 work.**
+Decision: 19 November 2026; M3 update: 20 November 2026. **Portable positions, three optional native rules and an automated Setzkit TextKit adapter proof implemented; review, production rollout and manual/device acceptance open.**
 GMSetzer is also the syntax and native Markdown-analysis engine for Setzkit.
 The existing tree/source ranges are prerequisites, not a finished editor or
 linter. `MarkdownParser.configurationIssues` reports configuration failures
@@ -17,22 +17,20 @@ resource-limit conditions; it does not yet implement document lint findings.
 | Other analyzers | Portable values and extension points; no filesystem, editor or network access | Provide workspace snapshots or additional providers through existing ports |
 | Suggested fixes | Explicit edits with original ranges and expected source text, when justified | Validate snapshot/configuration and apply only on user action through `EditTransaction` |
 
-`SetzerAnalysis` will depend on `SetzerSyntax`, not UI, the HTML renderer or an
+`SetzerAnalysis` depends on `SetzerSyntax`, not UI, the HTML renderer or an
 additional parser. `SetzerSyntax` owns portable diagnostic/span/fix values.
 The parser must not depend on the analysis module. Native analysis reuses an
 existing parse; it must not parse the same snapshot again. A separate text-only
 provider can still run independently when it does not consume GMSetzer's tree.
 
-M2 introduces the portable value API without adding an analysis package target. Introduce the
-module with its first tested native rules, by the M3 editor-integration gate.
+M2 introduced the portable value API. M3 adds the analysis target with the three named rules and explicit suppression scopes in [M3EditorServices](M3EditorServices.md).
 
 M1-C provides an optional generic `Document.tokens` table through
 `collectSyntaxDetails`: source role/range and owning node. It collects reference and fence components, inline delimiters/link parts,
 escapes/entities, raw HTML and custom roles. `referenceSyntax(for:)`
 provides a convenience view. `DocumentIndex` owns snapshot-bound parents and
 ancestors. Portable `DocumentDiagnostic`/`DiagnosticReport` and suggested edit/fix values
-are implemented. Actual lint findings, offset queries, UTF-16 underlines
-and the native rule engine remain planned. See [ExtensionContracts.md](ExtensionContracts.md)
+are implemented. M3 implements native findings, offset queries and the automated UTF-16 underline proof; product integration and manual/device checks remain open. See [ExtensionContracts.md](ExtensionContracts.md)
 and the current [M1 acceptance record](M1Acceptance.md).
 
 ## Markdown validity and findings
@@ -130,8 +128,7 @@ configuration determinism, suppression scope, excluded code contexts, edit
 preconditions, and configuration failures separated from document findings.
 Required Setzkit acceptance: correct TextKit ranges, stale-result rejection,
 IME/undo protection, overlapping decorations, optional linting, accessible
-navigation and explicit fix transactions. These checks are **open**; existing
-block/spec tests are not evidence that editor diagnostics are implemented.
+navigation and explicit fix transactions. Library/service and macOS adapter tests are implemented and green; manual/device checks remain **open**. Evidence and limits are in [M3EditorServices](M3EditorServices.md).
 
 ## Implemented portable contract (M2)
 
@@ -152,7 +149,6 @@ byte snapshot without touching an editor or filesystem. Matching only the
 edited substrings is not a full snapshot precondition: Setzkit must also check
 its full source/configuration stamp before applying the chosen transaction.
 
-No parser lint rules, automatic fixes, suppression compatibility or Setzkit
-underlines are claimed. Legal unmatched markup continues as literal syntax
+M3 implements native opt-in rules, explicit suppression ranges and Setzkit underline/fix proofs. No automatic fix application or markdownlint suppression compatibility is claimed. Legal unmatched markup continues as literal syntax
 without document findings. Validation and remaining gates are in
 [M2Inlines.md](M2Inlines.md).

@@ -10,6 +10,7 @@ public enum HTMLRendering: Sendable {
 
 public struct HTMLRendererContext: Sendable {
     public let index: Int
+    public let sourceAnchorID: String?
     /// Tight-list paragraphs and list items receive the same scheduling context
     /// as the built-in renderer, including when their ancestors are wrapped.
     public let tightItem: Bool
@@ -27,16 +28,18 @@ public typealias HTMLRendererHook = @Sendable (Node, Document) -> HTMLRendering?
 /// preservation require explicit options. Hook output is a caller trust boundary.
 public struct HTMLRenderer: Sendable {
     public let includeSourceRanges: Bool
+    public let sourceAnchorPrefix: String?
     public let allowRawHTML: Bool
     public let preserveHTMLComments: Bool
     public let allowUnsafeURLs: Bool
     private let contextualHooks: [NodeKind: ContextualHTMLRendererHook]
     private let hooks: [NodeKind: HTMLRendererHook]
 
-    public init(includeSourceRanges: Bool = false, allowRawHTML: Bool = false,
+    public init(includeSourceRanges: Bool = false, sourceAnchorPrefix: String? = nil, allowRawHTML: Bool = false,
                 preserveHTMLComments: Bool = false, allowUnsafeURLs: Bool = false, hooks: [NodeKind: HTMLRendererHook] = [:],
                 contextualHooks: [NodeKind: ContextualHTMLRendererHook] = [:]) {
         self.includeSourceRanges = includeSourceRanges
+        self.sourceAnchorPrefix = sourceAnchorPrefix
         self.allowRawHTML = allowRawHTML
         self.preserveHTMLComments = preserveHTMLComments
         self.allowUnsafeURLs = allowUnsafeURLs
@@ -56,7 +59,7 @@ public struct HTMLRenderer: Sendable {
             case .enter(let index, let tightItem):
                 let node = document.nodes[index]
                 let contextual = tree.flatMap { tree in
-                    contextualHooks[node.kind]?(HTMLRendererContext(index: index, tightItem: tightItem, tree: tree))
+                    contextualHooks[node.kind]?(HTMLRendererContext(index: index, sourceAnchorID: sourceAnchorID(forNode: index), tightItem: tightItem, tree: tree))
                 }
                 if let directive = contextual ?? hooks[node.kind]?(node, document) {
                     switch directive {
@@ -73,33 +76,33 @@ public struct HTMLRenderer: Sendable {
                     scheduleChildren(index, document: document, pending: &pending)
                 case .paragraph:
                     if !tightItem {
-                        output += "<p\(anchors(node))>"
+                        output += "<p\(anchors(node, index: index))>"
                         pending.append(.output("</p>\n"))
                     }
                     scheduleChildren(index, document: document, pending: &pending)
                 case .blockQuote:
-                    output += "<blockquote\(anchors(node))>\n"
+                    output += "<blockquote\(anchors(node, index: index))>\n"
                     pending.append(.output("</blockquote>\n"))
                     scheduleChildren(index, document: document, pending: &pending)
                 case .list(let attributes):
                     let tag: String
                     switch attributes.style {
-                    case .bullet: tag = "ul"; output += "<ul\(anchors(node))>\n"
+                    case .bullet: tag = "ul"; output += "<ul\(anchors(node, index: index))>\n"
                     case .ordered(let start, _):
                         tag = "ol"
                         let startAttribute = start == 1 ? "" : " start=\"\(start)\""
-                        output += "<ol\(startAttribute)\(anchors(node))>\n"
+                        output += "<ol\(startAttribute)\(anchors(node, index: index))>\n"
                     }
                     pending.append(.output("</\(tag)>\n"))
                     scheduleChildren(index, document: document, pending: &pending)
                 case .listItem:
                     let children = document.children(of: index).filter { document.nodes[$0].kind != .referenceDefinition }
-                    output += "<li\(anchors(node))>"
+                    output += "<li\(anchors(node, index: index))>"
                     if let first = children.first, !tightItem || document.nodes[first].kind != .paragraph { output += "\n" }
                     pending.append(.output("</li>\n"))
                     scheduleItemChildren(children, document: document, tightItem: tightItem, pending: &pending)
                 case .heading(let level):
-                    output += "<h\(level)\(anchors(node))>"
+                    output += "<h\(level)\(anchors(node, index: index))>"
                     pending.append(.output("</h\(level)>\n"))
                     scheduleChildren(index, document: document, pending: &pending)
                 case .text(let text): output += Self.escape(text)
@@ -124,9 +127,9 @@ public struct HTMLRenderer: Sendable {
                 case .htmlInline(let literal):
                     let html = preserveHTMLComments ? literal : Self.removingHTMLComments(literal)
                     output += allowRawHTML ? html : Self.escape(html)
-                case .thematicBreak: output += "<hr\(anchors(node)) />\n"
+                case .thematicBreak: output += "<hr\(anchors(node, index: index)) />\n"
                 case .codeBlock(let info, let literal):
-                    output += "<pre\(anchors(node))><code"
+                    output += "<pre\(anchors(node, index: index))><code"
                     if let language = info?.split(whereSeparator: { $0 == " " || $0 == "\t" }).first {
                         output += " class=\"language-\(Self.escape(String(language)))\""
                     }
@@ -180,8 +183,14 @@ public struct HTMLRenderer: Sendable {
 
     private func url(_ value: String) -> String {
         if !allowUnsafeURLs {
-            let scheme = value.utf8.prefix { $0 != 58 }.filter { $0 > 32 && $0 != 127 }.map { (65...90).contains($0) ? $0 + 32 : $0 }
-            if value.utf8.contains(58) && ["javascript", "vbscript", "data", "file"].contains(String(decoding: scheme, as: UTF8.self)) { return "" }
+            // A scheme ends before any path/query/fragment separator. Only
+            // these browser-safe schemes are allowed; relative URLs remain.
+            let prefix = value.utf8.prefix { $0 != 47 && $0 != 63 && $0 != 35 }
+            if let colon = prefix.firstIndex(of: 58) {
+                let scheme = prefix[..<colon].filter { $0 > 32 && $0 != 127 }
+                    .map { (65...90).contains($0) ? $0 + 32 : $0 }
+                if !["http", "https", "mailto"].contains(String(decoding: scheme, as: UTF8.self)) { return "" }
+            }
         }
         let safe = "-_.+!*(),%#@?=;:/&$~".utf8
         let hex = Array("0123456789ABCDEF".utf8)
@@ -210,8 +219,15 @@ public struct HTMLRenderer: Sendable {
         return output
     }
 
-    private func anchors(_ node: Node) -> String {
-        includeSourceRanges ? " data-source-start=\"\(node.range.lowerBound)\" data-source-end=\"\(node.range.upperBound)\"" : ""
+    /// IDs identify nodes in this render only, not across edits. The caller
+    /// namespaces separate previews by choosing a prefix.
+    public func sourceAnchorID(forNode index: Int) -> String? {
+        sourceAnchorPrefix.map { $0 + String(index) }
+    }
+
+    private func anchors(_ node: Node, index: Int) -> String {
+        let id = sourceAnchorID(forNode: index).map { " id=\"\(Self.escape($0))\"" } ?? ""
+        return id + (includeSourceRanges ? " data-source-start=\"\(node.range.lowerBound)\" data-source-end=\"\(node.range.upperBound)\"" : "")
     }
 
     public static func escape(_ text: String) -> String {

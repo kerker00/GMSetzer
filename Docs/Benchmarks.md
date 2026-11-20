@@ -354,3 +354,12 @@ failed empty-filter invocation, are retained. The early three-sample probe
 excludes allocation interposition, document destruction and C controls; it is
 diagnostic only. See [M2Inlines.md](M2Inlines.md) for commands, validation and
 remaining M3/device/M6 coverage. All prior block measurements above are history.
+
+## M3 measurement boundary (20 November 2026)
+
+M3 adds optional source/tree indexes, native analysis and the Setzkit adapter;
+these are not covered by M2 timings. No full benchmark series was run for this
+change. Fresh parse + annotation + position-index + analysis/decoration timings
+remain pending owner authorization. The protected conformance path and full
+Document validation remain intact; no lazy-text API change was introduced.
+See [M3EditorServices](M3EditorServices.md).

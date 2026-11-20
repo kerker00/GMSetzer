@@ -3,3 +3,5 @@
 @_exported public import SetzerParser
 @_exported public import SetzerExtensions
 @_exported public import SetzerHTML
+
+@_exported public import SetzerAnalysis

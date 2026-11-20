@@ -2,7 +2,7 @@
 
 Implemented on 19 November 2026 on `feature/m1-html-references`, building on the
 M1 foundation. M2 adds CommonMark inlines, exact lexical spans and decoded
-reference lookup; UTF-16 conversion and native analysis remain M3 work. See
+reference lookup; M3 adds UTF-16 conversion, native analysis, safe URL allowlisting and escaped per-node preview IDs (see [M3EditorServices](M3EditorServices.md)). See
 [M2Inlines.md](M2Inlines.md) for current functional/acceptance status.
 
 ## HTML blocks

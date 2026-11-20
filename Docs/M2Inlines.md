@@ -213,3 +213,7 @@ no open dependent PRs. Their four local branches and three clean worktrees
 were removed; the unrelated detached scratch worktree was retained. Remote
 cleanup completed after explicit owner approval, using SHA-bound leases. No M2 branch push,
 PR creation, tag, release or publication is included in this implementation.
+
+M3 follow-up (20 November 2026): positions, native analysis and the Setzkit
+adapter proof are now implemented locally; see [M3EditorServices](M3EditorServices.md).
+The limitations above describe the M2 acceptance scope.
