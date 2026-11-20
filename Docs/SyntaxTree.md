@@ -42,6 +42,11 @@ renderer hooks and custom kinds; they do not replace typed built-in payloads.
 | `blockQuote` | Block nodes | Quoted blocks, including nested containers |
 | `list(ListAttributes)` | List items only | Bullet marker or ordered start/delimiter, plus tightness |
 | `listItem` | Block nodes | Item content; its range includes its own marker |
+| `taskListItem(checked:)` | Block nodes | GFM task list item; a list item with a checkbox state |
+| `table(TableAttributes)` | Table rows only | GFM table; one alignment per column, the first row is the header |
+| `tableRow(isHeader:)` | Table cells only | One table line; the delimiter row has no node |
+| `tableCell(alignment:)` | Inline nodes | Raw bytes between pipes; text excludes escaping backslashes |
+| `strikethrough` | Inline nodes | GFM tilde span |
 | `custom(kind:role:attributes:)` | See below | Namespaced extension kind with portable data |
 
 `SyntaxValue` supports strings, integers, booleans, arrays and objects. A custom
@@ -221,9 +226,10 @@ custom block kind with in-range, ordered source segments. Invalid results are
 reported and ignored; the normal parser retains the source. Callbacks are
 trusted code: validation cannot interrupt a callback that itself never returns.
 
-`.gfm` now explicitly selects its five extensions. Until M4 provides their
-implementations, each unavailable extension is reported instead of silently
-claiming implemented GFM support.
+`.gfm` selects six built-in identifiers (`BuiltinExtension`): tables, task
+lists, strikethrough and autolinks, plus the tag filter and GitHub's
+nested-strong rendering as `Document.renderingPolicy`. They need no supplied
+implementation; see [M4GFM.md](M4GFM.md) for recognition, ranges and tokens.
 
 ## Rendering
 
@@ -296,14 +302,15 @@ Historical M1-A validation: all 57 library Swift Testing tests pass with Swift 6
 three documented trees, invalid topology/extension results, mixed line endings,
 UTF-8/NUL handling, concurrent snapshots and short adversarial-input smoke
 tests. At M1 acceptance the protected exact-HTML baseline was 339/652 CommonMark
-and 339/672 GFM; M2 now protects 652 and 641 respectively.
+and 339/672 GFM; M2 protected 652 and 641 respectively, M4 protects 652 and 672.
 Eight combination tests add BOM/offset, wrapper/container and projected fallback
 coverage, including fallback metadata validation and immutable builder snapshots.
 Tools compare 1,985 documents by exact HTML, 1,924 HTML/reference documents
 by block depth/properties/literals and ten leading-BOM cases against pinned
 cmark; all agree. The block
-quote/list sections now pass including their HTML-comment cases. These counts
-do not claim implemented inline or GFM extensions.
+quote/list sections now pass including their HTML-comment cases. These M1
+counts did not claim inline or GFM extensions; M4's GFM evidence is in
+[M4GFM.md](M4GFM.md).
 The measured M1-B release baseline and annotation cost are in
 [Benchmarks.md](Benchmarks.md#m1-b-measured-baseline-and-checked-validation).
 Subsequent [portability verification](Portability.md) builds with Swift 6.2,

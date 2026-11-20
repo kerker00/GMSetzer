@@ -30,6 +30,7 @@ let package = Package(
             dependencies: [
                 .product(name: "GMSetzer", package: "GMSetzer"),
                 .product(name: "cmark-gfm", package: "swift-cmark"),
+                .product(name: "cmark-gfm-extensions", package: "swift-cmark"),
             ]
         ),
         .executableTarget(

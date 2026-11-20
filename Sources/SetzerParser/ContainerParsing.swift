@@ -19,6 +19,8 @@ internal struct OpenContainer {
     var pendingBlank = false
     var lastChildEndsBlank = false
     var loose = false
+    /// GFM task list item state, set when its checkbox is recognised.
+    var task: Bool?
 
     var prefix: ContainerPrefix {
         switch kind {
@@ -30,7 +32,7 @@ internal struct OpenContainer {
 }
 
 internal struct OpenLeaf {
-    enum Kind { case paragraph, fenced(BlockParser.Fence), indented, html(HTMLBlockKind) }
+    enum Kind { case paragraph, fenced(BlockParser.Fence), indented, html(HTMLBlockKind), table }
     let kind: Kind
     let parent: Int
     let start: Int
@@ -38,6 +40,10 @@ internal struct OpenLeaf {
     /// finishes it before anything else happens, so the lines are always
     /// contiguous; a range avoids a heap-allocated index list per block.
     var indices: Range<Int>
+    /// GFM: a paragraph that failed the table check is never rechecked, as in
+    /// cmark-gfm. Table state lives in `BlockParser.openTable`, keeping this
+    /// leaf free of reference-counted storage.
+    var tableChecked = false
 }
 
 extension BlockParser {
@@ -140,14 +146,29 @@ extension BlockParser {
                     if endsHTMLBlock(index, kind: kind) { finishLeaf() }
                     return true
                 }
+            case .table:
+                if continueTable(at: index) {
+                    extendLeaf(index)
+                    touchContainers(through: index)
+                    return true
+                }
             }
         }
 
         // A line without content after indentation is blank.
         if case .paragraph? = leaf?.kind, case let first = paragraphFirst ?? firstByte(index), first.byte != nil,
            !interruptsParagraph(index, matchedContainers: matchedContainers, first: first) {
+            // A GFM delimiter row turns the paragraph's last line into a table
+            // header; like cmark-gfm, only after every other block start.
+            if matchedContainers == containers.count, registry.contains(.table), leaf?.tableChecked == false,
+               first.columns <= 3, let byte = first.byte, byte == 124 || byte == 58 || byte == 45,
+               startTable(at: index) {
+                touchContainers(through: index)
+                return true
+            }
             // Missing quote/item prefixes may only continue an existing
             // paragraph; they cannot extend a fence, heading or code block.
+            if matchedContainers < containers.count { lazyParagraphLine = index }
             extendLeaf(index)
             touchContainers(through: index)
             return true
@@ -196,6 +217,17 @@ extension BlockParser {
                     containers.append(OpenContainer(node: node, kind: .item(padding: marker.padding),
                                                     start: lines[index].range.lowerBound, end: lines[index].range.upperBound))
                     lines[index] = marker.content
+                    if registry.contains(.taskList), let task = taskListMarker(index) {
+                        // cmark-gfm stops opening blocks after the checkbox:
+                        // the rest of the line is paragraph text.
+                        containers[containers.count - 1].task = task.checked
+                        if collectSyntaxDetails { builder.record(SyntaxToken("gfm.tasklist.marker", range: task.range, owner: node)) }
+                        var cursor = SourceCursor(line: lines[index])
+                        for _ in 0..<3 { cursor.advanceASCII() }
+                        lines[index] = cursor.view
+                        forcedParagraphLine = index
+                        return .startLeaf(depthLimited: false)
+                    }
                     continue
                 }
                 closeContainers(to: containers.count - 1)
@@ -262,7 +294,7 @@ extension BlockParser {
 
     private mutating func startLeaf(at index: Int, depthLimited: Bool) {
         let parent = containers.last?.node ?? 0
-        if !depthLimited {
+        if !depthLimited && forcedParagraphLine != index {
             // Each scanner below rejects a line whose first non-space byte
             // cannot start it; checking that byte first skips the scan.
             let first = firstByte(index)
@@ -406,7 +438,7 @@ extension BlockParser {
                 data = .list(ListAttributes(style: style, isTight: !container.loose))
                 endsBlank = container.pendingBlank || container.lastChildEndsBlank
             case .item:
-                data = .listItem
+                data = container.task.map { .taskListItem(checked: $0) } ?? .listItem
                 endsBlank = container.pendingBlank || container.lastChildEndsBlank
             }
             // Only nodes returned by append enter containers; root never does.
@@ -416,12 +448,16 @@ extension BlockParser {
     }
 
     @discardableResult
-    mutating func finishLeaf(headingLevel: Int? = nil, closingLine: Int? = nil) -> Bool {
+    mutating func finishLeaf(headingLevel: Int? = nil, closingLine: Int? = nil, tablePreamble: Bool = false) -> Bool {
         guard let active = leaf else { return false }
         leaf = nil
         switch active.kind {
         case .paragraph:
             let paragraphLines = active.indices
+            if tablePreamble {
+                finishTablePreamble(paragraphLines, parent: active.parent)
+                return true
+            }
             if paragraphLines.count == 1 {
                 // Single-line paragraphs and list item texts are the common
                 // case; finish them without a segment array.
@@ -524,6 +560,9 @@ extension BlockParser {
                     builder.record(SyntaxToken("core.fence.close", range: SourceRange(closing, end), owner: owner))
                 }
             }
+        case .table:
+            finishTable(active)
+            openTable = nil
         case .html(let kind):
             let segments = active.indices.map { lines[$0].range }
             var bytes: [UInt8] = []

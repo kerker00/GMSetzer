@@ -42,6 +42,21 @@ This data is covered by Unicode License V3, permitted by Plan section 8.
 Scripts/Data/CaseFolding-17.0.0.txt retains its source header and the input
 hash is tested. No runtime Unicode package is required.
 
+M4 GFM extensions
+-----------------
+
+GFM tables, task list items, strikethrough, extended autolinks and the tag
+filter are ported from cmark-gfm's extensions/table.c, tasklist.c,
+strikethrough.c, autolink.c, tagfilter.c and ext_scanners.re, as pinned in
+https://github.com/swiftlang/swift-cmark at revision
+08ddb528923cc1a6527e02b7a1aee9e516ca749a (a fork of
+https://github.com/github/cmark-gfm). The recognition rules are reproduced in
+original Swift over GMSetzer's byte/line model; files:
+Sources/SetzerParser/GFMBlocks.swift, Sources/SetzerParser/InlineAutolinks.swift,
+the strikethrough functions in Sources/SetzerParser/InlineParser.swift and the
+tag filter in Sources/SetzerHTML/HTMLRenderer.swift. The same BSD-2-Clause
+terms reproduced below apply.
+
 The inline delimiter-stack implementation follows CommonMark's parsing
 strategy and the cmark/swift-cmark src/inlines.c openers-bottom algorithm.
 The Swift code is an original implementation with value/index storage;

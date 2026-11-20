@@ -18,7 +18,7 @@ package struct DocumentTraversal: Sequence {
             var descend = true
             switch node.data {
             case .custom(_, let role, _): descend = traversal.includeCustomContent && (!traversal.blocksOnly || role == .block)
-            case .document, .blockQuote, .list, .listItem: break
+            case .document, .blockQuote, .list, .listItem, .taskListItem: break
             default: descend = !traversal.blocksOnly
             }
             if descend, let child = node.firstChild {

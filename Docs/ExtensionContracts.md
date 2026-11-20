@@ -78,8 +78,11 @@ is built once per render only when contextual hooks are registered. Wrappers
 continue to use built-in list child scheduling. Hook HTML remains trusted.
 
 `postInlineTransforms` is now a callable phase, with the same source,
-namespace and collection-mode validation as pre-inline transforms. M4/M5
-features must still test their own syntax and renderer policies.
+namespace and collection-mode validation as pre-inline transforms. M5
+features must still test their own syntax and renderer policies. M4's GFM
+features are core built-ins selected by `BuiltinExtension` identifiers, not
+`MarkdownExtension` implementations; a supplied implementation with such an
+identifier is a configuration issue ([M4GFM](M4GFM.md)).
 
 ## Integrated inline controller (M2)
 

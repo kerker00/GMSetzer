@@ -29,14 +29,15 @@ struct SpecTests {
     }
 
     /// Runs the examples and returns the numbers of the passing ones.
-    static func passingExamples(_ examples: [Example], profile: Profile) -> [Int] {
+    static func passingExamples(_ examples: [Example], profile: Profile,
+                                perExample: ((Example) -> Profile)? = nil) -> [Int] {
         let parser = MarkdownParser(profile: profile)
         // Trusted fixtures explicitly request specification output. Production
         // rendering retains escaped raw HTML and omitted comments by default.
         let renderer = HTMLRenderer.conformance
         let diagnose = ProcessInfo.processInfo.environment["GMSETZER_SPEC_DIAGNOSTICS"] == "1"
         return examples.compactMap { example in
-            let actual = renderer.render(parser.parse(example.markdown))
+            let actual = renderer.render((perExample.map { MarkdownParser(profile: $0(example)) } ?? parser).parse(example.markdown))
             if actual == example.html { return example.example }
             if diagnose {
                 let report: [String: Any] = ["profile": profile.name, "example": example.example,
@@ -54,12 +55,13 @@ struct SpecTests {
     }
 
     @discardableResult
-    static func check(_ examples: [Example], profile: Profile, baseline: [Int]) -> [Int] {
+    static func check(_ examples: [Example], profile: Profile, baseline: [Int],
+                      perExample: ((Example) -> Profile)? = nil) -> [Int] {
         let ids = Set(examples.map(\.example))
         #expect(ids.count == examples.count, "Example IDs must be unique")
         #expect(Set(baseline).count == baseline.count, "Baseline IDs must be unique")
         #expect(Set(baseline).isSubset(of: ids), "Baseline must refer to existing examples")
-        let passing = passingExamples(examples, profile: profile)
+        let passing = passingExamples(examples, profile: profile, perExample: perExample)
         let regressed = regressions(baseline: baseline, passing: passing)
         print("\(profile.name): \(passing.count)/\(examples.count) examples pass (\(baseline.count) protected)")
         let newlyPassing = Set(passing).subtracting(baseline).sorted()
@@ -81,13 +83,30 @@ struct SpecTests {
         #expect(passing.count == 652, "M2 requires complete exact CommonMark conformance")
     }
 
+    /// The GFM corpus is defined per example, as upstream's spec runner
+    /// does: core examples run without extensions, an extension example with
+    /// exactly its extension. GitHub's nested-strong rendering is part of the
+    /// cmark-gfm core renderer and always applies. Upstream marks the task
+    /// list examples "disabled"; GMSetzer requires them with the task list.
+    static func gfmProfile(for example: Example) -> Profile {
+        var selected: [BuiltinExtension] = [.collapseNestedStrong]
+        switch example.extension {
+        case "table": selected.append(.table)
+        case "strikethrough": selected.append(.strikethrough)
+        case "autolink": selected.append(.autolink)
+        case "tagfilter": selected.append(.tagFilter)
+        case "disabled": selected.append(.taskList)
+        default: break
+        }
+        return Profile(name: "gfm", extensions: selected.map { ExtensionConfiguration($0.rawValue) })
+    }
+
     @Test func gfmExamplesNeverRegress() throws {
-        // Upstream marks the task list examples as "disabled". They are
-        // required by GMSetzer and must remain in this conformance run.
         let examples = try Self.examples("gfm-0.29")
         #expect(examples.count == 672)
         let baseline = try JSONDecoder().decode(Baseline.self, from: Self.resource("baseline"))
-        Self.check(examples, profile: .gfm, baseline: baseline.gfm)
+        let passing = Self.check(examples, profile: .gfm, baseline: baseline.gfm, perExample: Self.gfmProfile)
+        #expect(passing.count == 672, "M4 requires the complete pinned GFM corpus")
     }
 
     @Test func gfmCorpusIncludesTaskListsAndTagFiltering() throws {

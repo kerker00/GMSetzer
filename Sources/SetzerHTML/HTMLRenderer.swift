@@ -53,7 +53,10 @@ public struct HTMLRenderer: Sendable {
         self.contextualHooks = contextualHooks
     }
 
-    private enum Event { case enter(Int, tightItem: Bool = false), output(String) }
+    /// `flag` carries the one bit of context a node needs from its parent:
+    /// tight-list state for paragraphs and items, header state for table
+    /// cells, and a strong parent for strong nodes.
+    private enum Event { case enter(Int, flag: Bool = false), output(String) }
 
     public func render(_ document: Document) -> String {
         let tree = contextualHooks.isEmpty ? nil : DocumentIndex(document)
@@ -101,9 +104,13 @@ public struct HTMLRenderer: Sendable {
                     }
                     pending.append(.output("</\(tag)>\n"))
                     scheduleChildren(index, document: document, pending: &pending)
-                case .listItem:
+                case .listItem, .taskListItem:
                     let children = document.children(of: index).filter { document.nodes[$0].kind != .referenceDefinition }
                     output += "<li\(anchors(node, index: index))>"
+                    if case .taskListItem(let checked) = node.data {
+                        output += checked ? "<input checked=\"\" disabled=\"\" type=\"checkbox\"> "
+                                          : "<input disabled=\"\" type=\"checkbox\"> "
+                    }
                     if let first = children.first, !tightItem || document.nodes[first].kind != .paragraph { output += "\n" }
                     pending.append(.output("</li>\n"))
                     scheduleItemChildren(children, document: document, tightItem: tightItem, pending: &pending)
@@ -115,10 +122,49 @@ public struct HTMLRenderer: Sendable {
                 case .softBreak: output += "\n"
                 case .hardBreak: output += "<br />\n"
                 case .code(let literal): output += "<code>\(Self.escape(literal))</code>"
-                case .emphasis, .strong:
-                    let tag = node.kind == .strong ? "strong" : "em"
-                    output += "<\(tag)>"
-                    pending.append(.output("</\(tag)>"))
+                case .emphasis:
+                    output += "<em>"
+                    pending.append(.output("</em>"))
+                    scheduleChildren(index, document: document, pending: &pending)
+                case .strong:
+                    let collapses = document.renderingPolicy.contains(.collapsesNestedStrong)
+                    // GitHub's renderer omits the tags of a strong whose parent is strong.
+                    if !(collapses && tightItem) {
+                        output += "<strong>"
+                        pending.append(.output("</strong>"))
+                    }
+                    if collapses {
+                        for child in document.children(of: index).reversed() {
+                            pending.append(.enter(child, flag: document.nodes[child].kind == .strong))
+                        }
+                    } else { scheduleChildren(index, document: document, pending: &pending) }
+                case .strikethrough:
+                    output += "<del>"
+                    pending.append(.output("</del>"))
+                    scheduleChildren(index, document: document, pending: &pending)
+                case .table:
+                    output += "<table\(anchors(node, index: index))>\n"
+                    let rows = document.children(of: index)
+                    pending.append(.output(rows.count > 1 ? "</tbody>\n</table>\n" : "</table>\n"))
+                    for (position, row) in rows.enumerated().reversed() {
+                        pending.append(.enter(row))
+                        if position == 1 { pending.append(.output("<tbody>\n")) }
+                    }
+                case .tableRow(let isHeader):
+                    output += isHeader ? "<thead>\n<tr\(anchors(node, index: index))>\n" : "<tr\(anchors(node, index: index))>\n"
+                    pending.append(.output(isHeader ? "</tr>\n</thead>\n" : "</tr>\n"))
+                    for cell in document.children(of: index).reversed() { pending.append(.enter(cell, flag: isHeader)) }
+                case .tableCell(let alignment):
+                    let tag = tightItem ? "th" : "td"
+                    let align: String
+                    switch alignment {
+                    case .none: align = ""
+                    case .left: align = " align=\"left\""
+                    case .center: align = " align=\"center\""
+                    case .right: align = " align=\"right\""
+                    }
+                    output += "<\(tag)\(align)\(anchors(node, index: index))>"
+                    pending.append(.output("</\(tag)>\n"))
                     scheduleChildren(index, document: document, pending: &pending)
                 case .link(let destination, let title):
                     output += "<a href=\"\(url(destination))\""
@@ -132,7 +178,7 @@ public struct HTMLRenderer: Sendable {
                     output += " />"
                 case .htmlInline(let literal):
                     let html = preserveHTMLComments ? literal : Self.removingHTMLComments(literal)
-                    output += allowRawHTML ? html : Self.escape(html)
+                    output += allowRawHTML ? rawHTML(html, document: document) : Self.escape(html)
                 case .thematicBreak: output += "<hr\(anchors(node, index: index)) />\n"
                 case .codeBlock(let info, let literal):
                     output += "<pre\(anchors(node, index: index))><code"
@@ -143,7 +189,7 @@ public struct HTMLRenderer: Sendable {
                 case .referenceDefinition: break
                 case .htmlBlock(let block):
                     let html = preserveHTMLComments ? block.literal : Self.removingHTMLComments(block.literal)
-                    output += allowRawHTML ? html : Self.escape(html)
+                    output += allowRawHTML ? rawHTML(html, document: document) : Self.escape(html)
                 case .custom:
                     if node.firstChild != nil {
                         scheduleChildren(index, document: document, pending: &pending)
@@ -166,9 +212,9 @@ public struct HTMLRenderer: Sendable {
         switch document.nodes[index].data {
         case .list(let attributes):
             for child in document.children(of: index).reversed() {
-                pending.append(.enter(child, tightItem: attributes.isTight))
+                pending.append(.enter(child, flag: attributes.isTight))
             }
-        case .listItem:
+        case .listItem, .taskListItem:
             let children = document.children(of: index).filter { document.nodes[$0].kind != .referenceDefinition }
             scheduleItemChildren(children, document: document, tightItem: tightItem, pending: &pending)
         default:
@@ -180,7 +226,7 @@ public struct HTMLRenderer: Sendable {
         for (position, child) in children.enumerated().reversed() {
             let unwrapped = tightItem && document.nodes[child].kind == .paragraph
             if unwrapped && position + 1 < children.count { pending.append(.output("\n")) }
-            pending.append(.enter(child, tightItem: unwrapped))
+            pending.append(.enter(child, flag: unwrapped))
         }
     }
 
@@ -224,6 +270,54 @@ public struct HTMLRenderer: Sendable {
             }
         }
         return output
+    }
+
+    /// Raw HTML passes through unless the document's profile selects the GFM
+    /// tag filter, which escapes the `<` of a disallowed tag.
+    private func rawHTML(_ html: String, document: Document) -> String {
+        guard document.renderingPolicy.contains(.filtersDisallowedRawHTML) else { return html }
+        return Self.filteringDisallowedTags(html)
+    }
+
+    private static let disallowedTags: [[UInt8]] = ["title", "textarea", "style", "xmp", "iframe",
+                                                    "noembed", "noframes", "script", "plaintext"].map { Array($0.utf8) }
+
+    /// GFM tag filter (ported from cmark-gfm `tagfilter.c`, BSD-2; see NOTICE): a tag
+    /// name must be followed by whitespace, `>` or `/>`; matching ignores case.
+    public static func filteringDisallowedTags(_ html: String) -> String {
+        let bytes = Array(html.utf8)
+        guard bytes.contains(60) else { return html }
+        var output: [UInt8] = []
+        output.reserveCapacity(bytes.count + 8)
+        for index in bytes.indices {
+            if bytes[index] == 60 && isDisallowedTag(bytes, at: index) { output.append(contentsOf: "&lt;".utf8) }
+            else { output.append(bytes[index]) }
+        }
+        return String(decoding: output, as: UTF8.self)
+    }
+
+    private static func isDisallowedTag(_ bytes: [UInt8], at start: Int) -> Bool {
+        let size = bytes.count - start
+        guard size >= 3 else { return false }
+        var name = start + 1
+        if bytes[name] == 47 { name += 1 }
+        for tag in disallowedTags {
+            var position = name, matched = true
+            for expected in tag {
+                guard position < bytes.count else { matched = false; break }
+                let byte = bytes[position]
+                guard (65...90).contains(byte) ? byte + 32 == expected : byte == expected else { matched = false; break }
+                position += 1
+            }
+            guard matched, position < bytes.count else { continue }
+            switch bytes[position] {
+            // cmark_isspace: tab, LF, CR and space only.
+            case 9, 10, 13, 32, 62: return true
+            case 47 where position + 1 < bytes.count && bytes[position + 1] == 62: return true
+            default: continue
+            }
+        }
+        return false
     }
 
     /// IDs identify nodes in this render only, not across edits. The caller

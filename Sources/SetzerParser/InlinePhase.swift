@@ -22,6 +22,8 @@ extension MarkdownParser {
         mapped[0] = 0
         var inline = InlineParser(input: InlineInput(), references: references, collectSyntax: collectSyntaxDetails,
                                   source: document.source, rules: inlineRules, triggers: triggers, maximumDepth: limits.maximumInlineExtensionDepth)
+        inline.enableGFM(strikethrough: registry.contains(.strikethrough), autolink: registry.contains(.autolink))
+        let gfm = GFMInlineTriggers(strikethrough: inline.strikethrough, autolink: inline.autolink)
         var pending = document.children(of: 0).reversed().map { ($0, 0) }
         while let (old, parent) = pending.popLast() {
             let node = document.nodes[old]
@@ -34,12 +36,12 @@ extension MarkdownParser {
             mapped[old] = index
             let children = document.children(of: old)
             let inlineBlock: Bool
-            switch node.data { case .paragraph, .heading: inlineBlock = true; default: inlineBlock = false }
+            switch node.data { case .paragraph, .heading, .tableCell: inlineBlock = true; default: inlineBlock = false }
             if inlineBlock, !children.isEmpty,
                children.allSatisfy({
                    switch document.nodes[$0].data { case .text, .softBreak: true; default: false }
                }),
-               needsInlineParsing(children, document: document, triggers: triggers, hasRules: !inlineRules.isEmpty) {
+               needsInlineParsing(children, document: document, triggers: triggers, hasRules: !inlineRules.isEmpty, gfm: gfm) {
                 // Block transforms may already have annotated original text.
                 // Preserve those exact ranges on the containing inline block.
                 for child in children { mapped[child] = index }
@@ -78,19 +80,42 @@ extension MarkdownParser {
     }
 
     private func needsInlineParsing(_ children: [Int], document: Document,
-                                    triggers: ByteSet, hasRules: Bool) -> Bool {
+                                    triggers: ByteSet, hasRules: Bool, gfm: GFMInlineTriggers) -> Bool {
         for child in children {
             guard case .text(let text) = document.nodes[child].data else { continue }
             // Block projection already repaired bytes and retained soft breaks.
             // Plain leaves need neither another projection nor another decode.
             if text.utf8.last == 32 || text.utf8.last == 9 { return true }
+            guard gfm.strikethrough || gfm.autolink else {
+                for byte in text.utf8 {
+                    switch byte {
+                    case 92, 38, 96, 42, 95, 91, 33, 60: return true
+                    default: if hasRules && triggers.contains(byte) { return true }
+                    }
+                }
+                continue
+            }
+            var previous: (UInt8, UInt8, UInt8) = (0, 0, 0)
             for byte in text.utf8 {
                 switch byte {
                 case 92, 38, 96, 42, 95, 91, 33, 60: return true
+                case 126 where gfm.strikethrough: return true
+                // An email needs '@'; www and URL autolinks need "www." or "://".
+                case 64 where gfm.autolink: return true
+                case 46 where gfm.autolink && previous == (119, 119, 119): return true
+                case 47 where gfm.autolink && previous.1 == 58 && previous.2 == 47: return true
                 default: if hasRules && triggers.contains(byte) { return true }
                 }
+                if gfm.autolink { previous = (previous.1, previous.2, byte) }
             }
         }
         return false
     }
+}
+
+/// Which GFM inline features can turn plain text into nodes.
+internal struct GFMInlineTriggers {
+    let strikethrough: Bool
+    let autolink: Bool
+
 }

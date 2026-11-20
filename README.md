@@ -6,11 +6,12 @@ renderer. No C, no Rust, no JavaScript, no runtime dependencies — it builds
 wherever Swift runs, including Linux.
 
 > **Status:** M2 merged in PR #11 (`021f110`), based on
-> merged PRs #9/#10. All 652 CommonMark 0.31.2 examples pass by exact HTML;
-> 641/672 pinned GFM examples pass. Blocks and inlines retain original UTF-8
+> merged PRs #9/#10; M3 merged in PR #12. All 652 CommonMark 0.31.2 examples
+> pass by exact HTML; M4 (local branch) passes all 672 pinned GFM examples with
+> tables, task lists, strikethrough, extended autolinks and the tag filter. Blocks and inlines retain original UTF-8
 > ranges, with optional lexical tokens and custom inline rules. Portable
 > diagnostic/fix values, position conversion, outline and three optional native
-> rules are implemented; M3 review remains open. M2 performance gates pass;
+> rules are implemented. M2 performance gates pass;
 > publication remains a separate owner decision.
 
 ## Independence
@@ -75,14 +76,14 @@ and device acceptance do not determine this package's API or release readiness.
 | --- | --- | --- |
 | `SetzerSyntax` | Validated block/inline tree, source ranges/tokens, parent/offset/outline index, position conversion, diagnostic/fix values | Additional query conveniences |
 | `SetzerParser` | Block/inline parser, custom rules/children, pre/post transforms and profiles | Additional dialect syntax |
-| `SetzerExtensions` | GFM profile selections | GFM rule implementations, footnotes, front matter, math, alerts and callouts |
-| `SetzerHTML` | CommonMark HTML, source anchors, escaping, comment policy and decoded URL checks | GFM tag filtering |
+| `SetzerExtensions` | GFM profile (built-in GFM features) | Footnotes, front matter, math, alerts and callouts |
+| `SetzerHTML` | CommonMark and GFM HTML, source anchors, escaping, comment policy, tag filter and decoded URL checks | – |
 | `SetzerAnalysis` | Three optional native rules over the existing document | Broader rule catalogue |
 | `GMSetzer` | Imports the five implemented modules above | Additional convenience APIs |
 
 M1 acceptance is merged in PR #9 and block hot-path optimisation in PR #10.
-M2 adds CommonMark inlines and 867 exact C comparisons. Complete GFM remains
-M4 work; the fixed M2 timing allowance is unchanged.
+M2 adds CommonMark inlines and 867 exact C comparisons. M4 adds GFM as typed
+built-in nodes, compared with cmark-gfm; see [Docs/M4GFM.md](Docs/M4GFM.md).
 
 ```swift
 import GMSetzer
@@ -95,9 +96,9 @@ let html = HTMLRenderer().render(document)
 `parse(bytes:)` also accepts original UTF-8 bytes, preserving invalid sequences
 in `Document.source` while replacing them in literals. A leading UTF-8 BOM is
 ignored for syntax recognition but retained in the original bytes and offsets.
-`.gfm` selects its five
-extensions explicitly; until M4 implements them, missing extensions are listed
-in `MarkdownParser.configurationIssues`; `validated()` rejects them.
+`MarkdownParser(profile: .gfm)` enables tables, task lists, strikethrough,
+extended autolinks, the tag filter and GitHub's nested-strong rendering; each
+`BuiltinExtension` can also be selected on its own.
 
 `collectSyntaxDetails: true` optionally collects `Document.tokens`, including
 reference/fence components, inline delimiters, link parts, escapes/entities,
@@ -116,9 +117,8 @@ renderer wrappers preserve built-in list tightness.
   CommonMark, 672 in the pinned GFM corpus, including task lists). The IDs of
   passing examples are recorded in
   `Tests/SetzerSpecTests/Resources/baseline.json`; each recorded example must
-  keep passing. Green tests mean the recorded baseline is preserved; they do
-  not claim complete GFM conformance. CommonMark has an additional explicit
-  652/652 completeness assertion.
+  keep passing. Both corpora have explicit completeness assertions (652/652,
+  672/672); GFM examples run with their own extension, as upstream does.
 - `Scripts/update-specs.sh` reproduces the specification examples from pinned,
   SHA-256 checked sources.
 - `python3 -I -m unittest discover -s Scripts` tests the update tools offline.

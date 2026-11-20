@@ -4,7 +4,7 @@ public import SetzerSyntax
 /// Optional lexical tokens retain source spelling; native analysis follows in M3.
 public struct MarkdownParser: Sendable {
     public let profile: Profile
-    private let registry: RuleRegistry
+    internal let registry: RuleRegistry
     internal var resolvedTransforms: [ActiveTransform] { registry.transforms }
     internal var resolvedInlineRules: [ActiveInlineRule] { registry.inlineRules }
     internal var resolvedPostInlineTransforms: [ActiveTransform] { registry.postInlineTransforms }
@@ -35,7 +35,9 @@ public struct MarkdownParser: Sendable {
     public func parse(bytes: [UInt8]) -> Document {
         var parser = BlockParser(source: bytes, registry: registry, limits: limits,
                                  collectSyntaxDetails: collectSyntaxDetails)
-        return applyTransforms(to: parseInlines(applyTransforms(to: parser.parse())), afterInlines: true)
+        let document = applyTransforms(to: parseInlines(applyTransforms(to: parser.parse())), afterInlines: true)
+        let policy = registry.renderingPolicy
+        return policy.isEmpty ? document : document.with(renderingPolicy: policy)
     }
 }
 
@@ -59,6 +61,15 @@ internal struct BlockParser {
     let extensionDepth: Int
     var containers: [OpenContainer] = []
     var leaf: OpenLeaf?
+    /// Line whose remaining content must start a paragraph (after a GFM
+    /// task list checkbox); no other leaf start is tried there.
+    var forcedParagraphLine = -1
+    /// GFM: the last paragraph line added lazily. cmark-gfm keeps such a line
+    /// from the end of the matched containers, so a table header there keeps
+    /// its leading whitespace.
+    var lazyParagraphLine = -1
+    /// State of the open GFM table leaf, if any.
+    var openTable: TableState?
     var builder: DocumentBuilder
     let registry: RuleRegistry
     var rules: [ActiveRule] { registry.custom }
