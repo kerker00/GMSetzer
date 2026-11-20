@@ -104,6 +104,8 @@ extension BlockParser {
     /// Read only kind and parent; do not copy OpenLeaf's growing
     /// indices array before appending, which would defeat its unique storage.
     private mutating func continueOpenLeaf(at index: Int, matchedContainers: Int) -> Bool {
+        // Paragraph lines need the first content byte several times.
+        var paragraphFirst: (byte: UInt8?, columns: Int)?
         if matchedContainers == containers.count, let kind = leaf?.kind {
             switch kind {
             case .fenced(let fence):
@@ -118,7 +120,10 @@ extension BlockParser {
                     return true
                 }
             case .paragraph:
-                if registry.contains(.setextHeading), let level = setextLevel(index) {
+                let first = firstByte(index)
+                paragraphFirst = first
+                if registry.contains(.setextHeading), first.columns <= 3, first.byte == 61 || first.byte == 45,
+                   let level = setextLevel(index) {
                     touchContainers(through: index)
                     guard let parent = leaf?.parent else { return false }
                     if !finishLeaf(headingLevel: level, closingLine: index) {
@@ -138,8 +143,9 @@ extension BlockParser {
             }
         }
 
-        if case .paragraph? = leaf?.kind, !isBlank(index),
-           !interruptsParagraph(index, matchedContainers: matchedContainers) {
+        // A line without content after indentation is blank.
+        if case .paragraph? = leaf?.kind, case let first = paragraphFirst ?? firstByte(index), first.byte != nil,
+           !interruptsParagraph(index, matchedContainers: matchedContainers, first: first) {
             // Missing quote/item prefixes may only continue an existing
             // paragraph; they cannot extend a fence, heading or code block.
             extendLeaf(index)
@@ -298,11 +304,11 @@ extension BlockParser {
         leaf = OpenLeaf(kind: .paragraph, parent: parent, start: index, indices: index..<(index + 1))
     }
 
-    mutating func interruptsParagraph(_ index: Int, matchedContainers: Int) -> Bool {
+    mutating func interruptsParagraph(_ index: Int, matchedContainers: Int,
+                                      first: (byte: UInt8?, columns: Int)) -> Bool {
         // Every core and extension block start allows at most three columns
         // of indentation, and each core scanner requires a specific first
         // byte. Plain paragraph text therefore needs a single byte dispatch.
-        let first = firstByte(index)
         guard first.columns <= 3, let byte = first.byte else { return false }
         switch byte {
         case 35:
