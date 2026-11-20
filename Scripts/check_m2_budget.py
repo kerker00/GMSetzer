@@ -3,12 +3,21 @@
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import math
 from pathlib import Path
 import sys
 
-from check_benchmark_budget import ABSOLUTE, parse_results
+# -I deliberately excludes the script directory from sys.path. Load this exact
+# adjacent, tracked module instead of widening import search paths.
+_spec = importlib.util.spec_from_file_location("_gmsetzer_benchmark_budget", Path(__file__).with_name("check_benchmark_budget.py"))
+if _spec is None or _spec.loader is None:
+    raise RuntimeError("cannot load adjacent benchmark-budget checker")
+_gate = importlib.util.module_from_spec(_spec)
+sys.modules[_spec.name] = _gate
+_spec.loader.exec_module(_gate)
+ABSOLUTE, parse_results = _gate.ABSOLUTE, _gate.parse_results
 
 
 def evaluate(results, baseline, allowances):

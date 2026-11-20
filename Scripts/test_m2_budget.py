@@ -4,6 +4,8 @@ import hashlib
 import io
 import json
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
 from unittest.mock import patch
 import unittest
@@ -68,6 +70,10 @@ class M2BudgetTests(unittest.TestCase):
             argv = ["check_m2_budget.py", str(baseline), "--baseline", str(baseline), "--allowance", str(settings)]
             with patch("sys.argv", argv), contextlib.redirect_stdout(io.StringIO()):
                 self.assertEqual(main(), 0)
+            isolated = subprocess.run([sys.executable, "-I", str(Path(__file__).with_name("check_m2_budget.py"))] + argv[1:],
+                capture_output=True, text=True, timeout=10)
+            self.assertEqual(isolated.returncode, 0, isolated.stderr)
+            self.assertEqual(json.loads(isolated.stdout)["failures"], [])
             baseline.write_text(baseline.read_text() + "\nChanged receipt\n")
             with patch("sys.argv", argv), contextlib.redirect_stderr(io.StringIO()):
                 self.assertEqual(main(), 2)
