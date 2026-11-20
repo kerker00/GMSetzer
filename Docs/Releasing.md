@@ -25,8 +25,8 @@ Benchmarks and the separate `Tools/` reference suite are not part of CI.
 
    ```sh
    git fetch origin
-   git tag -a v0.4.0 <merged-commit> -m 'GMSetzer 0.4.0'
-   git push origin refs/tags/v0.4.0
+   git tag -a v0.5.0 <merged-commit> -m 'GMSetzer 0.5.0'
+   git push origin refs/tags/v0.5.0
    ```
 
 3. The `Release` workflow verifies that the tag has the form `vMAJOR.MINOR.PATCH`,
@@ -47,7 +47,7 @@ Consumers can pin the version with:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/kerker00/GMSetzer.git", exact: "0.4.0"),
+    .package(url: "https://github.com/kerker00/GMSetzer.git", exact: "0.5.0"),
 ],
 targets: [
     .target(name: "MyTarget", dependencies: [
@@ -59,19 +59,19 @@ targets: [
 The package URL can be entered in Xcode's package dependency dialog as well.
 Use an exact version for deliberate updates during pre-1.0 development.
 
-## 0.5.0 preparation
+## 0.5.0 publication
 
-PR #23 (`2d8ecef`) merges the source-only M5 preview preparation after
-[functional acceptance](M5Acceptance.md). It sets result identity `0.5.0` and adds
-[version-specific notes](Releases/0.5.0.md) and
-[executed preparation evidence](Validation/Release/0.5.0.md). Workflows,
-products, dependencies and protected fixtures are unchanged.
+PR #23 (`2d8ecef`) merged the source-only M5 preview preparation after
+[functional acceptance](M5Acceptance.md). With the owner's confirmation,
+annotated `v0.5.0` was created at that exact commit and the existing
+[release workflow](https://github.com/kerker00/GMSetzer/actions/runs/44827793180)
+passed tag validation, macOS/Linux CI and draft creation. The draft was checked
+against [version-specific notes](Releases/0.5.0.md), then published as a preview
+with zero uploaded assets. GitHub supplies the two automatic source archives.
 
-The latest published version remains 0.4.0. Preparation is merged; publication
-still requires owner confirmation of an exact tag commit, successful tag CI and
-confirmation of the resulting draft. Resolving a preparation commit through
-SwiftPM proves source-package consumption, not that an exact 0.5.0 version
-tag exists. No tag or release was created by the preparation PR.
-
-The intended source-only preview keeps GitHub's two automatic source archives;
-no binary uploads are added.
+The latest published preview is
+[v0.5.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.5.0).
+An isolated public-HTTPS SwiftPM consumer resolves exact version 0.5.0 to
+`2d8ecef4050976b0e817f0aaeba30fea4b3ac3d1` and exercises the library successfully.
+See [executed release evidence](Validation/Release/0.5.0.md). Products,
+dependencies, workflow definitions and protected fixtures are unchanged.

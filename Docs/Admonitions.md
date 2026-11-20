@@ -1,7 +1,7 @@
 # M5 alerts and callouts
 
 Merged in PR #22 (`c9543fe`), based on `3a12ff1` after math merged in PR #21.
-Not yet in a versioned release. This implements the remaining declared M5
+Included in the v0.5.0 preview. This implements the remaining declared M5
 syntax; [functional acceptance](M5Acceptance.md) is complete.
 No runtime dependency, core node case or module dependency is added.
 

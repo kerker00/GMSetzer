@@ -1,8 +1,8 @@
 # M5 named footnotes
 
 Merged in PR #20 (`a6a2da6`), based on `db077dd` after front matter
-merged in PR #19. Not yet in a versioned release. This is a separate M5 step;
-math, alerts and callouts remain open. No runtime dependency, new core node
+merged in PR #19. Included in the v0.5.0 preview alongside the separately
+implemented math, alerts and callouts. No runtime dependency, new core node
 case or change to strict CommonMark/GFM selections is introduced.
 
 ## Selection and presentation

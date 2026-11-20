@@ -1,10 +1,10 @@
 # M5 first step: raw YAML and TOML front matter
 
 Merged in PR #19 (`4b0f105`), based on `3abbcc8` after PR #18.
-Not yet in a versioned release. `FrontMatter` is a real `MarkdownExtension` in
+Included in the v0.5.0 preview. `FrontMatter` is a real `MarkdownExtension` in
 `SetzerExtensions`, using the existing custom-block API. There is no new core
 node case, runtime dependency or YAML/TOML deserialiser. Footnotes, math,
-alerts and callouts remain separate M5 work.
+alerts and callouts were implemented in separate M5 steps and also ship in 0.5.0.
 
 ## Selection and typed access
 

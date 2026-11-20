@@ -1,6 +1,6 @@
 # Native analysis messages
 
-Merged in PR #17 (`0434ff5`) after v0.4.0; not yet in a versioned release.
+Merged in PR #17 (`0434ff5`) after v0.4.0; included in the v0.5.0 preview.
 `SetzerAnalysis` supplies an optional, Foundation-free
 English/German catalogue for the three native findings and their whitespace
 fix title. Consumers choose the language explicitly or translate the same
@@ -88,7 +88,7 @@ directories. Linux ran a source-only copy of this package in a separate
 temporary directory; no consumer checkout or new execution environment was
 needed. Five new tests cover this step; script tests were not repeated because
 no scripts changed. Consumer UI adoption and fresh benchmark/reference series
-are not claimed by these local checks. There is no new tag or published release.
+are not claimed by these local checks. At that implementation-validation stage, no new tag or release was published.
 
 At branch completion, the [PR CI](https://github.com/kerker00/GMSetzer/actions/runs/44785845210)
 Linux/Swift 6.2 job also passes; the GitHub macOS job is queued. The

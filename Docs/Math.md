@@ -1,8 +1,8 @@
 # M5 opaque TeX syntax
 
 Merged in PR #21 (`6f166b7`), based on `ae3ca76` after footnotes merged in
-PR #20. Not yet in a versioned release. This step recognises inline, dollar-display
-and fenced math. Alerts and callouts remain open. It adds no runtime dependency,
+PR #20. Included in the v0.5.0 preview. This step recognises inline, dollar-display
+and fenced math. Alerts and callouts also ship in 0.5.0. It adds no runtime dependency,
 core node case or TeX engine; presentation belongs to the caller.
 
 ## Selection and typed access

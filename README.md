@@ -9,8 +9,8 @@ wherever Swift runs, including Linux.
 > extension/profile/combination criteria have [functional acceptance](Docs/M5Acceptance.md).
 > Merged-main CI passes 227 Swift tests, all 652 CommonMark and 672 GFM examples,
 > 17 Python tests and optimized builds on macOS/Linux. The latest published
-> source-only preview remains [v0.4.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.4.0).
-> PR #23 (`2d8ecef`) merges the 0.5.0 preparation; its tag/release remain pending.
+> source-only preview is [v0.5.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.5.0),
+> published at `2d8ecef` after successful release CI and exact-version SwiftPM validation.
 
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented
@@ -19,7 +19,7 @@ release still supplies English defaults only.
 
 Merged PR #18 (`4397819`) adds exact quote/list marker tokens on `main`;
 see [ContainerMarkers](Docs/ContainerMarkers.md). Its PR and merged-main CI
-pass on macOS and Linux. These features are not yet in a versioned release;
+pass on macOS and Linux. These features are included in v0.5.0;
 M5 is now functionally accepted across the separately merged steps below.
 
 Merged PR #19 (`4b0f105`) adds opt-in raw YAML/TOML front matter on `main`
@@ -38,9 +38,9 @@ Merged PR #22 (`c9543fe`) adds GitHub-style alerts and
 Obsidian-style callouts with parsed titles, folding and an optional HTML
 recipe; see [Admonitions](Docs/Admonitions.md). PR and merged-main CI pass
 on macOS and Linux. [M5 functional acceptance](Docs/M5Acceptance.md) is
-complete. Merged PR #23 (`2d8ecef`) prepares the next preview with
-[release notes](Docs/Releases/0.5.0.md), candidate identity `0.5.0` and
-[preparation checks](Docs/Validation/Release/0.5.0.md). Publication remains pending.
+complete. PR #23 (`2d8ecef`) prepared the published v0.5.0 preview with
+[release notes](Docs/Releases/0.5.0.md), result identity `0.5.0` and
+[release validation](Docs/Validation/Release/0.5.0.md).
 
 Requires **Swift 6.2 or later**. The current provisional Apple minimums are
 macOS 15, iOS 18 and visionOS 2; Linux is supported. The repository is public
@@ -50,16 +50,16 @@ registry are required.
 
 ## Installation
 
-Pin the **0.4.0 preview release** with Swift Package Manager:
+Pin the **0.5.0 preview release** with Swift Package Manager:
 
 ```swift
-.package(url: "https://github.com/kerker00/GMSetzer.git", exact: "0.4.0")
+.package(url: "https://github.com/kerker00/GMSetzer.git", exact: "0.5.0")
 ```
 
 Add `.product(name: "GMSetzer", package: "GMSetzer")` to your target's
 dependencies. APIs may change before 1.0. GitHub provides source ZIP and tar.gz
 archives; no binary assets are uploaded. See the
-[release notes](Docs/Releases/0.4.0.md) and
+[release notes](Docs/Releases/0.5.0.md) and
 [release process](Docs/Releasing.md) for scope, checks and publication steps.
 
 ## Independence
@@ -96,7 +96,7 @@ and device acceptance do not determine this package's API or release readiness.
   portable findings and suggested fixes. Analysis is not a complete linter;
   English defaults remain available, with an optional English/German lookup
   on `main` since PR #17. Original quote/list marker ranges are on `main`
-  since PR #18; these additions are not yet in a versioned release. Consumers
+  since PR #18; these additions are included in 0.5.0. Consumers
   choose editor colors themselves.
 
 ## Documentation
@@ -125,10 +125,10 @@ and device acceptance do not determine this package's API or release readiness.
   outline, HTML and native analysis APIs and their validation limits.
 - [Docs/NativeAnalysisMessages.md](Docs/NativeAnalysisMessages.md) – stable
   finding/fix message keys and arguments, optional English/German text lookup
-  and fallback behavior (unreleased).
+  and fallback behavior (since 0.5.0).
 - [Docs/ContainerMarkers.md](Docs/ContainerMarkers.md) – original quote/list
   marker ranges, owners, extension boundaries and annotation-mode checks
-  (unreleased).
+  (since 0.5.0).
 - [Docs/M4GFM.md](Docs/M4GFM.md) – merged GFM profiles, switches, source ranges,
   conformance and measurements.
 - [Docs/HTMLReferences.md](Docs/HTMLReferences.md) – HTML policies, multiline
@@ -145,10 +145,10 @@ M5 selection/rendering examples are documented in [FrontMatter](Docs/FrontMatter
 | --- | --- | --- |
 | `SetzerSyntax` | Validated block/inline tree, source ranges/tokens, parent/offset/outline index, position conversion, diagnostic/fix values | Additional query conveniences |
 | `SetzerParser` | Block/inline parser, custom rules/children, pre/post transforms and profiles | Additional dialect syntax |
-| `SetzerExtensions` | GFM profile; raw YAML/TOML front matter; named footnotes; opaque TeX; alerts/callouts (unreleased) | Further dialects |
+| `SetzerExtensions` | GFM profile; raw YAML/TOML front matter; named footnotes; opaque TeX; alerts/callouts | Further dialects |
 | `SetzerHTML` | CommonMark and GFM HTML, source anchors, escaping, comment policy, tag filter and decoded URL checks | – |
 | `SetzerAnalysis` | Three optional native rules over the existing document | Broader rule catalogue |
-| `GMSetzer` | Imports the five modules above; composed footnote HTML and admonition HTML recipe (unreleased) | Additional convenience APIs |
+| `GMSetzer` | Imports the five modules above; composed footnote HTML and admonition HTML recipe | Additional convenience APIs |
 
 M1 acceptance is merged in PR #9 and block hot-path optimisation in PR #10.
 M2 adds CommonMark inlines and 867 exact C comparisons. M4 adds GFM as typed

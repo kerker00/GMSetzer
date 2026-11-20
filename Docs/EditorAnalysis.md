@@ -84,7 +84,7 @@ locations; consumers must not widen them to neighboring characters.
 
 Native finding/fix keys and argument schemas are documented in the
 [message catalogue](NativeAnalysisMessages.md). An optional Foundation-free
-English/German lookup is merged in PR #17 (`0434ff5`), not yet released;
+English/German lookup is merged in PR #17 (`0434ff5`) and shipped in 0.5.0;
 the consumer still chooses its language and owns presentation. Analysis
 results retain English defaults and do not depend on a process locale.
 
@@ -141,13 +141,13 @@ annotation/index/analysis costs separately and review the public API before 1.0.
 Consumer UI/device test reports remain in their own repositories; a green library
 suite does not claim that any particular editor integration works.
 
-The [math step](Math.md), merged in PR #21 (`6f166b7`) and not yet released, adds owned `math.fence.*` and
+The [math step](Math.md), merged in PR #21 (`6f166b7`) and shipped in 0.5.0, adds owned `math.fence.*` and
 `math.content` spans for opaque inline/display/fenced TeX. Existing source and
 UTF-16 mapping apply; no TeX validation findings or editor theme mapping are
 implied. Native analysis retains its opaque-custom-content policy.
 
 The [alert/callout step](Admonitions.md), merged in PR #22 (`c9543fe`) and
-not yet released, adds owned marker/type/fold/
+shipped in 0.5.0, adds owned marker/type/fold/
 title spans and remaps original quote/list/body annotations after wrapping.
 Title inlines use normal core/extension roles. Source-order outline traversal
 includes body headings; native analysis keeps custom containers opaque.

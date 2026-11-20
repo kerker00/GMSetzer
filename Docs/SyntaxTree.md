@@ -353,11 +353,11 @@ markers belong to the item (including task items), not the list group. No
 padding or synthetic lazy-line marker is included. Annotation stays opt-in
 and preserves the semantic tree and HTML. See [ContainerMarkers](ContainerMarkers.md)
 for exact source, extension, transform and validation contracts. This addition
-is not yet in a versioned release.
+is included in the v0.5.0 preview.
 
 ## M5 front matter
 
-The unreleased [front-matter step](FrontMatter.md) uses the custom leaf kind
+The [front-matter step](FrontMatter.md), shipped in 0.5.0, uses the custom leaf kind
 `frontmatter.block`, a `format` string attribute and one exact interior source
 segment (including an empty insertion segment for empty metadata). Typed access
 is supplied by `FrontMatter` in `SetzerExtensions`, keeping the syntax layer
@@ -366,8 +366,8 @@ no metadata headings, inline nodes or reference definitions are created.
 
 ## M5 named footnotes
 
-The [footnote step](Footnotes.md), merged in PR #20 (`a6a2da6`) and not yet
-in a versioned release, supplies custom block containers
+The [footnote step](Footnotes.md), merged in PR #20 (`a6a2da6`) and shipped
+in 0.5.0, supplies custom block containers
 `footnotes.definition` with parsed Markdown children and custom inline leaves
 `footnotes.reference`. Raw labels, optional number/occurrence attributes and
 owned marker tokens retain snapshot provenance. Nodes stay in source order;
@@ -381,7 +381,7 @@ for the explicit continuation and protected bracket grammar.
 
 ## M5 math
 
-The [math step](Math.md), merged in PR #21 (`6f166b7`) and not yet released, adds custom leaves `math.inline` and
+The [math step](Math.md), merged in PR #21 (`6f166b7`) and shipped in 0.5.0, adds custom leaves `math.inline` and
 `math.block`, with `format` and projected `tex` string attributes. Inline node
 segments retain the complete span; the typed `Math` view removes delimiter
 bytes for content access. Block segments retain exact content provenance,
@@ -393,8 +393,8 @@ rendering stays with the caller. No module dependency or core node case changes.
 
 ## M5 alerts and callouts
 
-The [admonition step](Admonitions.md), merged in PR #22 (`c9543fe`) and not
-yet released, reserves first-line quote
+The [admonition step](Admonitions.md), merged in PR #22 (`c9543fe`) and shipped
+in 0.5.0, reserves first-line quote
 headers and wraps the parsed body in `alerts.block` / `callouts.block` custom
 containers. Custom callout titles retain a `callouts.title` container with
 ordinary paragraph inlines; generated titles invent no source nodes. Internal

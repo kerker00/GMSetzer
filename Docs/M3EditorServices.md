@@ -70,8 +70,7 @@ accesses files/UI/network. `NativeAnalyzer.analyze` takes an existing document,
 `MarkdownDialect` identity (default `.commonMark`; `.gfm` and custom
 non-empty identifiers are possible) and a typed configuration. Rules default to
 an empty set. Provider: `gmsetzer.native`, version `GMSetzerVersion.current`
-(release-preparation identity `0.5.0` on `main` since PR #23; not a published
-tag). Findings are style warnings. Analysis walks the tree
+(released identity `0.5.0` in the v0.5.0 preview). Findings are style warnings. Analysis walks the tree
 once per rule family, keeps protected ranges in source order without sorting,
 validates suppression bounds with the constant-size boundary check (no position
 index) and matches suppressions per rule with a sorted cursor.
@@ -90,7 +89,7 @@ primary findings of that rule. Suppression does not change heading history.
 Ranges must follow the source boundary policy. No inline comment directive,
 markdownlint compatibility or broader lint catalogue is claimed.
 
-The unreleased `NativeAnalysisMessages.text(for:languageTag:)` lookup supplies
+The `NativeAnalysisMessages.text(for:languageTag:)` lookup, shipped in 0.5.0, supplies
 English/German text for these findings and the whitespace fix title. English
 defaults remain unchanged; heading findings additionally supply the integer
 `maximumLevel` argument. Locale selection and display stay with the consumer.

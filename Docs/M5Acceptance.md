@@ -50,6 +50,9 @@ plain-text and native-analysis custom-content policies remain explicit.
 M6 still owns fresh selected-extension timing/allocation measurements, broader
 hostile-input/fuzzing work and speed targets. No new benchmark/reference series
 was run for this acceptance. Consumer editor/device integration and minimum
-Apple runtime verification remain separate. A source-only 0.5.0 preview may be
-prepared under the existing release process; its preparation PR, chosen commit,
-tag-triggered CI and owner-confirmed publication are separate checkpoints.
+Apple runtime verification remain separate. The source-only
+[v0.5.0 preview](https://github.com/kerker00/GMSetzer/releases/tag/v0.5.0) is now
+published at `2d8ecef`, following preparation PR #23, owner confirmation and
+successful tag-triggered CI. Exact-version SwiftPM consumption and source-only
+publication evidence are in [release validation](Validation/Release/0.5.0.md).
+Publication does not complete M6 or consumer runtime acceptance.

@@ -1,8 +1,8 @@
 # Quote and list marker provenance
 
 Merged in PR #18 (`4397819`), implementation `c58b6ac` based on `57d13d8`
-after localization PR #17. Available on `main`, not yet in a versioned release.
-This completes the marker step toward 0.5; M5's additional syntax remains open.
+after localization PR #17. Included in the v0.5.0 preview. The later M5
+syntax is also merged; see [functional acceptance](M5Acceptance.md).
 
 ## Contract
 

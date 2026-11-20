@@ -1,6 +1,7 @@
 # GMSetzer – Plan and Requirements
 
-**Status: 20 November 2026, M1 and block optimisation merged (PRs #9/#10); M2 merged in PR #11 (`021f110`); M3 merged in PR #12 (`651af17`) and its measurements in PR #13 (`c5f9a0b`); M4 GFM merged in PR #14 (`e163e6f`) with 672/672 GFM examples; consumer follow-ups below.** This document is the
+**Status: 20 November 2026, M1–M5 merged and functionally accepted; the
+source-only v0.5.0 preview is published after successful tag-triggered CI.** This document is the
 reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
@@ -79,14 +80,16 @@ existed. [M5 functional acceptance](M5Acceptance.md) is complete against the
 declared fixtures/profile/combination criteria. Release preparation and M6
 remain separate; no tag or release is created. See [Admonitions](Admonitions.md).
 
-**0.5.0 preparation merged:** PR #23 (`2d8ecef`) sets result identity `0.5.0` and adds
-[versioned notes](Releases/0.5.0.md), based on merged M5 acceptance. The latest
-published version remains 0.4.0. Candidate checks are recorded in
-[Validation/Release/0.5.0](Validation/Release/0.5.0.md). PR CI passes on both
-hosts; merged-main CI also passes on both hosts. The preparation branch is removed
-locally and remotely; no additional worktrees existed. Owner-confirmed tagging,
-tag-triggered CI and publication remain pending. No workflow
-or manifest change is needed.
+**0.5.0 published:** [v0.5.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.5.0)
+is published on 20 November 2026 at `2d8ecef`, after owner confirmation,
+successful tag validation, 227 Swift tests, 17 script tests and optimized
+builds on both release CI hosts. All protected CommonMark/GFM examples pass.
+An isolated public-HTTPS SwiftPM consumer resolves exact version 0.5.0 to the
+same commit and exercises all M5 APIs. GitHub supplies ZIP/tar.gz archives;
+there are zero uploaded build assets. The annotated tag remains unchanged.
+See [release notes](Releases/0.5.0.md) and
+[release validation](Validation/Release/0.5.0.md). M6 measurements/hardening and
+consumer UI/device acceptance remain separate work.
 
 GMSetzer is an independent, general-purpose Markdown library intended for
 open-source use under the MIT licence. Editors, command-line tools, servers
@@ -343,7 +346,7 @@ and callback trust boundary are in [SyntaxTree.md](SyntaxTree.md). Renderer
 hooks stay in `SetzerHTML`, without a parser-to-renderer dependency.
 
 Math: the library produces nodes with the TeX source and nothing else. The
-[math step](Math.md), merged in PR #21 and not yet released, implements three independently switchable
+[math step](Math.md), merged in PR #21 and shipped in 0.5.0, implements three independently switchable
 forms, exact provenance and caller-renderer hooks; no TeX engine is bundled.
 
 <a id="learning"></a>
@@ -615,8 +618,10 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: owner-confirmed tagging of the merged 0.5.0 preparation
-and publication after successful release CI, under [Releasing](Releasing.md).
+Current next work: M6 speed/hardening preparation. Fresh selected-extension
+measurements, broader hostile-input checks and fuzzing remain open; full
+benchmark/long-test execution still requires owner confirmation. The source-only
+0.5.0 preview is published under [Releasing](Releasing.md).
 M6 performance/hardening and any versioned publication remain separate work.
 Front matter is merged in PR #19 and named footnotes in PR #20.
 Localization and container markers are merged;

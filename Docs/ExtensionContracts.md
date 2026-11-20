@@ -2,11 +2,11 @@
 
 This is the implemented block and inline contract, including the M2 controller
 and opt-in [M5 footnote support](Footnotes.md), merged in PR #20 (`a6a2da6`)
-and not yet in a versioned release.
+and included in the v0.5.0 preview.
 The [math step](Math.md), merged in PR #21 (`6f166b7`), uses prepared complete inline matches,
 a display-block rule and a post-inline code-fence transform. TeX is opaque;
-that step adds no parser API or dependency. The [alert/callout step](Admonitions.md), merged in PR #22 (`c9543fe`) and not
-yet released, adds quote-start header rules, wrapping
+that step adds no parser API or dependency. The [alert/callout step](Admonitions.md), merged in PR #22 (`c9543fe`) and
+shipped in 0.5.0, adds quote-start header rules, wrapping
 transforms and composed HTML.
 The small rules in `ContainerExtensionTests`, `TransformTests` and
 `InlineExtensionTests` are architecture probes, not feature-conformance tests.
