@@ -5,13 +5,12 @@ Markdown with switchable extensions, exact source positions and an HTML
 renderer. No C, no Rust, no JavaScript, no runtime dependencies — it builds
 wherever Swift runs, including Linux.
 
-> **Status, 20 November 2026:** M1–M4 are merged in `main`, including
-> M3 editor services (PR #12, `651af17`), their measurements (PR #13,
-> `c5f9a0b`) and GFM (PR #14, `e163e6f`). All 652 CommonMark 0.31.2 and
-> 672 pinned GFM specification examples pass by exact HTML. The source-only
-> [v0.4.0 preview release](https://github.com/kerker00/GMSetzer/releases/tag/v0.4.0)
-> is published; macOS/Linux CI and release preparation are merged in PR #16
-> (`6a0eb8e`). Both platforms pass all 118 Swift tests and 17 Python tests.
+> **Status, 20 November 2026:** M1–M5 are merged in `main`; the declared
+> extension/profile/combination criteria have [functional acceptance](Docs/M5Acceptance.md).
+> Merged-main CI passes 227 Swift tests, all 652 CommonMark and 672 GFM examples,
+> 17 Python tests and optimized builds on macOS/Linux. The latest published
+> source-only preview remains [v0.4.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.4.0).
+> `release/0.5.0` prepares the next preview; it has no published tag or release.
 
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented
@@ -21,7 +20,7 @@ release still supplies English defaults only.
 Merged PR #18 (`4397819`) adds exact quote/list marker tokens on `main`;
 see [ContainerMarkers](Docs/ContainerMarkers.md). Its PR and merged-main CI
 pass on macOS and Linux. These features are not yet in a versioned release;
-the 0.5 extension milestone is being implemented in separate steps.
+M5 is now functionally accepted across the separately merged steps below.
 
 Merged PR #19 (`4b0f105`) adds opt-in raw YAML/TOML front matter on `main`
 through the existing extension API; see [FrontMatter](Docs/FrontMatter.md).
@@ -39,7 +38,9 @@ Merged PR #22 (`c9543fe`) adds GitHub-style alerts and
 Obsidian-style callouts with parsed titles, folding and an optional HTML
 recipe; see [Admonitions](Docs/Admonitions.md). PR and merged-main CI pass
 on macOS and Linux. [M5 functional acceptance](Docs/M5Acceptance.md) is
-complete; 0.5.0 release preparation is the next step.
+complete. The `release/0.5.0` branch prepares the next preview with
+[release notes](Docs/Releases/0.5.0.md), candidate identity `0.5.0` and
+[preparation checks](Docs/Validation/Release/0.5.0.md). Publication remains pending.
 
 Requires **Swift 6.2 or later**. The current provisional Apple minimums are
 macOS 15, iOS 18 and visionOS 2; Linux is supported. The repository is public

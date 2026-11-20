@@ -67,17 +67,24 @@ merged branch is removed locally and remotely; no additional worktrees existed.
 See [Math](Math.md) for that step's declared grammar and validation limits.
 
 **Merged M5 step:** PR #22 (`c9543fe`) adds optional
-GitHub-style alerts and Obsidian-style callouts retain parsed body/title
+GitHub-style alerts and Obsidian-style callouts that retain parsed body/title
 Markdown, folding metadata, exact header tokens and composed HTML. A new
 quote-start context prevents header/setext/table ambiguity; rebuilding remaps
 validated token owners without allowing foreign-token forgery/duplication.
 All 227 tests pass on macOS/Swift 6.4.2, macOS/Swift 6.2 and Linux/Swift 6.4.2;
-both host release builds pass. Development identity is `0.5.0-dev.4`. PR and
+both host release builds pass. Development identity was `0.5.0-dev.4` at that step. PR and
 merged-main CI pass on macOS and Linux, including 17 script tests per host.
 The merged branch is removed locally and remotely; no additional worktrees
 existed. [M5 functional acceptance](M5Acceptance.md) is complete against the
 declared fixtures/profile/combination criteria. Release preparation and M6
 remain separate; no tag or release is created. See [Admonitions](Admonitions.md).
+
+**0.5.0 preparation:** `release/0.5.0` proposes result identity `0.5.0` and
+[versioned notes](Releases/0.5.0.md), based on merged M5 acceptance. The latest
+published version remains 0.4.0. Candidate checks are recorded in
+[Validation/Release/0.5.0](Validation/Release/0.5.0.md); preparation review/merge,
+tag-triggered CI and owner-confirmed publication remain pending. No workflow
+or manifest change is needed.
 
 GMSetzer is an independent, general-purpose Markdown library intended for
 open-source use under the MIT licence. Editors, command-line tools, servers
@@ -606,7 +613,8 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: source-only 0.5.0 release preparation under [Releasing](Releasing.md).
+Current next work: review/merge of `release/0.5.0` under [Releasing](Releasing.md),
+then owner-confirmed tagging and publication after successful release CI.
 M6 performance/hardening and any versioned publication remain separate work.
 Front matter is merged in PR #19 and named footnotes in PR #20.
 Localization and container markers are merged;
