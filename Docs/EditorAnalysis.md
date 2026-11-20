@@ -33,7 +33,7 @@ custom roles. `referenceSyntax(for:)` offers a reference-component view.
 heading outline. `SourceIndex` converts original byte positions/ranges to
 portable UTF-16 offsets/ranges or one-based lines/scalar columns.
 
-The unreleased [container marker step](ContainerMarkers.md) adds explicit
+The [container marker step](ContainerMarkers.md), merged in PR #18 (`4397819`), adds explicit
 quote prefixes and each item's complete list marker. These lexical ranges
 exclude indentation/padding and are not inferred from a container's broad
 semantic bounds. Collection also retains prefixes on lines consumed by

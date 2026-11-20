@@ -438,7 +438,7 @@ extensions at 1 MB and 5 MB. `check_benchmark_budget.py` and
 
 ## Container marker tokens (development toward 0.5)
 
-`feature/container-marker-tokens` adds optional quote/list provenance and
+PR #18 (`4397819`) adds optional quote/list provenance and
 retains accepted prefixes on lines consumed by extensions. Marker ranges are
 captured by the existing scanners; token storage and the extra consumed-line
 annotation pass are enabled only with `collectSyntaxDetails`. Collection off

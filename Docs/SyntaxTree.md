@@ -346,10 +346,11 @@ rules, position conversion and the actual editor transaction adapter. See
 
 ## Container marker provenance
 
-The unreleased marker step adds `core.blockQuote.marker` for each actual `>`
+PR #18 (`4397819`) adds `core.blockQuote.marker` on `main` for each actual `>`
 prefix and `core.list.marker` for each item's original bullet or complete
 ordered marker. Quote continuation prefixes retain the quote owner; list
 markers belong to the item (including task items), not the list group. No
 padding or synthetic lazy-line marker is included. Annotation stays opt-in
 and preserves the semantic tree and HTML. See [ContainerMarkers](ContainerMarkers.md)
-for exact source, extension, transform and validation contracts.
+for exact source, extension, transform and validation contracts. This addition
+is not yet in a versioned release.

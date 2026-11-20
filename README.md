@@ -18,9 +18,10 @@ findings and fix titles on `main`, with a documented
 [message-key/argument catalogue](Docs/NativeAnalysisMessages.md). The v0.4.0
 release still supplies English defaults only.
 
-Unreleased work on `feature/container-marker-tokens` adds exact quote/list
-marker tokens for source highlighting; see [ContainerMarkers](Docs/ContainerMarkers.md).
-The 0.5 extension milestone remains a separate next step.
+Merged PR #18 (`4397819`) adds exact quote/list marker tokens on `main`;
+see [ContainerMarkers](Docs/ContainerMarkers.md). Its PR and merged-main CI
+pass on macOS and Linux. These features are not yet in a versioned release;
+the 0.5 extension milestone remains the next separate step.
 
 Requires **Swift 6.2 or later**. The current provisional Apple minimums are
 macOS 15, iOS 18 and visionOS 2; Linux is supported. The repository is public
@@ -73,8 +74,9 @@ and device acceptance do not determine this package's API or release readiness.
   skipped heading levels, duplicate headings and trailing whitespace, with
   portable findings and suggested fixes. Analysis is not a complete linter;
   English defaults remain available, with an optional English/German lookup
-  on `main` since PR #17 (not yet in a versioned release). The marker branch
-  adds original quote/list marker ranges; it does not provide editor colors.
+  on `main` since PR #17. Original quote/list marker ranges are on `main`
+  since PR #18; these additions are not yet in a versioned release. Consumers
+  choose editor colors themselves.
 
 ## Documentation
 

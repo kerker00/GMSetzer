@@ -1,8 +1,8 @@
 # Quote and list marker provenance
 
-Implemented on `feature/container-marker-tokens`, based on `57d13d8` after
-merged localization PR #17. Not yet merged or released. This is the next
-library step toward 0.5; it does not implement M5's additional Markdown syntax.
+Merged in PR #18 (`4397819`), implementation `c58b6ac` based on `57d13d8`
+after localization PR #17. Available on `main`, not yet in a versioned release.
+This completes the marker step toward 0.5; M5's additional syntax remains open.
 
 ## Contract
 
@@ -102,7 +102,13 @@ accepted-prefix collection fix. The final full suites include that fix.
 macOS runs used isolated scratch/cache/config/security/module paths and
 `--disable-sandbox`. Linux ran a source-only package copy in a task-specific
 temporary directory; no consumer checkout or new execution environment was
-needed. Twelve tests were added. Script tests were not repeated because no
-scripts changed. GitHub CI at the minimum Linux compiler has not run for this
-branch yet. No fresh benchmark/reference series, performance claim, consumer
+needed. Twelve tests were added. Local script tests were not repeated because no
+scripts changed. No fresh benchmark/reference series, performance claim, consumer
 editor/device acceptance, version tag or release is part of this step.
+
+Subsequent [PR CI](https://github.com/kerker00/GMSetzer/actions/runs/44789966780)
+and [merged-main CI](https://github.com/kerker00/GMSetzer/actions/runs/44792200115)
+both pass on macOS and Linux, including library/specification tests, optimized
+builds and the offline Python checks. The Linux job uses the minimum Swift 6.2
+compiler; the macOS job uses Xcode 26.2. The merged feature branch was removed
+locally and remotely; no additional worktree existed.
