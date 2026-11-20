@@ -166,12 +166,21 @@ extension BlockParser {
 
     /// Retain the existing extension/quote/list precedence and depth fallback.
     private mutating func openContainers(at index: Int) -> ContainerOpening {
+        // A list opened on this line reuses its marker for the first item
+        // instead of scanning the same line again.
+        var openedMarker: ListMarker?
         opening: while true {
             // A list without an open item accepts only a compatible marker.
             if let last = containers.last, case .list(let style) = last.kind {
-                if Self.mayStartListItem(firstByte(index)), let marker = listMarker(index, interrupting: false),
-                   !(registry.contains(.thematicBreak) && thematicBreak(index)),
-                   Self.sameList(style, marker.style) {
+                let candidate: ListMarker?
+                if let known = openedMarker {
+                    candidate = known
+                    openedMarker = nil
+                } else if Self.mayStartListItem(firstByte(index)), let found = listMarker(index, interrupting: false),
+                          !(registry.contains(.thematicBreak) && thematicBreak(index)) {
+                    candidate = found
+                } else { candidate = nil }
+                if let marker = candidate, Self.sameList(style, marker.style) {
                     guard hasRoom(for: 1, at: index) else {
                         closeContainers(to: containers.count - 1)
                         return .startLeaf(depthLimited: true)
@@ -232,6 +241,7 @@ extension BlockParser {
                         let start = lines[index].range.lowerBound
                         let node = append(.list(ListAttributes(style: marker.style)), range: SourceRange(start, start))
                         containers.append(OpenContainer(node: node, kind: .list(marker.style), start: start, end: lines[index].range.upperBound))
+                        openedMarker = marker
                         // Next iteration opens the first item through the same path
                         // used for subsequent siblings.
                         continue opening
@@ -475,7 +485,7 @@ extension BlockParser {
             let removal: Int
             let info: String?
             let indented: Bool
-            if case .fenced(let fence) = active.kind { removal = fence.indent; info = fence.info; indented = false }
+            if case .fenced(let fence) = active.kind { removal = fence.indent; info = fence.info.map(decode); indented = false }
             else {
                 removal = 4
                 info = nil

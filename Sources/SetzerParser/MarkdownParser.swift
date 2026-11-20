@@ -69,9 +69,10 @@ internal struct BlockParser {
         self.limits = limits
         self.collectSyntaxDetails = collectSyntaxDetails
         self.builder = DocumentBuilder(source: source, collectSyntaxDetails: collectSyntaxDetails)
-        // Typical documents have one to two nodes per line; reserving one per
-        // line avoids most regrowth without holding much unused capacity.
-        self.builder.reserveCapacity(lines.count + 1)
+        // Typical documents have one to two nodes per line. Reserving one and
+        // a half per line avoids regrowth there; array doubling would keep at
+        // least as much spare capacity.
+        self.builder.reserveCapacity(lines.count + lines.count / 2 + 1)
         self.registry = registry
     }
 
@@ -163,7 +164,7 @@ internal struct BlockParser {
     func decode(_ range: SourceRange) -> String {
         source.withUnsafeBufferPointer { buffer in
             let bytes = UnsafeBufferPointer(rebasing: buffer[range.lowerBound..<range.upperBound])
-            if !bytes.contains(0) { return String(decoding: bytes, as: UTF8.self) }
+            if !ByteSearch.containsZero(bytes) { return String(decoding: bytes, as: UTF8.self) }
             var repaired: [UInt8] = []
             repaired.reserveCapacity(bytes.count + 8)
             Self.appendRepaired(bytes, to: &repaired)
@@ -237,7 +238,9 @@ internal struct BlockParser {
         return count >= 3
     }
 
-    struct Fence { let marker: UInt8; let count: Int; let indent: Int; let info: String? }
+    /// The info string stays a source range until the block is finished,
+    /// so an open leaf holds no reference-counted storage.
+    struct Fence { let marker: UInt8; let count: Int; let indent: Int; let info: SourceRange? }
 
     func openingFence(_ index: Int) -> Fence? {
         let indent = indentation(index)
@@ -251,7 +254,7 @@ internal struct BlockParser {
         let info = trimmed(cursor, end)
         if marker == 96 && source[info.lowerBound..<info.upperBound].contains(96) { return nil }
         return Fence(marker: marker, count: cursor - indent.offset, indent: indent.columns,
-                     info: info.isEmpty ? nil : decode(info))
+                     info: info.isEmpty ? nil : info)
     }
 
     func closesFence(_ index: Int, _ fence: Fence) -> Bool {
@@ -360,6 +363,27 @@ internal struct BlockParser {
             if line.range.upperBound > line.contentRange.upperBound { literal += "\n" }
         }
         return literal
+    }
+}
+
+/// Word-at-a-time search for a NUL byte.
+internal enum ByteSearch {
+    @inline(__always)
+    static func containsZero(_ buffer: UnsafeBufferPointer<UInt8>) -> Bool {
+        let low7: UInt64 = 0x7F7F_7F7F_7F7F_7F7F
+        var offset = 0
+        if let base = buffer.baseAddress {
+            while offset + 8 <= buffer.count {
+                let word = UnsafeRawPointer(base + offset).loadUnaligned(as: UInt64.self)
+                if ~(((word & low7) &+ low7) | word | low7) != 0 { return true }
+                offset += 8
+            }
+        }
+        while offset < buffer.count {
+            if buffer[offset] == 0 { return true }
+            offset += 1
+        }
+        return false
     }
 }
 
