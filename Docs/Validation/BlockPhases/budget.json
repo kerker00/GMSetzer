@@ -1,0 +1,84 @@
+{
+  "cases": [
+    {
+      "profile": "CommonMark",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 2.615,
+      "c_ms": 1.743,
+      "ratio": 1.5002868617326448,
+      "limit_ms": 3.486,
+      "remaining_ms": 0.871,
+      "budget_passed": true,
+      "regression_percent": -4.071900220102709
+    },
+    {
+      "profile": "CommonMark",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 26.132,
+      "c_ms": 18.711000000000002,
+      "ratio": 1.3966116188338409,
+      "limit_ms": 37.422000000000004,
+      "remaining_ms": 11.290000000000003,
+      "budget_passed": true,
+      "regression_percent": -2.32853672210801
+    },
+    {
+      "profile": "CommonMark",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 132.514,
+      "c_ms": 95.551,
+      "ratio": 1.3868405354208748,
+      "limit_ms": 191.102,
+      "remaining_ms": 58.587999999999994,
+      "budget_passed": true,
+      "regression_percent": -5.953073767583151
+    },
+    {
+      "profile": "GFM",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 2.58,
+      "c_ms": 3.035,
+      "ratio": 0.8500823723228995,
+      "limit_ms": 6.07,
+      "remaining_ms": 3.49,
+      "budget_passed": true,
+      "regression_percent": -3.62345909600299
+    },
+    {
+      "profile": "GFM",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 26.083000000000002,
+      "c_ms": 36.34,
+      "ratio": 0.7177490368739681,
+      "limit_ms": 60.0,
+      "remaining_ms": 33.917,
+      "budget_passed": true,
+      "regression_percent": -3.6318628537648556
+    },
+    {
+      "profile": "GFM",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 132.317,
+      "c_ms": 193.59300000000002,
+      "ratio": 0.6834802911262288,
+      "limit_ms": 300.0,
+      "remaining_ms": 167.683,
+      "budget_passed": true,
+      "regression_percent": -2.2747919082402035
+    }
+  ],
+  "failures": [],
+  "scope": "Current block parser only; passing does not prove complete inline/GFM performance."
+}

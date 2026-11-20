@@ -249,6 +249,10 @@ are off by default, so source anchors do not change conformance comparisons.
 
 ## Current boundary and next work
 
+The internal block driver is split into container matching, leaf continuation,
+container opening and leaf starts; [BlockPhases.md](BlockPhases.md) records the
+ordering/progress contract. Public syntax values and callback APIs are unchanged.
+
 This implementation supports block quotes, ordered/bullet lists and lazy
 continuation, as well as paragraphs, ATX/setext headings, thematic breaks,
 fenced/indented code, all seven HTML block classes, multiline reference definitions and literal
@@ -288,5 +292,6 @@ The measured M1-B release baseline and annotation cost are in
 [Benchmarks.md](Benchmarks.md#m1-b-measured-baseline-and-checked-validation).
 Subsequent [portability verification](Portability.md) builds with Swift 6.2,
 passes all 57 macOS tests with a compatible SDK, and executes the protected spec
-baseline plus targeted checks on static Linux ARM64. The full Linux Swift
-Testing/glibc/x86-64 matrix and minimum Apple OS runtime checks remain open.
+baseline plus targeted checks on static Linux ARM64. The phase extraction also
+passes all 57 tests on Linux x86-64/glibc with Swift 6.4.2. Full Linux Swift 6.2
+suite coverage and minimum Apple OS runtime checks remain open.

@@ -41,161 +41,189 @@ extension BlockParser {
     mutating func parse() -> Document {
         var index = 0
         while index < physicalLines.count {
-            var view = physicalLines[index]
-            var matched = 0
-            for container in containers {
-                let prefix: ContainerPrefix
-                if case .item(let padding) = container.kind {
-                    prefix = .item(padding: padding, acceptsBlank: container.childCount > 0 || leaf?.parent == container.node)
-                } else { prefix = container.prefix }
-                guard let next = Self.project(view, source: source, prefixes: [prefix]) else { break }
-                view = next
-                matched += 1
-            }
-            lines[index] = view
-            let allMatched = matched == containers.count
-
-            if allMatched, let kind = leaf?.kind {
-                switch kind {
-                case .fenced(let fence):
-                    touchContainers(through: index)
-                    if closesFence(index, fence) { finishLeaf(closingLine: index) }
-                    else { leaf!.indices.append(index) }
-                    index += 1
-                    continue
-                case .indented:
-                    if isBlank(index) || indentation(index).columns >= 4 {
-                        leaf!.indices.append(index)
-                        touchContainers(through: index)
-                        index += 1
-                        continue
-                    }
-                case .paragraph:
-                    if let level = setextLevel(index) {
-                        touchContainers(through: index)
-                        let parent = leaf!.parent
-                        if !finishLeaf(headingLevel: level, closingLine: index) {
-                            // Removing only definitions leaves the underline
-                            // as paragraph text; it is not a fresh list marker.
-                            leaf = OpenLeaf(kind: .paragraph, parent: parent, start: index, indices: [index])
-                        }
-                        index += 1
-                        continue
-                    }
-                case .html(let kind):
-                    if (kind != .blockTag && kind != .completeTag) || !isBlank(index) {
-                        leaf!.indices.append(index)
-                        touchContainers(through: index)
-                        if endsHTMLBlock(index, kind: kind) { finishLeaf() }
-                        index += 1
-                        continue
-                    }
-                }
-            }
-
-            if case .paragraph? = leaf?.kind, !isBlank(index),
-               !interruptsParagraph(index, matchedContainers: matched) {
-                // Missing quote/item prefixes may only continue an existing
-                // paragraph; they cannot extend a fence, heading or code block.
-                leaf!.indices.append(index)
-                touchContainers(through: index)
+            let matched = matchOpenContainers(at: index)
+            if continueOpenLeaf(at: index, matchedContainers: matched) {
                 index += 1
                 continue
             }
             finishLeaf()
             closeContainers(to: matched)
-
-            if isBlank(index) {
-                touchContainers(through: index)
-                if let last = containers.indices.last {
-                    if case .quote = containers[last].kind { containers[last].pendingBlank = false }
-                    else { containers[last].pendingBlank = true }
-                }
+            if consumeBlankLine(at: index) {
                 index += 1
                 continue
             }
-
-            var consumedExtension = false
-            var limited = false
-            while true {
-                // A list without an open item accepts only a compatible marker.
-                if let last = containers.last, case .list(let style) = last.kind {
-                    if let marker = listMarker(index, interrupting: false), !thematicBreak(index),
-                       Self.sameList(style, marker.style) {
-                        guard hasRoom(for: 1, at: index) else { closeContainers(to: containers.count - 1); limited = true; break }
-                        beginChild()
-                        let node = append(.listItem, range: SourceRange(lines[index].range.lowerBound, lines[index].range.lowerBound))
-                        containers.append(OpenContainer(node: node, kind: .item(padding: marker.padding),
-                                                        start: lines[index].range.lowerBound, end: lines[index].range.upperBound))
-                        lines[index] = marker.content
-                        continue
-                    }
-                    closeContainers(to: containers.count - 1)
-                    continue
-                }
-                if let resolved = extensionMatch(at: index, interrupting: false) {
-                    let match = resolved.match
-                    beginChild()
-                    let end = index + match.consumedLines
-                    append(match.data, range: SourceRange(lines[index].range.lowerBound, physicalLines[end - 1].range.upperBound),
-                           segments: match.sourceSegments, fallbackLiteral: extensionFallback(resolved.lines))
-                    touchContainers(through: end - 1)
-                    index = end
-                    consumedExtension = true
-                    break
-                }
-                if let content = Self.quoteContent(lines[index], source: source) {
-                    guard hasRoom(for: 1, at: index) else { limited = true; break }
-                    beginChild()
-                    let start = lines[index].range.lowerBound
-                    let node = append(.blockQuote, range: SourceRange(start, start))
-                    containers.append(OpenContainer(node: node, kind: .quote, start: start, end: lines[index].range.upperBound))
-                    lines[index] = content
-                    if isBlank(index) { break }
-                    continue
-                }
-                if !thematicBreak(index), let marker = listMarker(index, interrupting: false) {
-                    guard hasRoom(for: 2, at: index) else { limited = true; break }
-                    beginChild()
-                    let start = lines[index].range.lowerBound
-                    let node = append(.list(ListAttributes(style: marker.style)), range: SourceRange(start, start))
-                    containers.append(OpenContainer(node: node, kind: .list(marker.style), start: start, end: lines[index].range.upperBound))
-                    // Next iteration opens the first item through the same path
-                    // used for subsequent siblings.
-                    continue
-                }
-                break
+            switch openContainers(at: index) {
+            case .consumed(let nextLine):
+                index = nextLine
+            case .startLeaf(let depthLimited):
+                touchContainers(through: index)
+                if !isBlank(index) { startLeaf(at: index, depthLimited: depthLimited) }
+                index += 1
             }
-            if consumedExtension { continue }
-            touchContainers(through: index)
-            if isBlank(index) { index += 1; continue }
-            let parent = containers.last?.node ?? 0
-            if !limited && indentation(index).columns >= 4 {
-                beginChild()
-                leaf = OpenLeaf(kind: .indented, parent: parent, start: index, indices: [index])
-            } else if !limited, let fence = openingFence(index) {
-                beginChild()
-                leaf = OpenLeaf(kind: .fenced(fence), parent: parent, start: index, indices: [])
-            } else if !limited, let heading = atxHeading(index) {
-                beginChild()
-                let node = append(.heading(level: heading.level), range: lines[index].range,
-                                  segments: heading.content.isEmpty ? [] : [heading.content])
-                appendText(heading.content, to: node)
-            } else if !limited && thematicBreak(index) {
-                beginChild()
-                append(.thematicBreak, range: lines[index].range)
-            } else if !limited, let kind = htmlBlockStart(index, interrupting: false) {
-                beginChild()
-                leaf = OpenLeaf(kind: .html(kind), parent: parent, start: index, indices: [index])
-                if endsHTMLBlock(index, kind: kind) { finishLeaf() }
-            } else {
-                leaf = OpenLeaf(kind: .paragraph, parent: parent, start: index, indices: [index])
-            }
-            index += 1
         }
         finishLeaf()
         closeContainers(to: 0)
         return try! builder.build()
+    }
+
+    /// Project the current physical line through the still-open containers.
+    private mutating func matchOpenContainers(at index: Int) -> Int {
+        var view = physicalLines[index]
+        var matched = 0
+        for container in containers {
+            let prefix: ContainerPrefix
+            if case .item(let padding) = container.kind {
+                prefix = .item(padding: padding, acceptsBlank: container.childCount > 0 || leaf?.parent == container.node)
+            } else { prefix = container.prefix }
+            guard let next = Self.project(view, source: source, prefixes: [prefix]) else { break }
+            view = next
+            matched += 1
+        }
+        lines[index] = view
+        return matched
+    }
+
+    /// Read only kind and parent; do not copy OpenLeaf's growing
+    /// indices array before appending, which would defeat its unique storage.
+    private mutating func continueOpenLeaf(at index: Int, matchedContainers: Int) -> Bool {
+        if matchedContainers == containers.count, let kind = leaf?.kind {
+            switch kind {
+            case .fenced(let fence):
+                touchContainers(through: index)
+                if closesFence(index, fence) { finishLeaf(closingLine: index) }
+                else { leaf?.indices.append(index) }
+                return true
+            case .indented:
+                if isBlank(index) || indentation(index).columns >= 4 {
+                    leaf?.indices.append(index)
+                    touchContainers(through: index)
+                    return true
+                }
+            case .paragraph:
+                if let level = setextLevel(index) {
+                    touchContainers(through: index)
+                    guard let parent = leaf?.parent else { return false }
+                    if !finishLeaf(headingLevel: level, closingLine: index) {
+                        // Removing only definitions leaves the underline
+                        // as paragraph text; it is not a fresh list marker.
+                        leaf = OpenLeaf(kind: .paragraph, parent: parent, start: index, indices: [index])
+                    }
+                    return true
+                }
+            case .html(let kind):
+                if (kind != .blockTag && kind != .completeTag) || !isBlank(index) {
+                    leaf?.indices.append(index)
+                    touchContainers(through: index)
+                    if endsHTMLBlock(index, kind: kind) { finishLeaf() }
+                    return true
+                }
+            }
+        }
+
+        if case .paragraph? = leaf?.kind, !isBlank(index),
+           !interruptsParagraph(index, matchedContainers: matchedContainers) {
+            // Missing quote/item prefixes may only continue an existing
+            // paragraph; they cannot extend a fence, heading or code block.
+            leaf?.indices.append(index)
+            touchContainers(through: index)
+            return true
+        }
+        return false
+    }
+
+    private mutating func consumeBlankLine(at index: Int) -> Bool {
+        guard isBlank(index) else { return false }
+        touchContainers(through: index)
+        if let last = containers.indices.last {
+            if case .quote = containers[last].kind { containers[last].pendingBlank = false }
+            else { containers[last].pendingBlank = true }
+        }
+        return true
+    }
+
+    private enum ContainerOpening {
+        case consumed(nextLine: Int)
+        case startLeaf(depthLimited: Bool)
+    }
+
+    /// Retain the existing extension/quote/list precedence and depth fallback.
+    private mutating func openContainers(at index: Int) -> ContainerOpening {
+        while true {
+            // A list without an open item accepts only a compatible marker.
+            if let last = containers.last, case .list(let style) = last.kind {
+                if let marker = listMarker(index, interrupting: false), !thematicBreak(index),
+                   Self.sameList(style, marker.style) {
+                    guard hasRoom(for: 1, at: index) else {
+                        closeContainers(to: containers.count - 1)
+                        return .startLeaf(depthLimited: true)
+                    }
+                    beginChild()
+                    let node = append(.listItem, range: SourceRange(lines[index].range.lowerBound, lines[index].range.lowerBound))
+                    containers.append(OpenContainer(node: node, kind: .item(padding: marker.padding),
+                                                    start: lines[index].range.lowerBound, end: lines[index].range.upperBound))
+                    lines[index] = marker.content
+                    continue
+                }
+                closeContainers(to: containers.count - 1)
+                continue
+            }
+            if let resolved = extensionMatch(at: index, interrupting: false) {
+                let match = resolved.match
+                beginChild()
+                let end = index + match.consumedLines
+                append(match.data, range: SourceRange(lines[index].range.lowerBound, physicalLines[end - 1].range.upperBound),
+                       segments: match.sourceSegments, fallbackLiteral: extensionFallback(resolved.lines))
+                touchContainers(through: end - 1)
+                return .consumed(nextLine: end)
+            }
+            if let content = Self.quoteContent(lines[index], source: source) {
+                guard hasRoom(for: 1, at: index) else { return .startLeaf(depthLimited: true) }
+                beginChild()
+                let start = lines[index].range.lowerBound
+                let node = append(.blockQuote, range: SourceRange(start, start))
+                containers.append(OpenContainer(node: node, kind: .quote, start: start, end: lines[index].range.upperBound))
+                lines[index] = content
+                if isBlank(index) { break }
+                continue
+            }
+            if !thematicBreak(index), let marker = listMarker(index, interrupting: false) {
+                guard hasRoom(for: 2, at: index) else { return .startLeaf(depthLimited: true) }
+                beginChild()
+                let start = lines[index].range.lowerBound
+                let node = append(.list(ListAttributes(style: marker.style)), range: SourceRange(start, start))
+                containers.append(OpenContainer(node: node, kind: .list(marker.style), start: start, end: lines[index].range.upperBound))
+                // Next iteration opens the first item through the same path
+                // used for subsequent siblings.
+                continue
+            }
+            break
+        }
+        return .startLeaf(depthLimited: false)
+    }
+
+    private mutating func startLeaf(at index: Int, depthLimited: Bool) {
+        let parent = containers.last?.node ?? 0
+        if !depthLimited && indentation(index).columns >= 4 {
+            beginChild()
+            leaf = OpenLeaf(kind: .indented, parent: parent, start: index, indices: [index])
+        } else if !depthLimited, let fence = openingFence(index) {
+            beginChild()
+            leaf = OpenLeaf(kind: .fenced(fence), parent: parent, start: index, indices: [])
+        } else if !depthLimited, let heading = atxHeading(index) {
+            beginChild()
+            let node = append(.heading(level: heading.level), range: lines[index].range,
+                              segments: heading.content.isEmpty ? [] : [heading.content])
+            appendText(heading.content, to: node)
+        } else if !depthLimited && thematicBreak(index) {
+            beginChild()
+            append(.thematicBreak, range: lines[index].range)
+        } else if !depthLimited, let kind = htmlBlockStart(index, interrupting: false) {
+            beginChild()
+            leaf = OpenLeaf(kind: .html(kind), parent: parent, start: index, indices: [index])
+            if endsHTMLBlock(index, kind: kind) { finishLeaf() }
+        } else {
+            leaf = OpenLeaf(kind: .paragraph, parent: parent, start: index, indices: [index])
+        }
     }
 
     mutating func interruptsParagraph(_ index: Int, matchedContainers: Int) -> Bool {

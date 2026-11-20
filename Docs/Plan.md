@@ -355,7 +355,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | Milestone | Contents | Done when | Estimate | Status |
 | --- | --- | --- | --- | --- |
 | M0 | Repository, package layout, specification run, benchmark setup, name and gap check | Starting point measured; harness reviewed, reference configurations corrected | 2–3 | **reviewed and corrected** (19 Nov 2026); new reference timings pending |
-| M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **reviewed; acceptance open**: M1-A merged in PR #4 (`51efee6`); M1-B measurements, checked validation optimisation and local budget gate implemented. 57 tests and 3,919 reference comparisons pass; 339/652 CommonMark and 339/672 GFM examples pass. [Review-M1](Review-M1.md) tracks remaining M1-C extension/storage proof and M1-D refactor/acceptance before M2 |
+| M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **reviewed; acceptance open**: M1-A merged in PR #4 (`51efee6`); M1-B measurements, checked validation optimisation and local budget gate implemented. 57 tests and 3,919 reference comparisons pass; 339/652 CommonMark and 339/672 GFM examples pass. [Review-M1](Review-M1.md) tracks the completed block-phase split, remaining M1-C extension/storage proof and M1-D invariant/hardening acceptance before M2 |
 | M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | |
 | M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; editor adapter for syntax spans/findings | Security/position/analysis tests pass; Setzkit proves snapshot-bound syntax decoration and diagnostic underlines; integration can start | re-estimate | |
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | |
@@ -402,6 +402,11 @@ profile conversions, incremental parsing if measurements call for it.
 
 ## 13. Open questions
 
+The block-loop decomposition has moved to the beginning of M1-C, before shared
+registry dispatch; its implemented boundaries and verification are in
+[BlockPhases.md](BlockPhases.md). Remaining M1-D work includes the builder
+invariant/`try!` audit and final acceptance, not a second decomposition.
+
 1. **Minimum platform and Swift versions.** The manifest requires Swift tools
    6.2 and provisionally macOS 15, iOS 18 and visionOS 2. Swift 6.2 now builds
    all library modules for macOS and Linux ARM64; all 57 macOS tests pass with
@@ -409,10 +414,11 @@ profile conversions, incremental parsing if measurements call for it.
    an unsafe-buffer bridge support macOS 15, while direct `Array.span` and
    `UTF8Span` require macOS 26. Minimum Apple OS runtime checks remain open;
    keep the byte-buffer path. See [Portability.md](Portability.md).
-2. **Linux verification coverage.** A static ARM64 binary now runs in an
-   isolated Linux VM and retains all protected IDs across 1,324 spec inputs,
-   plus targeted source/render/validation checks. The full Linux Swift Testing
-   suite, glibc and x86-64 checks remain open; the static SDK lacks `Testing`.
+2. **Linux verification coverage.** The initial static ARM64 probe retains all
+   protected IDs across 1,324 spec inputs plus targeted checks. The extracted
+   phases now pass all 57 tests on Linux x86-64/glibc with Swift 6.4.2 through
+   an existing SSH host, and cross-build for static ARM64 with Swift 6.2.
+   A full Linux suite on Swift 6.2 remains open; its static SDK lacks `Testing`.
 3. **Fuzzing on macOS** with the Xcode toolchain, or only on Linux.
 4. **Editor-analysis delivery estimate and native rule subset.** The explicit
    syntax/underline/native-lint scope changes M2/M3 work; select and test the

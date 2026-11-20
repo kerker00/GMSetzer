@@ -1,0 +1,36 @@
+{
+  "client_date": "2026-11-20",
+  "timezone": "Europe/Berlin",
+  "measured_core_commit": "4c4fd464d8b5532b8c221e5438bfdd1978e42da0",
+  "measured_source_sha256": "a8d9d7af098bfcc73ae6d05a63850d00a7af7b69e5a3840b81691149bb2e1143",
+  "swift_macos": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0",
+  "macos": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434",
+  "benchmark": "Release, debug symbols off, 30 cases, wallClock/mallocCountTotal/mallocBytesCount; microsecond output; existing frozen M1-B baseline, 10% regression alert",
+  "linux": "Existing SSH Linux host, x86_64, Linux 7.3.3-1-cachyos, Swift 6.4.2, x86_64-unknown-linux-gnu; full suite; only sources/manifest/fixtures transferred; task scratch removed; glibc 2.44",
+  "macos_swift62": "Official isolated 6.2 release, macOS 14.4 SDK, own Testing libraries, package deployment target macOS 15; full suite",
+  "artifacts": {
+    "mac-swift64.txt": "8afacd0faecdd2381ec9608dad8524808042f6eb792f8dedce4e02315fdc8fc2",
+    "cmark-reference.txt": "07383a367b72299604e1ca70a87dc700201f42f0896dfef0d290a5b25a008d5e",
+    "mac-swift62.txt": "1460a6d16b11aed0c788bcc454334987b3d511bc9470f671fa06f081ae823370",
+    "linux-arm64-swift62-build.txt": "c48ed6aa963ad562e85d0360090372d1a4a0a7c63049e73c396e6978cc00b2d3",
+    "benchmark.md": "f2d596ed668f749e288bd9d3f2f356bb44521d958d615f667e6ef471e46b8508",
+    "linux-x86_64.txt": "03710d2a77fb1df57b21c8caad39876fa44695d3b2aca34a634dfee28d372998",
+    "budget.json": "953e3aa581ae6821c067e90abd85dccdd0f306bb135c1985965c72f0062dfd0b",
+    "mac-swift64-release.txt": "f0926dc2d6dbb5085fdab3b672ca28f75547ab50dde4349e7e46a0910f490c91"
+  },
+  "limits": [
+    "No new VM/container or global install",
+    "Linux full suite uses Swift 6.4.2, not 6.2",
+    "GFM/inline implementations remain incomplete",
+    "Benchmark differences within a few percent are not claimed as an optimisation"
+  ],
+  "hardware": {
+    "cpu": "Apple M2",
+    "physical_cores": 8,
+    "ram_bytes": 17179869184
+  },
+  "additional_checks": [
+    "All 57 Swift 6.4.2 macOS release tests pass with debug symbols off",
+    "All five refactored modules cross-build for static Linux ARM64 with Swift 6.2; no new VM execution"
+  ]
+}
