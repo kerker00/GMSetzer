@@ -34,7 +34,10 @@ internal struct OpenLeaf {
     let kind: Kind
     let parent: Int
     let start: Int
-    var indices: [Int]
+    /// Content lines. Every physical line either continues the open leaf or
+    /// finishes it before anything else happens, so the lines are always
+    /// contiguous; a range avoids a heap-allocated index list per block.
+    var indices: Range<Int>
 }
 
 extension BlockParser {
@@ -73,17 +76,29 @@ extension BlockParser {
     private mutating func matchOpenContainers(at index: Int) -> Int {
         var view = physicalLines[index]
         var matched = 0
-        for container in containers {
-            let prefix: ContainerPrefix
-            if case .item(let padding) = container.kind {
-                prefix = .item(padding: padding, acceptsBlank: container.childCount > 0 || leaf?.parent == container.node)
-            } else { prefix = container.prefix }
-            guard let next = Self.project(view, source: source, prefixes: [prefix]) else { break }
+        let leafParent = leaf?.parent
+        for position in containers.indices {
+            let next: SourceLine?
+            switch containers[position].kind {
+            case .quote: next = Self.quoteContent(view, source: source)
+            case .list: next = view
+            case .item(let padding):
+                let acceptsBlank = containers[position].childCount > 0 || leafParent == containers[position].node
+                next = Self.itemContent(view, source: source, padding: padding, acceptsBlank: acceptsBlank)
+            }
+            guard let next else { break }
             view = next
             matched += 1
         }
         lines[index] = view
         return matched
+    }
+
+    @inline(__always)
+    private mutating func extendLeaf(_ index: Int) {
+        // Contiguity is a parser invariant; see OpenLeaf.indices.
+        assert(leaf?.indices.upperBound == index)
+        if let lower = leaf?.indices.lowerBound { leaf?.indices = lower..<(index + 1) }
     }
 
     /// Read only kind and parent; do not copy OpenLeaf's growing
@@ -94,11 +109,11 @@ extension BlockParser {
             case .fenced(let fence):
                 touchContainers(through: index)
                 if closesFence(index, fence) { finishLeaf(closingLine: index) }
-                else { leaf?.indices.append(index) }
+                else { extendLeaf(index) }
                 return true
             case .indented:
                 if isBlank(index) || indentation(index).columns >= 4 {
-                    leaf?.indices.append(index)
+                    extendLeaf(index)
                     touchContainers(through: index)
                     return true
                 }
@@ -109,13 +124,13 @@ extension BlockParser {
                     if !finishLeaf(headingLevel: level, closingLine: index) {
                         // Removing only definitions leaves the underline
                         // as paragraph text; it is not a fresh list marker.
-                        leaf = OpenLeaf(kind: .paragraph, parent: parent, start: index, indices: [index])
+                        leaf = OpenLeaf(kind: .paragraph, parent: parent, start: index, indices: index..<(index + 1))
                     }
                     return true
                 }
             case .html(let kind):
                 if (kind != .blockTag && kind != .completeTag) || !isBlank(index) {
-                    leaf?.indices.append(index)
+                    extendLeaf(index)
                     touchContainers(through: index)
                     if endsHTMLBlock(index, kind: kind) { finishLeaf() }
                     return true
@@ -127,7 +142,7 @@ extension BlockParser {
            !interruptsParagraph(index, matchedContainers: matchedContainers) {
             // Missing quote/item prefixes may only continue an existing
             // paragraph; they cannot extend a fence, heading or code block.
-            leaf?.indices.append(index)
+            extendLeaf(index)
             touchContainers(through: index)
             return true
         }
@@ -154,7 +169,8 @@ extension BlockParser {
         opening: while true {
             // A list without an open item accepts only a compatible marker.
             if let last = containers.last, case .list(let style) = last.kind {
-                if let marker = listMarker(index, interrupting: false), !(registry.contains(.thematicBreak) && thematicBreak(index)),
+                if Self.mayStartListItem(firstByte(index)), let marker = listMarker(index, interrupting: false),
+                   !(registry.contains(.thematicBreak) && thematicBreak(index)),
                    Self.sameList(style, marker.style) {
                     guard hasRoom(for: 1, at: index) else {
                         closeContainers(to: containers.count - 1)
@@ -198,7 +214,7 @@ extension BlockParser {
                         return .consumed(nextLine: end)
                     }
                 case .core(.blockQuote):
-                    if let content = Self.quoteContent(lines[index], source: source) {
+                    if firstByte(index).byte == 62, let content = Self.quoteContent(lines[index], source: source) {
                         guard hasRoom(for: 1, at: index) else { return .startLeaf(depthLimited: true) }
                         beginChild()
                         let start = lines[index].range.lowerBound
@@ -209,7 +225,7 @@ extension BlockParser {
                         continue opening
                     }
                 case .core(.list):
-                    if !(registry.contains(.thematicBreak) && thematicBreak(index)),
+                    if Self.mayStartListItem(firstByte(index)), !(registry.contains(.thematicBreak) && thematicBreak(index)),
                        let marker = listMarker(index, interrupting: false) {
                         guard hasRoom(for: 2, at: index) else { return .startLeaf(depthLimited: true) }
                         beginChild()
@@ -231,34 +247,37 @@ extension BlockParser {
     private mutating func startLeaf(at index: Int, depthLimited: Bool) {
         let parent = containers.last?.node ?? 0
         if !depthLimited {
+            // Each scanner below rejects a line whose first non-space byte
+            // cannot start it; checking that byte first skips the scan.
+            let first = firstByte(index)
             for rule in registry.leaves {
                 switch rule {
-                case .indentedCode where indentation(index).columns >= 4:
+                case .indentedCode where first.columns >= 4:
                     beginChild()
-                    leaf = OpenLeaf(kind: .indented, parent: parent, start: index, indices: [index])
+                    leaf = OpenLeaf(kind: .indented, parent: parent, start: index, indices: index..<(index + 1))
                     return
                 case .fencedCode:
-                    if let fence = openingFence(index) {
+                    if first.columns <= 3, first.byte == 96 || first.byte == 126, let fence = openingFence(index) {
                         beginChild()
-                        leaf = OpenLeaf(kind: .fenced(fence), parent: parent, start: index, indices: [])
+                        leaf = OpenLeaf(kind: .fenced(fence), parent: parent, start: index, indices: (index + 1)..<(index + 1))
                         return
                     }
                 case .atxHeading:
-                    if let heading = atxHeading(index) {
+                    if first.columns <= 3, first.byte == 35, let heading = atxHeading(index) {
                         beginChild()
                         let node = append(.heading(level: heading.level), range: lines[index].range,
                             segments: heading.content.isEmpty ? [] : [heading.content])
                         appendText(heading.content, to: node)
                         return
                     }
-                case .thematicBreak where thematicBreak(index):
+                case .thematicBreak where first.columns <= 3 && (first.byte == 42 || first.byte == 45 || first.byte == 95) && thematicBreak(index):
                     beginChild()
                     append(.thematicBreak, range: lines[index].range)
                     return
                 case .htmlBlock:
-                    if let kind = htmlBlockStart(index, interrupting: false) {
+                    if first.columns <= 3, first.byte == 60, let kind = htmlBlockStart(index, interrupting: false) {
                         beginChild()
-                        leaf = OpenLeaf(kind: .html(kind), parent: parent, start: index, indices: [index])
+                        leaf = OpenLeaf(kind: .html(kind), parent: parent, start: index, indices: index..<(index + 1))
                         if endsHTMLBlock(index, kind: kind) { finishLeaf() }
                         return
                     }
@@ -266,19 +285,48 @@ extension BlockParser {
                 }
             }
         }
-        leaf = OpenLeaf(kind: .paragraph, parent: parent, start: index, indices: [index])
+        leaf = OpenLeaf(kind: .paragraph, parent: parent, start: index, indices: index..<(index + 1))
     }
 
     mutating func interruptsParagraph(_ index: Int, matchedContainers: Int) -> Bool {
-        if (registry.contains(.atxHeading) && atxHeading(index) != nil) ||
-           (registry.contains(.fencedCode) && openingFence(index) != nil) ||
-           (registry.contains(.thematicBreak) && thematicBreak(index)) { return true }
-        if registry.contains(.blockQuote), Self.quoteContent(lines[index], source: source) != nil { return true }
-        if registry.contains(.htmlBlock), htmlBlockStart(index, interrupting: matchedContainers == containers.count) != nil { return true }
+        // Every core and extension block start allows at most three columns
+        // of indentation, and each core scanner requires a specific first
+        // byte. Plain paragraph text therefore needs a single byte dispatch.
+        let first = firstByte(index)
+        guard first.columns <= 3, let byte = first.byte else { return false }
+        switch byte {
+        case 35:
+            if registry.contains(.atxHeading) && atxHeading(index) != nil { return true }
+        case 96, 126:
+            if registry.contains(.fencedCode) && openingFence(index) != nil { return true }
+        case 42, 45, 95:
+            if registry.contains(.thematicBreak) && thematicBreak(index) { return true }
+        case 62:
+            if registry.contains(.blockQuote), Self.quoteContent(lines[index], source: source) != nil { return true }
+        case 60:
+            if registry.contains(.htmlBlock), htmlBlockStart(index, interrupting: matchedContainers == containers.count) != nil { return true }
+        default: break
+        }
         // At an unmatched outer container this begins a new block there; it
         // does not interrupt that outer container's existing paragraph.
-        if registry.contains(.list), listMarker(index, interrupting: matchedContainers == containers.count) != nil { return true }
+        if Self.mayStartListItem(first), registry.contains(.list),
+           listMarker(index, interrupting: matchedContainers == containers.count) != nil { return true }
+        guard registry.mayInterrupt(byte) else { return false }
         return extensionMatch(at: index, interrupting: true, prefixCount: matchedContainers) != nil
+    }
+
+    /// First byte after indentation and its column count, as seen by every
+    /// block scanner. `byte` is nil for a line without content.
+    @inline(__always)
+    func firstByte(_ index: Int) -> (byte: UInt8?, columns: Int) {
+        let indent = indentation(index)
+        return (indent.offset < lines[index].contentRange.upperBound ? source[indent.offset] : nil, indent.columns)
+    }
+
+    @inline(__always)
+    static func mayStartListItem(_ first: (byte: UInt8?, columns: Int)) -> Bool {
+        guard first.columns <= 3, let byte = first.byte else { return false }
+        return byte == 42 || byte == 43 || byte == 45 || (48...57).contains(byte)
     }
 
     /// Import a fully validated subtree without copying or rebasing source bytes.
@@ -355,78 +403,93 @@ extension BlockParser {
         leaf = nil
         switch active.kind {
         case .paragraph:
-            let allSegments = active.indices.map { index in
-                SourceRange(indentation(index).offset, lines[index].contentRange.upperBound)
+            let paragraphLines = active.indices
+            var segments: [SourceRange] = []
+            segments.reserveCapacity(paragraphLines.count)
+            for index in paragraphLines {
+                segments.append(SourceRange(indentation(index).offset, lines[index].contentRange.upperBound))
             }
-            let scanner = ReferenceScanner(source: source, content: allSegments,
-                endings: active.indices.map { lines[$0].range.upperBound }, collectSyntax: collectSyntaxDetails)
             var firstContent = 0
-            while registry.contains(.referenceDefinition), let reference = scanner.parse(at: firstContent) {
-                let first = active.indices[reference.firstLine]
-                let last = active.indices[reference.endLine - 1]
-                let owner = append(.referenceDefinition(reference.definition),
-                       range: SourceRange(lines[first].range.lowerBound, lines[last].range.upperBound),
-                       segments: active.indices[reference.firstLine..<reference.endLine].map { lines[$0].range }, to: active.parent)
-                if let syntax = reference.syntax {
-                    for (role, ranges) in [("core.reference.label", syntax.label), ("core.reference.destination", syntax.destination),
-                                           ("core.reference.title", syntax.title), ("core.reference.marker", syntax.markers)] {
-                        for range in ranges { builder.record(SyntaxToken(role, range: range, owner: owner)) }
+            // A definition must start with "[" on the first paragraph line;
+            // only then is the scanner and its line-ending table needed.
+            if registry.contains(.referenceDefinition), let opening = segments.first,
+               opening.lowerBound < opening.upperBound, source[opening.lowerBound] == 91 {
+                let scanner = ReferenceScanner(source: source, content: segments,
+                    endings: paragraphLines.map { lines[$0].range.upperBound }, collectSyntax: collectSyntaxDetails)
+                while let reference = scanner.parse(at: firstContent) {
+                    let first = paragraphLines.lowerBound + reference.firstLine
+                    let last = paragraphLines.lowerBound + reference.endLine - 1
+                    let owner = append(.referenceDefinition(reference.definition),
+                           range: SourceRange(lines[first].range.lowerBound, lines[last].range.upperBound),
+                           segments: (first...last).map { lines[$0].range }, to: active.parent)
+                    if let syntax = reference.syntax {
+                        for (role, ranges) in [("core.reference.label", syntax.label), ("core.reference.destination", syntax.destination),
+                                               ("core.reference.title", syntax.title), ("core.reference.marker", syntax.markers)] {
+                            for range in ranges { builder.record(SyntaxToken(role, range: range, owner: owner)) }
+                        }
                     }
+                    firstContent = reference.endLine
                 }
-                firstContent = reference.endLine
             }
-            guard firstContent < active.indices.count else { return false }
+            guard firstContent < paragraphLines.count else { return false }
             beginChild()
-            let contentIndices = Array(active.indices.dropFirst(firstContent))
-            var segments = Array(allSegments.dropFirst(firstContent))
+            let contentStart = paragraphLines.lowerBound + firstContent
+            if firstContent > 0 { segments.removeFirst(firstContent) }
             if let last = segments.last { segments[segments.count - 1] = trimmed(last.lowerBound, last.upperBound) }
-            let endLine = closingLine ?? contentIndices.last!
+            let endLine = closingLine ?? (paragraphLines.upperBound - 1)
             let node = append(headingLevel.map { .heading(level: $0) } ?? .paragraph,
-                              range: SourceRange(lines[contentIndices[0]].range.lowerBound, lines[endLine].range.upperBound),
+                              range: SourceRange(lines[contentStart].range.lowerBound, lines[endLine].range.upperBound),
                               segments: segments, to: active.parent)
             for (position, segment) in segments.enumerated() {
                 appendText(segment, to: node)
                 if position + 1 < segments.count {
-                    let line = lines[contentIndices[position]]
+                    let line = lines[contentStart + position]
                     append(.softBreak, range: SourceRange(line.contentRange.upperBound, line.range.upperBound), to: node)
                 }
             }
         case .fenced, .indented:
-            var indices = active.indices
+            var end = active.indices.upperBound
             let removal: Int
             let info: String?
-            if case .fenced(let fence) = active.kind { removal = fence.indent; info = fence.info }
+            let indented: Bool
+            if case .fenced(let fence) = active.kind { removal = fence.indent; info = fence.info; indented = false }
             else {
                 removal = 4
                 info = nil
-                while let last = indices.last, isBlank(last) { indices.removeLast() }
-                if indices.count < active.indices.count,
+                indented = true
+                while end > active.indices.lowerBound && isBlank(end - 1) { end -= 1 }
+                if end < active.indices.upperBound,
                    let parent = containers.indices.last { containers[parent].pendingBlank = true }
             }
-            var literal = ""
+            let codeLines = active.indices.lowerBound..<end
+            var literal: [UInt8] = []
+            if let last = codeLines.last {
+                literal.reserveCapacity(lines[last].range.upperBound - lines[codeLines.lowerBound].range.lowerBound + 16)
+            }
             var segments: [SourceRange] = []
-            for index in indices {
-                if case .indented = active.kind, isBlank(index) {
-                    literal += "\n"
+            segments.reserveCapacity(codeLines.count)
+            for index in codeLines {
+                if indented && isBlank(index) {
+                    literal.append(10)
                     segments.append(lines[index].range)
                 } else {
-                    let content = codeContent(index, removing: removal)
-                    literal += content.literal
-                    segments.append(content.range)
+                    segments.append(appendCodeContent(index, removing: removal, to: &literal))
                 }
             }
-            let endLine = closingLine ?? indices.last ?? active.start
-            append(.codeBlock(info: info, literal: literal),
+            let endLine = closingLine ?? codeLines.last ?? active.start
+            append(.codeBlock(info: info, literal: String(decoding: literal, as: UTF8.self)),
                    range: SourceRange(lines[active.start].range.lowerBound, lines[endLine].range.upperBound),
                    segments: segments, to: active.parent)
         case .html(let kind):
             let segments = active.indices.map { lines[$0].range }
-            var literal = ""
+            var bytes: [UInt8] = []
             for index in active.indices {
-                literal += String(repeating: " ", count: lines[index].virtualIndentation)
-                literal += decode(lines[index].contentRange) + "\n"
+                Self.appendSpaces(lines[index].virtualIndentation, to: &bytes)
+                appendRepaired(lines[index].contentRange, to: &bytes)
+                bytes.append(10)
             }
-            let last = active.indices.last!
+            let literal = String(decoding: bytes, as: UTF8.self)
+            let last = active.indices.upperBound - 1
             append(.htmlBlock(HTMLBlock(kind: kind, literal: literal)),
                    range: SourceRange(lines[active.start].range.lowerBound, lines[last].range.upperBound),
                    segments: segments, to: active.parent)
@@ -435,10 +498,22 @@ extension BlockParser {
     }
 
     static func quoteContent(_ line: SourceLine, source: [UInt8]) -> SourceLine? {
-        var cursor = SourceCursor(source: source, line: line)
-        guard cursor.skipIndentation() <= 3, cursor.byte == 62 else { return nil }
+        var cursor = SourceCursor(line: line)
+        guard cursor.skipIndentation(in: source) <= 3, cursor.byte(source) == 62 else { return nil }
         cursor.advanceASCII()
-        if cursor.byte == 32 || cursor.byte == 9 { cursor.consumeIndentation(1) }
+        let next = cursor.byte(source)
+        if next == 32 || next == 9 { cursor.consumeIndentation(1, in: source) }
+        return cursor.view
+    }
+
+    @inline(__always)
+    static func itemContent(_ line: SourceLine, source: [UInt8], padding: Int, acceptsBlank: Bool) -> SourceLine? {
+        var cursor = SourceCursor(line: line)
+        var probe = cursor
+        let indent = probe.skipIndentation(in: source)
+        if indent >= padding { cursor.consumeIndentation(padding, in: source) }
+        else if acceptsBlank && probe.atEnd { cursor = probe }
+        else { return nil }
         return cursor.view
     }
 
@@ -451,13 +526,8 @@ extension BlockParser {
                 view = next
             case .list: break
             case .item(let padding, let acceptsBlank):
-                var cursor = SourceCursor(source: source, line: view)
-                var probe = cursor
-                let indent = probe.skipIndentation()
-                if indent >= padding { cursor.consumeIndentation(padding) }
-                else if acceptsBlank && probe.atEnd { cursor = probe }
-                else { return nil }
-                view = cursor.view
+                guard let next = itemContent(view, source: source, padding: padding, acceptsBlank: acceptsBlank) else { return nil }
+                view = next
             }
         }
         return view
@@ -470,31 +540,32 @@ extension BlockParser {
     }
 
     func listMarker(_ index: Int, interrupting: Bool) -> ListMarker? {
-        var cursor = SourceCursor(source: source, line: lines[index])
-        let indent = cursor.skipIndentation()
-        guard indent <= 3, let first = cursor.byte else { return nil }
+        var cursor = SourceCursor(line: lines[index])
+        let indent = cursor.skipIndentation(in: source)
+        guard indent <= 3, let first = cursor.byte(source) else { return nil }
         let markerStart = cursor.offset
         let style: ListStyle
-        if [UInt8(42), 43, 45].contains(first) {
+        if first == 42 || first == 43 || first == 45 {
             style = .bullet(marker: first)
             cursor.advanceASCII()
         } else if (48...57).contains(first) {
             var digits = 0
             var start = 0
-            while let byte = cursor.byte, (48...57).contains(byte), digits < 9 {
+            while let byte = cursor.byte(source), (48...57).contains(byte), digits < 9 {
                 start = start * 10 + Int(byte - 48)
                 digits += 1
                 cursor.advanceASCII()
             }
-            guard let delimiter = cursor.byte, delimiter == 46 || delimiter == 41,
+            guard let delimiter = cursor.byte(source), delimiter == 46 || delimiter == 41,
                   !interrupting || start == 1 else { return nil }
             style = .ordered(start: start, delimiter: delimiter)
             cursor.advanceASCII()
         } else { return nil }
-        guard cursor.atEnd || cursor.byte == 32 || cursor.byte == 9 else { return nil }
+        let following = cursor.byte(source)
+        guard cursor.atEnd || following == 32 || following == 9 else { return nil }
         let width = cursor.offset - markerStart
         var probe = cursor
-        let whitespace = probe.skipIndentation()
+        let whitespace = probe.skipIndentation(in: source)
         if interrupting && probe.atEnd { return nil }
         let padding: Int
         if whitespace >= 1 && whitespace <= 4 && !probe.atEnd {
@@ -502,7 +573,7 @@ extension BlockParser {
             cursor = probe
         } else {
             padding = indent + width + 1
-            cursor.consumeIndentation(1)
+            cursor.consumeIndentation(1, in: source)
         }
         return ListMarker(style: style, padding: padding, content: cursor.view)
     }

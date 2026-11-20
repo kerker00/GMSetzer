@@ -36,8 +36,12 @@ internal struct RuleRegistry: Sendable {
     let custom: [ActiveRule]
     let enabled: UInt16
     let issues: [ConfigurationIssue]
+    /// First bytes for which an active custom rule may interrupt a paragraph.
+    let interruptTriggers: ByteSet
 
     func contains(_ rule: CoreBlockRule) -> Bool { enabled & rule.bit != 0 }
+    @inline(__always)
+    func mayInterrupt(_ byte: UInt8) -> Bool { interruptTriggers.contains(byte) }
 
     static let core = RuleRegistry(opening: [.core(.blockQuote), .core(.list)],
         leaves: [.indentedCode, .fencedCode, .atxHeading, .thematicBreak, .htmlBlock],
@@ -173,6 +177,16 @@ internal struct RuleRegistry: Sendable {
             profile.disabledRules.contains(rule.rawValue) ? value : value | rule.bit
         }
         self.issues = issues
+        self.interruptTriggers = Self.interruptTriggers(custom)
+    }
+
+    /// A rule without a trigger byte may match any line.
+    private static func interruptTriggers(_ rules: [ActiveRule]) -> ByteSet {
+        var set = ByteSet()
+        for active in rules where active.rule.interruptsParagraph {
+            if let trigger = active.rule.trigger { set.insert(trigger) } else { return ByteSet(all: true) }
+        }
+        return set
     }
 
     private init(opening: [RegisteredBlockRule], leaves: [CoreBlockRule], custom: [ActiveRule], transforms: [ActiveTransform],
@@ -180,6 +194,7 @@ internal struct RuleRegistry: Sendable {
         self.opening = opening; self.leaves = leaves; self.custom = custom
         self.transforms = transforms
         self.enabled = enabled; self.issues = issues
+        self.interruptTriggers = Self.interruptTriggers(custom)
     }
 
     private static func validIdentifier(_ value: String) -> Bool {
@@ -192,5 +207,37 @@ internal struct RuleRegistry: Sendable {
 
     private static func qualified(_ identifier: String, owner: String) -> String {
         identifier.contains(".") || identifier == owner ? identifier : owner + "." + identifier
+    }
+}
+
+/// A 256-bit membership table for byte dispatch.
+internal struct ByteSet: Sendable {
+    private var words: (UInt64, UInt64, UInt64, UInt64)
+
+    init(all: Bool = false) {
+        let word: UInt64 = all ? .max : 0
+        words = (word, word, word, word)
+    }
+
+    mutating func insert(_ byte: UInt8) {
+        let bit = UInt64(1) << UInt64(byte & 63)
+        switch byte >> 6 {
+        case 0: words.0 |= bit
+        case 1: words.1 |= bit
+        case 2: words.2 |= bit
+        default: words.3 |= bit
+        }
+    }
+
+    @inline(__always)
+    func contains(_ byte: UInt8) -> Bool {
+        let word: UInt64
+        switch byte >> 6 {
+        case 0: word = words.0
+        case 1: word = words.1
+        case 2: word = words.2
+        default: word = words.3
+        }
+        return word & (UInt64(1) << UInt64(byte & 63)) != 0
     }
 }

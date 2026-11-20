@@ -86,18 +86,27 @@ internal struct BlockParser {
 
     static func scanLines(_ bytes: [UInt8]) -> [SourceLine] {
         var result: [SourceLine] = []
-        var start = 0
-        var cursor = 0
-        while cursor < bytes.count {
-            if bytes[cursor] == 10 || bytes[cursor] == 13 {
-                let contentEnd = cursor
-                if bytes[cursor] == 13 && cursor + 1 < bytes.count && bytes[cursor + 1] == 10 { cursor += 1 }
-                cursor += 1
-                result.append(SourceLine(start, contentEnd, cursor))
-                start = cursor
-            } else { cursor += 1 }
+        bytes.withUnsafeBufferPointer { buffer in
+            let count = buffer.count
+            // One pass counts line terminators so the line table is allocated
+            // exactly once; the second pass records the lines.
+            var terminators = 0
+            for byte in buffer where byte == 10 || byte == 13 { terminators += 1 }
+            result.reserveCapacity(terminators + 1)
+            var start = 0
+            var cursor = 0
+            while cursor < count {
+                let byte = buffer[cursor]
+                if byte == 10 || byte == 13 {
+                    let contentEnd = cursor
+                    if byte == 13 && cursor + 1 < count && buffer[cursor + 1] == 10 { cursor += 1 }
+                    cursor += 1
+                    result.append(SourceLine(start, contentEnd, cursor))
+                    start = cursor
+                } else { cursor += 1 }
+            }
+            if start < count { result.append(SourceLine(start, count, count)) }
         }
-        if start < bytes.count { result.append(SourceLine(start, bytes.count, bytes.count)) }
         if bytes.starts(with: [0xEF, 0xBB, 0xBF]), let first = result.first {
             // Keep physicalRange at byte zero, but begin syntax recognition
             // after the BOM with a fresh column for indentation/tab stops.
@@ -111,11 +120,26 @@ internal struct BlockParser {
         (33...47).contains(byte) || (58...64).contains(byte) ||
         (91...96).contains(byte) || (123...126).contains(byte)
     }
-    func isBlank(_ index: Int) -> Bool { source[lines[index].contentRange.lowerBound..<lines[index].contentRange.upperBound].allSatisfy(space) }
+    func isBlank(_ index: Int) -> Bool {
+        let range = lines[index].contentRange
+        var cursor = range.lowerBound
+        while cursor < range.upperBound {
+            let byte = source[cursor]
+            if byte != 32 && byte != 9 { return false }
+            cursor += 1
+        }
+        return true
+    }
 
+    @inline(__always)
     func indentation(_ index: Int) -> (offset: Int, columns: Int) {
-        var cursor = SourceCursor(source: source, line: lines[index])
-        let columns = cursor.skipIndentation()
+        indentation(of: lines[index])
+    }
+
+    @inline(__always)
+    func indentation(of line: SourceLine) -> (offset: Int, columns: Int) {
+        var cursor = SourceCursor(line: line)
+        let columns = cursor.skipIndentation(in: source)
         return (cursor.offset, columns)
     }
 
@@ -128,14 +152,39 @@ internal struct BlockParser {
     }
 
     func decode(_ range: SourceRange) -> String {
-        let bytes = source[range.lowerBound..<range.upperBound]
-        if !bytes.contains(0) { return String(decoding: bytes, as: UTF8.self) }
-        var repaired: [UInt8] = []
-        for byte in bytes {
-            if byte == 0 { repaired.append(contentsOf: [0xEF, 0xBF, 0xBD]) }
-            else { repaired.append(byte) }
+        source.withUnsafeBufferPointer { buffer in
+            let bytes = UnsafeBufferPointer(rebasing: buffer[range.lowerBound..<range.upperBound])
+            if !bytes.contains(0) { return String(decoding: bytes, as: UTF8.self) }
+            var repaired: [UInt8] = []
+            repaired.reserveCapacity(bytes.count + 8)
+            Self.appendRepaired(bytes, to: &repaired)
+            return String(decoding: repaired, as: UTF8.self)
         }
-        return String(decoding: repaired, as: UTF8.self)
+    }
+
+    /// Append original bytes with NUL replaced by U+FFFD. Multi-line literals
+    /// collect bytes first and decode once; ASCII separators between lines
+    /// end any malformed sequence exactly as separate decoding would.
+    @inline(__always)
+    static func appendRepaired(_ bytes: UnsafeBufferPointer<UInt8>, to output: inout [UInt8]) {
+        var runStart = 0
+        for position in 0..<bytes.count where bytes[position] == 0 {
+            output.append(contentsOf: UnsafeBufferPointer(rebasing: bytes[runStart..<position]))
+            output.append(0xEF); output.append(0xBF); output.append(0xBD)
+            runStart = position + 1
+        }
+        output.append(contentsOf: UnsafeBufferPointer(rebasing: bytes[runStart..<bytes.count]))
+    }
+
+    func appendRepaired(_ range: SourceRange, to output: inout [UInt8]) {
+        source.withUnsafeBufferPointer { buffer in
+            Self.appendRepaired(UnsafeBufferPointer(rebasing: buffer[range.lowerBound..<range.upperBound]), to: &output)
+        }
+    }
+
+    @inline(__always)
+    static func appendSpaces(_ count: Int, to output: inout [UInt8]) {
+        for _ in 0..<count { output.append(32) }
     }
 
     func atxHeading(_ index: Int) -> (level: Int, content: SourceRange)? {
@@ -206,12 +255,14 @@ internal struct BlockParser {
     }
 
     /// Original source segments include a partially consumed tab byte.
-    func codeContent(_ index: Int, removing columns: Int) -> (range: SourceRange, literal: String) {
+    func appendCodeContent(_ index: Int, removing columns: Int, to literal: inout [UInt8]) -> SourceRange {
         let line = lines[index]
-        var cursor = SourceCursor(source: source, line: line)
-        cursor.consumeIndentation(columns)
-        return (SourceRange(cursor.view.range.lowerBound, line.range.upperBound),
-                String(repeating: " ", count: cursor.virtual) + decode(SourceRange(cursor.offset, line.contentRange.upperBound)) + "\n")
+        var cursor = SourceCursor(line: line)
+        cursor.consumeIndentation(columns, in: source)
+        Self.appendSpaces(cursor.virtual, to: &literal)
+        appendRepaired(SourceRange(cursor.offset, line.contentRange.upperBound), to: &literal)
+        literal.append(10)
+        return SourceRange(cursor.virtual > 0 ? (cursor.virtualSourceOffset ?? cursor.offset) : cursor.offset, line.range.upperBound)
     }
 
     mutating func extensionMatch(at index: Int, interrupting: Bool, prefixCount: Int? = nil, candidate: ActiveRule? = nil)
