@@ -435,6 +435,15 @@ validation. M1-A fixes the three reproduced defects and is merged in PR #4.
 M1-B records two authorised full runs, a checked validation optimisation and a
 local performance gate in [M1Measurements.md](M1Measurements.md). The current
 block baseline passes its measured budgets; completed inline/GFM performance
-is not established. Next: M1-C extension/storage proof and M1-D refactor/
-acceptance before the M2 inline implementation. Existing measurement-series
+is not established. M1-B is merged in PR #5 (`7c0f4ea`); the Setzkit-side
+documentation alignment is merged in Setzkit PR #22 (`39e5fd0`).
+
+The agreed order before M2 is now: verify Linux and Swift 6.2 first; split the
+block-parser main loop at the start of M1-C, before introducing shared rule
+dispatch; then prove extension/storage contracts with an explicit inline
+budget; finally complete the remaining M1-D checks and accept M1. The current
+core baseline leaves 0.724 ms at 100 KB and 11.223 ms at 1 MB for all additional
+parse work, not exclusively inlines. M1-C must measure remaining string/segment
+costs and establish a tested budget rather than assume that this reserve is
+sufficient. Existing measurement-series
 authorization remains valid; otherwise follow the full-benchmark owner rule.
