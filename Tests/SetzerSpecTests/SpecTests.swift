@@ -163,4 +163,20 @@ struct SpecTests {
             }
         }
     }
+
+    @Test func unselectedFootnotesPreserveEverySpecificationAndRenderer() throws {
+        for (name, gfm) in [("commonmark-0.31.2", false), ("gfm-0.29", true)] {
+            for example in try Self.examples(name) {
+                let profile = gfm ? Self.gfmProfile(for: example) : .commonMark
+                let original = MarkdownParser(profile: profile, collectSyntaxDetails: true).parse(example.markdown)
+                let supplied = MarkdownParser(profile: profile, extensions: [Footnotes.implementation], collectSyntaxDetails: true)
+                    .parse(example.markdown)
+                #expect(supplied.nodes == original.nodes, "\(name) example \(example.example)")
+                #expect(supplied.tokens == original.tokens)
+                #expect(supplied.diagnostics == original.diagnostics)
+                #expect(FootnotesHTMLRenderer(renderer: .conformance).render(supplied) == example.html,
+                    "\(name) example \(example.example)")
+            }
+        }
+    }
 }

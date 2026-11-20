@@ -48,3 +48,9 @@ The first M5 step also supplies `FrontMatter.implementation` without selecting
 it for every example. Nodes, tokens, diagnostics and exact HTML must remain
 identical to the strict CommonMark/GFM parser. Front matter itself is tested
 separately with original project-authored examples, not by changing spec data.
+
+The named-footnote step adds a separate all-example check with
+`Footnotes.implementation` supplied but unselected, comparing nodes, tokens,
+diagnostics and `FootnotesHTMLRenderer` with conformance settings against all
+1,324 expected outputs. Original footnote/combination tests live outside these
+protected fixtures; no baseline ID or upstream fixture is modified.

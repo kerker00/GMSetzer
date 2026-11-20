@@ -60,8 +60,32 @@ public struct HTMLRenderer: Sendable {
 
     public func render(_ document: Document) -> String {
         let tree = contextualHooks.isEmpty ? nil : DocumentIndex(document)
+        return render(document, events: [.enter(0)], tree: tree)
+    }
+
+    /// Package-level composition keeps extension HTML in the convenience
+    /// module without making the syntax renderer depend on parser extensions.
+    package func addingHooks(_ additional: [NodeKind: HTMLRendererHook]) -> HTMLRenderer {
+        HTMLRenderer(includeSourceRanges: includeSourceRanges, sourceAnchorPrefix: sourceAnchorPrefix,
+            allowRawHTML: allowRawHTML, preserveHTMLComments: preserveHTMLComments,
+            allowUnsafeURLs: allowUnsafeURLs, allowedURLSchemes: allowedURLSchemes,
+            hooks: hooks.merging(additional) { _, replacement in replacement },
+            contextualHooks: contextualHooks.filter { additional[$0.key] == nil })
+    }
+
+    package func render(_ document: Document, tree: DocumentIndex) -> String {
+        render(document, events: [.enter(0)], tree: tree)
+    }
+
+    package func renderChildren(_ document: Document, of index: Int, tree: DocumentIndex) -> String {
+        var pending: [Event] = []
+        scheduleChildren(index, document: document, pending: &pending)
+        return render(document, events: pending, tree: tree)
+    }
+
+    private func render(_ document: Document, events: [Event], tree: DocumentIndex?) -> String {
         var output = ""
-        var pending: [Event] = [.enter(0)]
+        var pending = events
         while let event = pending.popLast() {
             switch event {
             case .output(let text): output += text

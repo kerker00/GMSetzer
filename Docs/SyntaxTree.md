@@ -363,3 +363,17 @@ segment (including an empty insertion segment for empty metadata). Typed access
 is supplied by `FrontMatter` in `SetzerExtensions`, keeping the syntax layer
 independent. Optional opening/content/closing tokens share the leaf's owner;
 no metadata headings, inline nodes or reference definitions are created.
+
+## M5 named footnotes
+
+The unreleased [footnote step](Footnotes.md) supplies custom block containers
+`footnotes.definition` with parsed Markdown children and custom inline leaves
+`footnotes.reference`. Raw labels, optional number/occurrence attributes and
+owned marker tokens retain snapshot provenance. Nodes stay in source order;
+`Footnotes.Index` computes cited-note display order and reachable calls without
+moving or copying nodes, including for cyclic notes. The convenience product
+adds `FootnotesHTMLRenderer`, composing the existing syntax-only renderer with
+the parser extension without changing either module's dependencies.
+The source-order outline includes headings in custom note containers; native
+analysis retains its opaque-custom-content policy. See the feature document
+for the explicit continuation and protected bracket grammar.

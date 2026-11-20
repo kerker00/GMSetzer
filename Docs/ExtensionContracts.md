@@ -1,7 +1,8 @@
 # Extension and storage contracts — M1-C and M2
 
-This is the implemented block and inline contract, including the M2 controller. It does not implement footnotes, alerts or math as shipped
-features. The small rules in `ContainerExtensionTests`, `TransformTests` and
+This is the implemented block and inline contract, including the M2 controller
+and opt-in [M5 footnote support](Footnotes.md) on the unreleased footnote branch.
+Alerts and math remain planned. The small rules in `ContainerExtensionTests`, `TransformTests` and
 `InlineExtensionTests` are architecture probes, not feature-conformance tests.
 
 ## Configuration and dispatch
@@ -46,7 +47,9 @@ are ordered suffix projections of those same physical lines. The core parses
 these views over the **same original bytes**, then imports the validated tree
 and remaps token owners. No reconstructed Markdown or byte-offset rebasing is
 used. `droppingASCII` and `droppingIndentation` retain line endings, physical
-columns and residual tab spaces. Child validation is linear in consumed lines.
+columns and residual tab spaces. `droppingBytes` additionally handles
+byte-counted Unicode/invalid-UTF-8 prefixes without tabs; the callback chooses
+the syntax boundary. Child validation is linear in consumed lines.
 
 Custom parsing adds bounded recursive calls around the iterative core driver.
 The combined custom/core container depth is capped by `ParserLimits` (default
@@ -97,11 +100,15 @@ identifier is a configuration issue ([M4GFM](M4GFM.md)).
 
 `InlineRule`, `InlineContext`, `InlineMatch`, `DelimiterRequest` and opaque
 `DelimiterHandle` replace the removed internal draft. Core and custom rules
-run through one cursor/controller. Escapes, code spans and link structure are
+run through one cursor/controller. Escapes, code spans and ordinary link structure are
 protected entry points; custom triggers then run by explicit `ruleOrder`,
 priority and profile order, before core emphasis and text. Consumed code,
 link destinations/titles and raw HTML are never redispatched to callbacks.
 Core protected entry points cannot be reordered or disabled through this API.
+The footnote step adds an explicit `allowsBracketSyntax` opt-in for complete
+custom matches at `[` outside open link/image brackets. Existing rules default
+to false; bracket matches cannot open/close delimiter handles. Unknown labels
+decline before mutation and keep ordinary core bracket parsing.
 Trigger membership uses a byte set; the parser does not hash a rule dictionary
 for every ordinary text byte. Literal decoding avoids temporary byte arrays
 when no escapes/entities/NUL or code-span line-ending normalization is needed.
@@ -111,6 +118,12 @@ endings), not a guessed contiguous range in the original snapshot. `source`
 retains the original bytes and `originalRanges(for:)` maps input ranges back
 across CRLF and removed container prefixes. Callback token ranges and optional
 child ranges use input coordinates; the core converts them to source tokens.
+
+`InlineRule(..., prepare:)` builds a `Sendable` matcher once per snapshot,
+after block transforms and before inline traversal. Nested controllers reuse
+it, avoiding per-call scans for document-wide definitions. Each subsequent
+parse prepares a fresh matcher. Existing `match:` registrations are unchanged;
+prepared-rule callbacks have the same compiled-code trust boundary.
 
 Matches must consume a positive bounded number of bytes and declare an owned
 custom inline kind. Children/tokens must remain inside the match; children

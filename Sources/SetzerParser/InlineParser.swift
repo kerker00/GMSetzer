@@ -489,7 +489,8 @@ internal struct InlineParser {
     mutating func parse() {
         while cursor < bytes.count {
             let start = cursor
-            // Escapes, code and link structure are core-protected entry points.
+            // Escapes, code and ordinary links are core-protected entry points.
+            // Explicit bracket rules are dispatched separately below.
             // Custom triggers are resolved by this controller before ordinary text
             // and core emphasis, never from inside a consumed destination/code node.
             if hasCustomRules, triggers.contains(bytes[cursor]), ![UInt8(92), 96, 91, 93, 60].contains(bytes[cursor]),
@@ -522,6 +523,13 @@ internal struct InlineParser {
             case 42, 95: delimiterRun()
             case 126 where strikethrough: tildeRun()
             case 91:
+                if hasCustomRules, brackets.isEmpty {
+                    switch customMatch(bracket: true) {
+                    case .unmatched: break
+                    case .matched: continue
+                    case .nested(let children, let owner): parseNested(children, owner: owner); continue
+                    }
+                }
                 if !brackets.isEmpty { brackets[brackets.count - 1].bracketAfter = true }
                 let item = append(.text("["), cursor, cursor + 1)
                 brackets.append(Bracket(item: item, image: false, bottom: delimiters.count, active: true))

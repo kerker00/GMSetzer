@@ -2,7 +2,7 @@ import SetzerSyntax
 
 /// CommonMark decoding is single-pass: a decoded ampersand or backslash must
 /// never introduce another entity/escape. Code and raw HTML bypass this path.
-internal enum InlineDecoding {
+package enum InlineDecoding {
     /// CommonMark uses Zs plus TAB/LF/FF/CR; Swift's broader whitespace
     /// property also contains VT, NEL and Unicode line/paragraph separators.
     static func whitespace(_ scalar: Unicode.Scalar) -> Bool {
@@ -83,7 +83,7 @@ internal enum InlineDecoding {
 
     /// Labels keep their source spelling: escapes/entities are not decoded.
     /// Unicode full folding and whitespace collapse are independent of locale.
-    static func label(_ text: String) -> ReferenceLabel {
+    package static func label(_ text: String) -> ReferenceLabel {
         var output = ""
         var pendingSpace = false
         for scalar in text.unicodeScalars {
@@ -97,11 +97,11 @@ internal enum InlineDecoding {
 
 /// Swift String equality canonically normalizes Unicode. CommonMark label
 /// matching only folds case and ASCII label whitespace, so compare raw UTF-8.
-internal struct ReferenceLabel: Hashable, Sendable {
-    let bytes: [UInt8]
+package struct ReferenceLabel: Hashable, Sendable {
+    package let bytes: [UInt8]
     init(_ value: String) { bytes = Array(value.utf8) }
-    static func == (lhs: Self, rhs: Self) -> Bool { lhs.bytes == rhs.bytes }
-    func hash(into hasher: inout Hasher) {
+    package static func == (lhs: Self, rhs: Self) -> Bool { lhs.bytes == rhs.bytes }
+    package func hash(into hasher: inout Hasher) {
         bytes.withUnsafeBufferPointer { hasher.combine(bytes: UnsafeRawBufferPointer($0)) }
     }
 }
