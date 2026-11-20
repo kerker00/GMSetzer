@@ -141,7 +141,7 @@ annotation/index/analysis costs separately and review the public API before 1.0.
 Consumer UI/device test reports remain in their own repositories; a green library
 suite does not claim that any particular editor integration works.
 
-The unreleased [math step](Math.md) adds owned `math.fence.*` and
+The [math step](Math.md), merged in PR #21 (`6f166b7`) and not yet released, adds owned `math.fence.*` and
 `math.content` spans for opaque inline/display/fenced TeX. Existing source and
 UTF-16 mapping apply; no TeX validation findings or editor theme mapping are
 implied. Native analysis retains its opaque-custom-content policy.

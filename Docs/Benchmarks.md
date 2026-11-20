@@ -472,7 +472,7 @@ cost of selected footnotes or the supporting parser/renderer changes.
 
 ## M5 opaque math (development)
 
-`feature/m5-math` builds a per-line next-close lookup for single-dollar
+Merged PR #21 (`6f166b7`) builds a per-line next-close lookup for single-dollar
 delimiters once per snapshot, indexing each opener independently. Failed
 inline candidates do not rescan the remaining leaf. Dollar-display blocks
 scan projected lines to the next bare closing fence or container boundary;

@@ -381,7 +381,7 @@ for the explicit continuation and protected bracket grammar.
 
 ## M5 math
 
-The unreleased [math step](Math.md) adds custom leaves `math.inline` and
+The [math step](Math.md), merged in PR #21 (`6f166b7`) and not yet released, adds custom leaves `math.inline` and
 `math.block`, with `format` and projected `tex` string attributes. Inline node
 segments retain the complete span; the typed `Math` view removes delimiter
 bytes for content access. Block segments retain exact content provenance,

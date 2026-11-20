@@ -31,8 +31,9 @@ Merged PR #20 (`a6a2da6`) adds named footnotes, source-spelled tokens,
 numbering and a separate HTML renderer with backlinks on `main`; see
 [Footnotes](Docs/Footnotes.md). PR and merged-main CI pass on macOS and Linux.
 
-Unreleased work on `feature/m5-math` adds opaque inline/display/fenced TeX
+Merged PR #21 (`6f166b7`) adds opaque inline/display/fenced TeX on `main`
 with exact provenance and caller-owned rendering; see [Math](Docs/Math.md).
+PR and merged-main CI pass on macOS and Linux.
 Alerts and callouts remain planned.
 
 Requires **Swift 6.2 or later**. The current provisional Apple minimums are
@@ -73,8 +74,8 @@ and device acceptance do not determine this package's API or release readiness.
 - **Correct:** every example of CommonMark 0.31.2 and of the GFM spec.
 - **Extensible:** shipped CommonMark and GFM profiles, independently selectable
   GFM features, custom block/inline rules and transforms. The first M5
-  steps add raw YAML/TOML front matter and named footnotes on `main`; the next
-  branch implements opaque TeX syntax. Alerts, callouts and further dialects
+  steps add raw YAML/TOML front matter, named footnotes and opaque TeX syntax
+  on `main`. Alerts, callouts and further dialects
   follow separately.
 - **Positions:** every node knows its source range in UTF-8 bytes;
   conversion to lines, columns and UTF-16 offsets for text views.
@@ -138,7 +139,7 @@ not part of v0.4.0.
 | --- | --- | --- |
 | `SetzerSyntax` | Validated block/inline tree, source ranges/tokens, parent/offset/outline index, position conversion, diagnostic/fix values | Additional query conveniences |
 | `SetzerParser` | Block/inline parser, custom rules/children, pre/post transforms and profiles | Additional dialect syntax |
-| `SetzerExtensions` | GFM profile; raw YAML/TOML front matter; named footnotes; opaque TeX on the unreleased math branch | Alerts and callouts |
+| `SetzerExtensions` | GFM profile; raw YAML/TOML front matter; named footnotes; opaque TeX (unreleased) | Alerts and callouts |
 | `SetzerHTML` | CommonMark and GFM HTML, source anchors, escaping, comment policy, tag filter and decoded URL checks | – |
 | `SetzerAnalysis` | Three optional native rules over the existing document | Broader rule catalogue |
 | `GMSetzer` | Imports the five modules above; composed footnote HTML renderer (unreleased) | Additional convenience APIs |

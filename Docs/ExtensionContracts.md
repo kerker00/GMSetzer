@@ -3,7 +3,7 @@
 This is the implemented block and inline contract, including the M2 controller
 and opt-in [M5 footnote support](Footnotes.md), merged in PR #20 (`a6a2da6`)
 and not yet in a versioned release.
-The unreleased [math step](Math.md) uses prepared complete inline matches,
+The [math step](Math.md), merged in PR #21 (`6f166b7`), uses prepared complete inline matches,
 a display-block rule and a post-inline code-fence transform. TeX is opaque;
 there is no new parser API or dependency. Alerts and callouts remain planned.
 The small rules in `ContainerExtensionTests`, `TransformTests` and

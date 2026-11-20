@@ -1,7 +1,7 @@
 # M5 opaque TeX syntax
 
-Implemented on `feature/m5-math`, based on `ae3ca76` after footnotes merged in
-PR #20. Not yet merged or released. This step recognises inline, dollar-display
+Merged in PR #21 (`6f166b7`), based on `ae3ca76` after footnotes merged in
+PR #20. Not yet in a versioned release. This step recognises inline, dollar-display
 and fenced math. Alerts and callouts remain open. It adds no runtime dependency,
 core node case or TeX engine; presentation belongs to the caller.
 
@@ -177,8 +177,10 @@ macOS commands use task-specific scratch/cache/configuration/security and
 module-cache paths outside the repository. Counts are 191 library tests and
 11 specification tests: 23 math tests and one corpus test added by this step.
 Each environment retains 652/652 CommonMark and 672/672 GFM protected examples.
-No fixture or protected ID was changed. Minimum-version macOS/Linux PR CI is
-still pending; unchanged Python scripts were not rerun locally.
+No fixture or protected ID was changed. PR and merged-main CI pass on macOS
+and Linux with Swift 6.2, including script checks and both release builds.
+The merged branch is removed locally and remotely; no additional worktrees
+existed. Unchanged Python scripts were not rerun locally.
 
 Development identity is `0.5.0-dev.3`, not a release tag. No fresh benchmark
 or reference-tool series, consumer TeX-engine integration, UI or device checks

@@ -58,13 +58,14 @@ Linux, including Linux/Swift 6.2. Merged-main CI also passes on both hosts. The 
 is removed locally and remotely; there are no additional worktrees to remove.
 That step leaves math, alerts and callouts open; no new release is published.
 
-**Next M5 step:** `feature/m5-math` recognises opaque inline `$…$`, display
+**Merged M5 step:** PR #21 (`6f166b7`) recognises opaque inline `$…$`, display
 `$$…$$` and `math` code fences through the existing extension API. Raw bytes,
 projected TeX and exact syntax tokens remain available; the caller supplies
 formula rendering. All 202 tests pass on macOS/Swift 6.4.2, macOS/Swift 6.2
 and Linux/Swift 6.4.2; both host release builds pass. Development identity is
-`0.5.0-dev.3`; CI, review and merge remain pending. Alerts and callouts remain
-open. See [Math](Math.md) for the declared grammar and validation limits.
+`0.5.0-dev.3`; PR and merged-main CI pass on macOS and Linux. The merged
+branch is removed locally and remotely; no additional worktrees existed.
+Alerts and callouts remain open. See [Math](Math.md) for the declared grammar and validation limits.
 
 GMSetzer is an independent, general-purpose Markdown library intended for
 open-source use under the MIT licence. Editors, command-line tools, servers
@@ -321,7 +322,7 @@ and callback trust boundary are in [SyntaxTree.md](SyntaxTree.md). Renderer
 hooks stay in `SetzerHTML`, without a parser-to-renderer dependency.
 
 Math: the library produces nodes with the TeX source and nothing else. The
-unreleased [math step](Math.md) implements three independently switchable
+[math step](Math.md), merged in PR #21 and not yet released, implements three independently switchable
 forms, exact provenance and caller-renderer hooks; no TeX engine is bundled.
 
 <a id="learning"></a>
@@ -443,7 +444,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | **merged in PR #11 (`021f110`)**: 652/652 exact CommonMark, 641/672 GFM; 96 Swift tests across macOS/Swift 6.2/release/Linux, 17 Python checks and 4,786 C comparisons pass. Final core and selected-rule cases pass both unchanged budget gates. See [M2Inlines](M2Inlines.md) |
 | M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; portable syntax/finding APIs | Security/position/analysis tests and standalone package validation pass; application adapters remain outside this package | re-estimate | **merged in PR #12 (`651af17`)** after review corrections: exact position/outline queries, safe configurable URL scheme allowlist/anchors and three optional native rules. 106 library tests passed across macOS/debug/release/Swift 6.2/Linux; after the [review](Review-M3.md) corrections 108 pass on macOS (Swift 6.2/Linux not re-run) with byte-identical differential results. Index/analysis timings and optimisations: [Benchmarks](Benchmarks.md#m3-editor-services-20-november-2026). See [M3EditorServices](M3EditorServices.md) |
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | **merged in PR #14 (`e163e6f`)**: tables, task lists, strikethrough, extended autolinks and tag filter as built-in payloads (owner decision 1A); 672/672 GFM and 652/652 CommonMark; generated documents agree with cmark-gfm. Library and reference tests pass on macOS; GFM parses at 0.88× cmark-gfm and both budget checks pass. Swift 6.2/Linux not re-run. See [M4GFM](M4GFM.md) |
-| M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Declared extension fixtures and profile/combination tests pass | 5–8 | **first step merged in PR #19 (`4b0f105`)**: raw YAML/TOML front matter; 153 tests pass on both hosts and macOS/Swift 6.2. PR/main CI pass on both hosts. Named footnotes merged in PR #20 (`a6a2da6`), with 178 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on macOS/Linux. Opaque inline/display/fenced TeX is implemented on `feature/m5-math`, with 202 local tests passing on both hosts and macOS/Swift 6.2; CI/review/merge pending. Alerts and callouts remain open. See [FrontMatter](FrontMatter.md), [Footnotes](Footnotes.md) and [Math](Math.md) |
+| M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Declared extension fixtures and profile/combination tests pass | 5–8 | **first step merged in PR #19 (`4b0f105`)**: raw YAML/TOML front matter; 153 tests pass on both hosts and macOS/Swift 6.2. PR/main CI pass on both hosts. Named footnotes merged in PR #20 (`a6a2da6`), with 178 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on macOS/Linux. Opaque inline/display/fenced TeX is merged in PR #21 (`6f166b7`), with 202 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on both hosts. Alerts and callouts remain open. See [FrontMatter](FrontMatter.md), [Footnotes](Footnotes.md) and [Math](Math.md) |
 | M6 | Speed and hardening: measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met | 5–8 | |
 | M7 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | 3–5 | |
 | | **Original total before explicit editor-analysis scope** | | **38–59; re-estimate required** | |
@@ -593,8 +594,7 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: CI/review/merge of the math step, then alerts and callouts
-in separate reviewable M5 steps. Front matter is merged in PR #19 and named
+Current next work: alerts and callouts in a separate reviewable M5 step. Front matter is merged in PR #19 and named
 footnotes in PR #20.
 Localization and container markers are merged;
 neither completes M5's extension scope. Consumer scheduling, dependency pinning and
