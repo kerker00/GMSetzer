@@ -95,3 +95,6 @@ Linux/Swift 6.2 job also passes; the GitHub macOS job is queued. The
 [merged-main CI](https://github.com/kerker00/GMSetzer/actions/runs/44786023211)
 is still running. The local macOS runs above are completed evidence and do not
 substitute for a completed GitHub macOS job.
+
+Subsequently, that merged-main CI run completed successfully on both
+macOS/Swift 6.2.3 and Linux/Swift 6.2, superseding the pending CI status above.

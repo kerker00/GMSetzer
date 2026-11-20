@@ -21,10 +21,20 @@ See [Releasing](Releasing.md) for the process and the
 native finding/fix text catalogue, structured heading-level arguments and
 explicit fallback behavior. Its merged branch is removed locally and remotely.
 Local validation is complete (123 tests on macOS/Swift 6.4.2, macOS/Swift 6.2
-and Linux/Swift 6.4.2; both host release builds pass). The PR's Linux/Swift 6.2
-CI job passes; hosted macOS CI is queued at branch completion. Consumer
+and Linux/Swift 6.4.2; both host release builds pass). The subsequent merged-main
+CI passes on macOS/Swift 6.2.3 and Linux/Swift 6.2. Consumer
 presentation adoption and a versioned release remain separate. See
 [NativeAnalysisMessages](NativeAnalysisMessages.md).
+
+**In progress toward 0.5:** `feature/container-marker-tokens` adds opt-in
+original quote/list marker ranges, including explicit continuation prefixes,
+item ownership and accepted multi-line extension boundaries. The semantic
+parse and HTML remain unchanged. See [ContainerMarkers](ContainerMarkers.md).
+M5's additional syntax remains separate and unimplemented by this step.
+Local validation passes all 135 tests on macOS/Swift 6.4.2, macOS/Swift 6.2 and
+Linux/Swift 6.4.2, plus both host release builds. Annotation on/off preserves
+all 1,324 specification trees and exact HTML. Review, GitHub CI and merge are
+pending; no new release or benchmark series was run.
 
 GMSetzer is an independent, general-purpose Markdown library intended for
 open-source use under the MIT licence. Editors, command-line tools, servers
@@ -538,13 +548,17 @@ repository; it no longer blocks library publication.
    contract is in [NativeAnalysisMessages](NativeAnalysisMessages.md).
    Provider/parser development identity is `0.4.1-dev` for the metadata change;
    this does not create a release tag. Consumer adoption remains separate.
-2. **Container marker tokens.** Syntax tokens cover inline delimiters and
-   leaf markers but not block-quote `>` or list markers, so a consumer cannot
-   replace its own syntax colouring with GMSetzer's without losing those
-   roles. Add `core.blockQuote.marker` and `core.list.marker` tokens with
-   exact per-line ranges.
+2. **Container marker tokens.** Implemented on `feature/container-marker-tokens`,
+   not yet merged/released: `core.blockQuote.marker` covers each actual quote
+   prefix; `core.list.marker` covers each item's original bullet or ordered
+   marker without padding. Collection remains opt-in and preserves semantic
+   output. Development identity is `0.5.0-dev`; there is no new release tag.
+   Exact ownership, extension and fallback contracts are documented in
+   [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
+   outside the library.
 
-Current next work: container marker tokens, then M5. The localization step is
-merged; it does not complete M5's extension scope. Consumer scheduling, dependency pinning and
+Current next work: review/merge the locally validated container marker tokens, then
+M5. The localization step is merged; neither step completes M5's extension
+scope. Consumer scheduling, dependency pinning and
 device acceptance belong to consumer repositories. No new benchmark series or
 publication is part of this localization change.

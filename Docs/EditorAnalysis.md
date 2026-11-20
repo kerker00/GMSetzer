@@ -33,6 +33,12 @@ custom roles. `referenceSyntax(for:)` offers a reference-component view.
 heading outline. `SourceIndex` converts original byte positions/ranges to
 portable UTF-16 offsets/ranges or one-based lines/scalar columns.
 
+The unreleased [container marker step](ContainerMarkers.md) adds explicit
+quote prefixes and each item's complete list marker. These lexical ranges
+exclude indentation/padding and are not inferred from a container's broad
+semantic bounds. Collection also retains prefixes on lines consumed by
+validated multi-line extensions without recording speculative lookahead.
+
 AST bounds alone are insufficient for exact syntax decoration. A container's
 broad range must not be presented as a lexical marker. Semantic content ranges
 and lexical token ranges are distinct. Preserve zero-length locations and

@@ -435,3 +435,14 @@ extensions at 1 MB and 5 MB. `check_benchmark_budget.py` and
 `check_m2_budget.py` (frozen M1 baseline, 0.5 / 8 / 40 ms allowance) both exit
 0; C control drift is −2.2 / −4.8 / +0.7 %. CommonMark matches the M3 record at
 100 KB and 5 MB and is 7 % above it at 1 MB; see [M4GFM](M4GFM.md#performance).
+
+## Container marker tokens (development toward 0.5)
+
+`feature/container-marker-tokens` adds optional quote/list provenance and
+retains accepted prefixes on lines consumed by extensions. Marker ranges are
+captured by the existing scanners; token storage and the extra consumed-line
+annotation pass are enabled only with `collectSyntaxDetails`. Collection off
+still has `tokens == nil`. Semantic and exact-HTML parity tests are not timing
+or allocation measurements. No fresh benchmark series was run; the historical
+M4 timings above do not establish the cost of these changes. New measurements
+remain pending before making a performance claim for this development version.
