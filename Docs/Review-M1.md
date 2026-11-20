@@ -6,6 +6,13 @@ against [Plan.md](Plan.md), [EditorAnalysis.md](EditorAnalysis.md) and
 Setzkit's parser, pipeline and extension requirements. This review records
 findings and recommendations only; no library code was changed.
 
+**Portability follow-up, 20 November 2026:** [Portability.md](Portability.md)
+records a Swift 6.2 build, all 57 macOS tests, and actual static Linux ARM64
+execution retaining every protected spec ID. Full Linux Swift Testing/glibc/
+x86-64 coverage remains open. Compile probes distinguish the back-deployable
+Span type/buffer bridge from macOS-26-only Array.span and UTF8Span. These
+results supplement the original findings below; no library source changed.
+
 ## Summary
 
 The foundation is sound: a dependency-free module split, typed payloads from

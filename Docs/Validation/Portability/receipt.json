@@ -1,0 +1,65 @@
+{
+  "client_date": "2026-11-20",
+  "timezone": "Europe/Berlin",
+  "core_commit": "7c0f4ea838b3f62a1886cd73fef0270fc2c0ed44",
+  "probe_commit": "34ba92b6ca394129a444d7038221380fbc015916",
+  "compiler": "Apple Swift version 6.2 (swift-6.2-RELEASE)\nTarget: arm64-apple-macosx28.0\nBuild config: +assertions",
+  "host": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434",
+  "macos_sdk": "Command Line Tools MacOSX14.4.sdk; package deployment target macOS 15; own Swift 6.2 Testing libraries; --disable-xctest",
+  "toolchain_url": "https://download.swift.org/swift-6.2-release/xcode/swift-6.2-RELEASE/swift-6.2-RELEASE-osx.pkg",
+  "toolchain_sha256": "9eac4a13500c7a6dedfd90814fd31c17af2efc38150137b56b70bf5f44b2d64b",
+  "toolchain_signature": "pkgutil: signed by Developer ID Installer: Swift Open Source (V9AUD2URP3); trusted Apple notarization and timestamp",
+  "linux_sdk_url": "https://download.swift.org/swift-6.2-release/static-sdk/swift-6.2-RELEASE/swift-6.2-RELEASE_static-linux-0.0.1.artifactbundle.tar.gz",
+  "linux_sdk_sha256": "d2225840e592389ca517bbf71652f7003dbf45ac35d1e57d98b9250368769378",
+  "qemu": "QEMU emulator version 11.1.3",
+  "guest": "Alpine v3.22 aarch64 netboot; Linux 6.12.115-0-virt; TCG cortex-a72, 1536 MiB, 2 CPUs, no NIC or disks/host shares",
+  "kernel_url": "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/aarch64/netboot/vmlinuz-virt",
+  "kernel_sha256": "ebf299aa6829b15166008db24b076ac0a8b3e778c72ed66be488742aaf05d741",
+  "initramfs_url": "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/aarch64/netboot/initramfs-virt",
+  "initramfs_sha256": "0f7da92ca19e6b87b8f0a250e3ce84cc8335c16b2369b18d96f68cc486d638b8",
+  "linux_binary_sha256": "fea68114464de274811de2046a4e36119b6b5827c544fa6bc8e0e6b05467dc7f",
+  "files": {
+    "Tools/PortabilityProbe/Package.swift": "9bbfba6bbf57cfef507b4541c73386bbfca8563171557fbb5a835b6f68c35ead",
+    "Tools/PortabilityProbe/Sources/PortabilityProbe/PortabilityProbe.swift": "bb1ddc6e54accd95adbfeac5212353da95793e2ff99e3a90dcbb72bca5303ef2",
+    "Scripts/run_linux_portability_probe.py": "ddd8276bb9ab2de9155d3e79c17ba17c6cf5482939b4a975c6633814f3429c44"
+  },
+  "limitations": [
+    "Linux probe is not the complete 57-test Swift Testing suite",
+    "No glibc, Linux x86_64, iOS/visionOS or minimum-OS runtime verification",
+    "No timing claim from emulation",
+    "No runtime library source or dependency changes"
+  ],
+  "availability_checks": [
+    {
+      "source": "SpanTypeCheck.swift",
+      "target": "arm64-apple-macosx15.0",
+      "swift_language_version": "6",
+      "exit_code": 0
+    },
+    {
+      "source": "ArraySpanCheck.swift",
+      "target": "arm64-apple-macosx15.0",
+      "swift_language_version": "6",
+      "exit_code": 1
+    },
+    {
+      "source": "BufferSpanCheck.swift",
+      "target": "arm64-apple-macosx15.0",
+      "swift_language_version": "6",
+      "exit_code": 0
+    },
+    {
+      "source": "UTF8SpanCheck.swift",
+      "target": "arm64-apple-macosx15.0",
+      "swift_language_version": "6",
+      "exit_code": 1
+    },
+    {
+      "source": "UTF8SpanCheck.swift",
+      "target": "arm64-apple-macosx26.0",
+      "swift_language_version": "6",
+      "exit_code": 0
+    }
+  ],
+  "output_normalization": "Stored text logs use LF and omit trailing whitespace; values and diagnostics are unchanged."
+}

@@ -1,0 +1,5 @@
+/private/tmp/gmsetzer-portability/UTF8SpanCheck.swift:1:43: error: 'UTF8Span' is only available in macOS 26.0 or newer
+1 | func utf8SpanParameter(_ bytes: borrowing UTF8Span) {}
+  |      |                                    `- error: 'UTF8Span' is only available in macOS 26.0 or newer
+  |      `- note: add '@available' attribute to enclosing global function
+2 |
