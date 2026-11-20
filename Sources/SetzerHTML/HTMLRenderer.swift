@@ -22,22 +22,24 @@ public struct HTMLRendererContext: Sendable {
 public typealias ContextualHTMLRendererHook = @Sendable (HTMLRendererContext) -> HTMLRendering?
 public typealias HTMLRendererHook = @Sendable (Node, Document) -> HTMLRendering?
 
-/// Iterative rendering of the currently implemented block tree. Source
+/// Iterative rendering of CommonMark blocks and inlines. Source
 /// literals and HTML blocks are escaped by default. Raw HTML and comment
 /// preservation require explicit options. Hook output is a caller trust boundary.
 public struct HTMLRenderer: Sendable {
     public let includeSourceRanges: Bool
     public let allowRawHTML: Bool
     public let preserveHTMLComments: Bool
+    public let allowUnsafeURLs: Bool
     private let contextualHooks: [NodeKind: ContextualHTMLRendererHook]
     private let hooks: [NodeKind: HTMLRendererHook]
 
     public init(includeSourceRanges: Bool = false, allowRawHTML: Bool = false,
-                preserveHTMLComments: Bool = false, hooks: [NodeKind: HTMLRendererHook] = [:],
+                preserveHTMLComments: Bool = false, allowUnsafeURLs: Bool = false, hooks: [NodeKind: HTMLRendererHook] = [:],
                 contextualHooks: [NodeKind: ContextualHTMLRendererHook] = [:]) {
         self.includeSourceRanges = includeSourceRanges
         self.allowRawHTML = allowRawHTML
         self.preserveHTMLComments = preserveHTMLComments
+        self.allowUnsafeURLs = allowUnsafeURLs
         self.hooks = hooks
         self.contextualHooks = contextualHooks
     }
@@ -102,6 +104,26 @@ public struct HTMLRenderer: Sendable {
                     scheduleChildren(index, document: document, pending: &pending)
                 case .text(let text): output += Self.escape(text)
                 case .softBreak: output += "\n"
+                case .hardBreak: output += "<br />\n"
+                case .code(let literal): output += "<code>\(Self.escape(literal))</code>"
+                case .emphasis, .strong:
+                    let tag = node.kind == .strong ? "strong" : "em"
+                    output += "<\(tag)>"
+                    pending.append(.output("</\(tag)>"))
+                    scheduleChildren(index, document: document, pending: &pending)
+                case .link(let destination, let title):
+                    output += "<a href=\"\(url(destination))\""
+                    if let title, !title.isEmpty { output += " title=\"\(Self.escape(title))\"" }
+                    output += ">"
+                    pending.append(.output("</a>"))
+                    scheduleChildren(index, document: document, pending: &pending)
+                case .image(let destination, let title):
+                    output += "<img src=\"\(url(destination))\" alt=\"\(Self.escape(imageText(index, document: document)))\""
+                    if let title, !title.isEmpty { output += " title=\"\(Self.escape(title))\"" }
+                    output += " />"
+                case .htmlInline(let literal):
+                    let html = preserveHTMLComments ? literal : Self.removingHTMLComments(literal)
+                    output += allowRawHTML ? html : Self.escape(html)
                 case .thematicBreak: output += "<hr\(anchors(node)) />\n"
                 case .codeBlock(let info, let literal):
                     output += "<pre\(anchors(node))><code"
@@ -151,6 +173,41 @@ public struct HTMLRenderer: Sendable {
             if unwrapped && position + 1 < children.count { pending.append(.output("\n")) }
             pending.append(.enter(child, tightItem: unwrapped))
         }
+    }
+
+    /// Dedicated trusted-fixture settings; allowing HTML alone never enables unsafe URLs.
+    public static let conformance = HTMLRenderer(allowRawHTML: true, preserveHTMLComments: true, allowUnsafeURLs: true)
+
+    private func url(_ value: String) -> String {
+        if !allowUnsafeURLs {
+            let scheme = value.utf8.prefix { $0 != 58 }.filter { $0 > 32 && $0 != 127 }.map { (65...90).contains($0) ? $0 + 32 : $0 }
+            if value.utf8.contains(58) && ["javascript", "vbscript", "data", "file"].contains(String(decoding: scheme, as: UTF8.self)) { return "" }
+        }
+        let safe = "-_.+!*(),%#@?=;:/&$~".utf8
+        let hex = Array("0123456789ABCDEF".utf8)
+        var bytes: [UInt8] = []
+        for byte in value.utf8 {
+            if byte == 38 { bytes.append(contentsOf: "&amp;".utf8) }
+            else if (65...90).contains(byte) || (97...122).contains(byte) || (48...57).contains(byte) || safe.contains(byte) { bytes.append(byte) }
+            else if byte == 39 { bytes.append(contentsOf: "&#x27;".utf8) }
+            else { bytes.append(37); bytes.append(hex[Int(byte >> 4)]); bytes.append(hex[Int(byte & 15)]) }
+        }
+        return String(decoding: bytes, as: UTF8.self)
+    }
+
+    private func imageText(_ index: Int, document: Document) -> String {
+        var output = ""
+        var pending = document.children(of: index).reversed().map { $0 }
+        while let current = pending.popLast() {
+            let node = document.nodes[current]
+            switch node.data {
+            case .text(let text), .code(let text): output += text
+            case .softBreak, .hardBreak: output += "\n"
+            case .htmlInline(let html): output += html
+            default: pending.append(contentsOf: document.children(of: current).reversed())
+            }
+        }
+        return output
     }
 
     private func anchors(_ node: Node) -> String {

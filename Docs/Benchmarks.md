@@ -5,11 +5,10 @@ build). Every entry names the commit, machine and OS. Times are medians (p50).
 
 ## How to read the numbers
 
-- **GMSetzer** has separate CommonMark and GFM entries. M1 now parses leaf
-  blocks and quote/list containers into a validated syntax tree with source ranges.
-  HTML blocks and references are now included; inline markup and GFM rules are
-  still pending. Do not compare its
-  current timings as equivalent work to a complete parser.
+- **GMSetzer** has separate CommonMark and GFM entries. M2 now parses complete
+  CommonMark blocks/inlines into a validated source-positioned tree. Historical
+  M1 rows below measured block-only work. GFM extensions remain pending, so
+  its GFM ratios are informational until the M4 conformance gate.
 - **cmark-gfm (C)** has corresponding core and GFM entries. Both enable
   `CMARK_OPT_SOURCEPOS` for inline positions and include parser creation,
   parsing and freeing the document. The GFM entry attaches `table`, `tasklist`,
@@ -318,3 +317,40 @@ Each input ran under six configurations, about 128,000 parses in total:
 - Full release tree validation costs about **0.6 ms**.
 
 Both are architecture decisions for the owner, not part of this branch.
+
+## M2 inline implementation (20 November 2026)
+
+The complete CommonMark parser is based on merged PR #10 (`34cbe31`). The
+fixed additional-total-parse allowance remains **0.5 / 8 / 40 ms** against the
+hashed M1 baseline. Three owner-authorized full **48-case** runs retain both
+failed attempts and the passing capacity run; the final **30-case** repeat
+confirms the exact final source with simultaneous C controls, annotation and
+selected-rule cases. The general gate and all three frozen M2 variants pass.
+No corpus, baseline hash, limit or allowance was changed.
+
+| mixed-v1 | Core, ms | C sourcepos, ms | Ratio | Selected inline, ms | Selected block, ms | Syntax on, ms |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 100 KB | 2.728 | 1.720 | 1.59× | 2.714 | 2.830 | 3.445 |
+| 1 MB | 28.230 | 19.104 | 1.48× | 28.951 | 29.508 | 37.388 |
+| 5 MB | 146.670 | 95.879 | 1.53× | 149.160 | 152.044 | 188.088 |
+
+The final C controls drift -2.2% / -4.2% / -0.1% from the frozen baseline,
+within 10%. At 1 MB, core allocation volume is about **110 K allocations /
+58 MB gross** versus C's **224 K / 30 MB**. Syntax collection on is
+**37.388 ms / 186 K / 72 MB**; this optional cost is not part of the off-mode
+gate. The selected block rule leaves the smallest allowance reserve,
+**0.138 ms at 100 KB**. Arbitrary callbacks need their own measurements.
+GFM ratios remain informational until its full conformance gate.
+
+Initial core medians **3.330 / 34.996 / 177.603 ms** and the first scratch-reuse
+medians **3.205 / 33.440 / 170.656 ms** failed M2 despite passing the general
+ratio ceiling. Exact projection capacities, fewer literal/code copies, reused
+scratch state, byte-set trigger dispatch and the common-backtick fast path
+bring the final parser inside the fixed allowance, while retaining release
+validation. These before/after observations do not isolate additive phase costs.
+
+[Raw exports, source hashes and all gate results](Validation/M2/), including the
+failed empty-filter invocation, are retained. The early three-sample probe
+excludes allocation interposition, document destruction and C controls; it is
+diagnostic only. See [M2Inlines.md](M2Inlines.md) for commands, validation and
+remaining M3/device/M6 coverage. All prior block measurements above are history.

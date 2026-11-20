@@ -5,14 +5,13 @@ Markdown with switchable extensions, exact source positions and an HTML
 renderer. No C, no Rust, no JavaScript, no runtime dependencies — it builds
 wherever Swift runs, including Linux.
 
-> **Status:** M1 technical acceptance passed; cumulative PR/owner merge pending. The first slice implements a validated
-> syntax tree, paragraphs, headings, code, nested block quotes and ordered/bullet
-> lists, including lazy continuation, tightness and depth limits. Custom block
-> rules receive projected source lines and optional core-parsed children. HTML blocks and multiline reference
-> definitions are implemented, with an opt-in generic token table. Inline
-> markup and editor analysis remain pending. Current spec passes: 339/652
-> CommonMark and 339/672 GFM. The repository stays private until
-> milestone M2 and owner approval.
+> **Status:** M2 technical acceptance passed on `feature/m2-inlines`, based on
+> merged PRs #9/#10. All 652 CommonMark 0.31.2 examples pass by exact HTML;
+> 641/672 pinned GFM examples pass. Blocks and inlines retain original UTF-8
+> ranges, with optional lexical tokens and custom inline rules. Portable
+> diagnostic/fix values are implemented; native lint and editor integration
+> remain M3 work. Core and selected-rule performance gates pass; owner review/merge is pending. Publication remains
+> a separate owner decision.
 
 ## Goals
 
@@ -46,7 +45,9 @@ wherever Swift runs, including Linux.
 - [Docs/SyntaxTree.md](Docs/SyntaxTree.md) – implemented tree/extension contract,
   example ranges and the implemented block contracts.
 - [Docs/ExtensionContracts.md](Docs/ExtensionContracts.md) – shared configuration,
-  container/transform probes, token ownership, hook context and the inline API draft.
+  container/inline rules, transforms, token ownership and hook context.
+- [Docs/M2Inlines.md](Docs/M2Inlines.md) – inline API, source tokens, diagnostic/fix
+  values, current validation and remaining performance acceptance.
 - [Docs/BlockPhases.md](Docs/BlockPhases.md) – extracted block-phase boundaries,
   full Linux regression suite and performance countermeasurement before registry work.
 - [Docs/EditorAnalysis.md](Docs/EditorAnalysis.md) – planned syntax, native lint
@@ -59,15 +60,16 @@ wherever Swift runs, including Linux.
 
 | Module | Implemented | Planned |
 | --- | --- | --- |
-| `SetzerSyntax` | Validated tree, source ranges/segments, optional tokens and parent index | Position conversion, outline queries |
-| `SetzerParser` | Block parser, custom children/transforms, validated registry and profiles | Inline parser and promotion of the inline API draft |
+| `SetzerSyntax` | Validated block/inline tree, source ranges/tokens, parent index, diagnostic/fix values | Position conversion, outline queries |
+| `SetzerParser` | Block/inline parser, custom rules/children, pre/post transforms and profiles | Additional dialect syntax |
 | `SetzerExtensions` | GFM profile selections | GFM rule implementations, footnotes, front matter, math, alerts and callouts |
-| `SetzerHTML` | Block HTML rendering, source anchors, escaping and comment policy | Inline rendering and URL safety |
+| `SetzerHTML` | CommonMark HTML, source anchors, escaping, comment policy and decoded URL checks | GFM tag filtering |
 | `GMSetzer` | Imports the four implemented modules above | Optional analysis module with its first tested rules |
 
-The [M1 acceptance record](Docs/M1Acceptance.md) closes the review work with
-70 library tests, 3,919 C comparisons and a fixed M2 parse budget. Owner merge
-is pending. Actual inlines, complete GFM and editor integration remain M2–M5.
+M1 acceptance is merged in PR #9 and block hot-path optimisation in PR #10.
+M2 adds CommonMark inlines and 867 exact C comparisons. Complete GFM and
+Setzkit integration remain M4 and M3 work respectively; the fixed M2 timing
+allowance is unchanged.
 
 ```swift
 import GMSetzer
@@ -85,9 +87,13 @@ extensions explicitly; until M4 implements them, missing extensions are listed
 in `MarkdownParser.configurationIssues`; `validated()` rejects them.
 
 `collectSyntaxDetails: true` optionally collects `Document.tokens`, including
-reference components/markers and extension roles. `referenceSyntax(for:)` is a
+reference/fence components, inline delimiters, link parts, escapes/entities,
+raw HTML and extension roles. `referenceSyntax(for:)` is a
 convenience view. `DocumentIndex` provides snapshot-bound parents/ancestors. HTML blocks are escaped and recognised comments omitted by default;
 `allowRawHTML` and `preserveHTMLComments` are explicit renderer options.
+Dangerous decoded URL schemes are neutralised even with raw HTML enabled.
+`HTMLRenderer.conformance` explicitly permits raw HTML, comments and unsafe URLs
+for trusted fixtures; it is not the production configuration.
 Custom leaf fallbacks retain projected content without quote/list prefixes;
 renderer wrappers preserve built-in list tightness.
 
@@ -98,7 +104,8 @@ renderer wrappers preserve built-in list tightness.
   passing examples are recorded in
   `Tests/SetzerSpecTests/Resources/baseline.json`; each recorded example must
   keep passing. Green tests mean the recorded baseline is preserved; they do
-  not claim complete CommonMark or GFM conformance.
+  not claim complete GFM conformance. CommonMark has an additional explicit
+  652/652 completeness assertion.
 - `Scripts/update-specs.sh` reproduces the specification examples from pinned,
   SHA-256 checked sources.
 - `python3 -I -m unittest discover -s Scripts` tests the update tools offline.

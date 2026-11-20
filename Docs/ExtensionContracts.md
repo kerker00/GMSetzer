@@ -1,9 +1,8 @@
-# M1-C extension and storage contracts
+# Extension and storage contracts — M1-C and M2
 
-This is the implemented block contract and the executable **draft** of the
-M2 inline boundary. It does not implement footnotes, alerts or math as shipped
+This is the implemented block and inline contract, including the M2 controller. It does not implement footnotes, alerts or math as shipped
 features. The small rules in `ContainerExtensionTests`, `TransformTests` and
-`InlineContractTests` are architecture probes, not feature-conformance tests.
+`InlineExtensionTests` are architecture probes, not feature-conformance tests.
 
 ## Configuration and dispatch
 
@@ -63,8 +62,8 @@ back to ordinary parsing with `invalidExtensionResult(qualifiedRuleID)`.
 
 ## Transform and renderer boundaries
 
-`BlockTransform` runs once after block parsing and before the future inline
-phase. It returns a validated `Document` with identical source bytes and the
+`BlockTransform` runs once after block parsing and before inline resolution
+when registered in `transforms`. It returns a validated `Document` with identical source bytes and the
 same syntax-collection mode. Introduced custom kinds must be declared by its
 descriptor; introduced tokens must use its namespace. Existing foreign nodes
 and tokens may be retained. A thrown or invalid result preserves the previous
@@ -78,33 +77,59 @@ a nil result tries the legacy hook and then normal rendering. A parent index
 is built once per render only when contextual hooks are registered. Wrappers
 continue to use built-in list child scheduling. Hook HTML remains trusted.
 
-Post-inline transforms are **not** a callable phase yet. M2 must add that phase
-with core inline dispatch; M4/M5 feature implementations must test their own
-syntax, continuation, diagnostics and renderer policy.
+`postInlineTransforms` is now a callable phase, with the same source,
+namespace and collection-mode validation as pre-inline transforms. M4/M5
+features must still test their own syntax and renderer policies.
 
-## Inline draft to integrate in M2
+## Integrated inline controller (M2)
 
-`InlineContractDraft.swift` is internal, exercised through `@testable` tests;
-it is not a public API or an active inline parser. M2 must implement core inline
-rules through the same controller as extensions, before promoting these types.
+`InlineRule`, `InlineContext`, `InlineMatch`, `DelimiterRequest` and opaque
+`DelimiterHandle` replace the removed internal draft. Core and custom rules
+run through one cursor/controller. Escapes, code spans and link structure are
+protected entry points; custom triggers then run by explicit `ruleOrder`,
+priority and profile order, before core emphasis and text. Consumed code,
+link destinations/titles and raw HTML are never redispatched to callbacks.
+Core protected entry points cannot be reordered or disabled through this API.
+Trigger membership uses a byte set; the parser does not hash a rule dictionary
+for every ordinary text byte. Literal decoding avoids temporary byte arrays
+when no escapes/entities/NUL or code-span line-ending normalization is needed.
 
-The core owns source cursor progress, code/escape/link protected regions,
-flanking/run calculation, delimiter stack, eligible opener handles and mutation.
-Callbacks request an inline node, optional child source range, namespaced tokens
-and one controlled operation: none, open(width), or close(handle, width).
-They never receive mutable stack storage. Validation precedes node/stack
-mutation: positive bounded byte consumption (overflow safe), declared inline
-kind, contained children/tokens, flanking, run width and a live eligible opener
-owned by the same extension. Foreign/stale openers are rejected atomically.
+Callback coordinates refer to a projected leaf `input` (UTF-8 with LF line
+endings), not a guessed contiguous range in the original snapshot. `source`
+retains the original bytes and `originalRanges(for:)` maps input ranges back
+across CRLF and removed container prefixes. Callback token ranges and optional
+child ranges use input coordinates; the core converts them to source tokens.
 
-M2 dispatch order is protected core syntax first (escapes, code, link
-structure), then eligible inline triggers by explicit precedence, then text.
-Delimiter callbacks run only where that controller permits them; delimiter
-rules cannot reopen code or link destinations. Math, strike/highlight and wiki
-rules require separate syntax tests when implemented. Current draft tests prove
-boundary validation and owned handles, **not** actual code-span/link exclusion
-or correct CommonMark delimiter-stack behavior. M2 must test those integrations,
-nested/adjacent delimiter runs and amortized linear behavior against cmark.
+Matches must consume a positive bounded number of bytes and declare an owned
+custom inline kind. Children/tokens must remain inside the match; children
+must be a strictly smaller range. Invalid results report an infrastructure
+`invalidExtensionResult` before node/stack mutation and permit literal fallback.
+Custom leaf fallback text uses the projected spelling, including replacement
+UTF-8/NUL decoding. Existing pre-inline tokens on replaced text are retained
+with the containing paragraph/heading as owner.
+
+Custom delimiter callbacks request open/close of an entire run. Flanking,
+width, rule identity, current bracket scope and a live eligible handle are
+checked by the controller. Identity-bound handles from another parse or rule
+cannot close an opener. Unmatched custom delimiters remain literal. Partial
+run consumption is deliberately not supported by this first public contract.
+Core emphasis uses the CommonMark delimiter stack, rule of three and
+openers-bottom bounds; nodes/stack entries are spliced iteratively. Scratch
+storage is reused within one parse, with all stack/handle/protected state reset
+between leaves. Declined custom trigger runs cache their end positions.
+
+Complete custom matches may ask the same controller to parse child input.
+Those calls have `maximumInlineExtensionDepth` (default 16, maximum 32),
+separate from block depth. Overflow emits retained literal children and a
+resource diagnostic. Core code/emphasis/link parsing does not recurse.
+Callbacks are trusted compiled code: the library cannot interrupt their traps,
+loops or arbitrary work. Building eligible custom-handle arrays also has a
+cost; selected callbacks must be measured, not assumed free.
+
+`InlineExtensionTests` exercises real code/link exclusion, flanking, owned and
+stale handles, projected CRLF offsets, precedence/disable switches, rejected
+matches, preserved annotations, recursion limits and post-inline dispatch.
+These are architecture probes, not shipped math/highlight/wiki features.
 
 ## Snapshot storage decision
 

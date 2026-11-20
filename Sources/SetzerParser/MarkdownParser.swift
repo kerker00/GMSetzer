@@ -1,11 +1,13 @@
 public import SetzerSyntax
 
-/// Parses CommonMark block structure, HTML blocks and reference definitions.
-/// Inline markup and editor analysis follow; see Docs/SyntaxTree.md.
+/// Parses CommonMark blocks and inlines over an immutable UTF-8 snapshot.
+/// Optional lexical tokens retain source spelling; native analysis follows in M3.
 public struct MarkdownParser: Sendable {
     public let profile: Profile
     private let registry: RuleRegistry
     internal var resolvedTransforms: [ActiveTransform] { registry.transforms }
+    internal var resolvedInlineRules: [ActiveInlineRule] { registry.inlineRules }
+    internal var resolvedPostInlineTransforms: [ActiveTransform] { registry.postInlineTransforms }
     public var configurationIssues: [ConfigurationIssue] { registry.issues }
     public let limits: ParserLimits
     public let collectSyntaxDetails: Bool
@@ -33,7 +35,7 @@ public struct MarkdownParser: Sendable {
     public func parse(bytes: [UInt8]) -> Document {
         var parser = BlockParser(source: bytes, registry: registry, limits: limits,
                                  collectSyntaxDetails: collectSyntaxDetails)
-        return applyTransforms(to: parser.parse())
+        return applyTransforms(to: parseInlines(applyTransforms(to: parser.parse())), afterInlines: true)
     }
 }
 

@@ -9,6 +9,13 @@ public struct NodeKind: Hashable, Sendable, CustomStringConvertible {
     public static let heading = NodeKind("heading")
     public static let text = NodeKind("text")
     public static let softBreak = NodeKind("softBreak")
+    public static let hardBreak = NodeKind("hardBreak")
+    public static let code = NodeKind("code")
+    public static let emphasis = NodeKind("emphasis")
+    public static let strong = NodeKind("strong")
+    public static let link = NodeKind("link")
+    public static let image = NodeKind("image")
+    public static let htmlInline = NodeKind("htmlInline")
     public static let thematicBreak = NodeKind("thematicBreak")
     public static let codeBlock = NodeKind("codeBlock")
     public static let referenceDefinition = NodeKind("referenceDefinition")
@@ -18,7 +25,8 @@ public struct NodeKind: Hashable, Sendable, CustomStringConvertible {
     public static let htmlBlock = NodeKind("htmlBlock")
 
     public static let builtins: Set<NodeKind> = [
-        .document, .paragraph, .heading, .text, .softBreak,
+        .document, .paragraph, .heading, .text, .softBreak, .hardBreak,
+        .code, .emphasis, .strong, .link, .image, .htmlInline,
         .thematicBreak, .codeBlock, .referenceDefinition, .blockQuote, .list, .listItem, .htmlBlock,
     ]
 }
@@ -35,8 +43,8 @@ public indirect enum SyntaxValue: Hashable, Sendable {
     case object([String: SyntaxValue])
 }
 
-/// Unresolved source spelling. M2 will decode destinations/titles and perform
-/// Unicode case folding of labels when resolving references.
+/// Source-spelled definition. The inline phase decodes destinations/titles and
+/// folds labels for lookup; the retained payload itself is never rewritten.
 public struct ReferenceDefinition: Hashable, Sendable {
     public let rawLabel: String
     public let rawDestination: String
@@ -88,6 +96,13 @@ public enum NodeData: Hashable, Sendable {
     case heading(level: Int)
     case text(String)
     case softBreak
+    case hardBreak
+    case code(String)
+    case emphasis
+    case strong
+    case link(destination: String, title: String?)
+    case image(destination: String, title: String?)
+    case htmlInline(String)
     case thematicBreak
     case codeBlock(info: String?, literal: String)
     case referenceDefinition(ReferenceDefinition)
@@ -104,6 +119,13 @@ public enum NodeData: Hashable, Sendable {
         case .heading: .heading
         case .text: .text
         case .softBreak: .softBreak
+        case .hardBreak: .hardBreak
+        case .code: .code
+        case .emphasis: .emphasis
+        case .strong: .strong
+        case .link: .link
+        case .image: .image
+        case .htmlInline: .htmlInline
         case .thematicBreak: .thematicBreak
         case .codeBlock: .codeBlock
         case .referenceDefinition: .referenceDefinition
@@ -117,7 +139,7 @@ public enum NodeData: Hashable, Sendable {
 
     public var role: NodeRole {
         switch self {
-        case .text, .softBreak: .inline
+        case .text, .softBreak, .hardBreak, .code, .emphasis, .strong, .link, .image, .htmlInline: .inline
         case .custom(_, let role, _): role
         default: .block
         }
@@ -130,7 +152,7 @@ public enum NodeData: Hashable, Sendable {
         case .document, .blockQuote, .listItem:
             child.role == .block && !child.isDocumentOrListItem
         case .list: child.isListItem
-        case .paragraph, .heading: child.role == .inline
+        case .paragraph, .heading, .emphasis, .strong, .link, .image: child.role == .inline
         case .custom(_, .block, _): !child.isDocumentOrListItem
         case .custom(_, .inline, _): child.role == .inline
         default: false

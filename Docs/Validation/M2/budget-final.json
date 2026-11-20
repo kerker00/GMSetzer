@@ -1,0 +1,78 @@
+{
+  "cases": [
+    {
+      "profile": "CommonMark",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 2.728,
+      "c_ms": 1.72,
+      "ratio": 1.5860465116279072,
+      "limit_ms": 3.44,
+      "remaining_ms": 0.7119999999999997,
+      "budget_passed": true
+    },
+    {
+      "profile": "CommonMark",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 28.23,
+      "c_ms": 19.104,
+      "ratio": 1.4777010050251258,
+      "limit_ms": 38.208,
+      "remaining_ms": 9.977999999999998,
+      "budget_passed": true
+    },
+    {
+      "profile": "CommonMark",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 146.67000000000002,
+      "c_ms": 95.879,
+      "ratio": 1.5297406105612283,
+      "limit_ms": 191.758,
+      "remaining_ms": 45.087999999999994,
+      "budget_passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 2.71,
+      "c_ms": 3.045,
+      "ratio": 0.8899835796387521,
+      "limit_ms": 6.09,
+      "remaining_ms": 3.38,
+      "budget_passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 28.574,
+      "c_ms": 37.454,
+      "ratio": 0.762909168580125,
+      "limit_ms": 60.0,
+      "remaining_ms": 31.426,
+      "budget_passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 148.505,
+      "c_ms": 196.608,
+      "ratio": 0.7553354899088541,
+      "limit_ms": 300.0,
+      "remaining_ms": 151.495,
+      "budget_passed": true
+    }
+  ],
+  "failures": [],
+  "scope": "Current configured parser; GFM ratios remain informational until full GFM conformance. M2 has a separate frozen additional-work gate."
+}

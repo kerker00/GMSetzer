@@ -6,6 +6,7 @@ import hashlib
 import importlib.util
 import json
 import math
+import re
 from pathlib import Path
 import sys
 
@@ -18,6 +19,22 @@ _gate = importlib.util.module_from_spec(_spec)
 sys.modules[_spec.name] = _gate
 _spec.loader.exec_module(_gate)
 ABSOLUTE, parse_results = _gate.ABSOLUTE, _gate.parse_results
+
+
+VARIANTS = {"core": None, "selected-registry": "selected registry", "selected-inline": "selected inline"}
+
+
+def variant_results(text, variant):
+    """Use the same frozen core baseline for all selected-rule total costs.
+
+    Selected cases must exist at every size; absence must not silently fall
+    back to the cheaper core measurement. C controls remain from the same run.
+    """
+    selected = VARIANTS[variant]
+    if selected is not None:
+        text = re.sub(r"(?m)^### GMSetzer CommonMark parse ", "### Unselected GMSetzer CommonMark parse ", text)
+        text = re.sub(r"(?m)^### GMSetzer " + re.escape(selected) + r" parse ", "### GMSetzer CommonMark parse ", text)
+    return parse_results(text)
 
 
 def evaluate(results, baseline, allowances):
@@ -56,6 +73,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("results", type=Path)
     parser.add_argument("--baseline", required=True, type=Path)
+    parser.add_argument("--variant", choices=VARIANTS, default="core",
+                        help="Include selected block/inline rule cost in the unchanged frozen M2 allowance")
     parser.add_argument("--allowance", required=True, type=Path)
     args = parser.parse_args()
     try:
@@ -63,7 +82,8 @@ def main():
         frozen = args.baseline.read_bytes()
         if hashlib.sha256(frozen).hexdigest() != settings["baseline_sha256"]:
             raise ValueError("frozen M1 baseline hash changed")
-        report = evaluate(parse_results(args.results.read_text()), parse_results(frozen.decode()), settings["additional_parse_ms"])
+        report = evaluate(variant_results(args.results.read_text(), args.variant), parse_results(frozen.decode()), settings["additional_parse_ms"])
+        report["variant"] = args.variant
     except (ValueError, OSError, KeyError, TypeError) as error:
         print(str(error), file=sys.stderr)
         return 2

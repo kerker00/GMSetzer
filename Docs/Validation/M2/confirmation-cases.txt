@@ -1,0 +1,30 @@
+GMSetzer CommonMark parse 1 MB
+GMSetzer CommonMark parse 100 KB
+GMSetzer CommonMark parse 5 MB
+GMSetzer GFM parse 1 MB
+GMSetzer GFM parse 100 KB
+GMSetzer GFM parse 5 MB
+GMSetzer inline syntax on 1 MB
+GMSetzer inline syntax on 100 KB
+GMSetzer inline syntax on 5 MB
+GMSetzer reference syntax off 1 MB
+GMSetzer reference syntax off 100 KB
+GMSetzer reference syntax off 5 MB
+GMSetzer reference syntax on 1 MB
+GMSetzer reference syntax on 100 KB
+GMSetzer reference syntax on 5 MB
+GMSetzer selected inline parse 1 MB
+GMSetzer selected inline parse 100 KB
+GMSetzer selected inline parse 5 MB
+GMSetzer selected registry parse 1 MB
+GMSetzer selected registry parse 100 KB
+GMSetzer selected registry parse 5 MB
+cmark-gfm (C) CommonMark parse 1 MB
+cmark-gfm (C) CommonMark parse 100 KB
+cmark-gfm (C) CommonMark parse 5 MB
+cmark-gfm (C) GFM parse 1 MB
+cmark-gfm (C) GFM parse 100 KB
+cmark-gfm (C) GFM parse 5 MB
+cmark-gfm (C) references 1 MB
+cmark-gfm (C) references 100 KB
+cmark-gfm (C) references 5 MB

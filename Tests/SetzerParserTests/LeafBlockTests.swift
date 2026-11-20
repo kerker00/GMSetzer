@@ -20,7 +20,7 @@ struct LeafBlockTests {
         ("### title ###  \n", "<h3>title</h3>\n"),
         ("### ###\n", "<h3></h3>\n"),
         ("# title#\n", "<h1>title#</h1>\n"),
-        ("# title \\#\n", "<h1>title \\#</h1>\n"),
+        ("# title \\#\n", "<h1>title #</h1>\n"),
         ("####### title\n", "<p>####### title</p>\n"),
         ("#title\n", "<p>#title</p>\n"),
         ("one\ntwo\n===\n", "<h1>one\ntwo</h1>\n"),
@@ -73,7 +73,7 @@ struct LeafBlockTests {
         #expect(HTMLRenderer().render(MarkdownParser().parse("prefix\n[label]: /url\n")) == "<p>prefix\n[label]: /url</p>\n")
         #expect(HTMLRenderer().render(MarkdownParser().parse("[label]: /url junk\n")) == "<p>[label]: /url junk</p>\n")
         #expect(HTMLRenderer().render(MarkdownParser().parse("[label]: foo\\ bar\n")) == "<p>[label]: foo\\ bar</p>\n")
-        #expect(HTMLRenderer().render(MarkdownParser().parse("[\u{00A0}]: /url\n")) == "<p>[\u{00A0}]: /url</p>\n")
+        #expect(HTMLRenderer().render(MarkdownParser().parse("[\u{00A0}]: /url\n")) == "")
     }
 
     @Test func sourceHTMLIsEscapedAndBlockAnchorsAreExplicit() {

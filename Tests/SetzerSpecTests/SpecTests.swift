@@ -33,7 +33,7 @@ struct SpecTests {
         let parser = MarkdownParser(profile: profile)
         // Trusted fixtures explicitly request specification output. Production
         // rendering retains escaped raw HTML and omitted comments by default.
-        let renderer = HTMLRenderer(allowRawHTML: true, preserveHTMLComments: true)
+        let renderer = HTMLRenderer.conformance
         let diagnose = ProcessInfo.processInfo.environment["GMSETZER_SPEC_DIAGNOSTICS"] == "1"
         return examples.compactMap { example in
             let actual = renderer.render(parser.parse(example.markdown))
@@ -53,7 +53,8 @@ struct SpecTests {
         Set(baseline).subtracting(passing).sorted()
     }
 
-    static func check(_ examples: [Example], profile: Profile, baseline: [Int]) {
+    @discardableResult
+    static func check(_ examples: [Example], profile: Profile, baseline: [Int]) -> [Int] {
         let ids = Set(examples.map(\.example))
         #expect(ids.count == examples.count, "Example IDs must be unique")
         #expect(Set(baseline).count == baseline.count, "Baseline IDs must be unique")
@@ -64,6 +65,7 @@ struct SpecTests {
         let newlyPassing = Set(passing).subtracting(baseline).sorted()
         if !newlyPassing.isEmpty { print("\(profile.name) new passing IDs: \(newlyPassing)") }
         #expect(regressed.isEmpty, "Regressed example IDs: \(regressed)")
+        return passing
     }
 
     @Test func aNewPassCannotHideARegression() {
@@ -75,7 +77,8 @@ struct SpecTests {
         let examples = try Self.examples("commonmark-0.31.2")
         #expect(examples.count == 652)
         let baseline = try JSONDecoder().decode(Baseline.self, from: Self.resource("baseline"))
-        Self.check(examples, profile: .commonMark, baseline: baseline.commonmark)
+        let passing = Self.check(examples, profile: .commonMark, baseline: baseline.commonmark)
+        #expect(passing.count == 652, "M2 requires complete exact CommonMark conformance")
     }
 
     @Test func gfmExamplesNeverRegress() throws {
@@ -105,7 +108,7 @@ struct SpecTests {
             let references = document.nodes.filter { $0.kind == .referenceDefinition }
             #expect(references.count == expected[example.example], "Reference block shape in example \(example.example)")
             #expect(document.tokens != nil)
-            #expect(document.tokens?.allSatisfy { document.nodes[$0.owner].kind == .referenceDefinition } == true)
+            #expect(document.tokens?.filter { $0.role.hasPrefix("core.reference.") }.allSatisfy { document.nodes[$0.owner].kind == .referenceDefinition } == true)
         }
     }
 }

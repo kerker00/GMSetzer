@@ -11,7 +11,7 @@ from unittest.mock import patch
 import unittest
 
 from check_benchmark_budget import Timing
-from check_m2_budget import evaluate, main
+from check_m2_budget import evaluate, main, variant_results
 
 
 class M2BudgetTests(unittest.TestCase):
@@ -56,6 +56,26 @@ class M2BudgetTests(unittest.TestCase):
         key = ("GMSetzer", "CommonMark", "1 MB")
         current[key] = dataclasses.replace(current[key], milliseconds=41)
         self.assertEqual(len(evaluate(current, self.baseline, dict(self.limits, **{"1 MB": 30}))["failures"]), 1)
+
+    def test_selected_rules_cannot_hide_behind_faster_core_measurements(self):
+        rows = []
+        for (engine, profile, size), value in self.baseline.items():
+            rows.append(f"### {engine} {profile} parse {size} (bytes: {value.byte_count}, corpus: {value.corpus})\n"
+                        f"| Time (wall clock) (ms) * | 1 | 1 | {value.milliseconds} | 1 | 1 | 1 | 1 | 20 |\n")
+            if engine == "GMSetzer":
+                for name in ["selected inline", "selected registry"]:
+                    rows.append(f"### GMSetzer {name} parse {size} (bytes: {value.byte_count}, corpus: {value.corpus})\n"
+                                f"| Time (wall clock) (ms) * | 1 | 1 | {value.milliseconds + self.limits[size] + 1} | 1 | 1 | 1 | 1 | 20 |\n")
+        text = "\n".join(rows)
+        self.assertEqual(evaluate(variant_results(text, "core"), self.baseline, self.limits)["failures"], [])
+        for variant in ["selected-inline", "selected-registry"]:
+            self.assertEqual(len(evaluate(variant_results(text, variant), self.baseline, self.limits)["failures"]), 3)
+
+    def test_missing_selected_cases_do_not_fall_back_to_core(self):
+        text = "### GMSetzer CommonMark parse 1 MB (bytes: 1000000, corpus: mixed-v1)\n| Time (wall clock) (ms) * | 1 | 1 | 20 | 1 | 1 | 1 | 1 | 20 |\n"
+        for variant in ["selected-inline", "selected-registry"]:
+            with self.assertRaises(ValueError):
+                evaluate(variant_results(text, variant), self.baseline, self.limits)
 
     def test_cli_rejects_a_tampered_frozen_baseline(self):
         rows = []

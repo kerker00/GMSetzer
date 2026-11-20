@@ -85,6 +85,14 @@ let benchmarks: @Sendable () -> Void = {
         Benchmark("GMSetzer selected registry parse \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
             for _ in benchmark.scaledIterations { blackHole(registryParser.parse(text)) }
         }
+        let inlineRegistryParser = Corpus.inlineRegistryParser()
+        Benchmark("GMSetzer selected inline parse \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            for _ in benchmark.scaledIterations { blackHole(inlineRegistryParser.parse(text)) }
+        }
+        let annotatedParser = MarkdownParser(collectSyntaxDetails: true)
+        Benchmark("GMSetzer inline syntax on \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            for _ in benchmark.scaledIterations { blackHole(annotatedParser.parse(text)) }
+        }
         Benchmark("GMSetzer parent index \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
             for _ in benchmark.scaledIterations { blackHole(DocumentIndex(document)) }
         }

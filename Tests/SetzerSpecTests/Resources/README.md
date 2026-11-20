@@ -23,8 +23,16 @@ examples. The 670-example count excluded them and was incomplete for GMSetzer.
 
 `baseline.json` records passing example IDs per profile. The spec tests fail
 if any protected example regresses, even if another starts passing. Add new
-passing IDs in the same commit. M1 through HTML/references protects 339 CommonMark
-and 339 GFM examples. The harness explicitly permits raw HTML and comments for
-trusted conformance fixtures; safe-default rendering is tested separately.
+passing IDs in the same commit. M1 protected 339 CommonMark and 339 GFM
+examples. M2 preserves all of them and now protects 652 CommonMark and 641 GFM
+examples. Fixtures/digests are unchanged. The harness uses the explicit
+`HTMLRenderer.conformance` configuration for trusted fixtures (raw HTML,
+comments and unsafe URL examples); safe-default rendering is tested separately.
 At M0 only CommonMark 207 and GFM 176/188 passed; those
 rendered empty output and did not demonstrate parser implementation.
+
+The default specification check remains exact. The separately tested optional
+`HTMLNormalization` helper only removes generated br/hr/img closing slashes;
+it preserves text whitespace, attributes, code and original raw HTML. It is not
+used to turn a strict fixture mismatch into a protected pass. The remaining GFM
+mismatches (extensions and older nested-strong behavior) remain M4 work.

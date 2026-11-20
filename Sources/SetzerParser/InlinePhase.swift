@@ -1,0 +1,96 @@
+import SetzerSyntax
+
+extension MarkdownParser {
+    internal func parseInlines(_ document: Document) -> Document {
+        var references: [ReferenceLabel: InlineParser.Reference] = [:]
+        for node in document.nodes {
+            if case .referenceDefinition(let definition) = node.data {
+                let key = InlineDecoding.label(definition.rawLabel)
+                if let previous = references[key], previous.sourceOffset <= node.range.lowerBound { continue }
+                references[key] = InlineParser.Reference(sourceOffset: node.range.lowerBound,
+                        destination: InlineDecoding.decode(definition.rawDestination),
+                        title: definition.rawTitle.map { InlineDecoding.decode($0) })
+            }
+        }
+        var triggers = ByteSet()
+        for active in resolvedInlineRules { triggers.insert(active.rule.trigger) }
+        let inlineRules = Dictionary(grouping: resolvedInlineRules, by: { $0.rule.trigger })
+        var builder = DocumentBuilder(source: document.source, collectSyntaxDetails: document.tokens != nil)
+        builder.reserveCapacity(document.nodes.count * 3)
+        for diagnostic in document.diagnostics { builder.report(diagnostic) }
+        var mapped = [Int](repeating: -1, count: document.nodes.count)
+        mapped[0] = 0
+        var inline = InlineParser(input: InlineInput(), references: references, collectSyntax: collectSyntaxDetails,
+                                  source: document.source, rules: inlineRules, triggers: triggers, maximumDepth: limits.maximumInlineExtensionDepth)
+        var pending = document.children(of: 0).reversed().map { ($0, 0) }
+        while let (old, parent) = pending.popLast() {
+            let node = document.nodes[old]
+            let data: NodeData
+            if case .codeBlock(let info, let literal) = node.data {
+                data = .codeBlock(info: info.map { InlineDecoding.decode($0) }, literal: literal)
+            } else { data = node.data }
+            let index = try! builder.append(data, range: node.range, segments: node.segments,
+                                            fallbackLiteral: document.customLeafFallbacks[old], to: parent)
+            mapped[old] = index
+            let children = document.children(of: old)
+            let inlineBlock: Bool
+            switch node.data { case .paragraph, .heading: inlineBlock = true; default: inlineBlock = false }
+            if inlineBlock, !children.isEmpty,
+               children.allSatisfy({
+                   switch document.nodes[$0].data { case .text, .softBreak: true; default: false }
+               }),
+               needsInlineParsing(children, document: document, triggers: triggers, hasRules: !inlineRules.isEmpty) {
+                // Block transforms may already have annotated original text.
+                // Preserve those exact ranges on the containing inline block.
+                for child in children { mapped[child] = index }
+                let input = InlineInput(document, children: children)
+                inline.reset(to: input)
+                inline.parse()
+                for diagnostic in inline.diagnostics { builder.report(diagnostic) }
+                var events: [(Int, Int)] = []
+                if let first = inline.first { events.append((first, index)) }
+                while let (itemIndex, owner) = events.popLast() {
+                    let item = inline.items[itemIndex]
+                    let mapped = input.mapped(item.start, item.end)
+                    let data: NodeData
+                    if case .text("") = item.data {
+                        data = .text(String(decoding: input.bytes[item.start..<item.end], as: UTF8.self))
+                    } else { data = item.data }
+                    let inlineIndex = try! builder.append(data, range: mapped.range,
+                                                          segments: mapped.segments, fallbackLiteral: item.fallback, to: owner)
+                    if collectSyntaxDetails {
+                        for (role, start, end) in item.tokens {
+                            for range in input.ranges(start, end) { builder.record(SyntaxToken(role, range: range, owner: inlineIndex)) }
+                        }
+                    }
+                    if let next = item.next { events.append((next, owner)) }
+                    if let child = item.firstChild { events.append((child, inlineIndex)) }
+                }
+            } else {
+                for child in children.reversed() { pending.append((child, index)) }
+            }
+        }
+        for token in document.tokens ?? [] {
+            let owner = mapped[token.owner]
+            if owner >= 0 { builder.record(SyntaxToken(token.role, range: token.range, owner: owner)) }
+        }
+        return try! builder.build()
+    }
+
+    private func needsInlineParsing(_ children: [Int], document: Document,
+                                    triggers: ByteSet, hasRules: Bool) -> Bool {
+        for child in children {
+            guard case .text(let text) = document.nodes[child].data else { continue }
+            // Block projection already repaired bytes and retained soft breaks.
+            // Plain leaves need neither another projection nor another decode.
+            if text.utf8.last == 32 || text.utf8.last == 9 { return true }
+            for byte in text.utf8 {
+                switch byte {
+                case 92, 38, 96, 42, 95, 91, 33, 60: return true
+                default: if hasRules && triggers.contains(byte) { return true }
+                }
+            }
+        }
+        return false
+    }
+}

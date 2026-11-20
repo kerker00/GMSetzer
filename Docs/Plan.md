@@ -1,6 +1,6 @@
 # GMSetzer – Plan and Requirements
 
-**Status: 20 November 2026, M1 technical acceptance passed on the cumulative acceptance branch; owner merge pending, M2 not started.** This document is the
+**Status: 20 November 2026, M1 and block optimisation merged (PRs #9/#10); M2 technical acceptance passed on `feature/m2-inlines`, owner review/merge pending.** This document is the
 reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
@@ -210,8 +210,8 @@ its first tested rules. The parser remains independent of analysis and HTML.
 - **M1 model contract:** the initial payloads, source segments, cross-module
   builder and iterative range/tree validation are implemented in
   [SyntaxTree.md](SyntaxTree.md). List start/delimiter/tightness, built-in
-  container continuation and depth limits are now included. Custom container
-  hooks and link payloads remain subsequent M1/M2 work.
+  container continuation and depth limits are now included. Custom containers and CommonMark inline payloads are implemented; see
+  [M2Inlines.md](M2Inlines.md) for the current inline and annotation contract.
 - **Incremental parsing** (re-parsing only changed top-level blocks) comes
   later and only if measurements show the need.
 
@@ -237,7 +237,8 @@ implementations are supplied separately to the parser. The initial registry
 supports custom leaf-block rules, deterministic priority and checked progress
 and ranges. Unavailable extensions and invalid matches produce diagnostics.
 Leaf rules receive projected lines and cannot consume past a container boundary.
-Custom container/inline hooks and post-processing remain open. The detailed contract
+Custom containers, inline triggers and pre/post-inline transforms are implemented.
+Built-in escape/code/link entry points remain protected from custom triggers. The detailed contract
 and callback trust boundary are in [SyntaxTree.md](SyntaxTree.md). Renderer
 hooks stay in `SetzerHTML`, without a parser-to-renderer dependency.
 
@@ -314,9 +315,9 @@ source files; source, version and licence go into the file header and into
   records the IDs of passing examples; losing any recorded example fails even
   if another starts passing. Add newly passing IDs in the same commit.
   Downloads are revision-pinned and SHA-256 checked; updating the corpus is
-  a separate reviewed change. The comparison is exact today. Introduce a
-  narrowly defined HTML normaliser, with its own regression tests, by M2;
-  never erase meaningful whitespace in code or raw HTML.
+  a separate reviewed change. The protected comparison remains exact. A tested, optional comparison
+  normaliser only removes generated void-tag slashes, retaining text, attributes,
+  code and original raw HTML byte-for-byte; no whitespace collapse is permitted.
 - **Version differences:** CommonMark 0.31.2 and the GFM 0.29-derived corpus
   are distinct targets. Classify conflicting inputs before M4; retain both
   original fixtures and use explicit profile-specific behaviour. Any proposed
@@ -355,8 +356,8 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | Milestone | Contents | Done when | Estimate | Status |
 | --- | --- | --- | --- | --- |
 | M0 | Repository, package layout, specification run, benchmark setup, name and gap check | Starting point measured; harness reviewed, reference configurations corrected | 2–3 | **reviewed and corrected** (19 Nov 2026); new reference timings pending |
-| M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **technical acceptance passed; merge pending**: M1-A merged in PR #4 (`51efee6`); M1-B measurements, checked validation optimisation and local budget gate implemented. 70 library tests, 3,919 reference comparisons and 13 Python tests pass; protected baselines remain 339/652 CommonMark and 339/672 GFM. [M1Acceptance](M1Acceptance.md) records the M1-C contracts, M1-D audit, portability matrix and fixed M2 budget |
-| M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | |
+| M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **merged in PR #9 (`61fcb95`)**: M1-A merged in PR #4 (`51efee6`); M1-B measurements, checked validation optimisation and local budget gate implemented. At M1 acceptance, 70 library tests, 3,919 reference comparisons and 13 Python tests passed; its protected baselines were 339/652 CommonMark and 339/672 GFM. [M1Acceptance](M1Acceptance.md) records the M1-C contracts, M1-D audit, portability matrix and fixed M2 budget |
+| M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | **technical acceptance passed; review/merge pending**: 652/652 exact CommonMark, 641/672 GFM; 96 Swift tests across macOS/Swift 6.2/release/Linux, 17 Python checks and 4,786 C comparisons pass. Final core and selected-rule cases pass both unchanged budget gates. See [M2Inlines](M2Inlines.md) |
 | M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; editor adapter for syntax spans/findings | Security/position/analysis tests pass; Setzkit proves snapshot-bound syntax decoration and diagnostic underlines; integration can start | re-estimate | |
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | |
 | M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Setzkit's corpus complete | 5–8 | |
@@ -441,11 +442,12 @@ documentation alignment is merged in Setzkit PR #22 (`39e5fd0`).
 The agreed pre-M2 sequence is technically complete: portability, phase split,
 shared extension/storage proof, fixed inline allowance and M1-D acceptance.
 [M1Acceptance.md](M1Acceptance.md) records all results and the remaining platform
-combinations without claiming editor/device checks. M1-C contracts and the
-internal inline draft are in [ExtensionContracts.md](ExtensionContracts.md).
+combinations without claiming editor/device checks. M1-C contracts and the now integrated M2 inline controller are in
+[ExtensionContracts.md](ExtensionContracts.md) and [M2Inlines.md](M2Inlines.md).
 The cumulative PR also carries the phase extraction from PR #8, merged into
-its former base branch after PR #7 had already reached main. Owner merge is
-pending; M2 implementation has not started.
+its former base branch after PR #7 had already reached main. The owner merged that work in PR #9 (`61fcb95`) and the block optimisation
+in PR #10 (`34cbe31`). M2 builds on that main revision. Functional checks and the frozen core/selected-rule performance gates pass;
+owner review and merge remain pending.
 
 The frozen CommonMark baseline leaves 1.048 / 15.286 / 69.207 ms total headroom
 at 100 KB / 1 MB / 5 MB. M2 receives a fixed **0.5 / 8 / 40 ms** allowance for
@@ -454,7 +456,7 @@ hashed baseline. A positive reserve remains at every size. Selected rule
 callbacks, new validation and allocation costs count inside this allowance.
 String/segment reconstruction and optional parent-index costs are measured;
 there is no assumed saving from a future lazy/pool representation.
-The branch `perf/block-parser-hot-paths` makes the block parse about three
+Merged PR #10 (`34cbe31`) makes the block parse about three
 times faster in a local harness, with byte-identical output (see
 [Benchmarks](Benchmarks.md#block-parser-hot-path-optimisation-branch-perfblock-parser-hot-paths)).
 A full package-benchmark run confirms this: CommonMark 1 MB takes 7.385 ms
@@ -463,3 +465,10 @@ frozen M2 allowance stays unchanged; the gain is reserve. The GFM
 ratios remain informational until the actual extensions are implemented.
 Existing measurement-series authorization remains valid; otherwise follow the
 full-benchmark owner rule.
+
+M2 now protects all 652 CommonMark examples and 641 pinned GFM examples.
+The remaining GFM differences are M4 work, including the pinned older
+nested-strong semantics. No fixture or protected ID was removed. The latest
+functional, source-span, diagnostic, portability and timing evidence is in
+[M2Inlines.md](M2Inlines.md); M2 technical acceptance uses the full/focused package-benchmark series and
+unchanged gate inputs, not a short timing probe.

@@ -1,6 +1,7 @@
 public import SetzerSyntax
 
-/// Runs once after blocks and before the future inline phase, in profile order.
+/// Runs in profile order, before inlines when registered in `transforms`, or
+/// after inline resolution when registered in `postInlineTransforms`.
 /// The result must be a validated tree over the exact same bytes. This supports
 /// callout/alert recognition without making the block recogniser own inlines.
 public struct BlockTransform: Sendable {
@@ -20,9 +21,9 @@ internal struct ActiveTransform: Sendable {
 }
 
 extension MarkdownParser {
-    internal func applyTransforms(to input: Document) -> Document {
+    internal func applyTransforms(to input: Document, afterInlines: Bool = false) -> Document {
         var document = input
-        for active in resolvedTransforms {
+        for active in afterInlines ? resolvedPostInlineTransforms : resolvedTransforms {
             do {
                 let result = try active.rule.transform(document)
                 let existing = Set(document.nodes.map(\.kind))
