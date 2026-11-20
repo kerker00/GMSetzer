@@ -8,6 +8,8 @@ no knowledge of earlier discussions is needed.
 The M4 follow-ups are merged in PR #15 (`1473d49`); its merged documentation
 branch has been removed. Source-only v0.4.0 and macOS/Linux CI are prepared
 on `release/0.4.0`; review, merge, tagging and publication remain pending.
+See [Releasing](Releasing.md) for the process and the
+[preparation checks](Validation/Release/0.4.0.md) for executed evidence.
 
 GMSetzer is an independent, general-purpose Markdown library intended for
 open-source use under the MIT licence. Editors, command-line tools, servers
@@ -407,7 +409,9 @@ profile conversions, incremental parsing if measurements call for it.
   confirmation right before the step.
 - **CI:** the owner authorised macOS/Linux CI and source-only release
   preparation on 20 November 2026. Implementation is on `release/0.4.0` and
-  is not yet merged into `main`.
+  is not yet merged into `main`. It adds Swift 6.2 tests, optimized builds and
+  offline script tests; successful version-tag checks create a source-only
+  release draft. See [Releasing](Releasing.md).
 - **Versioning:** SemVer. Before 1.0 the API may change; afterwards only with a
   major version.
 - **Every fix** comes with a regression test; crashes and hangs on hostile

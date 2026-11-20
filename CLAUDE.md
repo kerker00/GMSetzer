@@ -35,4 +35,4 @@ describes the workflow.
   without another prompt (owner, 20 November 2026). Source, manifests,
   executable workflows, tags, releases and visibility changes are excluded.
 - The owner authorised macOS/Linux CI and source-only release preparation on
-  20 November 2026; implementation is pending on `release/0.4.0`.
+  20 November 2026; follow [Docs/Releasing.md](Docs/Releasing.md).
