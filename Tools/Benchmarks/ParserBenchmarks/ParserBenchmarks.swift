@@ -96,6 +96,57 @@ let benchmarks: @Sendable () -> Void = {
         Benchmark("GMSetzer parent index \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
             for _ in benchmark.scaledIterations { blackHole(DocumentIndex(document)) }
         }
+        // M3 editor services on the parsed CommonMark document. Each benchmark
+        // isolates one optional service; the snapshot case adds them up.
+        Benchmark("GMSetzer position index \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            for _ in benchmark.scaledIterations { blackHole(SourceIndex(document)) }
+        }
+        let cjkText = Corpus.multibyteDocument(bytes: bytes)
+        let cjkBytes = Array(cjkText.utf8)
+        Benchmark("GMSetzer position index multibyte \(label)", configuration: measurement(cjkText, corpus: "multibyte-v1")) { benchmark in
+            for _ in benchmark.scaledIterations { blackHole(SourceIndex(cjkBytes)) }
+        }
+        Benchmark("Swift String UTF-16 count multibyte \(label)", configuration: measurement(cjkText, corpus: "multibyte-v1")) { benchmark in
+            // Context only: the standard library's own UTF-16 breadcrumb build.
+            for _ in benchmark.scaledIterations { blackHole(String(decoding: cjkBytes, as: UTF8.self).utf16.count) }
+        }
+        let positions = SourceIndex(document), tree = DocumentIndex(document)
+        // 10,000 evenly spread offsets per iteration; invalid offsets count too.
+        let probes = (0..<10_000).map { $0 * document.source.count / 10_000 }
+        Benchmark("GMSetzer 10k position round trips \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            for _ in benchmark.scaledIterations {
+                var sum = 0
+                for offset in probes {
+                    if let units = positions.utf16Offset(atUTF8Offset: offset) { sum &+= positions.utf8Offset(atUTF16Offset: units) ?? 0 }
+                    if let position = positions.position(atUTF8Offset: offset) { sum &+= positions.utf8Offset(at: position) ?? 0 }
+                }
+                blackHole(sum)
+            }
+        }
+        Benchmark("GMSetzer 10k caret queries \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            for _ in benchmark.scaledIterations {
+                var sum = 0
+                for offset in probes { sum &+= tree.node(atUTF8Offset: offset) ?? 0 }
+                blackHole(sum)
+            }
+        }
+        Benchmark("GMSetzer outline \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            for _ in benchmark.scaledIterations { blackHole(tree.outline()) }
+        }
+        let allRules = NativeAnalysisConfiguration(rules: Set(NativeRule.allCases))
+        Benchmark("GMSetzer native analysis \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            for _ in benchmark.scaledIterations { blackHole(try NativeAnalyzer.analyze(document, configuration: allRules)) }
+        }
+        Benchmark("GMSetzer editor snapshot \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
+            // Parse plus every optional service, as an editor would per version.
+            for _ in benchmark.scaledIterations {
+                let snapshot = MarkdownParser().parse(text)
+                let snapshotTree = DocumentIndex(snapshot)
+                blackHole(SourceIndex(snapshot))
+                blackHole(snapshotTree.outline())
+                blackHole(try NativeAnalyzer.analyze(snapshot, configuration: allRules))
+            }
+        }
         let referenceText = Corpus.referenceDocument(bytes: bytes)
         for collect in [false, true] {
             let parser = MarkdownParser(collectSyntaxDetails: collect)

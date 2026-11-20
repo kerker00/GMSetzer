@@ -104,7 +104,8 @@ public struct SourceIndex: Sendable {
     public func utf8Offset(atUTF16Offset offset: Int) -> Int? {
         guard offset >= 0, offset <= utf16Count else { return nil }
         var point = checkpoints[checkpoint(before: offset, utf16: true)]
-        while point.utf16 < offset { Self.advance(&point, source) }
+        // In an ASCII run one byte is one UTF-16 unit.
+        walk(&point) { $0.utf16 < offset ? $0.byte + (offset - $0.utf16) : nil }
         return point.utf16 == offset ? point.byte : nil
     }
     public func utf8Offset(at position: SourcePosition) -> Int? {
@@ -117,11 +118,12 @@ public struct SourceIndex: Sendable {
             } else { high = mid }
         }
         var point = checkpoints[low - 1]
-        while point.column < position.column {
-            guard point.byte < source.count, source[point.byte] != 10, source[point.byte] != 13 else { return nil }
-            Self.advance(&point, source)
-        }
-        return point.byte
+        let line = point.line
+        // Runs stop before CR/LF, so a column past the line end ends on the
+        // terminator (or EOF) and is rejected below.
+        walk(&point) { $0.column < position.column && $0.line == line && $0.byte < source.count &&
+            source[$0.byte] != 10 && source[$0.byte] != 13 ? $0.byte + (position.column - $0.column) : nil }
+        return point.column == position.column && point.line == line ? point.byte : nil
     }
     public func utf16Range(for range: SourceRange) -> UTF16Range? {
         guard let lower = utf16Offset(atUTF8Offset: range.lowerBound),
@@ -145,9 +147,26 @@ public struct SourceIndex: Sendable {
     private func point(atByte offset: Int) -> Checkpoint? {
         guard offset >= 0, offset <= source.count else { return nil }
         var point = checkpoints[checkpoint(before: offset, utf16: false)]
-        while point.byte < offset { Self.advance(&point, source) }
+        walk(&point) { $0.byte < offset ? offset : nil }
         return point.byte == offset ? point : nil
     }
+    /// Advances `point` while `limit` returns the furthest byte an ASCII run
+    /// may reach; non-ASCII scalars and line terminators decode one at a time.
+    @inline(__always)
+    private func walk(_ point: inout Checkpoint, _ limit: (Checkpoint) -> Int?) {
+        source.withUnsafeBufferPointer { buffer in
+            while let bound = limit(point) {
+                let end = ByteSearch.asciiRunEnd(in: buffer, from: point.byte, to: min(bound, buffer.count))
+                if end > point.byte {
+                    let length = end - point.byte
+                    point.byte = end; point.utf16 += length; point.column += length
+                } else {
+                    Self.advance(&point, source)
+                }
+            }
+        }
+    }
+
     /// UTF-8 decoding needs at most three preceding bytes to establish a
     /// boundary. Tree queries do not need to build the full position index.
     package static func isBoundary(_ offset: Int, in bytes: [UInt8]) -> Bool {

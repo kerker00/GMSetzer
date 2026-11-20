@@ -113,4 +113,30 @@ struct SourceIndexTests {
         }
         #expect(index.utf16Count == utf16)
     }
+
+    @Test func treeIndexMatchesLinksForAnyNodeOrder() throws {
+        // "# A\n\n# B\n": root, then headings stored in reverse index order,
+        // each with a text child placed before its parent.
+        let source = Array("# A\n\n# B\n".utf8)
+        let nodes = [
+            Node(data: .document, range: SourceRange(0, source.count), firstChild: 4),
+            Node(data: .text("B"), range: SourceRange(7, 8)),
+            Node(data: .heading(level: 1), range: SourceRange(5, 9), firstChild: 1),
+            Node(data: .text("A"), range: SourceRange(2, 3)),
+            Node(data: .heading(level: 1), range: SourceRange(0, 4), firstChild: 3, nextSibling: 2),
+        ]
+        let document = try Document(source: source, nodes: nodes)
+        let tree = DocumentIndex(document)
+        #expect((0..<5).map { tree.parent(of: $0) } == [nil, 2, 0, 4, 0])
+        #expect(Array(tree.ancestors(of: 1)) == [2, 0])
+        #expect(tree.outline().map(\.node) == [4, 2])
+        #expect(tree.outline().map(\.title) == ["A", "B"])
+        #expect(tree.node(atUTF8Offset: 2) == 3)
+        #expect(tree.node(atUTF8Offset: 7) == 1)
+        #expect(tree.node(atUTF8Offset: 4, affinity: .upstream) == 4)
+        // The parser's append order takes the sequential path with equal results.
+        let parsed = DocumentIndex(MarkdownParser().parse(bytes: source))
+        #expect(parsed.outline().map(\.title) == ["A", "B"])
+        #expect(parsed.node(atUTF8Offset: 2).map { parsed.document.nodes[$0].kind } == .text)
+    }
 }
