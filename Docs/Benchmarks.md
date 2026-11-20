@@ -484,7 +484,7 @@ checks. No fresh benchmark, allocation or reference series was run for
 
 ## M5 alerts and callouts (development)
 
-`feature/m5-alerts-callouts` reserves header lines using the existing block
+Merged PR #22 (`c9543fe`) reserves header lines using the existing block
 registry and an immediate quote-start signal. Before inlines, each selected
 wrapping transform rebuilds a validated tree and remaps existing tokens. Foreign
 annotation provenance is counted by role/range; token validation and rebuilding

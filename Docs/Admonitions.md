@@ -1,8 +1,8 @@
 # M5 alerts and callouts
 
-Implemented on `feature/m5-alerts-callouts`, based on `3a12ff1` after math
-merged in PR #21. Not yet merged or released. This implements the remaining
-declared M5 syntax; milestone acceptance still awaits CI, review and merge.
+Merged in PR #22 (`c9543fe`), based on `3a12ff1` after math merged in PR #21.
+Not yet in a versioned release. This implements the remaining declared M5
+syntax; [functional acceptance](M5Acceptance.md) is complete.
 No runtime dependency, core node case or module dependency is added.
 
 ## Selection and HTML
@@ -173,6 +173,8 @@ module-cache paths outside the repository. Counts are 215 library tests and
 12 specification tests: 23 admonition tests, one transform probe and one corpus
 test added by this step. Each environment retains 652/652 CommonMark and
 672/672 GFM protected examples. No fixture, baseline ID or manifest changed.
-Minimum-version PR CI remains pending; unchanged Python scripts were not
-rerun locally. Development identity is `0.5.0-dev.4`, not a release tag.
+PR and merged-main CI pass on macOS/Swift 6.2.3 and Linux/Swift 6.2, including
+17 script tests and optimized builds per host. The merged branch is removed
+locally and remotely; no additional worktrees existed. Unchanged Python
+scripts were not rerun locally. Development identity is `0.5.0-dev.4`, not a release tag.
 No fresh benchmark/reference series or consumer UI/device checks were run.

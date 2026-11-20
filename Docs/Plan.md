@@ -34,8 +34,7 @@ M5's additional syntax remains separate and unimplemented by this step.
 Local validation passes all 135 tests on macOS/Swift 6.4.2, macOS/Swift 6.2 and
 Linux/Swift 6.4.2, plus both host release builds. Annotation on/off preserves
 all 1,324 specification trees and exact HTML. PR CI and merged-main CI pass
-on macOS and Linux, including the minimum Linux Swift 6.2 compiler. The merged
-branch is removed locally and remotely; no new release or benchmark series
+on macOS and Linux, including the minimum Linux Swift 6.2 compiler. The merged branch is removed locally and remotely; no new release or benchmark series
 was run.
 
 **M5 in progress:** merged PR #19 (`4b0f105`) adds opt-in raw YAML/TOML
@@ -64,19 +63,21 @@ projected TeX and exact syntax tokens remain available; the caller supplies
 formula rendering. All 202 tests pass on macOS/Swift 6.4.2, macOS/Swift 6.2
 and Linux/Swift 6.4.2; both host release builds pass. Development identity is
 `0.5.0-dev.3` at that step; PR and merged-main CI pass on macOS and Linux. The
-merged
-branch is removed locally and remotely; no additional worktrees existed.
+merged branch is removed locally and remotely; no additional worktrees existed.
 See [Math](Math.md) for that step's declared grammar and validation limits.
 
-**Remaining M5 syntax implemented on `feature/m5-alerts-callouts`:** optional
+**Merged M5 step:** PR #22 (`c9543fe`) adds optional
 GitHub-style alerts and Obsidian-style callouts retain parsed body/title
 Markdown, folding metadata, exact header tokens and composed HTML. A new
 quote-start context prevents header/setext/table ambiguity; rebuilding remaps
 validated token owners without allowing foreign-token forgery/duplication.
 All 227 tests pass on macOS/Swift 6.4.2, macOS/Swift 6.2 and Linux/Swift 6.4.2;
-both host release builds pass. Development identity is `0.5.0-dev.4`. M5
-acceptance remains pending CI/review/merge; no tag or release is created.
-See [Admonitions](Admonitions.md).
+both host release builds pass. Development identity is `0.5.0-dev.4`. PR and
+merged-main CI pass on macOS and Linux, including 17 script tests per host.
+The merged branch is removed locally and remotely; no additional worktrees
+existed. [M5 functional acceptance](M5Acceptance.md) is complete against the
+declared fixtures/profile/combination criteria. Release preparation and M6
+remain separate; no tag or release is created. See [Admonitions](Admonitions.md).
 
 GMSetzer is an independent, general-purpose Markdown library intended for
 open-source use under the MIT licence. Editors, command-line tools, servers
@@ -455,7 +456,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | **merged in PR #11 (`021f110`)**: 652/652 exact CommonMark, 641/672 GFM; 96 Swift tests across macOS/Swift 6.2/release/Linux, 17 Python checks and 4,786 C comparisons pass. Final core and selected-rule cases pass both unchanged budget gates. See [M2Inlines](M2Inlines.md) |
 | M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; portable syntax/finding APIs | Security/position/analysis tests and standalone package validation pass; application adapters remain outside this package | re-estimate | **merged in PR #12 (`651af17`)** after review corrections: exact position/outline queries, safe configurable URL scheme allowlist/anchors and three optional native rules. 106 library tests passed across macOS/debug/release/Swift 6.2/Linux; after the [review](Review-M3.md) corrections 108 pass on macOS (Swift 6.2/Linux not re-run) with byte-identical differential results. Index/analysis timings and optimisations: [Benchmarks](Benchmarks.md#m3-editor-services-20-november-2026). See [M3EditorServices](M3EditorServices.md) |
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | **merged in PR #14 (`e163e6f`)**: tables, task lists, strikethrough, extended autolinks and tag filter as built-in payloads (owner decision 1A); 672/672 GFM and 652/652 CommonMark; generated documents agree with cmark-gfm. Library and reference tests pass on macOS; GFM parses at 0.88× cmark-gfm and both budget checks pass. Swift 6.2/Linux not re-run. See [M4GFM](M4GFM.md) |
-| M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Declared extension fixtures and profile/combination tests pass | 5–8 | **first step merged in PR #19 (`4b0f105`)**: raw YAML/TOML front matter; 153 tests pass on both hosts and macOS/Swift 6.2. PR/main CI pass on both hosts. Named footnotes merged in PR #20 (`a6a2da6`), with 178 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on macOS/Linux. Opaque inline/display/fenced TeX is merged in PR #21 (`6f166b7`), with 202 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on both hosts. Alerts and callouts are implemented on `feature/m5-alerts-callouts`; all 227 local tests pass on both hosts and macOS/Swift 6.2. Declared M5 syntax is implemented, with CI/review/merge and milestone acceptance pending. See [FrontMatter](FrontMatter.md), [Footnotes](Footnotes.md), [Math](Math.md) and [Admonitions](Admonitions.md) |
+| M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Declared extension fixtures and profile/combination tests pass | 5–8 | **first step merged in PR #19 (`4b0f105`)**: raw YAML/TOML front matter; 153 tests pass on both hosts and macOS/Swift 6.2. PR/main CI pass on both hosts. Named footnotes merged in PR #20 (`a6a2da6`), with 178 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on macOS/Linux. Opaque inline/display/fenced TeX is merged in PR #21 (`6f166b7`), with 202 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on both hosts. Alerts and callouts merged in PR #22 (`c9543fe`); all 227 local tests pass on both hosts and macOS/Swift 6.2, and PR/main CI pass on both hosts. **Functional M5 accepted** against the declared extension/profile/combination criterion; see [M5Acceptance](M5Acceptance.md). See [FrontMatter](FrontMatter.md), [Footnotes](Footnotes.md), [Math](Math.md) and [Admonitions](Admonitions.md) |
 | M6 | Speed and hardening: measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met | 5–8 | |
 | M7 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | 3–5 | |
 | | **Original total before explicit editor-analysis scope** | | **38–59; re-estimate required** | |
@@ -605,7 +606,7 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: CI/review/merge of the alert/callout step and M5 acceptance.
+Current next work: source-only 0.5.0 release preparation under [Releasing](Releasing.md).
 M6 performance/hardening and any versioned publication remain separate work.
 Front matter is merged in PR #19 and named footnotes in PR #20.
 Localization and container markers are merged;

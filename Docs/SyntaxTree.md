@@ -393,7 +393,8 @@ rendering stays with the caller. No module dependency or core node case changes.
 
 ## M5 alerts and callouts
 
-The unreleased [admonition step](Admonitions.md) reserves first-line quote
+The [admonition step](Admonitions.md), merged in PR #22 (`c9543fe`) and not
+yet released, reserves first-line quote
 headers and wraps the parsed body in `alerts.block` / `callouts.block` custom
 containers. Custom callout titles retain a `callouts.title` container with
 ordinary paragraph inlines; generated titles invent no source nodes. Internal

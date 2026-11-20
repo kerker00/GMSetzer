@@ -146,7 +146,8 @@ The [math step](Math.md), merged in PR #21 (`6f166b7`) and not yet released, add
 UTF-16 mapping apply; no TeX validation findings or editor theme mapping are
 implied. Native analysis retains its opaque-custom-content policy.
 
-The unreleased [alert/callout step](Admonitions.md) adds owned marker/type/fold/
+The [alert/callout step](Admonitions.md), merged in PR #22 (`c9543fe`) and
+not yet released, adds owned marker/type/fold/
 title spans and remaps original quote/list/body annotations after wrapping.
 Title inlines use normal core/extension roles. Source-order outline traversal
 includes body headings; native analysis keeps custom containers opaque.

@@ -5,8 +5,8 @@ and opt-in [M5 footnote support](Footnotes.md), merged in PR #20 (`a6a2da6`)
 and not yet in a versioned release.
 The [math step](Math.md), merged in PR #21 (`6f166b7`), uses prepared complete inline matches,
 a display-block rule and a post-inline code-fence transform. TeX is opaque;
-that step adds no parser API or dependency. The unreleased
-[alert/callout step](Admonitions.md) adds quote-start header rules, wrapping
+that step adds no parser API or dependency. The [alert/callout step](Admonitions.md), merged in PR #22 (`c9543fe`) and not
+yet released, adds quote-start header rules, wrapping
 transforms and composed HTML.
 The small rules in `ContainerExtensionTests`, `TransformTests` and
 `InlineExtensionTests` are architecture probes, not feature-conformance tests.
