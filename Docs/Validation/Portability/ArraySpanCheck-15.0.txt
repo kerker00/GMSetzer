@@ -1,0 +1,6 @@
+/private/tmp/gmsetzer-portability/ArraySpanCheck.swift:1:54: error: 'span' is only available in macOS 26.0 or newer
+1 | func arraySpanCount(_ bytes: [UInt8]) -> Int { bytes.span.count }
+  |      |                                               |- error: 'span' is only available in macOS 26.0 or newer
+  |      |                                               `- note: add 'if #available' version check
+  |      `- note: add '@available' attribute to enclosing global function
+2 |

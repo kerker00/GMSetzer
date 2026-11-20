@@ -290,4 +290,7 @@ quote/list sections now pass including their HTML-comment cases. These counts
 do not claim implemented inline or GFM extensions.
 The measured M1-B release baseline and annotation cost are in
 [Benchmarks.md](Benchmarks.md#m1-b-measured-baseline-and-checked-validation).
-Linux verification and a build using the minimum Swift 6.2 toolchain remain pending.
+Subsequent [portability verification](Portability.md) builds with Swift 6.2,
+passes all 57 macOS tests with a compatible SDK, and executes the protected spec
+baseline plus targeted checks on static Linux ARM64. The full Linux Swift
+Testing/glibc/x86-64 matrix and minimum Apple OS runtime checks remain open.

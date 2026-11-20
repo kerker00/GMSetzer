@@ -408,12 +408,16 @@ registry dispatch; its implemented boundaries and verification are in
 invariant/`try!` audit and final acceptance, not a second decomposition.
 
 1. **Minimum platform and Swift versions.** The manifest requires Swift tools
-   6.2 and provisionally macOS 15, iOS 18 and visionOS 2. The local Swift 6.4.2
-   SDK marks `UTF8Span` as Apple OS 26+, while `Span` has back-deployment
-   support; do not treat their availability as identical. Keep the byte-buffer
-   path until deployment targets and the minimum-toolchain build are verified.
-2. **Linux verification.** The package is designed for Linux but has not been
-   built there yet (no container tool on the owner's Mac).
+   6.2 and provisionally macOS 15, iOS 18 and visionOS 2. Swift 6.2 now builds
+   all library modules for macOS and Linux ARM64; all 57 macOS tests pass with
+   a compatible SDK/testing runtime. Compile probes confirm that `Span` and
+   an unsafe-buffer bridge support macOS 15, while direct `Array.span` and
+   `UTF8Span` require macOS 26. Minimum Apple OS runtime checks remain open;
+   keep the byte-buffer path. See [Portability.md](Portability.md).
+2. **Linux verification coverage.** A static ARM64 binary now runs in an
+   isolated Linux VM and retains all protected IDs across 1,324 spec inputs,
+   plus targeted source/render/validation checks. The full Linux Swift Testing
+   suite, glibc and x86-64 checks remain open; the static SDK lacks `Testing`.
 3. **Fuzzing on macOS** with the Xcode toolchain, or only on Linux.
 4. **Editor-analysis delivery estimate and native rule subset.** The explicit
    syntax/underline/native-lint scope changes M2/M3 work; select and test the
