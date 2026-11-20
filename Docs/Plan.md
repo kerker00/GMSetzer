@@ -402,6 +402,11 @@ profile conversions, incremental parsing if measurements call for it.
 
 ## 13. Open questions
 
+The block-loop decomposition has moved to the beginning of M1-C, before shared
+registry dispatch; its implemented boundaries and verification are in
+[BlockPhases.md](BlockPhases.md). Remaining M1-D work includes the builder
+invariant/`try!` audit and final acceptance, not a second decomposition.
+
 1. **Minimum platform and Swift versions.** The manifest requires Swift tools
    6.2 and provisionally macOS 15, iOS 18 and visionOS 2. The local Swift 6.4.2
    SDK marks `UTF8Span` as Apple OS 26+, while `Span` has back-deployment

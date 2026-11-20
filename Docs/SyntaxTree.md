@@ -249,6 +249,10 @@ are off by default, so source anchors do not change conformance comparisons.
 
 ## Current boundary and next work
 
+The internal block driver is split into container matching, leaf continuation,
+container opening and leaf starts; [BlockPhases.md](BlockPhases.md) records the
+ordering/progress contract. Public syntax values and callback APIs are unchanged.
+
 This implementation supports block quotes, ordered/bullet lists and lazy
 continuation, as well as paragraphs, ATX/setext headings, thematic breaks,
 fenced/indented code, all seven HTML block classes, multiline reference definitions and literal
