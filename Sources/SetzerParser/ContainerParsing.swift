@@ -266,7 +266,7 @@ extension BlockParser {
                     if first.columns <= 3, first.byte == 35, let heading = atxHeading(index) {
                         beginChild()
                         let node = append(.heading(level: heading.level), range: lines[index].range,
-                            segments: heading.content.isEmpty ? [] : [heading.content])
+                            segments: heading.content.isEmpty ? .none : .one(heading.content))
                         appendText(heading.content, to: node)
                         return
                     }
@@ -336,7 +336,7 @@ extension BlockParser {
         var owners: [Int: Int] = [:]
         while let (index, parent) = pending.popLast() {
             let node = document.nodes[index]
-            let target = append(node.data, range: node.range, segments: node.sourceSegments,
+            let target = append(node.data, range: node.range, segments: node.segments,
                 fallbackLiteral: document.customLeafFallbacks[index], to: parent)
             owners[index] = target
             for child in document.children(of: index).reversed() { pending.append((child, target)) }
@@ -404,6 +404,23 @@ extension BlockParser {
         switch active.kind {
         case .paragraph:
             let paragraphLines = active.indices
+            if paragraphLines.count == 1 {
+                // Single-line paragraphs and list item texts are the common
+                // case; finish them without a segment array.
+                let index = paragraphLines.lowerBound
+                let segment = SourceRange(indentation(index).offset, lines[index].contentRange.upperBound)
+                if !(registry.contains(.referenceDefinition) && segment.lowerBound < segment.upperBound
+                     && source[segment.lowerBound] == 91) {
+                    beginChild()
+                    let content = trimmed(segment.lowerBound, segment.upperBound)
+                    let endLine = closingLine ?? index
+                    let node = append(headingLevel.map { .heading(level: $0) } ?? .paragraph,
+                                      range: SourceRange(lines[index].range.lowerBound, lines[endLine].range.upperBound),
+                                      segments: .one(content), to: active.parent)
+                    appendText(content, to: node)
+                    return true
+                }
+            }
             var segments: [SourceRange] = []
             segments.reserveCapacity(paragraphLines.count)
             for index in paragraphLines {

@@ -123,15 +123,70 @@ public enum NodeData: Hashable, Sendable {
         }
     }
 
+    /// Custom kinds never use built-in names (validated before traversal),
+    /// so matching cases is equivalent to comparing kind names.
     fileprivate func permits(_ child: NodeData) -> Bool {
         switch self {
         case .document, .blockQuote, .listItem:
-            child.role == .block && child.kind != .document && child.kind != .listItem
-        case .list: child.kind == .listItem
+            child.role == .block && !child.isDocumentOrListItem
+        case .list: child.isListItem
         case .paragraph, .heading: child.role == .inline
-        case .custom(_, .block, _): child.kind != .document && child.kind != .listItem
+        case .custom(_, .block, _): !child.isDocumentOrListItem
         case .custom(_, .inline, _): child.role == .inline
         default: false
+        }
+    }
+
+    private var isDocumentOrListItem: Bool {
+        switch self {
+        case .document, .listItem: true
+        default: false
+        }
+    }
+
+    private var isListItem: Bool {
+        if case .listItem = self { return true }
+        return false
+    }
+}
+
+/// Source segments of one node. Most nodes have none or exactly one, so
+/// those are stored inline instead of in a heap-allocated array.
+package enum SourceSegments: Hashable, Sendable {
+    case none
+    case one(SourceRange)
+    case many([SourceRange])
+
+    @inline(__always)
+    package init(_ ranges: [SourceRange]) {
+        switch ranges.count {
+        case 0: self = .none
+        case 1: self = .one(ranges[0])
+        default: self = .many(ranges)
+        }
+    }
+
+    package var array: [SourceRange] {
+        switch self {
+        case .none: []
+        case .one(let range): [range]
+        case .many(let ranges): ranges
+        }
+    }
+
+    /// Checks containment in `range` and source order without allocating.
+    @inline(__always)
+    fileprivate func ordered(within range: SourceRange) -> Bool {
+        switch self {
+        case .none: return true
+        case .one(let segment): return range.contains(segment)
+        case .many(let segments):
+            var previousEnd = range.lowerBound
+            for segment in segments {
+                guard range.contains(segment), segment.lowerBound >= previousEnd else { return false }
+                previousEnd = segment.upperBound
+            }
+            return true
         }
     }
 }
@@ -142,15 +197,23 @@ public struct Node: Hashable, Sendable {
     public let data: NodeData
     public var kind: NodeKind { data.kind }
     public let range: SourceRange
-    public let sourceSegments: [SourceRange]
+    package let segments: SourceSegments
+    public var sourceSegments: [SourceRange] { segments.array }
     public internal(set) var firstChild: Int?
     public internal(set) var nextSibling: Int?
 
     public init(data: NodeData, range: SourceRange, sourceSegments: [SourceRange] = [],
                 firstChild: Int? = nil, nextSibling: Int? = nil) {
+        self.init(data: data, range: range, segments: SourceSegments(sourceSegments),
+                  firstChild: firstChild, nextSibling: nextSibling)
+    }
+
+    @inline(__always)
+    package init(data: consuming NodeData, range: SourceRange, segments: SourceSegments,
+                 firstChild: Int? = nil, nextSibling: Int? = nil) {
         self.data = data
         self.range = range
-        self.sourceSegments = sourceSegments
+        self.segments = segments
         self.firstChild = firstChild
         self.nextSibling = nextSibling
     }
@@ -205,70 +268,76 @@ public struct Document: Sendable {
               root.range == SourceRange(0, source.count), root.nextSibling == nil else {
             throw DocumentError.invalidRoot
         }
-        for (index, node) in nodes.enumerated() {
-            guard node.range.upperBound <= source.count else {
-                throw DocumentError.invalidRange(node: index)
-            }
-            var previousEnd = node.range.lowerBound
-            for segment in node.sourceSegments {
-                guard node.range.contains(segment), segment.lowerBound >= previousEnd else {
-                    throw DocumentError.invalidSegments(node: index)
-                }
-                previousEnd = segment.upperBound
-            }
-            if let target = node.firstChild, !nodes.indices.contains(target) {
-                throw DocumentError.invalidIndex(node: index, target: target)
-            }
-            if let target = node.nextSibling, !nodes.indices.contains(target) {
-                throw DocumentError.invalidIndex(node: index, target: target)
-            }
-            switch node.data {
-            case .heading(let level) where !(1...6).contains(level):
-                throw DocumentError.invalidPayload(node: index)
-            case .custom(let kind, _, _) where kind.name.isEmpty || NodeKind.builtins.contains(kind):
-                throw DocumentError.invalidPayload(node: index)
-            case .document where index != 0:
-                throw DocumentError.invalidPayload(node: index)
-            case .list(let attributes):
-                switch attributes.style {
-                case .bullet(let marker) where ![UInt8(42), 43, 45].contains(marker):
-                    throw DocumentError.invalidPayload(node: index)
-                case .ordered(let start, let delimiter)
-                    where !(0...999_999_999).contains(start) || ![UInt8(46), 41].contains(delimiter):
-                    throw DocumentError.invalidPayload(node: index)
-                default: break
-                }
-            default: break
-            }
-        }
-        // Node indices are dense and have all been bounds-checked above.
-        // Avoid hashing and per-node temporary arrays in this linear pass.
-        var visited = [Bool](repeating: false, count: nodes.count)
-        var pending: [(index: Int, parent: Int?)] = [(0, nil)]
-        while let (index, parent) = pending.popLast() {
-            guard !visited[index] else { throw DocumentError.repeatedNode(index) }
-            visited[index] = true
-            let node = nodes[index]
-            if let parent {
-                guard nodes[parent].range.contains(node.range) else {
+        // Read fields in place: binding whole nodes would copy and release
+        // their payloads once per node in both passes.
+        try nodes.withUnsafeBufferPointer { nodes in
+            let count = nodes.count
+            for index in 0..<count {
+                let range = nodes[index].range
+                guard range.upperBound <= source.count else {
                     throw DocumentError.invalidRange(node: index)
                 }
-                guard nodes[parent].data.permits(node.data) else {
+                guard nodes[index].segments.ordered(within: range) else {
+                    throw DocumentError.invalidSegments(node: index)
+                }
+                if let target = nodes[index].firstChild, !(0..<count).contains(target) {
+                    throw DocumentError.invalidIndex(node: index, target: target)
+                }
+                if let target = nodes[index].nextSibling, !(0..<count).contains(target) {
+                    throw DocumentError.invalidIndex(node: index, target: target)
+                }
+                switch nodes[index].data {
+                case .paragraph, .text, .softBreak, .thematicBreak, .codeBlock, .referenceDefinition,
+                     .blockQuote, .listItem, .htmlBlock:
+                    break
+                case .heading(let level) where !(1...6).contains(level):
+                    throw DocumentError.invalidPayload(node: index)
+                case .custom(let kind, _, _) where kind.name.isEmpty || NodeKind.builtins.contains(kind):
+                    throw DocumentError.invalidPayload(node: index)
+                case .document where index != 0:
+                    throw DocumentError.invalidPayload(node: index)
+                case .list(let attributes):
+                    switch attributes.style {
+                    case .bullet(let marker) where !(marker == 42 || marker == 43 || marker == 45):
+                        throw DocumentError.invalidPayload(node: index)
+                    case .ordered(let start, let delimiter)
+                        where !(0...999_999_999).contains(start) || !(delimiter == 46 || delimiter == 41):
+                        throw DocumentError.invalidPayload(node: index)
+                    default: break
+                    }
+                default: break
+                }
+            }
+            // Node indices are dense and have all been bounds-checked above.
+            // Avoid hashing and per-node temporary arrays in this linear pass.
+            var visited = [Bool](repeating: false, count: count)
+            var pending: [(index: Int, parent: Int)] = []
+            pending.reserveCapacity(64)
+            visited[0] = true
+            if let child = nodes[0].firstChild { pending.append((child, 0)) }
+            while let (index, parent) = pending.popLast() {
+                guard !visited[index] else { throw DocumentError.repeatedNode(index) }
+                visited[index] = true
+                let range = nodes[index].range
+                guard nodes[parent].range.contains(range) else {
+                    throw DocumentError.invalidRange(node: index)
+                }
+                guard nodes[parent].data.permits(nodes[index].data) else {
                     throw DocumentError.invalidChild(parent: parent, child: index)
                 }
-            }
-            if let sibling = node.nextSibling {
-                guard node.range.upperBound <= nodes[sibling].range.lowerBound else {
-                    // Check repeated nodes first, so self-cycles have a precise error.
-                    if visited[sibling] { throw DocumentError.repeatedNode(sibling) }
-                    throw DocumentError.unorderedSiblings(node: index)
+                if let sibling = nodes[index].nextSibling {
+                    guard range.upperBound <= nodes[sibling].range.lowerBound else {
+                        // Check repeated nodes first, so self-cycles have a precise error.
+                        if visited[sibling] { throw DocumentError.repeatedNode(sibling) }
+                        throw DocumentError.unorderedSiblings(node: index)
+                    }
+                    pending.append((sibling, parent))
                 }
-                pending.append((sibling, parent))
+                if let child = nodes[index].firstChild { pending.append((child, index)) }
             }
-            if let child = node.firstChild { pending.append((child, index)) }
-        }
-        if let unreachable = visited.firstIndex(of: false) {
-            throw DocumentError.unreachableNode(unreachable)
+            if let unreachable = visited.firstIndex(of: false) {
+                throw DocumentError.unreachableNode(unreachable)
+            }
         }
         for index in customLeafFallbacks.keys {
             guard nodes.indices.contains(index), case .custom = nodes[index].data,
@@ -335,15 +404,28 @@ public struct DocumentBuilder: Sendable {
         self.lastChildren = [nil]
     }
 
+    /// Capacity hint for parsers that can estimate the node count.
+    package mutating func reserveCapacity(_ count: Int) {
+        nodes.reserveCapacity(count)
+        lastChildren.reserveCapacity(count)
+    }
+
     /// A fallback literal is plain text for a custom leaf, independent of its
     /// semantic source segments. build() checks the owning node.
     @discardableResult
     public mutating func append(_ data: NodeData, range: SourceRange,
                                 sourceSegments: [SourceRange] = [], fallbackLiteral: String? = nil,
                                 to parent: Int = 0) throws -> Int {
-        guard nodes.indices.contains(parent) else { throw DocumentError.invalidParent(parent) }
+        try append(data, range: range, segments: SourceSegments(sourceSegments), fallbackLiteral: fallbackLiteral, to: parent)
+    }
+
+    @discardableResult
+    @inline(__always)
+    package mutating func append(_ data: consuming NodeData, range: SourceRange, segments: SourceSegments,
+                                 fallbackLiteral: String? = nil, to parent: Int = 0) throws -> Int {
+        guard parent >= 0 && parent < nodes.count else { throw DocumentError.invalidParent(parent) }
         let index = nodes.count
-        nodes.append(Node(data: data, range: range, sourceSegments: sourceSegments))
+        nodes.append(Node(data: data, range: range, segments: segments))
         lastChildren.append(nil)
         if let last = lastChildren[parent] { nodes[last].nextSibling = index }
         else { nodes[parent].firstChild = index }
@@ -367,9 +449,8 @@ public struct DocumentBuilder: Sendable {
     public mutating func finish(_ index: Int, data: NodeData, range: SourceRange,
                                 sourceSegments: [SourceRange] = [], fallbackLiteral: String? = nil) throws {
         guard index > 0 && nodes.indices.contains(index) else { throw DocumentError.invalidParent(index) }
-        let old = nodes[index]
-        nodes[index] = Node(data: data, range: range, sourceSegments: sourceSegments,
-                            firstChild: old.firstChild, nextSibling: old.nextSibling)
+        nodes[index] = Node(data: data, range: range, segments: SourceSegments(sourceSegments),
+                            firstChild: nodes[index].firstChild, nextSibling: nodes[index].nextSibling)
         if let fallbackLiteral { customLeafFallbacks[index] = fallbackLiteral }
     }
 

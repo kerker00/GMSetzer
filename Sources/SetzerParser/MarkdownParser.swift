@@ -67,21 +67,32 @@ internal struct BlockParser {
         self.limits = limits
         self.collectSyntaxDetails = collectSyntaxDetails
         self.builder = DocumentBuilder(source: source, collectSyntaxDetails: collectSyntaxDetails)
+        // Typical documents have one to two nodes per line; reserving one per
+        // line avoids most regrowth without holding much unused capacity.
+        self.builder.reserveCapacity(physicalLines.count + 1)
         self.registry = registry
     }
 
     @discardableResult
-    mutating func append(_ data: NodeData, range: SourceRange, segments: [SourceRange] = [],
+    @inline(__always)
+    mutating func append(_ data: consuming NodeData, range: SourceRange, segments: [SourceRange],
+                         fallbackLiteral: String? = nil, to parent: Int? = nil) -> Int {
+        append(data, range: range, segments: SourceSegments(segments), fallbackLiteral: fallbackLiteral, to: parent)
+    }
+
+    @discardableResult
+    @inline(__always)
+    mutating func append(_ data: consuming NodeData, range: SourceRange, segments: SourceSegments = .none,
                          fallbackLiteral: String? = nil, to parent: Int? = nil) -> Int {
         // M1-D audit: parent is root, a previously appended open container, or
         // a just-appended leaf/import parent. Callbacks cannot supply indices.
         // A failure is a parser defect; do not silently replace its snapshot.
-        try! builder.append(data, range: range, sourceSegments: segments, fallbackLiteral: fallbackLiteral,
+        try! builder.append(data, range: range, segments: segments, fallbackLiteral: fallbackLiteral,
                             to: parent ?? containers.last?.node ?? 0)
     }
 
     mutating func appendText(_ range: SourceRange, to parent: Int) {
-        if !range.isEmpty { append(.text(decode(range)), range: range, segments: [range], to: parent) }
+        if !range.isEmpty { append(.text(decode(range)), range: range, segments: .one(range), to: parent) }
     }
 
     static func scanLines(_ bytes: [UInt8]) -> [SourceLine] {
@@ -90,20 +101,16 @@ internal struct BlockParser {
             let count = buffer.count
             // One pass counts line terminators so the line table is allocated
             // exactly once; the second pass records the lines.
-            var terminators = 0
-            for byte in buffer where byte == 10 || byte == 13 { terminators += 1 }
-            result.reserveCapacity(terminators + 1)
+            result.reserveCapacity(LineTerminators.count(in: buffer) + 1)
             var start = 0
             var cursor = 0
-            while cursor < count {
-                let byte = buffer[cursor]
-                if byte == 10 || byte == 13 {
-                    let contentEnd = cursor
-                    if byte == 13 && cursor + 1 < count && buffer[cursor + 1] == 10 { cursor += 1 }
-                    cursor += 1
-                    result.append(SourceLine(start, contentEnd, cursor))
-                    start = cursor
-                } else { cursor += 1 }
+            while let found = LineTerminators.next(in: buffer, from: cursor) {
+                cursor = found
+                let contentEnd = cursor
+                if buffer[cursor] == 13 && cursor + 1 < count && buffer[cursor + 1] == 10 { cursor += 1 }
+                cursor += 1
+                result.append(SourceLine(start, contentEnd, cursor))
+                start = cursor
             }
             if start < count { result.append(SourceLine(start, count, count)) }
         }
@@ -349,5 +356,55 @@ internal struct BlockParser {
             if line.range.upperBound > line.contentRange.upperBound { literal += "\n" }
         }
         return literal
+    }
+}
+
+/// Word-at-a-time search for LF and CR. Each 8-byte word is tested with an
+/// exact zero-byte mask, so plain text costs a few operations per 8 bytes.
+internal enum LineTerminators {
+    private static let low7: UInt64 = 0x7F7F_7F7F_7F7F_7F7F
+    private static let lf: UInt64 = 0x0A0A_0A0A_0A0A_0A0A
+    private static let cr: UInt64 = 0x0D0D_0D0D_0D0D_0D0D
+
+    /// High bit set in exactly the bytes of `value` that are zero; no carry
+    /// crosses byte boundaries, so the mask has no false positives.
+    @inline(__always)
+    private static func zeroBytes(_ value: UInt64) -> UInt64 {
+        ~(((value & low7) &+ low7) | value | low7)
+    }
+
+    @inline(__always)
+    private static func mask(_ buffer: UnsafeBufferPointer<UInt8>, at offset: Int) -> UInt64 {
+        let word = UInt64(littleEndian: UnsafeRawPointer(buffer.baseAddress! + offset).loadUnaligned(as: UInt64.self))
+        return zeroBytes(word ^ lf) | zeroBytes(word ^ cr)
+    }
+
+    static func count(in buffer: UnsafeBufferPointer<UInt8>) -> Int {
+        var total = 0
+        var offset = 0
+        while offset + 8 <= buffer.count {
+            total += mask(buffer, at: offset).nonzeroBitCount
+            offset += 8
+        }
+        while offset < buffer.count {
+            if buffer[offset] == 10 || buffer[offset] == 13 { total += 1 }
+            offset += 1
+        }
+        return total
+    }
+
+    @inline(__always)
+    static func next(in buffer: UnsafeBufferPointer<UInt8>, from start: Int) -> Int? {
+        var offset = start
+        while offset + 8 <= buffer.count {
+            let found = mask(buffer, at: offset)
+            if found != 0 { return offset + found.trailingZeroBitCount >> 3 }
+            offset += 8
+        }
+        while offset < buffer.count {
+            if buffer[offset] == 10 || buffer[offset] == 13 { return offset }
+            offset += 1
+        }
+        return nil
     }
 }
