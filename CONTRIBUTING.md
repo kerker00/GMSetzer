@@ -28,7 +28,11 @@ checkout may be required. Preserve historical validation records as history.
 5. Open a pull request against `main`. The owner merges.
 6. After a confirmed merge, follow
    [branch-cleanup](.claude/skills/branch-cleanup/SKILL.md) to verify and remove
-   merged branches and clean worktrees, and record the merged state.
+   merged branches and clean worktrees. At every branch completion, reconcile
+   README and affected documentation with current main. The owner authorised
+   committing and pushing these descriptive documentation/skill corrections
+   directly on main without another approval or docs PR (20 November 2026).
+   This exception does not include code or executable workflows.
 
 ## Rules
 
@@ -38,5 +42,6 @@ checkout may be required. Preserve historical validation records as history.
 - Code taken over or ported from other projects: MIT, BSD or Apache-2.0 only,
   origin in the file header and licence in `NOTICE`. Never GPL or LGPL code.
 - Every bug fix comes with a regression test.
-- No CI, releases, tags or making the repository public without the owner's
-  explicit confirmation right before the step.
+- The owner authorised macOS/Linux CI and source-only release preparation on
+  20 November 2026. Releases, tags and making the repository public still
+  require the owner's explicit confirmation before the step.

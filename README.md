@@ -5,14 +5,18 @@ Markdown with switchable extensions, exact source positions and an HTML
 renderer. No C, no Rust, no JavaScript, no runtime dependencies — it builds
 wherever Swift runs, including Linux.
 
-> **Status:** M2 merged in PR #11 (`021f110`), based on
-> merged PRs #9/#10; M3 merged in PR #12. All 652 CommonMark 0.31.2 examples
-> pass by exact HTML; M4 (local branch) passes all 672 pinned GFM examples with
-> tables, task lists, strikethrough, extended autolinks and the tag filter. Blocks and inlines retain original UTF-8
-> ranges, with optional lexical tokens and custom inline rules. Portable
-> diagnostic/fix values, position conversion, outline and three optional native
-> rules are implemented. M2 performance gates pass;
-> publication remains a separate owner decision.
+> **Status, 20 November 2026:** M1–M4 are merged in `main`, including
+> M3 editor services (PR #12, `651af17`), their measurements (PR #13,
+> `c5f9a0b`) and GFM (PR #14, `e163e6f`). All 652 CommonMark 0.31.2 and
+> 672 pinned GFM specification examples pass by exact HTML. The first
+> source-only release, v0.4.0, and macOS/Linux CI are prepared on a separate
+> release branch; they are not yet merged, tagged or published.
+
+Requires **Swift 6.2 or later**. The current provisional Apple minimums are
+macOS 15, iOS 18 and visionOS 2; Linux is supported. The repository is private
+and GitHub read access is required. After the first version tag is published,
+consumers can pin it through Swift Package Manager; no binary release assets
+or package registry are required.
 
 ## Independence
 
@@ -30,9 +34,9 @@ and device acceptance do not determine this package's API or release readiness.
 ## Goals
 
 - **Correct:** every example of CommonMark 0.31.2 and of the GFM spec.
-- **Extensible:** footnotes, front matter, math, alerts and callouts, and
-  later Obsidian, Pandoc and other dialects, as extensions that can be
-  switched on one by one and grouped into profiles.
+- **Extensible:** shipped CommonMark and GFM profiles, independently selectable
+  GFM features, custom block/inline rules and transforms. Footnotes, front
+  matter, math, alerts and callouts are planned for M5; further dialects follow.
 - **Positions:** every node knows its source range in UTF-8 bytes;
   conversion to lines, columns and UTF-16 offsets for text views.
 - **Fast:** parse time at most twice that of cmark-gfm, aiming for parity,
@@ -40,9 +44,11 @@ and device acceptance do not determine this package's API or release readiness.
 - **Safe defaults:** raw HTML is written as text unless the caller allows
   it.
 - **Swift 6:** `Sendable` values, strict concurrency, no global state.
-- **Editor analysis (planned):** source-spelled syntax roles and precise native
-  lint findings/fix suggestions over the same parse, for snapshot-bound editor
-  highlighting and underlines. The current implementation is not a finished linter.
+- **Editor services:** optional syntax tokens, UTF-16/line/column conversion,
+  parent/caret queries and a heading outline. Three opt-in native rules detect
+  skipped heading levels, duplicate headings and trailing whitespace, with
+  portable findings and suggested fixes. Analysis is not a complete linter;
+  messages are English and block-quote/list marker tokens remain follow-up work.
 
 ## Documentation
 
@@ -64,8 +70,12 @@ and device acceptance do not determine this package's API or release readiness.
   values, current validation and remaining performance acceptance.
 - [Docs/BlockPhases.md](Docs/BlockPhases.md) – extracted block-phase boundaries,
   full Linux regression suite and performance countermeasurement before registry work.
-- [Docs/EditorAnalysis.md](Docs/EditorAnalysis.md) – planned syntax, native lint
-  and editor-diagnostic contracts and acceptance gates.
+- [Docs/EditorAnalysis.md](Docs/EditorAnalysis.md) – syntax, native lint and
+  editor-diagnostic contracts, including planned extensions and acceptance gates.
+- [Docs/M3EditorServices.md](Docs/M3EditorServices.md) – implemented position,
+  outline, HTML and native analysis APIs and their validation limits.
+- [Docs/M4GFM.md](Docs/M4GFM.md) – merged GFM profiles, switches, source ranges,
+  conformance and measurements.
 - [Docs/HTMLReferences.md](Docs/HTMLReferences.md) – HTML policies, multiline
   definitions, opt-in editor provenance and validation.
 - [CONTRIBUTING.md](CONTRIBUTING.md) – workflow and rules.
@@ -84,6 +94,8 @@ and device acceptance do not determine this package's API or release readiness.
 M1 acceptance is merged in PR #9 and block hot-path optimisation in PR #10.
 M2 adds CommonMark inlines and 867 exact C comparisons. M4 adds GFM as typed
 built-in nodes, compared with cmark-gfm; see [Docs/M4GFM.md](Docs/M4GFM.md).
+
+## Usage
 
 ```swift
 import GMSetzer
@@ -110,6 +122,17 @@ Dangerous decoded URL schemes are neutralised even with raw HTML enabled.
 for trusted fixtures; it is not the production configuration.
 Custom leaf fallbacks retain projected content without quote/list prefixes;
 renderer wrappers preserve built-in list tightness.
+
+```swift
+let positions = SourceIndex(document)
+let utf16Range = positions.utf16Range(for: document.root.range)
+let outline = DocumentIndex(document).outline()
+let report = try NativeAnalyzer.analyze(document, dialect: .commonMark,
+    configuration: NativeAnalysisConfiguration(rules: [.headingLevel]))
+```
+
+Service contracts, the native rule catalogue and validation limits are in
+[Docs/M3EditorServices.md](Docs/M3EditorServices.md).
 
 ## Development
 
@@ -140,14 +163,3 @@ renderer wrappers preserve built-in list tightness.
 GMSetzer is released under the [MIT licence](LICENSE). Third-party material
 and its licences are listed in [NOTICE](NOTICE); the specification examples
 used as test data are licensed CC-BY-SA 4.0 and are not part of the library.
-
-M3 service contracts, the native rule catalogue and validation limits are in
-[Docs/M3EditorServices.md](Docs/M3EditorServices.md).
-
-```swift
-let positions = SourceIndex(document)
-let utf16Range = positions.utf16Range(for: document.root.range)
-let outline = DocumentIndex(document).outline()
-let report = try NativeAnalyzer.analyze(document, dialect: .commonMark,
-    configuration: NativeAnalysisConfiguration(rules: [.headingLevel]))
-```

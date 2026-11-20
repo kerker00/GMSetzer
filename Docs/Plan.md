@@ -5,6 +5,10 @@ reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
 
+The M4 follow-ups are merged in PR #15 (`1473d49`); its merged documentation
+branch has been removed. Source-only v0.4.0 and macOS/Linux CI are prepared
+on `release/0.4.0`; review, merge, tagging and publication remain pending.
+
 GMSetzer is an independent, general-purpose Markdown library intended for
 open-source use under the MIT licence. Editors, command-line tools, servers
 and extensions use the same public APIs. No particular application, checkout
@@ -393,10 +397,17 @@ profile conversions, incremental parsing if measurements call for it.
   documentation in English.
 - **Branches:** `main` is the only long-lived branch. Work happens on feature
   branches from `main`; pull requests target `main`. The owner merges.
+- **Branch completion documentation:** always reconcile README, current status
+  and affected documentation with `main`. The owner authorised descriptive
+  documentation/skill corrections to be committed and pushed directly on
+  `main` without another approval or docs PR (20 November 2026). Source,
+  manifests, executable workflows, tags and releases are outside this exception.
 - **Visibility:** private until M2. Making the repository public, tagging
   releases and publishing anything happens only after the owner's explicit
   confirmation right before the step.
-- **No CI** unless the owner decides otherwise.
+- **CI:** the owner authorised macOS/Linux CI and source-only release
+  preparation on 20 November 2026. Implementation is on `release/0.4.0` and
+  is not yet merged into `main`.
 - **Versioning:** SemVer. Before 1.0 the API may change; afterwards only with a
   major version.
 - **Every fix** comes with a regression test; crashes and hangs on hostile
@@ -500,9 +511,11 @@ before or alongside M5:
    consumers translate by key.
 2. **Versioned release for consumers.** Setzkit depends on a local path
    checkout, so it uses whatever branch is checked out; during integration
-   that was M4 from the then unmerged PR #14. Tag a pre-1.0 release after M4
-   so consumers can pin an exact version. Tagging and publishing need the
-   owner's explicit yes immediately before.
+   that was M4 from the then unmerged PR #14. Source-only `v0.4.0` and its
+   macOS/Linux CI are prepared on `release/0.4.0`; merge, tagging and
+   publication remain pending. GitHub will provide ZIP/tar.gz archives, with
+   no binary assets. Consumers can pin the version tag through Swift Package
+   Manager. Tagging and publishing still require the owner's confirmation.
 3. **Container marker tokens.** Syntax tokens cover inline delimiters and
    leaf markers but not block-quote `>` or list markers, so a consumer cannot
    replace its own syntax colouring with GMSetzer's without losing those

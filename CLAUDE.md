@@ -24,10 +24,15 @@ describes the workflow.
   documentation with the implementation.
 - After a confirmed PR merge, follow
   [branch-cleanup](.claude/skills/branch-cleanup/SKILL.md): verify and remove
-  merged branches and clean worktrees, then record the merged state.
+  merged branches and clean worktrees. At every branch completion, check README
+  and affected documentation against main and update stale descriptions.
 - Ask before running the full benchmarks or long test runs, before pushing,
   before opening pull requests, and always before publishing anything:
   making the repository public, tags, releases. The owner merges.
 - Existing session authorization remains valid. The standing authorization
-  in `branch-cleanup` covers verified branch deletion without another prompt.
-- No CI workflows unless the owner asks for them.
+  in `branch-cleanup` covers verified branch deletion and descriptive
+  documentation/skill corrections committed and pushed directly on main
+  without another prompt (owner, 20 November 2026). Source, manifests,
+  executable workflows, tags, releases and visibility changes are excluded.
+- The owner authorised macOS/Linux CI and source-only release preparation on
+  20 November 2026; implementation is pending on `release/0.4.0`.
