@@ -24,6 +24,30 @@ public enum CoreBlockRule: String, CaseIterable, Sendable {
     }
 }
 
+/// GFM features implemented by the core. A profile selects them by
+/// identifier like any extension, but no implementation is supplied.
+public enum BuiltinExtension: String, CaseIterable, Sendable {
+    case table = "gfm.table"
+    case taskList = "gfm.tasklist"
+    case strikethrough = "gfm.strikethrough"
+    case autolink = "gfm.autolink"
+    /// Rendering policy: escape disallowed raw HTML tags (GFM tag filter).
+    case tagFilter = "gfm.tagfilter"
+    /// Rendering policy: GitHub omits the tags of strong directly inside strong.
+    case collapseNestedStrong = "gfm.collapseNestedStrong"
+
+    var bit: UInt8 {
+        switch self {
+        case .table: 1
+        case .taskList: 2
+        case .strikethrough: 4
+        case .autolink: 8
+        case .tagFilter: 16
+        case .collapseNestedStrong: 32
+        }
+    }
+}
+
 internal enum RegisteredBlockRule: Sendable {
     case core(CoreBlockRule)
     case custom(Int)
@@ -36,12 +60,23 @@ internal struct RuleRegistry: Sendable {
     let custom: [ActiveRule]
     let enabled: UInt16
     let issues: [ConfigurationIssue]
+    /// Selected BuiltinExtension bits.
+    var builtins: UInt8 = 0
     /// First bytes for which an active custom rule may interrupt a paragraph.
     let interruptTriggers: ByteSet
     var inlineRules: [ActiveInlineRule] = []
     var postInlineTransforms: [ActiveTransform] = []
 
     func contains(_ rule: CoreBlockRule) -> Bool { enabled & rule.bit != 0 }
+    @inline(__always)
+    func contains(_ feature: BuiltinExtension) -> Bool { builtins & feature.bit != 0 }
+
+    var renderingPolicy: RenderingPolicy {
+        var policy: RenderingPolicy = []
+        if contains(.tagFilter) { policy.insert(.filtersDisallowedRawHTML) }
+        if contains(.collapseNestedStrong) { policy.insert(.collapsesNestedStrong) }
+        return policy
+    }
     @inline(__always)
     func mayInterrupt(_ byte: UInt8) -> Bool { interruptTriggers.contains(byte) }
 
@@ -78,6 +113,17 @@ internal struct RuleRegistry: Sendable {
         for selection in profile.extensions {
             guard selected.insert(selection.identifier).inserted else {
                 issues.append(ConfigurationIssue(.duplicateIdentifier, identifier: selection.identifier)); continue
+            }
+            if let builtin = BuiltinExtension(rawValue: selection.identifier) {
+                // Core implementation; a supplied one cannot replace it.
+                if implementations[selection.identifier] != nil {
+                    issues.append(ConfigurationIssue(.duplicateIdentifier, identifier: selection.identifier))
+                }
+                for key in selection.options.keys.sorted() {
+                    issues.append(ConfigurationIssue(.unknownOption, identifier: selection.identifier, detail: key))
+                }
+                builtins |= builtin.bit
+                continue
             }
             guard let implementation = implementations[selection.identifier] else {
                 issues.append(ConfigurationIssue(.unavailableExtension, identifier: selection.identifier)); continue

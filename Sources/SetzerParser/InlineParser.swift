@@ -155,6 +155,14 @@ internal struct InlineParser {
     let hasCustomRules: Bool
     let maximumDepth: Int
     let depth: Int
+    /// GFM strikethrough (`~`) and extended www/URL autolinks; set them with
+    /// `enableGFM`, which also updates the text-run stop bytes.
+    private(set) var strikethrough = false
+    private(set) var autolink = false
+    /// Bytes that end a plain text run: core specials and custom triggers.
+    private var baseStops = ByteSet()
+    /// `baseStops` plus the GFM trigger bytes in use.
+    private var textStops = ByteSet()
     var diagnostics: [ParseDiagnostic] = []
     var customOpeners: [CustomOpener] = []
     var items: [Item] = []
@@ -186,7 +194,18 @@ internal struct InlineParser {
         self.hasCustomRules = !rules.isEmpty
         self.maximumDepth = maximumDepth
         self.depth = depth
+        for byte: UInt8 in [92, 38, 96, 42, 95, 91, 93, 33, 60, 10] { baseStops.insert(byte) }
+        if !rules.isEmpty { for byte in 0...255 where triggers.contains(UInt8(byte)) { baseStops.insert(UInt8(byte)) } }
+        textStops = baseStops
         indexBackticks()
+    }
+
+    mutating func enableGFM(strikethrough: Bool, autolink: Bool) {
+        self.strikethrough = strikethrough
+        self.autolink = autolink
+        textStops = baseStops
+        if strikethrough { textStops.insert(126) }
+        if autolink { textStops.insert(119); textStops.insert(58) }
     }
 
     /// Reuse per-leaf controller storage inside this parse. Result nodes retain
@@ -329,7 +348,8 @@ internal struct InlineParser {
 
     mutating func emphasis(bottom: Int = 0) {
         // Separate lower bounds for each marker, closer flanking, and residue.
-        var bottoms = [Int](repeating: bottom - 1, count: 12)
+        // Entries 12...14 are GFM strikethrough, keyed by width like cmark-gfm.
+        var bottoms = [Int](repeating: bottom - 1, count: 15)
         var current: Int? = lastDelimiter
         var firstRelevant: Int?
         while let i = current, i >= bottom { firstRelevant = i; current = delimiters[i].previous }
@@ -337,7 +357,8 @@ internal struct InlineParser {
         while let closer = current {
             let c = delimiters[closer]
             if !c.canClose { current = c.next; continue }
-            let key = (c.marker == 42 ? 0 : 6) + (c.canOpen ? 3 : 0) + c.originalWidth % 3
+            let key = c.marker == 126 ? 12 + c.originalWidth % 3
+                : (c.marker == 42 ? 0 : 6) + (c.canOpen ? 3 : 0) + c.originalWidth % 3
             var candidate = c.previous
             var found: Int?
             while let opener = candidate, opener >= bottom, opener > bottoms[key] {
@@ -353,6 +374,11 @@ internal struct InlineParser {
                 bottoms[key] = c.previous ?? (bottom - 1)
                 current = c.next
                 if !c.canOpen { removeDelimiter(closer) }
+                continue
+            }
+            if c.marker == 126 {
+                strikethrough(opener: opener, closer: closer)
+                current = c.next
                 continue
             }
             let openItem = delimiters[opener].item
@@ -379,6 +405,64 @@ internal struct InlineParser {
             }
         }
         while let i = lastDelimiter, i >= bottom { removeDelimiter(i) }
+    }
+
+    /// GFM strikethrough (ported from cmark-gfm `strikethrough.c`, BSD-2; see NOTICE):
+    /// equal one- or two-tilde runs wrap their content; unequal runs stay
+    /// literal. Delimiters between the pair are discarded either way.
+    mutating func strikethrough(opener: Int, closer: Int) {
+        var between = delimiters[closer].previous
+        while let i = between, i != opener { between = delimiters[i].previous; removeDelimiter(i) }
+        let openItem = delimiters[opener].item, closeItem = delimiters[closer].item
+        if delimiters[opener].originalWidth == delimiters[closer].originalWidth {
+            let start = items[openItem].start, end = items[closeItem].end
+            let container = wrap(.strikethrough, opener: openItem, closer: closeItem, start: start, end: end)
+            token(container, "gfm.strikethrough.open", start, items[openItem].end)
+            token(container, "gfm.strikethrough.close", items[closeItem].start, end)
+            unlink(openItem)
+            unlink(closeItem)
+        }
+        removeDelimiter(opener)
+        removeDelimiter(closer)
+    }
+
+    /// cmark-gfm scans at most 100 tildes per run and pushes only runs of one
+    /// or two, flanked with Unicode P-category punctuation (no symbols).
+    mutating func tildeRun() {
+        let start = cursor
+        while cursor < bytes.count && bytes[cursor] == 126 && cursor - start < 100 { cursor += 1 }
+        let before = scalar(before: start), after = scalar(at: cursor)
+        func space(_ scalar: Unicode.Scalar?) -> Bool { scalar.map(Self.gfmSpace) ?? true }
+        func punct(_ scalar: Unicode.Scalar?) -> Bool { scalar.map(Self.gfmPunctuation) ?? false }
+        let left = !space(after) && (!punct(after) || space(before) || punct(before))
+        let right = !space(before) && (!punct(before) || space(after) || punct(after))
+        let item = append(.text(""), start, cursor)
+        let width = cursor - start
+        if (left || right) && width <= 2 {
+            let index = delimiters.count
+            delimiters.append(Delimiter(item: item, marker: 126, originalWidth: width,
+                                        canOpen: left, canClose: right, previous: lastDelimiter))
+            if let lastDelimiter { delimiters[lastDelimiter].next = index }
+            lastDelimiter = index
+        }
+    }
+
+    /// `cmark_utf8proc_is_space`.
+    static func gfmSpace(_ scalar: Unicode.Scalar) -> Bool {
+        switch scalar.value {
+        case 9, 10, 12, 13, 32, 160, 5760, 8192...8202, 8239, 8287, 12288: true
+        default: false
+        }
+    }
+
+    /// `cmark_utf8proc_is_punctuation`: ASCII punctuation and Unicode P*.
+    static func gfmPunctuation(_ scalar: Unicode.Scalar) -> Bool {
+        if scalar.value < 128 { return InlineDecoding.punctuation(UInt8(scalar.value)) }
+        switch scalar.properties.generalCategory {
+        case .connectorPunctuation, .dashPunctuation, .openPunctuation, .closePunctuation,
+             .initialPunctuation, .finalPunctuation, .otherPunctuation: return true
+        default: return false
+        }
     }
 
     mutating func parse() {
@@ -410,6 +494,7 @@ internal struct InlineParser {
                 } else { cursor += 1; text(start, cursor) }
             case 96: codeSpan()
             case 42, 95: delimiterRun()
+            case 126 where strikethrough: tildeRun()
             case 91:
                 if !brackets.isEmpty { brackets[brackets.count - 1].bracketAfter = true }
                 let item = append(.text("["), cursor, cursor + 1)
@@ -433,8 +518,22 @@ internal struct InlineParser {
                 let item = append(hard ? .hardBreak : .softBreak, markerStart, cursor)
                 if hard { token(item, "core.break", markerStart, cursor) }
             default:
+                if autolink, brackets.isEmpty, autolinkCandidate(cursor), extendedAutolink() { continue }
                 cursor += 1
-                while cursor < bytes.count && (!hasCustomRules || !triggers.contains(bytes[cursor])) && !Self.special(bytes[cursor]) { cursor += 1 }
+                if strikethrough || autolink {
+                    while cursor < bytes.count {
+                        let byte = bytes[cursor]
+                        if textStops.contains(byte) {
+                            // 'w' and ':' end the run only where an autolink can start.
+                            guard (byte == 119 || byte == 58) && !baseStops.contains(byte)
+                                    && !(brackets.isEmpty && autolinkCandidate(cursor)) else { break }
+                        }
+                        cursor += 1
+                    }
+                } else {
+                    // CommonMark keeps the original single-dispatch loop.
+                    while cursor < bytes.count && (!hasCustomRules || !triggers.contains(bytes[cursor])) && !Self.special(bytes[cursor]) { cursor += 1 }
+                }
                 var end = cursor
                 if cursor < bytes.count && bytes[cursor] == 10 {
                     while end > start && (bytes[end - 1] == 32 || bytes[end - 1] == 9) { end -= 1 }
@@ -443,6 +542,7 @@ internal struct InlineParser {
             }
         }
         emphasis()
+        if autolink && depth == 0 && bytes.contains(64) { emailAutolinks() }
     }
 
     @inline(__always)

@@ -23,11 +23,17 @@ public struct NodeKind: Hashable, Sendable, CustomStringConvertible {
     public static let list = NodeKind("list")
     public static let listItem = NodeKind("listItem")
     public static let htmlBlock = NodeKind("htmlBlock")
+    public static let table = NodeKind("table")
+    public static let tableRow = NodeKind("tableRow")
+    public static let tableCell = NodeKind("tableCell")
+    public static let strikethrough = NodeKind("strikethrough")
+    public static let taskListItem = NodeKind("taskListItem")
 
     public static let builtins: Set<NodeKind> = [
         .document, .paragraph, .heading, .text, .softBreak, .hardBreak,
         .code, .emphasis, .strong, .link, .image, .htmlInline,
         .thematicBreak, .codeBlock, .referenceDefinition, .blockQuote, .list, .listItem, .htmlBlock,
+        .table, .tableRow, .tableCell, .strikethrough, .taskListItem,
     ]
 }
 
@@ -88,6 +94,27 @@ public struct ListAttributes: Hashable, Sendable {
     }
 }
 
+/// Column alignment from a GFM table delimiter row.
+public enum TableAlignment: Hashable, Sendable { case none, left, center, right }
+
+public struct TableAttributes: Hashable, Sendable {
+    /// One entry per column; the header row defines the column count.
+    public let alignments: [TableAlignment]
+    public init(alignments: [TableAlignment]) { self.alignments = alignments }
+}
+
+/// Document-level HTML behaviours selected by the parse profile. They change
+/// only rendering, never the tree: a renderer applies them when relevant.
+public struct RenderingPolicy: OptionSet, Hashable, Sendable {
+    public let rawValue: UInt8
+    public init(rawValue: UInt8) { self.rawValue = rawValue }
+    /// GFM tag filter: when raw HTML is emitted, `<` of title, textarea,
+    /// style, xmp, iframe, noembed, noframes, script and plaintext tags is escaped.
+    public static let filtersDisallowedRawHTML = RenderingPolicy(rawValue: 1)
+    /// GitHub's renderer omits the tags of a strong node whose parent is strong.
+    public static let collapsesNestedStrong = RenderingPolicy(rawValue: 2)
+}
+
 /// Semantic data determines the kind, avoiding mismatched kind/payload pairs.
 /// More built-in cases arrive with the corresponding parser implementation.
 public enum NodeData: Hashable, Sendable {
@@ -110,6 +137,14 @@ public enum NodeData: Hashable, Sendable {
     case list(ListAttributes)
     case listItem
     case htmlBlock(HTMLBlock)
+    /// GFM table; children are rows, the first row is the header.
+    case table(TableAttributes)
+    case tableRow(isHeader: Bool)
+    /// Cells contain inlines; the alignment repeats the column's alignment.
+    case tableCell(alignment: TableAlignment)
+    case strikethrough
+    /// GFM task list item: a list item with a checkbox state.
+    case taskListItem(checked: Bool)
     case custom(kind: NodeKind, role: NodeRole, attributes: [String: SyntaxValue])
 
     public var kind: NodeKind {
@@ -133,13 +168,18 @@ public enum NodeData: Hashable, Sendable {
         case .list: .list
         case .listItem: .listItem
         case .htmlBlock: .htmlBlock
+        case .table: .table
+        case .tableRow: .tableRow
+        case .tableCell: .tableCell
+        case .strikethrough: .strikethrough
+        case .taskListItem: .taskListItem
         case .custom(let kind, _, _): kind
         }
     }
 
     public var role: NodeRole {
         switch self {
-        case .text, .softBreak, .hardBreak, .code, .emphasis, .strong, .link, .image, .htmlInline: .inline
+        case .text, .softBreak, .hardBreak, .code, .emphasis, .strong, .link, .image, .htmlInline, .strikethrough: .inline
         case .custom(_, let role, _): role
         default: .block
         }
@@ -149,11 +189,13 @@ public enum NodeData: Hashable, Sendable {
     /// so matching cases is equivalent to comparing kind names.
     fileprivate func permits(_ child: NodeData) -> Bool {
         switch self {
-        case .document, .blockQuote, .listItem:
-            child.role == .block && !child.isDocumentOrListItem
+        case .document, .blockQuote, .listItem, .taskListItem:
+            child.role == .block && !child.isDocumentOrListItem && !child.isTablePart
         case .list: child.isListItem
-        case .paragraph, .heading, .emphasis, .strong, .link, .image: child.role == .inline
-        case .custom(_, .block, _): !child.isDocumentOrListItem
+        case .table: if case .tableRow = child { true } else { false }
+        case .tableRow: if case .tableCell = child { true } else { false }
+        case .paragraph, .heading, .emphasis, .strong, .link, .image, .tableCell, .strikethrough: child.role == .inline
+        case .custom(_, .block, _): !child.isDocumentOrListItem && !child.isTablePart
         case .custom(_, .inline, _): child.role == .inline
         default: false
         }
@@ -161,14 +203,24 @@ public enum NodeData: Hashable, Sendable {
 
     private var isDocumentOrListItem: Bool {
         switch self {
-        case .document, .listItem: true
+        case .document, .listItem, .taskListItem: true
         default: false
         }
     }
 
     private var isListItem: Bool {
-        if case .listItem = self { return true }
-        return false
+        switch self {
+        case .listItem, .taskListItem: true
+        default: false
+        }
+    }
+
+    /// Rows and cells exist only inside their table and row.
+    private var isTablePart: Bool {
+        switch self {
+        case .tableRow, .tableCell: true
+        default: false
+        }
     }
 }
 
@@ -283,9 +335,13 @@ public struct Document: Sendable {
     /// separately so built-in nodes and semantic source segments do not grow.
     /// Values are plain text; renderers must escape them.
     public let customLeafFallbacks: [Int: String]
+    /// HTML behaviours of the parse profile; empty for CommonMark.
+    public private(set) var renderingPolicy: RenderingPolicy = []
 
     public init(source: [UInt8], nodes: [Node], diagnostics: [ParseDiagnostic] = [],
-                customLeafFallbacks: [Int: String] = [:], tokens: [SyntaxToken]? = nil) throws {
+                customLeafFallbacks: [Int: String] = [:], tokens: [SyntaxToken]? = nil,
+                renderingPolicy: RenderingPolicy = []) throws {
+        self.renderingPolicy = renderingPolicy
         guard let root = nodes.first, root.data == .document,
               root.range == SourceRange(0, source.count), root.nextSibling == nil else {
             throw DocumentError.invalidRoot
@@ -310,8 +366,10 @@ public struct Document: Sendable {
                 }
                 switch nodes[index].data {
                 case .paragraph, .text, .softBreak, .thematicBreak, .codeBlock, .referenceDefinition,
-                     .blockQuote, .listItem, .htmlBlock:
+                     .blockQuote, .listItem, .htmlBlock, .tableRow, .tableCell, .strikethrough, .taskListItem:
                     break
+                case .table(let attributes) where attributes.alignments.isEmpty:
+                    throw DocumentError.invalidPayload(node: index)
                 case .heading(let level) where !(1...6).contains(level):
                     throw DocumentError.invalidPayload(node: index)
                 case .custom(let kind, _, _) where kind.name.isEmpty || NodeKind.builtins.contains(kind):
@@ -400,6 +458,13 @@ public struct Document: Sendable {
     public var root: Node { nodes[0] }
 
     /// Node indices remain valid for the lifetime of this document only.
+    /// The parser applies its profile's policy after transforms rebuilt the tree.
+    package func with(renderingPolicy: RenderingPolicy) -> Document {
+        var copy = self
+        copy.renderingPolicy = renderingPolicy
+        return copy
+    }
+
     public func children(of index: Int) -> [Int] {
         precondition(nodes.indices.contains(index), "node index belongs to this document")
         var result: [Int] = []
@@ -479,7 +544,10 @@ public struct DocumentBuilder: Sendable {
         if let fallbackLiteral { customLeafFallbacks[index] = fallbackLiteral }
     }
 
+    public var renderingPolicy: RenderingPolicy = []
+
     public func build() throws -> Document {
-        try Document(source: source, nodes: nodes, diagnostics: diagnostics, customLeafFallbacks: customLeafFallbacks, tokens: tokens)
+        try Document(source: source, nodes: nodes, diagnostics: diagnostics, customLeafFallbacks: customLeafFallbacks,
+                     tokens: tokens, renderingPolicy: renderingPolicy)
     }
 }

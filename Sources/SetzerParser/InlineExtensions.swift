@@ -49,6 +49,7 @@ extension InlineParser {
                     } else {
                         var nested = InlineParser(input: input.slice(children), references: references, collectSyntax: collectSyntax,
                             source: source, rules: rules, triggers: triggers, maximumDepth: maximumDepth, depth: depth + 1)
+                        nested.enableGFM(strikethrough: strikethrough, autolink: autolink)
                         nested.parse()
                         let base = items.count
                         for var child in nested.items {

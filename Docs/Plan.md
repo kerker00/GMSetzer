@@ -1,6 +1,6 @@
 # GMSetzer – Plan and Requirements
 
-**Status: 20 November 2026, M1 and block optimisation merged (PRs #9/#10); M2 merged in PR #11 (`021f110`); M3 merged in PR #12 (`651af17`) after [review](Review-M3.md) corrections; M3 service measurements and optimisations on `perf/m3-measurements`.** This document is the
+**Status: 20 November 2026, M1 and block optimisation merged (PRs #9/#10); M2 merged in PR #11 (`021f110`); M3 merged in PR #12 (`651af17`) and its measurements in PR #13 (`c5f9a0b`); M4 GFM implemented locally on `feature/m4-gfm` with 672/672 GFM examples, review and merge open.** This document is the
 reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
@@ -336,6 +336,9 @@ source files; source, version and licence go into the file header and into
   are distinct targets. Classify conflicting inputs before M4; retain both
   original fixtures and use explicit profile-specific behaviour. Any proposed
   deviation needs a documented decision, never an implicit skipped example.
+  M4 resolution: the GFM corpus runs per example with its own extension, as
+  upstream does; GitHub's nested-strong output is a GFM rendering policy over
+  the unchanged CommonMark tree (owner decision 2A). See [M4GFM](M4GFM.md).
 - **Extensions:** test each switch independently, off/on and in combinations;
   own fixtures per extension, with comrak's and micromark's
   tests as references for expected behaviour (with attribution).
@@ -373,7 +376,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | M1 | Source/payload/builder and extension contracts; block parser: paragraphs, ATX/setext headings, thematic breaks, quotes, lists, indented/fenced code, HTML blocks, references; basic HTML renderer grows alongside blocks | Block AST/range tests cover all block sections; HTML-compatible subset passes. Examples needing inline parsing remain M2 work | 8–12 | **merged in PR #9 (`61fcb95`)**: M1-A merged in PR #4 (`51efee6`); M1-B measurements, checked validation optimisation and local budget gate implemented. At M1 acceptance, 70 library tests, 3,919 reference comparisons and 13 Python tests passed; its protected baselines were 339/652 CommonMark and 339/672 GFM. [M1Acceptance](M1Acceptance.md) records the M1-C contracts, M1-D audit, portability matrix and fixed M2 budget |
 | M2 | Inline parser and opt-in delimiter spans; portable document-diagnostic/fix contract; complete CommonMark rendering and tested normalisation | 652/652 CommonMark with explicit conformance settings; editor source-span tests pass; publication only after owner confirmation | re-estimate | **merged in PR #11 (`021f110`)**: 652/652 exact CommonMark, 641/672 GFM; 96 Swift tests across macOS/Swift 6.2/release/Linux, 17 Python checks and 4,786 C comparisons pass. Final core and selected-rule cases pass both unchanged budget gates. See [M2Inlines](M2Inlines.md) |
 | M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; portable syntax/finding APIs | Security/position/analysis tests and standalone package validation pass; application adapters remain outside this package | re-estimate | **merged in PR #12 (`651af17`)** after review corrections: exact position/outline queries, safe configurable URL scheme allowlist/anchors and three optional native rules. 106 library tests passed across macOS/debug/release/Swift 6.2/Linux; after the [review](Review-M3.md) corrections 108 pass on macOS (Swift 6.2/Linux not re-run) with byte-identical differential results. Index/analysis timings and optimisations: [Benchmarks](Benchmarks.md#m3-editor-services-20-november-2026). See [M3EditorServices](M3EditorServices.md) |
-| M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | |
+| M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | **implemented locally**: tables, task lists, strikethrough, extended autolinks and tag filter as built-in payloads (owner decision 1A); 672/672 GFM and 652/652 CommonMark; generated documents agree with cmark-gfm. Full test matrix, official benchmarks and review open. See [M4GFM](M4GFM.md) |
 | M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Declared extension fixtures and profile/combination tests pass | 5–8 | |
 | M6 | Speed and hardening: measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met | 5–8 | |
 | M7 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | 3–5 | |
@@ -479,11 +482,11 @@ ratios remain informational until the actual extensions are implemented.
 Existing measurement-series authorization remains valid; otherwise follow the
 full-benchmark owner rule.
 
-M2 now protects all 652 CommonMark examples and 641 pinned GFM examples.
-The remaining GFM differences are M4 work, including the pinned older
-nested-strong semantics. No fixture or protected ID was removed. The latest
+M2 protected all 652 CommonMark examples and 641 pinned GFM examples; M4
+protects all 672 GFM examples, run per example with its own extension as
+upstream does. No fixture or protected ID was removed. The latest
 functional, source-span, diagnostic, portability and timing evidence is in
 [M2Inlines.md](M2Inlines.md); M2 technical acceptance uses the full/focused package-benchmark series and
 unchanged gate inputs, not a short timing probe.
 
-Current next work: merge the M3 measurements, then continue M4 (31 GFM examples: 11 autolinks, 9 emphasis version differences, 7 tables, 2 task lists, 1 strikethrough, 1 tag filter). Consumer scheduling, dependency pinning and device acceptance belong to consumer repositories. No new benchmark series or publication was performed in M3.
+Current next work: review, test matrix and official measurements for M4 (`feature/m4-gfm`), then M5. Consumer scheduling, dependency pinning and device acceptance belong to consumer repositories. No new benchmark series or publication was performed in M3.
