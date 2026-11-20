@@ -12,6 +12,8 @@ their merged branches are cleaned up.
 on 20 November 2026 at `50991b3`, with only GitHub's source archives. Release
 CI passes on macOS/Swift 6.2.3 and Linux/Swift 6.2, and a separate SwiftPM
 consumer resolves and uses the remote version successfully.
+The owner has made the repository public; anonymous HTTPS access to the
+v0.4.0 tag was verified on 20 November 2026.
 See [Releasing](Releasing.md) for the process and the
 [preparation checks](Validation/Release/0.4.0.md) for executed evidence.
 
@@ -71,7 +73,7 @@ All taken by the project owner on 19 November 2026.
 | Learn from existing parsers as much as possible and do it better, faster and more complete | Algorithms and tests are taken over deliberately, under the licence rules in [section 7](#learning) |
 | Own repository from the first line of code | The parser is independently buildable and testable from day one |
 | Name **GMSetzer** | Family name with GMSnagNav; a *Setzer* is a typesetter. No collision found in a search |
-| Repository private until milestone M2, then public | Publishing is a separate step that the owner confirms explicitly |
+| Repository initially private, public since 20 November 2026 | The owner made it public; future visibility changes remain owner-confirmed |
 | MIT licence | Permissive, usable in commercial and open source apps |
 | Linux supported | The core uses only the Swift standard library |
 | No runtime dependencies in the library | Tool and test dependencies live in the separate package `Tools/` |
@@ -408,9 +410,9 @@ profile conversions, incremental parsing if measurements call for it.
   documentation/skill corrections to be committed and pushed directly on
   `main` without another approval or docs PR (20 November 2026). Source,
   manifests, executable workflows, tags and releases are outside this exception.
-- **Visibility:** private until M2. Making the repository public, tagging
-  releases and publishing anything happens only after the owner's explicit
-  confirmation right before the step.
+- **Visibility:** public since the owner's decision on 20 November 2026.
+  Future visibility changes, tags and releases require the owner's explicit
+  confirmation before the step.
 - **CI:** the owner authorised macOS/Linux CI and source-only release
   preparation on 20 November 2026; implementation is in `main` since PR #16
   (`6a0eb8e`). It runs Swift 6.2 tests, optimized builds and offline script

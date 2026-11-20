@@ -39,8 +39,9 @@ Benchmarks and the separate `Tools/` reference suite are not part of CI.
    prevents creation of the draft; fix the problem before choosing a new tag.
 
 A tag can already be resolved through Swift Package Manager while its GitHub
-release is still a draft. A private repository requires authenticated GitHub
-read access. Changing repository visibility is a separate owner decision.
+release is still a draft. The repository is public; source archives and SwiftPM
+dependencies are available over HTTPS without GitHub authentication. Changing
+repository visibility remains a separate owner decision.
 
 Consumers can pin the version with:
 

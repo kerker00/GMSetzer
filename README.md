@@ -14,9 +14,10 @@ wherever Swift runs, including Linux.
 > (`6a0eb8e`). Both platforms pass all 118 Swift tests and 17 Python tests.
 
 Requires **Swift 6.2 or later**. The current provisional Apple minimums are
-macOS 15, iOS 18 and visionOS 2; Linux is supported. The repository is private
-and GitHub read access is required. Consumers pin version tags through Swift
-Package Manager; no binary release assets or package registry are required.
+macOS 15, iOS 18 and visionOS 2; Linux is supported. The repository is public
+and can be fetched over HTTPS without GitHub authentication. Consumers pin
+version tags through Swift Package Manager; no binary release assets or package
+registry are required.
 
 ## Installation
 
