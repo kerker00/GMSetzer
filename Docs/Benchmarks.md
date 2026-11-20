@@ -481,3 +481,15 @@ views copy content only when requested. These are algorithm descriptions,
 not benchmark results. The unmatched-candidate and long-run cases are functional
 checks. No fresh benchmark, allocation or reference series was run for
 `0.5.0-dev.3`; historical timings do not establish selected math's cost.
+
+## M5 alerts and callouts (development)
+
+`feature/m5-alerts-callouts` reserves header lines using the existing block
+registry and an immediate quote-start signal. Before inlines, each selected
+wrapping transform rebuilds a validated tree and remaps existing tokens. Foreign
+annotation provenance is counted by role/range; token validation and rebuilding
+add passes when transforms are selected. Composed HTML shares the existing
+contextual tree index and renders custom title inlines once, retaining current
+hooks. The 300-callout case is a functional check, not a timing measurement.
+No new benchmark, allocation or reference-tool series was run for
+`0.5.0-dev.4`; M6 must measure these costs before making a new speed claim.

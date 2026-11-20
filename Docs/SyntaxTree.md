@@ -390,3 +390,17 @@ blocks parse projected container lines; math code fences reuse the core code
 literal and are converted after inlines. Owned `math.fence.*` / `math.content`
 tokens stay optional. TeX is never parsed into Markdown children or evaluated;
 rendering stays with the caller. No module dependency or core node case changes.
+
+## M5 alerts and callouts
+
+The unreleased [admonition step](Admonitions.md) reserves first-line quote
+headers and wraps the parsed body in `alerts.block` / `callouts.block` custom
+containers. Custom callout titles retain a `callouts.title` container with
+ordinary paragraph inlines; generated titles invent no source nodes. Internal
+header leaves are removed before inline parsing. Rebuilding remaps indices and
+existing token owners while preserving source/role/range/multiplicity. The
+controller rejects invented/duplicated foreign annotations. Optional owned
+header spans cover marker/type/fold/title bytes. Empty wrappers have empty
+fallbacks. `AdmonitionHTML` in the convenience module composes safe title/body
+HTML and native `<details>` folding with the existing renderer and other hooks.
+There are no new core payload cases or module dependencies.
