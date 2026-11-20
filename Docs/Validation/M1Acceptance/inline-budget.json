@@ -1,7 +1,7 @@
 {
   "scope": "CommonMark mixed-v1, syntax collection off, same host/toolchain; includes all additional total-parse work in M2",
   "baseline_file": "m2-baseline.md",
-  "baseline_sha256": "b2b5334edbd27ff38a5832cc1fb89d3160e592ec3a349c4c77024c5e6d6f19aa",
+  "baseline_sha256": "d306bb5e1933a290d4426d9e3dd1d03a70e55ea6a1c7b8a8dee51b0325734354",
   "additional_parse_ms": {
     "100 KB": 0.5,
     "1 MB": 8.0,
