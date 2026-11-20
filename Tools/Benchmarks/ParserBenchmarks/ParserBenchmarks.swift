@@ -73,8 +73,8 @@ let benchmarks: @Sendable () -> Void = {
         Benchmark("GMSetzer segment reconstruction \(label)", configuration: measurement(text, corpus: "mixed-v1")) { benchmark in
             for _ in benchmark.scaledIterations {
                 // Iterating/re-appending forces distinct arrays rather than COW copies.
-                blackHole(segments.map { ranges -> [SourceRange] in
-                    var copy: [SourceRange] = []
+                blackHole(segments.map { ranges -> [GMSetzer.SourceRange] in
+                    var copy: [GMSetzer.SourceRange] = []
                     copy.reserveCapacity(ranges.count)
                     for range in ranges { copy.append(range) }
                     return copy
