@@ -469,3 +469,15 @@ not measured speed guarantees. The 1,000-call and depth-limit tests are
 functional checks. No new benchmark series, allocation measurement or reference
 comparison was run for `0.5.0-dev.2`; historical timings do not establish the
 cost of selected footnotes or the supporting parser/renderer changes.
+
+## M5 opaque math (development)
+
+`feature/m5-math` builds a per-line next-close lookup for single-dollar
+delimiters once per snapshot, indexing each opener independently. Failed
+inline candidates do not rescan the remaining leaf. Dollar-display blocks
+scan projected lines to the next bare closing fence or container boundary;
+the post-inline math-code conversion reuses core fence parsing. Typed raw-byte
+views copy content only when requested. These are algorithm descriptions,
+not benchmark results. The unmatched-candidate and long-run cases are functional
+checks. No fresh benchmark, allocation or reference series was run for
+`0.5.0-dev.3`; historical timings do not establish selected math's cost.

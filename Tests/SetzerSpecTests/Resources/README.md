@@ -54,3 +54,8 @@ The named-footnote step adds a separate all-example check with
 diagnostics and `FootnotesHTMLRenderer` with conformance settings against all
 1,324 expected outputs. Original footnote/combination tests live outside these
 protected fixtures; no baseline ID or upstream fixture is modified.
+
+The math step separately supplies `Math.implementation` without selecting it
+for all 1,324 examples, comparing complete nodes, tokens, diagnostics and exact
+conformance HTML. Math grammar and combinations are tested with original
+project strings outside the upstream fixtures. No protected ID is changed.

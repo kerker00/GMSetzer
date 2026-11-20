@@ -140,3 +140,8 @@ M4/M5 add GFM/extension-specific spans and rule contexts. M6/M7 measure optional
 annotation/index/analysis costs separately and review the public API before 1.0.
 Consumer UI/device test reports remain in their own repositories; a green library
 suite does not claim that any particular editor integration works.
+
+The unreleased [math step](Math.md) adds owned `math.fence.*` and
+`math.content` spans for opaque inline/display/fenced TeX. Existing source and
+UTF-16 mapping apply; no TeX validation findings or editor theme mapping are
+implied. Native analysis retains its opaque-custom-content policy.
