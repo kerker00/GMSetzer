@@ -6,6 +6,12 @@ the M3 measurements ([PR #13](https://github.com/kerker00/GMSetzer/pull/13),
 (`e163e6f`). Library and reference tests and the filtered parse benchmark
 pass.
 
+Subsequent v0.4.0 release validation (`50991b3`) also passes the full 118-test
+library/specification suite on macOS/Swift 6.2.3 and Linux/Swift 6.2, including
+both complete protected corpora and optimized builds. The implementation-stage
+limits below remain historical; see the
+[release record](Validation/Release/0.4.0.md#published-release-validation-20-november-2026).
+
 ## Owner decisions
 
 - **Built-in payloads (1A).** Tables, task list items and strikethrough are

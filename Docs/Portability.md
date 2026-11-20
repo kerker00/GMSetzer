@@ -1,5 +1,11 @@
 # Minimum toolchain and Linux verification
 
+**Subsequent release verification:** v0.4.0 (`50991b3`) passes all 118 Swift
+tests, both complete specification corpora, the optimized build and 17 Python
+tests on Ubuntu 24.04 with Swift 6.2 and macOS 26 with Swift 6.2.3. This closes
+the minimum-version Linux suite gap in the historical M1 records below.
+See the [release validation](Validation/Release/0.4.0.md#published-release-validation-20-november-2026).
+
 Initial verification on 20 November 2026 uses library sources from `7c0f4ea`
 (merged M1-B); the development probe/runner are recorded in `34ba92b`.
 The subsequent [block-phase extraction](BlockPhases.md) at `4c4fd46` adds a

@@ -9,7 +9,9 @@ wherever Swift runs, including Linux.
 > M3 editor services (PR #12, `651af17`), their measurements (PR #13,
 > `c5f9a0b`) and GFM (PR #14, `e163e6f`). All 652 CommonMark 0.31.2 and
 > 672 pinned GFM specification examples pass by exact HTML. The source-only
-> v0.4.0 release preparation and macOS/Linux CI are merged in PR #16 (`6a0eb8e`).
+> [v0.4.0 preview release](https://github.com/kerker00/GMSetzer/releases/tag/v0.4.0)
+> is published; macOS/Linux CI and release preparation are merged in PR #16
+> (`6a0eb8e`). Both platforms pass all 118 Swift tests and 17 Python tests.
 
 Requires **Swift 6.2 or later**. The current provisional Apple minimums are
 macOS 15, iOS 18 and visionOS 2; Linux is supported. The repository is private

@@ -7,8 +7,11 @@ no knowledge of earlier discussions is needed.
 
 The M4 follow-ups are merged in PR #15 (`1473d49`). The source-only v0.4.0
 release preparation and macOS/Linux CI are merged in PR #16 (`6a0eb8e`);
-their merged branches are cleaned up. The owner authorised tagging and
-publication on 20 November 2026, after successful automated release checks.
+their merged branches are cleaned up.
+[v0.4.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.4.0) is published
+on 20 November 2026 at `50991b3`, with only GitHub's source archives. Release
+CI passes on macOS/Swift 6.2.3 and Linux/Swift 6.2, and a separate SwiftPM
+consumer resolves and uses the remote version successfully.
 See [Releasing](Releasing.md) for the process and the
 [preparation checks](Validation/Release/0.4.0.md) for executed evidence.
 
@@ -508,20 +511,18 @@ unchanged gate inputs, not a short timing probe.
 Open tasks from the first consumer integration (Setzkit, 20 November 2026),
 before or alongside M5:
 
+**Completed:** the versioned library release requested by the first consumer.
+Source-only v0.4.0 is published after successful macOS/Linux checks, without
+binary assets. Consumer version pinning remains a task in the consumer's own
+repository; it no longer blocks library publication.
+
 1. **Localised finding texts.** `NativeAnalyzer` findings and fix titles carry
    stable message keys (`gmsetzer.*`) and arguments, but only English
    `defaultText`; Setzkit currently shows the English text. Publish the key and
    argument catalogue as a documented, stable contract and decide whether the
    library ships translations (as data, keeping the core Foundation-free) or
    consumers translate by key.
-2. **Versioned release for consumers.** Setzkit depends on a local path
-   checkout, so it uses whatever branch is checked out; during integration
-   that was M4 from the then unmerged PR #14. Source-only `v0.4.0` preparation
-   and macOS/Linux CI are merged in PR #16 (`6a0eb8e`). The owner authorised
-   tagging and publication after the automated checks. GitHub provides
-   ZIP/tar.gz archives, with no binary assets. Consumer version pinning follows
-   publication and belongs in the consumer repository.
-3. **Container marker tokens.** Syntax tokens cover inline delimiters and
+2. **Container marker tokens.** Syntax tokens cover inline delimiters and
    leaf markers but not block-quote `>` or list markers, so a consumer cannot
    replace its own syntax colouring with GMSetzer's without losing those
    roles. Add `core.blockQuote.marker` and `core.list.marker` tokens with
