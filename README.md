@@ -13,6 +13,11 @@ wherever Swift runs, including Linux.
 > is published; macOS/Linux CI and release preparation are merged in PR #16
 > (`6a0eb8e`). Both platforms pass all 118 Swift tests and 17 Python tests.
 
+Unreleased work on `feature/native-analysis-localization` adds an optional
+English/German lookup for native findings and fix titles, with a documented
+[message-key/argument catalogue](Docs/NativeAnalysisMessages.md). The v0.4.0
+release still supplies English defaults only.
+
 Requires **Swift 6.2 or later**. The current provisional Apple minimums are
 macOS 15, iOS 18 and visionOS 2; Linux is supported. The repository is public
 and can be fetched over HTTPS without GitHub authentication. Consumers pin
@@ -63,7 +68,9 @@ and device acceptance do not determine this package's API or release readiness.
   parent/caret queries and a heading outline. Three opt-in native rules detect
   skipped heading levels, duplicate headings and trailing whitespace, with
   portable findings and suggested fixes. Analysis is not a complete linter;
-  messages are English and block-quote/list marker tokens remain follow-up work.
+  English defaults remain available, with an optional English/German lookup
+  in the unreleased development branch. Block-quote/list marker tokens remain
+  follow-up work.
 
 ## Documentation
 
@@ -89,6 +96,9 @@ and device acceptance do not determine this package's API or release readiness.
   editor-diagnostic contracts, including planned extensions and acceptance gates.
 - [Docs/M3EditorServices.md](Docs/M3EditorServices.md) – implemented position,
   outline, HTML and native analysis APIs and their validation limits.
+- [Docs/NativeAnalysisMessages.md](Docs/NativeAnalysisMessages.md) – stable
+  finding/fix message keys and arguments, optional English/German text lookup
+  and fallback behavior (unreleased).
 - [Docs/M4GFM.md](Docs/M4GFM.md) – merged GFM profiles, switches, source ranges,
   conformance and measurements.
 - [Docs/HTMLReferences.md](Docs/HTMLReferences.md) – HTML policies, multiline

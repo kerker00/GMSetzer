@@ -76,6 +76,12 @@ optional advisory fixes. A location is an original `SourceRange`, physical-line
 start or explicit document scope. Empty source ranges are caret/insertion
 locations; consumers must not widen them to neighboring characters.
 
+Native finding/fix keys and argument schemas are documented in the
+[message catalogue](NativeAnalysisMessages.md). An optional Foundation-free
+English/German lookup is implemented on the unreleased localization branch;
+the consumer still chooses its language and owns presentation. Analysis
+results retain English defaults and do not depend on a process locale.
+
 `DiagnosticReport` owns the exact source bytes and records provider version,
 dialect and configuration identity. It validates findings against that source.
 Ordering is source offset (document first), descending severity, code/message
