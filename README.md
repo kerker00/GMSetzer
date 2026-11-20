@@ -18,6 +18,10 @@ findings and fix titles on `main`, with a documented
 [message-key/argument catalogue](Docs/NativeAnalysisMessages.md). The v0.4.0
 release still supplies English defaults only.
 
+Unreleased work on `feature/container-marker-tokens` adds exact quote/list
+marker tokens for source highlighting; see [ContainerMarkers](Docs/ContainerMarkers.md).
+The 0.5 extension milestone remains a separate next step.
+
 Requires **Swift 6.2 or later**. The current provisional Apple minimums are
 macOS 15, iOS 18 and visionOS 2; Linux is supported. The repository is public
 and can be fetched over HTTPS without GitHub authentication. Consumers pin
@@ -69,8 +73,8 @@ and device acceptance do not determine this package's API or release readiness.
   skipped heading levels, duplicate headings and trailing whitespace, with
   portable findings and suggested fixes. Analysis is not a complete linter;
   English defaults remain available, with an optional English/German lookup
-  on `main` since PR #17 (not yet in a versioned release). Block-quote/list marker tokens remain
-  follow-up work.
+  on `main` since PR #17 (not yet in a versioned release). The marker branch
+  adds original quote/list marker ranges; it does not provide editor colors.
 
 ## Documentation
 
@@ -99,6 +103,9 @@ and device acceptance do not determine this package's API or release readiness.
 - [Docs/NativeAnalysisMessages.md](Docs/NativeAnalysisMessages.md) – stable
   finding/fix message keys and arguments, optional English/German text lookup
   and fallback behavior (unreleased).
+- [Docs/ContainerMarkers.md](Docs/ContainerMarkers.md) – original quote/list
+  marker ranges, owners, extension boundaries and annotation-mode checks
+  (unreleased).
 - [Docs/M4GFM.md](Docs/M4GFM.md) – merged GFM profiles, switches, source ranges,
   conformance and measurements.
 - [Docs/HTMLReferences.md](Docs/HTMLReferences.md) – HTML policies, multiline

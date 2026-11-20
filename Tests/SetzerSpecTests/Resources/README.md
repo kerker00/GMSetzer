@@ -38,3 +38,8 @@ The default specification check remains exact. The separately tested optional
 it preserves text whitespace, attributes, code and original raw HTML. It is not
 used to turn a strict fixture mismatch into a protected pass. No GFM mismatch
 remains; see Docs/M4GFM.md.
+
+The marker-token step also runs all 1,324 examples with syntax collection on
+and off. It requires identical semantic nodes/source segments, diagnostics,
+source and fallback metadata, exact annotated HTML and no duplicated container
+markers. This adds provenance coverage without changing fixtures or baseline IDs.

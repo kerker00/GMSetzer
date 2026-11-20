@@ -117,6 +117,24 @@ struct SpecTests {
         #expect(examples.contains { $0.extension == "tagfilter" })
     }
 
+    @Test func syntaxCollectionPreservesEverySpecificationTreeAndHTML() throws {
+        for (name, gfm) in [("commonmark-0.31.2", false), ("gfm-0.29", true)] {
+            for example in try Self.examples(name) {
+                let profile = gfm ? Self.gfmProfile(for: example) : .commonMark
+                let off = MarkdownParser(profile: profile).parse(example.markdown)
+                let on = MarkdownParser(profile: profile, collectSyntaxDetails: true).parse(example.markdown)
+                #expect(on.source == off.source, "\(name) example \(example.example)")
+                #expect(on.nodes == off.nodes, "\(name) example \(example.example)")
+                #expect(on.diagnostics == off.diagnostics, "\(name) example \(example.example)")
+                #expect(on.customLeafFallbacks == off.customLeafFallbacks)
+                #expect(on.tokens != nil)
+                #expect(HTMLRenderer.conformance.render(on) == example.html, "\(name) example \(example.example)")
+                let markers = (on.tokens ?? []).filter { $0.role == "core.blockQuote.marker" || $0.role == "core.list.marker" }
+                #expect(Set(markers).count == markers.count, "\(name) example \(example.example)")
+            }
+        }
+    }
+
     @Test func referenceDefinitionSectionsHaveTheRequiredBlockShapes() throws {
         let expected = [192: 1, 193: 1, 194: 1, 195: 1, 196: 1, 197: 0, 198: 1, 199: 0,
                         200: 1, 201: 0, 202: 1, 203: 1, 204: 2, 205: 1, 206: 1, 207: 1,

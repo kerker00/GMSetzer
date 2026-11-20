@@ -86,7 +86,14 @@ extension BlockParser {
         for position in containers.indices {
             let next: SourceLine?
             switch containers[position].kind {
-            case .quote: next = Self.quoteContent(view, source: source)
+            case .quote:
+                if let marker = Self.quoteMarker(view, source: source) {
+                    next = marker.content
+                    if collectSyntaxDetails {
+                        builder.record(SyntaxToken("core.blockQuote.marker", range: marker.range,
+                            owner: containers[position].node))
+                    }
+                } else { next = nil }
             case .list: next = view
             case .item(let padding):
                 let acceptsBlank = containers[position].childCount > 0 || leafParent == containers[position].node
@@ -216,6 +223,9 @@ extension BlockParser {
                     let node = append(.listItem, range: SourceRange(lines[index].range.lowerBound, lines[index].range.lowerBound))
                     containers.append(OpenContainer(node: node, kind: .item(padding: marker.padding),
                                                     start: lines[index].range.lowerBound, end: lines[index].range.upperBound))
+                    if collectSyntaxDetails {
+                        builder.record(SyntaxToken("core.list.marker", range: marker.range, owner: node))
+                    }
                     lines[index] = marker.content
                     if registry.contains(.taskList), let task = taskListMarker(index) {
                         // cmark-gfm stops opening blocks after the checkbox:
@@ -245,6 +255,14 @@ extension BlockParser {
                             fallbackLiteral: match.children == nil ? extensionFallback(resolved.lines) : nil)
                         for token in match.tokens { builder.record(SyntaxToken(token.role, range: token.range, owner: owner)) }
                         for diagnostic in match.diagnostics { builder.report(diagnostic) }
+                        if collectSyntaxDetails {
+                            // Accepted multi-line rules skip the normal loop.
+                            // Record their enclosing quote prefixes only now,
+                            // after validation, never during callback lookahead.
+                            for continuation in (index + 1)..<end {
+                                _ = matchOpenContainers(at: continuation)
+                            }
+                        }
                         if let children = match.children, !children.isEmpty {
                             if extensionDepth + containers.count + 1 < limits.maximumContainerDepth {
                                 var parser = BlockParser(source: source, registry: registry, limits: limits,
@@ -261,13 +279,16 @@ extension BlockParser {
                         return .consumed(nextLine: end)
                     }
                 case .core(.blockQuote):
-                    if firstByte(index).byte == 62, let content = Self.quoteContent(lines[index], source: source) {
+                    if firstByte(index).byte == 62, let marker = Self.quoteMarker(lines[index], source: source) {
                         guard hasRoom(for: 1, at: index) else { return .startLeaf(depthLimited: true) }
                         beginChild()
                         let start = lines[index].range.lowerBound
                         let node = append(.blockQuote, range: SourceRange(start, start))
                         containers.append(OpenContainer(node: node, kind: .quote, start: start, end: lines[index].range.upperBound))
-                        lines[index] = content
+                        if collectSyntaxDetails {
+                            builder.record(SyntaxToken("core.blockQuote.marker", range: marker.range, owner: node))
+                        }
+                        lines[index] = marker.content
                         if isBlank(index) { return .startLeaf(depthLimited: false) }
                         continue opening
                     }
@@ -581,12 +602,22 @@ extension BlockParser {
     }
 
     static func quoteContent(_ line: SourceLine, source: [UInt8]) -> SourceLine? {
+        quoteMarker(line, source: source)?.content
+    }
+
+    private struct QuoteMarker {
+        let range: SourceRange
+        let content: SourceLine
+    }
+
+    private static func quoteMarker(_ line: SourceLine, source: [UInt8]) -> QuoteMarker? {
         var cursor = SourceCursor(line: line)
         guard cursor.skipIndentation(in: source) <= 3, cursor.byte(source) == 62 else { return nil }
+        let start = cursor.offset
         cursor.advanceASCII()
         let next = cursor.byte(source)
         if next == 32 || next == 9 { cursor.consumeIndentation(1, in: source) }
-        return cursor.view
+        return QuoteMarker(range: SourceRange(start, start + 1), content: cursor.view)
     }
 
     @inline(__always)
@@ -619,6 +650,7 @@ extension BlockParser {
     struct ListMarker {
         let style: ListStyle
         let padding: Int
+        let range: SourceRange
         let content: SourceLine
     }
 
@@ -658,7 +690,8 @@ extension BlockParser {
             padding = indent + width + 1
             cursor.consumeIndentation(1, in: source)
         }
-        return ListMarker(style: style, padding: padding, content: cursor.view)
+        return ListMarker(style: style, padding: padding,
+            range: SourceRange(markerStart, markerStart + width), content: cursor.view)
     }
 
     static func sameList(_ lhs: ListStyle, _ rhs: ListStyle) -> Bool {
