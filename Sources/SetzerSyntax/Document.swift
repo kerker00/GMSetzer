@@ -347,10 +347,13 @@ public struct Document: Sendable {
         self.nodes = nodes
         self.diagnostics = diagnostics
         if let tokens {
-            for (index, token) in tokens.enumerated() {
-                guard !token.role.isEmpty, nodes.indices.contains(token.owner),
-                      nodes[token.owner].range.contains(token.range) else {
-                    throw DocumentError.invalidToken(index)
+            try tokens.withUnsafeBufferPointer { tokens in
+                for index in 0..<tokens.count {
+                    let owner = tokens[index].owner
+                    guard !tokens[index].role.isEmpty, nodes.indices.contains(owner),
+                          nodes[owner].range.contains(tokens[index].range) else {
+                        throw DocumentError.invalidToken(index)
+                    }
                 }
             }
         }
