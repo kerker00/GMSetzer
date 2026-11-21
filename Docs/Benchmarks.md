@@ -642,3 +642,18 @@ set. The full historical harness additionally matches all 48 files read from
 `fe6a505`; its updated runner intentionally differs. New receipts use schema 2
 with actual Git/dirty state and the selected compiler. No new timing, RSS or
 allocation series was run for these tool/test corrections.
+
+
+## M7 initial baseline preparation
+
+The initial [M7 step](M7Hardening.md) changes regression tests/documentation
+only. Runtime sources and protected fixtures remain unchanged. A bounded
+1,024-combination mutation campaign and 24 depth cases pass; the complete
+245-test local Debug/Release suites are green. These are correctness checks,
+not performance/scaling measurements.
+
+The pinned `ParserBenchmarks` target builds and lists 72 unique cases for
+100 KB/1 MB/5 MB; [case identity](Validation/M7/benchmark-cases.txt) and
+[preparation hashes](Validation/M7/preparation.json) are recorded. Full execution
+awaits owner confirmation. No new timing, allocation or memory result is
+claimed, and the existing C/absolute/frozen M2 gates are unchanged.

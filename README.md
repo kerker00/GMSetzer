@@ -31,6 +31,13 @@ adversarial/mutation coverage and a measured investigation of remaining costs.
 API/DocC/1.0 completion stays **M8**. Full benchmark and long fuzzing execution
 follow the existing approval requirement.
 
+The initial `feature/m7-hardening` step adds bounded deterministic mutation
+coverage: 1,024 profile/input combinations and 24 depth cases across strict,
+GFM and selected M5 configurations. All 245 local macOS/Swift 6.4.2 tests
+pass in Debug and Release. The 72-case benchmark target builds/lists; full
+measurement execution is pending approval. See [M7 hardening](Docs/M7Hardening.md)
+for scope, reproduction and remaining portability/performance gates.
+
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented
 [message-key/argument catalogue](Docs/NativeAnalysisMessages.md). The v0.4.0
