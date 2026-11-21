@@ -13,7 +13,11 @@ wherever Swift runs, including Linux.
 > published source-only preview remains v0.5.0; M6 is not in that release.
 
 [PR #24](https://github.com/kerker00/GMSetzer/pull/24) (`a8a0351`) adds
-**progressive HTML** with development identity `0.6.0-dev.1`.
+**progressive HTML**; its accepted M6 snapshot used identity `0.6.0-dev.1`.
+That implementation is being prepared separately as source-only **0.6.0**
+in [PR #25](https://github.com/kerker00/GMSetzer/pull/25).
+This M7 branch now reports **`0.7.0-dev.1`** and retains the new hardening/
+optimization work for the next preview.
 `HTMLRenderer.prepare` and `FootnotesHTMLRenderer.prepare` retain complete
 Markdown context and emit structural HTML groups on demand, with explicit
 whole-document fallbacks for raw HTML and document-order hooks. The

@@ -75,3 +75,19 @@ An isolated public-HTTPS SwiftPM consumer resolves exact version 0.5.0 to
 `2d8ecef4050976b0e817f0aaeba30fea4b3ac3d1` and exercises the library successfully.
 See [executed release evidence](Validation/Release/0.5.0.md). Products,
 dependencies, workflow definitions and protected fixtures are unchanged.
+
+
+## 0.6.0 / 0.7 development boundary
+
+The owner selected accepted main `0cf6690` for separate source-only 0.6.0
+preparation on 21 November 2026. [PR #25](https://github.com/kerker00/GMSetzer/pull/25)
+from `release/0.6.0` retains the accepted M6
+parser/rendering implementation and changes only its result identity to
+`0.6.0` in runtime sources. It excludes all M7 commits. Owner review/merge,
+exact merged-commit selection and the confirmed tag/publication sequence
+remain required; v0.5.0 remains the published preview until then.
+
+`feature/m7-hardening` continues separately as `0.7.0-dev.1`. Its mutation
+coverage, baseline data and parser optimization are not part of the 0.6.0
+release. Existing M7 measurements keep their recorded identity/hashes; the
+version-only transition does not retarget them or imply 0.7 acceptance.

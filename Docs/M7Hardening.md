@@ -2,11 +2,21 @@
 
 21 November 2026, initial work on `feature/m7-hardening`, based on the
 accepted M6 runtime (`a8a0351`) and documentation follow-up `0cf6690`.
-Development identity remains `0.6.0-dev.1`. The initial preparation through
+Development identity is now `0.7.0-dev.1`, separating M7 from the accepted
+M6 implementation being prepared as 0.6.0. Evidence through `61c3667` used
+`0.6.0-dev.1`; those original receipts/hashes are retained. The version-only
+follow-up does not claim a new timing/resource series. The initial preparation through
 `9e7bc71` changes tests/documentation only. The measured optimization below
 reuses scratch buffers and changes two runtime files; public API, dependencies
 and protected specification fixtures remain unchanged. M7 is not accepted or
 merged yet.
+
+The version-only follow-up passes the complete **245-test / 29-suite macOS
+Debug run** with Swift 6.4.2. All parser/rendering implementation files match
+`61c3667`; the only runtime difference is `GMSetzerVersion.current` changing
+from `0.6.0-dev.1` to `0.7.0-dev.1`. No new benchmark series or Linux/minimum-
+compiler run is claimed for this metadata change. The separate 0.6.0 release
+preparation is [PR #25](https://github.com/kerker00/GMSetzer/pull/25).
 
 ## Bounded mutation regression coverage
 
