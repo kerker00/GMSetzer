@@ -88,3 +88,21 @@ and may exceed the soft source/HTML size budget. Record these limits alongside
 the timing gains of inputs with many independent blocks. This matrix supplies
 M6 evidence; minimum-compiler checks, application UI measurements and the
 broader M7 hardening/comparison benchmark are separate work.
+
+## Offline M6 review budgets
+
+After collecting the complete matrix, run the offline checker from the repo
+root against the archived evidence directory:
+
+```sh
+python3 -I Scripts/check_progressive_html_budget.py \
+  Docs/BenchmarkData/m6-progressive-html/linux-arm64-2026-11-21 \
+  --source-root .
+```
+
+This reads the archived matrix without executing the probe. It verifies all
+42 cases, artifacts/source hashes, raw verification/timing/RSS records and
+per-case post-baseline budgets. Source matching is required before applying
+historical results to a current checkout. The candidate budgets and limitations
+are in [review readiness](../../Docs/Validation/M6/review-readiness.md). A
+passed check is not owner acceptance, a new run or application UI evidence.

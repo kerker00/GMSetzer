@@ -623,6 +623,10 @@ limits. [CSV](BenchmarkData/m6-progressive-html/linux-arm64-2026-11-21/summary.c
 [receipt/source hashes](BenchmarkData/m6-progressive-html/linux-arm64-2026-11-21/receipt.json)
 and [all raw records](BenchmarkData/m6-progressive-html/linux-arm64-2026-11-21/raw-results.tar.gz)
 retain the evidence. The [probe instructions](../Tools/ProgressiveHTMLProbe/README.md)
-describe reproduction and metric boundaries. M6 quantitative targets and
-minimum-Swift-6.2 verification remain open. Application transfer, layout and
-first-visible-output measurements remain outside this library work.
+describe reproduction and metric boundaries. The [review follow-up](Validation/M6/review-readiness.md)
+adds explicit post-baseline first-output/completion/RSS budgets: all 42
+archived cases pass with matching runtime sources. The checker validates raw
+records and completeness offline; this is not a fresh timing series or a
+statistical regression verdict. macOS/Swift 6.2 tests and the optimized build
+pass; Linux/Swift 6.2 PR CI and owner review remain open. Application transfer,
+layout and first-visible-output measurements remain outside this library work.

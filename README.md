@@ -13,7 +13,8 @@ wherever Swift runs, including Linux.
 > published at `2d8ecef` after successful release CI and exact-version SwiftPM validation.
 
 Work toward **M6 / the 0.6 development stage: progressive HTML** is implemented
-on `feature/m6-progressive-html`, with development identity `0.6.0-dev.1`.
+on `feature/m6-progressive-html`, with review follow-up on
+`feature/m6-validation` and development identity `0.6.0-dev.1`.
 `HTMLRenderer.prepare` and `FootnotesHTMLRenderer.prepare` retain full-document
 context and make structural HTML groups available on demand. Whole-document
 fallbacks preserve raw HTML and order-dependent hooks. See the
@@ -21,7 +22,7 @@ fallbacks preserve raw HTML and order-dependent hooks. See the
 [Plan 10.1](Docs/Plan.md#101-m6-progressive-html-for-large-documents).
 General performance/hardening moves to **M7** and API/DocC/1.0 completion to
 **M8**. The branch is not merged/released and M6's full measurement acceptance
-is still open; these additions are not capabilities of the published 0.5.0.
+awaits owner review and PR CI; these additions are not capabilities of the published 0.5.0.
 The initial implementation passes 239 tests on macOS (Debug/Release) and
 Linux ARM64, plus 17 script tests on each host; see the
 [M6 validation record](Docs/Validation/M6/initial-html-groups.md).
@@ -29,7 +30,10 @@ The owner-authorised [42-case Linux ARM64 measurement matrix](Docs/Validation/M6
 records stage timing, peak RSS and allocation requests. Mixed 1 MB/5 MB inputs
 reach first HTML in about half the parse-plus-full-output time on that host;
 giant blocks have no early-output gain and no general peak-memory reduction is
-established. Minimum-compiler checks and M6 quantitative acceptance remain open.
+established. A [review-readiness follow-up](Docs/Validation/M6/review-readiness.md)
+passes all 239 tests with Swift 6.2 on macOS and checks all 42 measurement cases
+against explicit post-baseline budgets. The optimized Swift 6.2 build and all
+24 offline Python tests pass. Linux/Swift 6.2 PR CI and owner review remain open.
 
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented
@@ -167,7 +171,7 @@ M5 selection/rendering examples are documented in [FrontMatter](Docs/FrontMatter
 | `SetzerSyntax` | Validated block/inline tree, source ranges/tokens, parent/offset/outline index, position conversion, diagnostic/fix values | Additional query conveniences |
 | `SetzerParser` | Block/inline parser, custom rules/children, pre/post transforms and profiles | Additional dialect syntax |
 | `SetzerExtensions` | GFM profile; raw YAML/TOML front matter; named footnotes; opaque TeX; alerts/callouts | Further dialects |
-| `SetzerHTML` | CommonMark/GFM HTML, source anchors and safe defaults; initial M6 prepared/grouped output on this feature branch | Complete M6 measurement acceptance |
+| `SetzerHTML` | CommonMark/GFM HTML, source anchors and safe defaults; initial M6 prepared/grouped output on this feature branch | M6 review and CI acceptance |
 | `SetzerAnalysis` | Three optional native rules over the existing document | Broader rule catalogue |
 | `GMSetzer` | Imports the five modules above; composed footnote HTML and admonition HTML recipe | Additional convenience APIs |
 

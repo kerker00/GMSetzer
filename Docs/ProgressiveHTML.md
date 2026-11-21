@@ -125,7 +125,10 @@ The [42-case Linux ARM64 follow-up](Validation/M6/linux-arm64-measurements.md)
 adds 100 KB/1 MB/5 MB workloads with syntax details off/on, fresh-process peak
 RSS and separate allocation counts/volume. It confirms earlier output for
 independent blocks, unchanged giant-block limits and no general peak-RSS gain.
-It does not establish quantitative acceptance targets, exhaustive extension/
-hook coverage or first-visible-output performance in an application. M6 remains
-in progress until its remaining measurement/portability gates are met; consumer
-UI integration remains separate.
+The subsequent [review follow-up](Validation/M6/review-readiness.md) defines
+post-baseline budgets, verifies all 42 cases against raw records and matching
+source hashes, and passes all 239 tests plus an optimized build on macOS/Swift
+6.2. Its seven checker regression tests bring the local Python suite to 24.
+These are candidate budgets for owner review, not pre-registered goals or a
+fresh measurement series. Linux/Swift 6.2 PR CI, owner review and merge remain
+open. M6 remains in progress; consumer UI integration stays separate.
