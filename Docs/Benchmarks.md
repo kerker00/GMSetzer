@@ -654,6 +654,43 @@ not performance/scaling measurements.
 
 The pinned `ParserBenchmarks` target builds and lists 72 unique cases for
 100 KB/1 MB/5 MB; [case identity](Validation/M7/benchmark-cases.txt) and
-[preparation hashes](Validation/M7/preparation.json) are recorded. Full execution
-awaits owner confirmation. No new timing, allocation or memory result is
-claimed, and the existing C/absolute/frozen M2 gates are unchanged.
+[preparation hashes](Validation/M7/preparation.json) record this first checkpoint.
+The subsequently approved full series is below; existing C/absolute/frozen M2
+limits remain unchanged.
+
+
+## M7 first complete baseline, 21 November 2026
+
+Owner-approved Release series at clean commit `1edf1a4`: Apple M2, 16 GiB RAM,
+macOS 27.0.1, Swift 6.4.2, pinned development dependencies and source-positioned
+C controls. All 72 cases complete; the export is written after 378.91 seconds
+including build/setup. Runtime/benchmark sources and the clean checkout are
+verified unchanged before/after. This is a baseline at unchanged runtime code,
+not a new optimization result.
+
+P50 milliseconds, matched `mixed-v1` inputs (100,284 / 1,000,100 / 5,000,500 bytes):
+
+| Profile | Size | GMSetzer | C | GM/C | Budget |
+| --- | --- | ---: | ---: | ---: | --- |
+| CommonMark | 100 KB | 2.671 | 1.673 | 1.597× | Pass |
+| CommonMark | 1 MB | 27.279 | 18.252 | 1.495× | Pass |
+| CommonMark | 5 MB | 143.524 | 91.947 | 1.561× | Pass |
+| GFM | 100 KB | 3.195 | 2.974 | 1.074× | Pass |
+| GFM | 1 MB | 32.801 | 35.815 | 0.916× | Pass |
+| GFM | 5 MB | 172.360 | 192.545 | 0.895× | Pass |
+
+All six paired C/absolute budgets pass, as do the nine frozen M2 core/selected-
+registry/selected-inline checks. C drift is −4.84% / −8.46% / −4.17%, within
+the unchanged ±10% limit; no countermeasurement is required. At 5 MB, safe full
+HTML over a pre-parsed tree takes 143.786 ms and reports about 1,013 K allocation
+requests / 82 M gross requested volume. These rounded metrics identify a useful
+profiling target; they are not retained heap/RSS or exact phase attribution.
+
+The [full report](Validation/M7/baseline-2026-11-21.md) records boundaries,
+allocation observations and limits. [Raw export](BenchmarkData/m7-baseline-2026-11-21/benchmark.md),
+[exact raw streams](BenchmarkData/m7-baseline-2026-11-21/raw-output.tar.gz),
+[CSV](BenchmarkData/m7-baseline-2026-11-21/summary.csv),
+[receipt/source hashes](BenchmarkData/m7-baseline-2026-11-21/receipt.json)
+and [artifact hashes](BenchmarkData/m7-baseline-2026-11-21/sha256.json) retain
+the evidence. Real-M5 and hostile-input scaling/resource measurements and
+broader isolated fuzzing remain required before M7 acceptance.

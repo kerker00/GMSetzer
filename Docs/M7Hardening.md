@@ -76,7 +76,7 @@ No parser/rendering defect was found in this bounded campaign, and no runtime
 workaround or optimization was introduced. Source grammar and baseline IDs
 were not changed to accommodate generated inputs.
 
-## Prepared performance baseline; execution pending
+## First complete performance baseline
 
 The existing `ParserBenchmarks` target builds successfully with the pinned
 `Tools/Package.resolved`. A list-only invocation enumerates **72 unique cases**
@@ -87,7 +87,13 @@ does not execute benchmark samples. Development dependency objects were copied
 from the existing local cache into task-specific storage; the original checkout
 and its local changes were not used as the source under test.
 
-After the required execution approval, run this from the repository root:
+The owner approved the complete series on 21 November 2026. It ran at clean
+commit `1edf1a4`; all 72 cases complete and all four existing budget commands
+pass. See the [measurement report](Validation/M7/baseline-2026-11-21.md) for
+exact values, controls, allocation observations and the archived raw streams.
+The preparation record above remains the historical build/list checkpoint.
+
+The executed command, from the repository root:
 
 ```sh
 env CLANG_MODULE_CACHE_PATH=/private/tmp/gmsetzer-m7-module-cache \
@@ -129,9 +135,11 @@ or attribution.
 The current suite includes registry/inline dispatch and optional editor services;
 further real-M5 and hostile-input scaling/resource cases remain M7 work.
 
-Next stages are controlled measurement, choosing improvements from those data,
-then a larger isolated fuzz/sanitizer campaign with minimized regressions.
+The first series supplies the existing C/absolute/frozen-M2 baseline. Next
+profile HTML emission and add real-M5/hostile-input scaling/resource cases,
+then expand the isolated fuzz/sanitizer campaign with minimized regressions.
 Full benchmark and long-test/fuzz execution retain the owner-confirmation gate
 in `CLAUDE.md`. M7 completion requires both the existing speed budgets and
 documented robustness/allocation evidence; a passing small campaign alone does
-not complete it. No push, PR or release is part of this initial local step.
+not complete it. The measurement result is recorded locally; push, PR and release remain
+separate steps.

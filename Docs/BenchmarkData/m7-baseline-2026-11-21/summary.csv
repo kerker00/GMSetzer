@@ -1,0 +1,73 @@
+case,source_bytes,corpus,wall_ms_p50,samples,malloc_count_metric,malloc_count_p50_display,malloc_bytes_metric,malloc_bytes_p50_display
+GMSetzer 10k caret queries 1 MB,1000100,mixed-v1,1.315,3753,Malloc (total) *,0,Malloc (bytes total) *,0
+GMSetzer 10k caret queries 100 KB,100284,mixed-v1,0.902,5475,Malloc (total) *,0,Malloc (bytes total) *,0
+GMSetzer 10k caret queries 5 MB,5000500,mixed-v1,3.488,1402,Malloc (total) *,0,Malloc (bytes total) *,0
+GMSetzer 10k position round trips 1 MB,1000100,mixed-v1,2.822,1761,Malloc (total) *,0,Malloc (bytes total) *,0
+GMSetzer 10k position round trips 100 KB,100284,mixed-v1,2.298,2164,Malloc (total) *,0,Malloc (bytes total) *,0
+GMSetzer 10k position round trips 5 MB,5000500,mixed-v1,3.076,1616,Malloc (total) *,0,Malloc (bytes total) *,0
+GMSetzer CommonMark parse 1 MB,1000100,mixed-v1,27.279,183,Malloc (total) (K) *,110,Malloc (bytes total) (M) *,59
+GMSetzer CommonMark parse 100 KB,100284,mixed-v1,2.671,1866,Malloc (total) (K) *,11,Malloc (bytes total) (K) *,5891
+GMSetzer CommonMark parse 5 MB,5000500,mixed-v1,143.524,35,Malloc (total) (K) *,548,Malloc (bytes total) (M) *,292
+GMSetzer GFM parse 1 MB,1000100,mixed-v1,32.801,153,Malloc (total) (K) *,131,Malloc (bytes total) (M) *,68
+GMSetzer GFM parse 100 KB,100284,mixed-v1,3.195,1565,Malloc (total) (K) *,13,Malloc (bytes total) (K) *,8880
+GMSetzer GFM parse 5 MB,5000500,mixed-v1,172.360,30,Malloc (total) (K) *,657,Malloc (bytes total) (M) *,439
+GMSetzer editor snapshot 1 MB,1000100,mixed-v1,33.620,149,Malloc (total) (K) *,128,Malloc (bytes total) (M) *,68
+GMSetzer editor snapshot 100 KB,100284,mixed-v1,3.211,1551,Malloc (total) (K) *,13,Malloc (bytes total) (K) *,6872
+GMSetzer editor snapshot 5 MB,5000500,mixed-v1,173.670,29,Malloc (total) (K) *,639,Malloc (bytes total) (M) *,344
+GMSetzer inline syntax on 1 MB,1000100,mixed-v1,36.504,137,Malloc (total) (K) *,186,Malloc (bytes total) (M) *,73
+GMSetzer inline syntax on 100 KB,100284,mixed-v1,3.510,1422,Malloc (total) (K) *,19,Malloc (bytes total) (K) *,7520
+GMSetzer inline syntax on 5 MB,5000500,mixed-v1,187.695,27,Malloc (total) (K) *,931,Malloc (bytes total) (M) *,362
+GMSetzer native analysis 1 MB,1000100,mixed-v1,3.135,1587,Malloc (total) (K) *,18,Malloc (bytes total) (K) *,5364
+GMSetzer native analysis 100 KB,100284,mixed-v1,0.312,10000,Malloc (total) *,1878,Malloc (bytes total) (K) *,499
+GMSetzer native analysis 5 MB,5000500,mixed-v1,16.327,304,Malloc (total) (K) *,91,Malloc (bytes total) (M) *,31
+GMSetzer outline 1 MB,1000100,mixed-v1,0.321,10000,Malloc (total) *,16,Malloc (bytes total) (K) *,769
+GMSetzer outline 100 KB,100284,mixed-v1,0.033,10000,Malloc (total) *,13,Malloc (bytes total) (K) *,81
+GMSetzer outline 5 MB,5000500,mixed-v1,2.038,2419,Malloc (total) *,18,Malloc (bytes total) (K) *,3128
+GMSetzer parent index 1 MB,1000100,mixed-v1,0.786,6247,Malloc (total) *,4,Malloc (bytes total) (K) *,1869
+GMSetzer parent index 100 KB,100284,mixed-v1,0.080,10000,Malloc (total) *,4,Malloc (bytes total) (K) *,188
+GMSetzer parent index 5 MB,5000500,mixed-v1,6.509,761,Malloc (total) *,4,Malloc (bytes total) (K) *,9344
+GMSetzer position index 1 MB,1000100,mixed-v1,0.620,8011,Malloc (total) *,4,Malloc (bytes total) (K) *,1823
+GMSetzer position index 100 KB,100284,mixed-v1,0.062,10000,Malloc (total) *,4,Malloc (bytes total) (K) *,213
+GMSetzer position index 5 MB,5000500,mixed-v1,3.105,1606,Malloc (total) *,4,Malloc (bytes total) (K) *,8819
+GMSetzer position index multibyte 1 MB,1000192,multibyte-v1,1.940,2565,Malloc (total) *,3,Malloc (bytes total) (K) *,774
+GMSetzer position index multibyte 100 KB,100096,multibyte-v1,0.194,10000,Malloc (total) *,3,Malloc (bytes total) (K) *,82
+GMSetzer position index multibyte 5 MB,5000192,multibyte-v1,9.724,515,Malloc (total) *,3,Malloc (bytes total) (K) *,3773
+GMSetzer reference syntax off 1 MB,1000098,references-v1,23.937,209,Malloc (total) (K) *,121,Malloc (bytes total) (M) *,39
+GMSetzer reference syntax off 100 KB,100188,references-v1,2.439,2039,Malloc (total) (K) *,12,Malloc (bytes total) (K) *,3859
+GMSetzer reference syntax off 5 MB,5000094,references-v1,123.404,41,Malloc (total) (K) *,606,Malloc (bytes total) (M) *,193
+GMSetzer reference syntax on 1 MB,1000098,references-v1,29.835,168,Malloc (total) (K) *,152,Malloc (bytes total) (M) *,66
+GMSetzer reference syntax on 100 KB,100188,references-v1,2.918,1707,Malloc (total) (K) *,15,Malloc (bytes total) (K) *,7238
+GMSetzer reference syntax on 5 MB,5000094,references-v1,154.796,33,Malloc (total) (K) *,758,Malloc (bytes total) (M) *,336
+GMSetzer render 1 MB,1000100,mixed-v1,27.509,182,Malloc (total) (K) *,203,Malloc (bytes total) (M) *,15
+GMSetzer render 100 KB,100284,mixed-v1,2.734,1815,Malloc (total) (K) *,20,Malloc (bytes total) (K) *,1577
+GMSetzer render 5 MB,5000500,mixed-v1,143.786,35,Malloc (total) (K) *,1013,Malloc (bytes total) (M) *,82
+GMSetzer segment reconstruction 1 MB,1000100,mixed-v1,7.098,682,Malloc (total) (K) *,95,Malloc (bytes total) (K) *,5665
+GMSetzer segment reconstruction 100 KB,100284,mixed-v1,0.693,7144,Malloc (total) *,9517,Malloc (bytes total) (K) *,568
+GMSetzer segment reconstruction 5 MB,5000500,mixed-v1,35.291,140,Malloc (total) (K) *,475,Malloc (bytes total) (M) *,28
+GMSetzer selected inline parse 1 MB,1000100,mixed-v1,28.901,173,Malloc (total) (K) *,113,Malloc (bytes total) (M) *,59
+GMSetzer selected inline parse 100 KB,100284,mixed-v1,2.830,1757,Malloc (total) (K) *,11,Malloc (bytes total) (K) *,5903
+GMSetzer selected inline parse 5 MB,5000500,mixed-v1,154.534,32,Malloc (total) (K) *,566,Malloc (bytes total) (M) *,293
+GMSetzer selected registry parse 1 MB,1000100,mixed-v1,29.180,171,Malloc (total) (K) *,110,Malloc (bytes total) (M) *,59
+GMSetzer selected registry parse 100 KB,100284,mixed-v1,2.841,1750,Malloc (total) (K) *,11,Malloc (bytes total) (K) *,5891
+GMSetzer selected registry parse 5 MB,5000500,mixed-v1,154.141,33,Malloc (total) (K) *,548,Malloc (bytes total) (M) *,292
+GMSetzer text reconstruction 1 MB,1000100,mixed-v1,1.709,2919,Malloc (total) (K) *,16,Malloc (bytes total) (K) *,2102
+GMSetzer text reconstruction 100 KB,100284,mixed-v1,0.159,10000,Malloc (total) *,1648,Malloc (bytes total) (K) *,211
+GMSetzer text reconstruction 5 MB,5000500,mixed-v1,8.495,591,Malloc (total) (K) *,82,Malloc (bytes total) (M) *,11
+GMSetzer validate 1 MB,1000100,mixed-v1,0.957,5190,Malloc (total) *,2,Malloc (bytes total) (K) *,118
+GMSetzer validate 100 KB,100284,mixed-v1,0.093,10000,Malloc (total) *,2,Malloc (bytes total) (K) *,13
+GMSetzer validate 5 MB,5000500,mixed-v1,4.776,1041,Malloc (total) *,2,Malloc (bytes total) (K) *,585
+Swift String UTF-16 count multibyte 1 MB,1000192,multibyte-v1,1.991,2502,Malloc (total) *,4,Malloc (bytes total) (K) *,1140
+Swift String UTF-16 count multibyte 100 KB,100096,multibyte-v1,0.200,10000,Malloc (total) *,4,Malloc (bytes total) (K) *,115
+Swift String UTF-16 count multibyte 5 MB,5000192,multibyte-v1,9.937,502,Malloc (total) *,4,Malloc (bytes total) (K) *,5635
+cmark-gfm (C) CommonMark parse 1 MB,1000100,mixed-v1,18.252,273,Malloc (total) (K) *,224,Malloc (bytes total) (M) *,30
+cmark-gfm (C) CommonMark parse 100 KB,100284,mixed-v1,1.673,2952,Malloc (total) (K) *,23,Malloc (bytes total) (K) *,2971
+cmark-gfm (C) CommonMark parse 5 MB,5000500,mixed-v1,91.947,55,Malloc (total) (K) *,1122,Malloc (bytes total) (M) *,148
+cmark-gfm (C) GFM parse 1 MB,1000100,mixed-v1,35.815,139,Malloc (total) (K) *,431,Malloc (bytes total) (M) *,39
+cmark-gfm (C) GFM parse 100 KB,100284,mixed-v1,2.974,1673,Malloc (total) (K) *,43,Malloc (bytes total) (K) *,3878
+cmark-gfm (C) GFM parse 5 MB,5000500,mixed-v1,192.545,26,Malloc (total) (K) *,2154,Malloc (bytes total) (M) *,193
+cmark-gfm (C) references 1 MB,1000098,references-v1,13.156,378,Malloc (total) (K) *,162,Malloc (bytes total) (M) *,15
+cmark-gfm (C) references 100 KB,100188,references-v1,1.294,3838,Malloc (total) (K) *,16,Malloc (bytes total) (K) *,1510
+cmark-gfm (C) references 5 MB,5000094,references-v1,73.400,68,Malloc (total) (K) *,808,Malloc (bytes total) (M) *,75
+swift-markdown parse 1 MB,1000100,mixed-v1,222.953,23,Malloc (total) (K) *,653,Malloc (bytes total) (M) *,67
+swift-markdown parse 100 KB,100284,mixed-v1,22.626,221,Malloc (total) (K) *,66,Malloc (bytes total) (K) *,6731
+swift-markdown parse 5 MB,5000500,mixed-v1,1149.239,5,Malloc (total) (K) *,3267,Malloc (bytes total) (M) *,335

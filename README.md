@@ -34,8 +34,9 @@ follow the existing approval requirement.
 The initial `feature/m7-hardening` step adds bounded deterministic mutation
 coverage: 1,024 profile/input combinations and 24 depth cases across strict,
 GFM and selected M5 configurations. All 245 local macOS/Swift 6.4.2 tests
-pass in Debug and Release. The 72-case benchmark target builds/lists; full
-measurement execution is pending approval. See [M7 hardening](Docs/M7Hardening.md)
+pass in Debug and Release. The owner-approved [72-case baseline](Docs/Validation/M7/baseline-2026-11-21.md)
+passes all six parser/C budgets and nine frozen M2 checks. Real-M5/hostile-input
+scaling and broader fuzzing remain open. See [M7 hardening](Docs/M7Hardening.md)
 for scope, reproduction and remaining portability/performance gates.
 
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
