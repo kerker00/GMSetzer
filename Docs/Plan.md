@@ -8,6 +8,15 @@ reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
 
+**0.6.0 release preparation:** `release/0.6.0` starts at accepted main
+`0cf6690`, changes only the result identity from `0.6.0-dev.1` to `0.6.0`
+in runtime sources and adds release documentation/checks. No M7 mutation or
+optimization commit is included. See [release notes](Releases/0.6.0.md) and
+[validation](Validation/Release/0.6.0.md). Owner review/merge and the subsequent
+confirmed tag/publication remain pending; v0.5.0 remains the published preview.
+M7 speed/hardening development is assigned to `0.7.0-dev.1` on its separate
+branch. M8 retains the API/DocC/1.0 scope.
+
 The M4 follow-ups are merged in PR #15 (`1473d49`). The source-only v0.4.0
 release preparation and macOS/Linux CI are merged in PR #16 (`6a0eb8e`);
 their merged branches are cleaned up.
@@ -568,7 +577,8 @@ hardening remain required in M7 before the stable API review in M8.
 consumption and throwing checkpoints. Built-in footnote/admonition composition
 shares complete-document context; raw HTML, document hooks and uncertified
 order-dependent hooks have explicit whole-document fallbacks. Existing
-full-string output stays supported. Development identity is `0.6.0-dev.1`.
+full-string output stays supported. The accepted M6 snapshot used development
+identity `0.6.0-dev.1`; release preparation selects `0.6.0`.
 
 The complete local macOS/Swift 6.4.2 Debug and Release suites and the
 Linux ARM64/Swift 6.4.2 suite each pass 239 tests, including safe and

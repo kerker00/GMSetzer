@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "started_utc": "2026-11-21T20:55:34.306929+00:00",
+  "source_base": "0cf6690bd5d0bd8c7ae77802c310dcccaab58be3",
+  "phases": {
+    "swift-debug": {
+      "exit_code": 0,
+      "elapsed_seconds": 50.4875155,
+      "stdout_sha256": "0ad0d86d97086ebb4b74bb37e3f8558905587c3c9fc8bd50ab724bab6603c7f4",
+      "stderr_sha256": "fc91568f4e15a4e11f3fb004d2c3011fb9aa61168b393a4aeaad9dd3e0d9be2f"
+    },
+    "swift-release": {
+      "exit_code": 0,
+      "elapsed_seconds": 62.015112583,
+      "stdout_sha256": "83a25180d08117dd01a8c12fdf5d3ed7ad853fb7e2c7c68ade06d18f9dd49ea3",
+      "stderr_sha256": "69df24a0c4756eca864c00aa65238cd8a4fbb1d3a61b8da7f1cb5fd0ca52f2dd"
+    },
+    "python": {
+      "exit_code": 0,
+      "elapsed_seconds": 4.089083875,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "ccafe8c0ee6f77c0e7e6967db5038653183e220c4cbc1c4c693fbbfcd2e8ec01"
+    },
+    "python-optimized": {
+      "exit_code": 0,
+      "elapsed_seconds": 4.041475583999997,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "73311c80adca676e264cfc7b723a97efd73fbda5207a8b84f0ffe0fcbc9722e1"
+    }
+  },
+  "probe_local_passed": true,
+  "original_stream_sha256": {
+    "swift-debug.stdout": "0ad0d86d97086ebb4b74bb37e3f8558905587c3c9fc8bd50ab724bab6603c7f4",
+    "swift-debug.stderr": "fc91568f4e15a4e11f3fb004d2c3011fb9aa61168b393a4aeaad9dd3e0d9be2f",
+    "swift-release.stdout": "83a25180d08117dd01a8c12fdf5d3ed7ad853fb7e2c7c68ade06d18f9dd49ea3",
+    "swift-release.stderr": "69df24a0c4756eca864c00aa65238cd8a4fbb1d3a61b8da7f1cb5fd0ca52f2dd",
+    "python.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python.stderr": "ccafe8c0ee6f77c0e7e6967db5038653183e220c4cbc1c4c693fbbfcd2e8ec01",
+    "python-optimized.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python-optimized.stderr": "73311c80adca676e264cfc7b723a97efd73fbda5207a8b84f0ffe0fcbc9722e1",
+    "probe-local.stdout": "8c846cce323f72096135eaa509245c006f39cc79325f1b9efa9091c86fd220ff",
+    "probe-local.stderr": "a83db8cf05ceb516331ef67194ac508191556a844354548a73401a84e9cc1bf2"
+  },
+  "retained_stream_sha256": {
+    "swift-debug.stdout": "d063fbbc4af2a1500ac8803ee205078d4ad35e3a92704edbe6f8d0f1c5a1d750",
+    "swift-debug.stderr": "88c0061da8634e9788376a5f9b3cf933727458a97aa7131516c87751856ed309",
+    "swift-release.stdout": "03335bdc2167b9b43a5667d47c89a1b32c6e1b069ec0c3ffc73bfbeecda7c3bc",
+    "swift-release.stderr": "2af75f378b920807ffebdbaf58a462a4236ba74bce81819595ab9207aa8c74ef",
+    "python.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python.stderr": "ccafe8c0ee6f77c0e7e6967db5038653183e220c4cbc1c4c693fbbfcd2e8ec01",
+    "python-optimized.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python-optimized.stderr": "73311c80adca676e264cfc7b723a97efd73fbda5207a8b84f0ffe0fcbc9722e1",
+    "probe-local.stdout": "8c846cce323f72096135eaa509245c006f39cc79325f1b9efa9091c86fd220ff",
+    "probe-local.stderr": "66b9b8b2f5de21a01ab5754753d931a5e91df314997dfb8664521bf08cee6e99"
+  },
+  "redaction": "Task/user paths redacted and LF line endings retained; test result/count and probe output lines unchanged."
+}
