@@ -126,3 +126,23 @@ complete: owner review of the API/budgets, PR/merged-main CI and owner merge
 remain. Consumer scheduling, WebView/device acceptance, broad M7 hardening and
 version publication are separate. No push, PR creation, merge, tag or release
 was performed in this follow-up.
+
+
+## Subsequent PR #24 CI validation
+
+[PR #24](https://github.com/kerker00/GMSetzer/pull/24) was created and
+[CI run 44926163013](https://github.com/kerker00/GMSetzer/actions/runs/44926163013)
+passed at source commit `bcf0291682e6c544a41f601229dc99715627897b` on
+21 November 2026. This closes the Linux/minimum-compiler and fresh Python
+execution gaps recorded above. Subsequent status changes are documentation
+only; runtime, tests, tools and protected fixtures retain that tested content.
+
+| Environment | Result |
+| --- | --- |
+| macOS 26, Xcode 26.2, Apple Swift 6.2.3 | 242 Swift tests in 28 suites, 652/652 CommonMark and 672/672 GFM examples, optimized build and 31 Python tests pass |
+| Ubuntu 24.04, Swift 6.2 | 242 Swift tests in 28 suites, both protected corpora, optimized build and 31 Python tests pass |
+
+The updated runner/evidence-checker regression tests execute successfully on
+both CI hosts. This is not a new measurement matrix or execution of the Linux
+resource runner; its timing/RSS/allocation record remains historical. Owner
+API/budget review, merge and any release remain open. No CI workflow was changed.

@@ -628,7 +628,8 @@ adds explicit post-baseline first-output/completion/RSS budgets: all 42
 archived cases pass with matching runtime sources. The checker validates raw
 records and completeness offline; this is not a fresh timing series or a
 statistical regression verdict. macOS/Swift 6.2 tests and the optimized build
-pass; Linux/Swift 6.2 PR CI and owner review remain open. Application transfer,
+pass; [PR #24 CI](https://github.com/kerker00/GMSetzer/actions/runs/44926163013)
+also passes on macOS/Swift 6.2.3 and Linux/Swift 6.2. Owner review and merge remain open. Application transfer,
 layout and first-visible-output measurements remain outside this library work.
 
 

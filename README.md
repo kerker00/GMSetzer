@@ -35,7 +35,9 @@ passes all 242 tests with Swift 6.2 on macOS and checks all 42 measurement cases
 against explicit post-baseline budgets. The optimized Swift 6.2 build and all
 31 offline Python tests pass, including optimised-Python guard checks. The
 [self-review](Docs/Review-M6.md) records corrected source/provenance checks and
-expanded cancellation coverage. Linux/Swift 6.2 PR CI and owner review remain open.
+expanded cancellation coverage. [PR #24 CI](https://github.com/kerker00/GMSetzer/actions/runs/44926163013)
+now passes all 242 Swift tests, optimized builds and 31 Python tests on macOS
+and Linux with Swift 6.2; owner review and merge remain open.
 
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented

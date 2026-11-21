@@ -133,5 +133,6 @@ deferred-appendix coverage, corrects measurement provenance and validates
 31 Python tests in normal and optimised modes. All 14 progressive tests also
 pass in Swift 6.2 Release.
 These are candidate budgets for owner review, not pre-registered goals or a
-fresh measurement series. Linux/Swift 6.2 PR CI, owner review and merge remain
-open. M6 remains in progress; consumer UI integration stays separate.
+fresh measurement series. [PR #24 CI](https://github.com/kerker00/GMSetzer/actions/runs/44926163013)
+now passes all 242 Swift tests, optimized builds and 31 Python tests on macOS
+and Linux with Swift 6.2. Owner review and merge remain open. M6 remains in progress; consumer UI integration stays separate.
