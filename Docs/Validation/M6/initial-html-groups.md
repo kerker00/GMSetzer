@@ -75,3 +75,15 @@ Consumer UI integration and device checks remain outside this library change.
 General hardening/fuzzing stays M7; API/DocC/1.0 completion stays M8.
 
 No push, PR creation, tag or publication is part of this local validation.
+
+
+## Subsequent measurement-only follow-up
+
+The owner subsequently authorised the [42-case Linux ARM64 matrix](linux-arm64-measurements.md).
+It supplies the 100 KB/1 MB/5 MB workload/annotation timings, fresh-process peak
+RSS and synchronous-thread gross allocation evidence missing above, at unchanged
+library sources (`087e694`). It records one representative all-M5 composition;
+minimum Swift 6.2 and quantitative M6 target acceptance remain open. The expanded
+v2 driver differs from the original macOS probe; the original source hashes
+remain evidence for the v1 driver at `087e694`. No fresh library-test run or
+consumer integration is claimed by that follow-up.

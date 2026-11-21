@@ -121,7 +121,11 @@ the same 239 tests and an optimised build pass on Linux ARM64/Swift 6.4.2.
 Both hosts pass all 17 offline script tests. The [validation record](Validation/M6/initial-html-groups.md)
 details commands, source identity and limits. The bounded 1 MB Release
 stage probe and its raw results are in [Benchmarks](Benchmarks.md#m6-progressive-html-first-stage-probe).
-It does not establish allocation/peak-memory targets, all-size/all-workload
-acceptance or first-visible-output performance in an application. M6 remains
+The [42-case Linux ARM64 follow-up](Validation/M6/linux-arm64-measurements.md)
+adds 100 KB/1 MB/5 MB workloads with syntax details off/on, fresh-process peak
+RSS and separate allocation counts/volume. It confirms earlier output for
+independent blocks, unchanged giant-block limits and no general peak-RSS gain.
+It does not establish quantitative acceptance targets, exhaustive extension/
+hook coverage or first-visible-output performance in an application. M6 remains
 in progress until its remaining measurement/portability gates are met; consumer
 UI integration remains separate.

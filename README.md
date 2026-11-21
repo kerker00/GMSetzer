@@ -25,6 +25,11 @@ is still open; these additions are not capabilities of the published 0.5.0.
 The initial implementation passes 239 tests on macOS (Debug/Release) and
 Linux ARM64, plus 17 script tests on each host; see the
 [M6 validation record](Docs/Validation/M6/initial-html-groups.md).
+The owner-authorised [42-case Linux ARM64 measurement matrix](Docs/Validation/M6/linux-arm64-measurements.md)
+records stage timing, peak RSS and allocation requests. Mixed 1 MB/5 MB inputs
+reach first HTML in about half the parse-plus-full-output time on that host;
+giant blocks have no early-output gain and no general peak-memory reduction is
+established. Minimum-compiler checks and M6 quantitative acceptance remain open.
 
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented

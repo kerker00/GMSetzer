@@ -474,7 +474,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; portable syntax/finding APIs | Security/position/analysis tests and standalone package validation pass; application adapters remain outside this package | re-estimate | **merged in PR #12 (`651af17`)** after review corrections: exact position/outline queries, safe configurable URL scheme allowlist/anchors and three optional native rules. 106 library tests passed across macOS/debug/release/Swift 6.2/Linux; after the [review](Review-M3.md) corrections 108 pass on macOS (Swift 6.2/Linux not re-run) with byte-identical differential results. Index/analysis timings and optimisations: [Benchmarks](Benchmarks.md#m3-editor-services-20-november-2026). See [M3EditorServices](M3EditorServices.md) |
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | **merged in PR #14 (`e163e6f`)**: tables, task lists, strikethrough, extended autolinks and tag filter as built-in payloads (owner decision 1A); 672/672 GFM and 652/652 CommonMark; generated documents agree with cmark-gfm. Library and reference tests pass on macOS; GFM parses at 0.88× cmark-gfm and both budget checks pass. Swift 6.2/Linux not re-run. See [M4GFM](M4GFM.md) |
 | M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Declared extension fixtures and profile/combination tests pass | 5–8 | **first step merged in PR #19 (`4b0f105`)**: raw YAML/TOML front matter; 153 tests pass on both hosts and macOS/Swift 6.2. PR/main CI pass on both hosts. Named footnotes merged in PR #20 (`a6a2da6`), with 178 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on macOS/Linux. Opaque inline/display/fenced TeX is merged in PR #21 (`6f166b7`), with 202 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on both hosts. Alerts and callouts merged in PR #22 (`c9543fe`); all 227 local tests pass on both hosts and macOS/Swift 6.2, and PR/main CI pass on both hosts. **Functional M5 accepted** against the declared extension/profile/combination criterion; see [M5Acceptance](M5Acceptance.md). See [FrontMatter](FrontMatter.md), [Footnotes](Footnotes.md), [Math](Math.md) and [Admonitions](Admonitions.md) |
-| M6 / 0.6 development | Progressive HTML: stage measurements, prepared complete-document context, structural output groups and bounded/on-demand emission | First group is available before full HTML construction; assembled output matches the existing renderer; source/safety/extension/cancellation contracts and macOS/Linux checks pass (10.1) | re-estimate after the complete measurement matrix | **in progress on `feature/m6-progressive-html`**: initial API, M5 composition and 239 tests pass on macOS Debug/Release and Linux ARM64; both hosts pass 17 script tests, Linux optimised build passes. Bounded 1 MB probe recorded; full workload/allocation matrix and minimum-compiler acceptance remain open. See [ProgressiveHTML](ProgressiveHTML.md) |
+| M6 / 0.6 development | Progressive HTML: stage measurements, prepared complete-document context, structural output groups and bounded/on-demand emission | First group is available before full HTML construction; assembled output matches the existing renderer; source/safety/extension/cancellation contracts and macOS/Linux checks pass (10.1) | re-estimate after the complete measurement matrix | **in progress on `feature/m6-progressive-html`**: initial API, M5 composition and 239 tests pass on macOS Debug/Release and Linux ARM64; both hosts pass 17 script tests, Linux optimised build passes. Initial macOS probe and owner-authorised 42-case Linux ARM64 stage/RSS/allocation matrix recorded; quantitative target acceptance and minimum-compiler checks remain open. See [ProgressiveHTML](ProgressiveHTML.md) |
 | M7 | General speed and hardening: selected-extension measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met; robustness and allocation evidence recorded | previous 5–8; re-estimate after M6 | **planned; former M6 moved back one milestone** |
 | M8 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | previous 3–5; re-estimate after M7 | **planned; former M7 moved back one milestone** |
 | | **Original total before explicit editor-analysis scope** | | **38–59; re-estimate required** | |
@@ -577,11 +577,20 @@ conformance grouped/full comparison over all 1,324 specification examples.
 Both hosts pass 17 offline script tests; Linux's optimised build passes.
 The [validation record](Validation/M6/initial-html-groups.md) records source
 identity, toolchain installation and remaining coverage.
-A bounded, three-sample 1 MB Release probe establishes an initial first-group
-baseline; [ProgressiveHTML](ProgressiveHTML.md) describes the API and
-[Benchmarks](Benchmarks.md#m6-progressive-html-first-stage-probe) records scope
-and raw data. No full benchmark/allocation matrix, new minimum-Swift-6.2 CI,
-consumer WebView proof or versioned publication is claimed. M6 remains open.
+A bounded, three-sample macOS 1 MB Release probe establishes the first baseline.
+The owner-authorised [Linux ARM64 follow-up](Validation/M6/linux-arm64-measurements.md)
+now records 42 workload/size/annotation configurations, exact HTML equality,
+eight-sample timing, fresh-process peak RSS and separate calling-thread gross
+allocation requests. Mixed 1 MB/5 MB inputs reach first output in about half the
+parse-plus-full-output time. A giant code block has no early-output benefit;
+peak RSS is generally dominated by the preceding parse, and annotated M5 parsing
+remains expensive. No universal latency or memory improvement is claimed.
+[ProgressiveHTML](ProgressiveHTML.md) describes the API; the
+[benchmark report](Benchmarks.md#m6-linux-arm64-workload-and-resource-matrix)
+links raw data and limitations. M6 quantitative acceptance targets, minimum
+Swift 6.2 verification, consumer WebView proof and publication remain open or
+separate. The broader parser/C and selected-extension hardening matrix stays
+M7. M6 is not complete.
 
 Full benchmark/long-test series still require the existing execution approval.
 The original total estimate above excludes this added scope and must be
@@ -729,7 +738,8 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: complete M6's measurement/portability gates after the
+Current next work: assess the recorded M6 Linux workload/resource matrix,
+agree quantitative acceptance targets and verify minimum Swift 6.2 after the
 initial prepared/group-output implementation in section 10.1. General selected-extension
 performance acceptance, broad hostile-input checks and fuzzing move to M7;
 API/DocC/1.0 completion moves to M8. Full benchmark/long-test execution still
@@ -737,4 +747,4 @@ requires the existing owner confirmation. M1–M5 and the source-only 0.5.0
 preview are complete under the documented functional/publication gates;
 consumer scheduling, dependency pinning and device acceptance stay in their
 own repositories. The initial M6 branch is not merged or released, and its
-bounded probe does not complete the full milestone.
+initial probe and 42-case Linux measurement record do not complete the full milestone.
