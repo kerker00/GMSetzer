@@ -1,0 +1,258 @@
+{
+  "schema": 1,
+  "cases": [
+    {
+      "host": "mac",
+      "case": "GMSetzer CommonMark parse 1 MB",
+      "before_ms": 27.886,
+      "after_ms": 23.593,
+      "change_percent": -15.394821774367063
+    },
+    {
+      "host": "mac",
+      "case": "GMSetzer CommonMark parse 100 KB",
+      "before_ms": 2.738,
+      "after_ms": 2.265,
+      "change_percent": -17.275383491599705
+    },
+    {
+      "host": "mac",
+      "case": "GMSetzer CommonMark parse 5 MB",
+      "before_ms": 147.325,
+      "after_ms": 124.649,
+      "change_percent": -15.391820804344125
+    },
+    {
+      "host": "mac",
+      "case": "GMSetzer GFM parse 1 MB",
+      "before_ms": 33.915,
+      "after_ms": 27.525,
+      "change_percent": -18.841220698805838
+    },
+    {
+      "host": "mac",
+      "case": "GMSetzer GFM parse 100 KB",
+      "before_ms": 3.256,
+      "after_ms": 2.703,
+      "change_percent": -16.984029484029485
+    },
+    {
+      "host": "mac",
+      "case": "GMSetzer GFM parse 5 MB",
+      "before_ms": 174.457,
+      "after_ms": 145.752,
+      "change_percent": -16.45391127899711
+    },
+    {
+      "host": "mac",
+      "case": "GMSetzer selected inline parse 1 MB",
+      "before_ms": 29.442,
+      "after_ms": 24.92,
+      "change_percent": -15.359010936757011
+    },
+    {
+      "host": "mac",
+      "case": "GMSetzer selected inline parse 100 KB",
+      "before_ms": 2.832,
+      "after_ms": 2.396,
+      "change_percent": -15.3954802259887
+    },
+    {
+      "host": "mac",
+      "case": "GMSetzer selected inline parse 5 MB",
+      "before_ms": 152.961,
+      "after_ms": 131.203,
+      "change_percent": -14.2245408960454
+    },
+    {
+      "host": "mac",
+      "case": "GMSetzer selected registry parse 1 MB",
+      "before_ms": 30.081,
+      "after_ms": 25.313,
+      "change_percent": -15.850536883747225
+    },
+    {
+      "host": "mac",
+      "case": "GMSetzer selected registry parse 100 KB",
+      "before_ms": 2.906,
+      "after_ms": 2.423,
+      "change_percent": -16.620784583620097
+    },
+    {
+      "host": "mac",
+      "case": "GMSetzer selected registry parse 5 MB",
+      "before_ms": 155.189,
+      "after_ms": 132.186,
+      "change_percent": -14.822571187390853
+    },
+    {
+      "host": "mac",
+      "case": "cmark-gfm (C) CommonMark parse 1 MB",
+      "before_ms": 18.219,
+      "after_ms": 18.596,
+      "change_percent": 2.069268346231956
+    },
+    {
+      "host": "mac",
+      "case": "cmark-gfm (C) CommonMark parse 100 KB",
+      "before_ms": 1.668,
+      "after_ms": 1.65,
+      "change_percent": -1.0791366906474864
+    },
+    {
+      "host": "mac",
+      "case": "cmark-gfm (C) CommonMark parse 5 MB",
+      "before_ms": 93.323,
+      "after_ms": 92.668,
+      "change_percent": -0.7018634205929852
+    },
+    {
+      "host": "mac",
+      "case": "cmark-gfm (C) GFM parse 1 MB",
+      "before_ms": 36.143,
+      "after_ms": 36.766,
+      "change_percent": 1.7237086019422865
+    },
+    {
+      "host": "mac",
+      "case": "cmark-gfm (C) GFM parse 100 KB",
+      "before_ms": 2.961,
+      "after_ms": 2.939,
+      "change_percent": -0.7429922323539229
+    },
+    {
+      "host": "mac",
+      "case": "cmark-gfm (C) GFM parse 5 MB",
+      "before_ms": 191.627,
+      "after_ms": 191.627,
+      "change_percent": 0.0
+    },
+    {
+      "host": "x64",
+      "case": "GMSetzer CommonMark parse 1 MB",
+      "before_ms": 44.761,
+      "after_ms": 42.172,
+      "change_percent": -5.784053081924013
+    },
+    {
+      "host": "x64",
+      "case": "GMSetzer CommonMark parse 100 KB",
+      "before_ms": 3.971,
+      "after_ms": 3.688,
+      "change_percent": -7.126668345504905
+    },
+    {
+      "host": "x64",
+      "case": "GMSetzer CommonMark parse 5 MB",
+      "before_ms": 231.604,
+      "after_ms": 215.745,
+      "change_percent": -6.847463774373508
+    },
+    {
+      "host": "x64",
+      "case": "GMSetzer GFM parse 1 MB",
+      "before_ms": 55.411,
+      "after_ms": 50.758,
+      "change_percent": -8.397249643572568
+    },
+    {
+      "host": "x64",
+      "case": "GMSetzer GFM parse 100 KB",
+      "before_ms": 4.858,
+      "after_ms": 4.461,
+      "change_percent": -8.172087278715512
+    },
+    {
+      "host": "x64",
+      "case": "GMSetzer GFM parse 5 MB",
+      "before_ms": 283.116,
+      "after_ms": 263.848,
+      "change_percent": -6.805690953531407
+    },
+    {
+      "host": "x64",
+      "case": "GMSetzer selected inline parse 1 MB",
+      "before_ms": 48.529,
+      "after_ms": 45.974,
+      "change_percent": -5.264893156669226
+    },
+    {
+      "host": "x64",
+      "case": "GMSetzer selected inline parse 100 KB",
+      "before_ms": 4.342,
+      "after_ms": 4.08,
+      "change_percent": -6.034085674804224
+    },
+    {
+      "host": "x64",
+      "case": "GMSetzer selected inline parse 5 MB",
+      "before_ms": 250.085,
+      "after_ms": 235.536,
+      "change_percent": -5.817622008517109
+    },
+    {
+      "host": "x64",
+      "case": "GMSetzer selected registry parse 1 MB",
+      "before_ms": 47.907,
+      "after_ms": 44.597,
+      "change_percent": -6.909219946980594
+    },
+    {
+      "host": "x64",
+      "case": "GMSetzer selected registry parse 100 KB",
+      "before_ms": 4.276,
+      "after_ms": 3.906,
+      "change_percent": -8.652946679139372
+    },
+    {
+      "host": "x64",
+      "case": "GMSetzer selected registry parse 5 MB",
+      "before_ms": 245.76,
+      "after_ms": 231.604,
+      "change_percent": -5.760091145833323
+    },
+    {
+      "host": "x64",
+      "case": "cmark-gfm (C) CommonMark parse 1 MB",
+      "before_ms": 33.98,
+      "after_ms": 33.948,
+      "change_percent": -0.09417304296643891
+    },
+    {
+      "host": "x64",
+      "case": "cmark-gfm (C) CommonMark parse 100 KB",
+      "before_ms": 2.421,
+      "after_ms": 2.454,
+      "change_percent": 1.363073110285029
+    },
+    {
+      "host": "x64",
+      "case": "cmark-gfm (C) CommonMark parse 5 MB",
+      "before_ms": 138.412,
+      "after_ms": 140.247,
+      "change_percent": 1.3257521024188756
+    },
+    {
+      "host": "x64",
+      "case": "cmark-gfm (C) GFM parse 1 MB",
+      "before_ms": 55.411,
+      "after_ms": 56.001,
+      "change_percent": 1.0647705329266621
+    },
+    {
+      "host": "x64",
+      "case": "cmark-gfm (C) GFM parse 100 KB",
+      "before_ms": 4.542,
+      "after_ms": 4.534,
+      "change_percent": -0.1761338617349173
+    },
+    {
+      "host": "x64",
+      "case": "cmark-gfm (C) GFM parse 5 MB",
+      "before_ms": 271.057,
+      "after_ms": 271.843,
+      "change_percent": 0.2899759091261167
+    }
+  ],
+  "scope": "Four separate unprofiled 18-case direct subsets on two hosts. No profiled timing is used, and no cross-host speedup is attributed."
+}

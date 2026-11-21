@@ -1,0 +1,13 @@
+{
+  "before": {
+    "iterations": 3,
+    "requests_per_parse": 109538.0,
+    "requested_bytes_per_parse": 58549158.0
+  },
+  "after": {
+    "iterations": 6,
+    "requests_per_parse": 56618.0,
+    "requested_bytes_per_parse": 56067470.0
+  },
+  "request_reduction_percent": 48.31200131461229
+}

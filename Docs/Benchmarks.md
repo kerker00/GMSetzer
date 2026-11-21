@@ -793,3 +793,46 @@ interrupted/preparation receipts in the
 [data directory](BenchmarkData/m7-linux-x64-2026-11-21/). No runtime optimization
 or M7 completion is claimed. Real-M5/hostile scaling, isolated fuzzing/sanitizers
 and minimum-compiler execution of the new tests remain.
+
+
+## M7 first measured parser optimization, 21 November 2026
+
+CPU/allocation profiling at base `9e7bc71` identifies per-node child arrays and
+per-leaf emission stacks in the inline phase. The two-file candidate reuses
+those buffers within one parse, retaining full validation and syntax work.
+See the [report](Validation/M7/inline-scratch-2026-11-21.md) for source/patch
+hashes, profiles, commands and exact scope.
+
+Four separate direct **18-case subsets** compare old/new Release binaries on
+M2/macOS and Intel i5-6600K/Linux x64, Swift 6.4.2. Inputs, dependency pins,
+source-positioned C configurations and five-second sampling remain unchanged.
+No profiler or SwiftPM parent competes during these timing runs. This does not
+repeat the whole 72-case target. P50 milliseconds for the 5 MB core cases:
+
+| Host | Profile | Before | After | After C | After GM/C |
+| --- | --- | ---: | ---: | ---: | ---: |
+| M2 | CommonMark | 147.325 | 124.649 | 92.668 | 1.345× |
+| M2 | GFM | 174.457 | 145.752 | 191.627 | 0.761× |
+| x64 | CommonMark | 231.604 | 215.745 | 140.247 | 1.538× |
+| x64 | GFM | 283.116 | 263.848 | 271.843 | 0.971× |
+
+Across 100 KB/1 MB/5 MB, CommonMark improves **15–17% on M2 / 6–7% on x64**;
+GFM improves **16–19% / 7–8%**. Selected no-op block/inline registries improve
+14.22–16.62% / 5.26–8.65%. Matching C controls vary by at most 2.07% / 1.36%.
+All six Mac C/absolute gates and nine frozen M2 checks pass unchanged, as do
+all six x64 same-host C ratios. These are same-host corpus observations, not
+cross-architecture attribution or proof of C parity. CommonMark remains
+24–54% slower than C on x64 in this series.
+
+Separate instrumented 1 MB Mac allocation stacks record **109,538 → 56,618
+requests per parse (48.31% fewer)**, normalized over 3 / 6 iterations. Gross
+requested bytes are 58,549,158 → 56,067,470; ordinary timing rows corroborate
+the rounded counts, 110 K → 57 K. Profiling timings are not performance data,
+and request counts/volume do not establish retained heap or peak-RSS changes.
+
+The [data directory](BenchmarkData/m7-inline-scratch-2026-11-21/) retains all
+72 subset rows, paired comparisons, source/binary identities, full sanitized
+profiles/logs and hashes. Current macOS/x64 library Debug/Release and Release
+C-reference tests pass. Candidate ARM64/minimum Swift 6.2, full-suite and fresh
+progressive stage/RSS/allocation checks remain pending; historical M6 resource
+hashes do not match the changed runtime. General M7 acceptance remains open.

@@ -2,9 +2,11 @@
 
 21 November 2026, initial work on `feature/m7-hardening`, based on the
 accepted M6 runtime (`a8a0351`) and documentation follow-up `0cf6690`.
-Development identity remains `0.6.0-dev.1`. This first step changes tests and
-documentation only; runtime sources, public API, dependencies and protected
-specification fixtures are unchanged. M7 is not accepted or merged yet.
+Development identity remains `0.6.0-dev.1`. The initial preparation through
+`9e7bc71` changes tests/documentation only. The measured optimization below
+reuses scratch buffers and changes two runtime files; public API, dependencies
+and protected specification fixtures remain unchanged. M7 is not accepted or
+merged yet.
 
 ## Bounded mutation regression coverage
 
@@ -57,9 +59,10 @@ macOS arm64, Xcode 27.2 / Apple Swift 6.4.2, and the native Linux follow-ups:
 - Complete Debug suite: **245 tests in 29 suites pass**, including all eight
   mutation cases and all 652 CommonMark / 672 GFM protected examples.
 - Complete Release suite: the same **245 tests pass**.
-- The standalone public API and runtime dependencies are unchanged; the M6
-  offline evidence checker still matches all 43 runtime/manifest files and
-  passes 42/42 historical cases. This is no new timing/resource measurement.
+- At initial preparation, the M6 offline evidence checker matches all 43
+  runtime/manifest files and passes 42/42 historical cases. The subsequent
+  optimization changes two runtime files, so that historical receipt no longer
+  matches the candidate. It is not reused as fresh resource evidence.
 - Native Linux ARM64 on an existing Raspberry Pi 5 / Debian 13.7 / Swift
   6.4.2: all **245 tests / 29 suites pass in Debug and Release**, plus all
   **31 Python tests** in both isolated normal and optimized modes. The
@@ -164,10 +167,33 @@ All six direct x64 C ratios pass: GFM is within about 7% of C; CommonMark is
 33–62% slower. Parity remains the aim, so CommonMark is the next parser
 profiling priority. No runtime optimization is claimed by changing the driver.
 
-The first Mac series supplies the historical C/absolute/frozen-M2 baseline.
-Profile CommonMark toward parity and HTML emission, and add real-M5/hostile-input
-scaling/resource cases, then expand the isolated fuzz/sanitizer campaign with
-minimized regressions.
+## First measured optimization
+
+The [inline scratch-buffer report](Validation/M7/inline-scratch-2026-11-21.md)
+records CPU/allocation profiles and a two-file change that reuses child-index
+and emission-event buffers within each inline parse. Per 1 MB CommonMark parse,
+allocation recording observes **109,538 → 56,618 requests (48.31% fewer)**.
+Four separate direct 18-case subsets compare old/new binaries on each host.
+CommonMark time improves **15–17% on M2 / 6–7% on x64**; GFM and selected no-op
+registry/inline cases also improve. Matching C controls vary by at most 2.07%
+on M2 / 1.36% on x64. All six current C/absolute Mac gates and nine frozen M2
+checks pass unchanged; all six x64 relative C checks pass. No cross-host
+speedup or peak-memory reduction is inferred.
+
+The candidate passes 245 library tests / 29 suites in Debug and Release and
+6 Release development-tool tests / 4 suites on both macOS and Linux x64.
+Candidate Linux ARM64 and minimum Swift 6.2 execution remain pending. Current
+progressive correctness tests pass, but the historical M6 42-case resource
+receipt is not hash-matched to these runtime changes; fresh resource evidence
+remains required. The full 72-case suite was not repeated for this small step.
+
+CommonMark is still 24–54% slower than C on x64 in the new series. Continue
+profiling remaining traversal, document construction/validation and trigger
+scanning toward parity, plus HTML emission and real-M5/hostile-input scaling/
+resource work; then broaden the isolated fuzz/sanitizer campaign. The initial
+Mac baseline remains historical; the new targeted Mac series supplies fresh
+C/absolute/frozen-M2 checks for this candidate.
+
 Full benchmark and long-test/fuzz execution retain the owner-confirmation gate
 in `CLAUDE.md`. M7 completion requires both the existing speed budgets and
 documented robustness/allocation evidence; a passing small campaign alone does

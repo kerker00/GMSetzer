@@ -1,0 +1,73 @@
+host,phase,case,source_bytes,corpus,wall_ms_p50,samples,malloc_count_metric,malloc_count_p50_display,malloc_bytes_metric,malloc_bytes_p50_display
+mac,before,GMSetzer CommonMark parse 1 MB,1000100,mixed-v1,27.886,179,Malloc (total) (K) *,110,Malloc (bytes total) (M) *,59
+mac,before,GMSetzer CommonMark parse 100 KB,100284,mixed-v1,2.738,1820,Malloc (total) (K) *,11,Malloc (bytes total) (K) *,5891
+mac,before,GMSetzer CommonMark parse 5 MB,5000500,mixed-v1,147.325,34,Malloc (total) (K) *,548,Malloc (bytes total) (M) *,292
+mac,before,GMSetzer GFM parse 1 MB,1000100,mixed-v1,33.915,147,Malloc (total) (K) *,131,Malloc (bytes total) (M) *,68
+mac,before,GMSetzer GFM parse 100 KB,100284,mixed-v1,3.256,1504,Malloc (total) (K) *,13,Malloc (bytes total) (K) *,8880
+mac,before,GMSetzer GFM parse 5 MB,5000500,mixed-v1,174.457,29,Malloc (total) (K) *,657,Malloc (bytes total) (M) *,439
+mac,before,GMSetzer selected inline parse 1 MB,1000100,mixed-v1,29.442,170,Malloc (total) (K) *,113,Malloc (bytes total) (M) *,59
+mac,before,GMSetzer selected inline parse 100 KB,100284,mixed-v1,2.832,1758,Malloc (total) (K) *,11,Malloc (bytes total) (K) *,5903
+mac,before,GMSetzer selected inline parse 5 MB,5000500,mixed-v1,152.961,33,Malloc (total) (K) *,566,Malloc (bytes total) (M) *,293
+mac,before,GMSetzer selected registry parse 1 MB,1000100,mixed-v1,30.081,166,Malloc (total) (K) *,110,Malloc (bytes total) (M) *,59
+mac,before,GMSetzer selected registry parse 100 KB,100284,mixed-v1,2.906,1716,Malloc (total) (K) *,11,Malloc (bytes total) (K) *,5891
+mac,before,GMSetzer selected registry parse 5 MB,5000500,mixed-v1,155.189,33,Malloc (total) (K) *,548,Malloc (bytes total) (M) *,292
+mac,before,cmark-gfm (C) CommonMark parse 1 MB,1000100,mixed-v1,18.219,275,Malloc (total) (K) *,224,Malloc (bytes total) (M) *,30
+mac,before,cmark-gfm (C) CommonMark parse 100 KB,100284,mixed-v1,1.668,2981,Malloc (total) (K) *,23,Malloc (bytes total) (K) *,2971
+mac,before,cmark-gfm (C) CommonMark parse 5 MB,5000500,mixed-v1,93.323,54,Malloc (total) (K) *,1122,Malloc (bytes total) (M) *,148
+mac,before,cmark-gfm (C) GFM parse 1 MB,1000100,mixed-v1,36.143,138,Malloc (total) (K) *,431,Malloc (bytes total) (M) *,39
+mac,before,cmark-gfm (C) GFM parse 100 KB,100284,mixed-v1,2.961,1666,Malloc (total) (K) *,43,Malloc (bytes total) (K) *,3878
+mac,before,cmark-gfm (C) GFM parse 5 MB,5000500,mixed-v1,191.627,26,Malloc (total) (K) *,2154,Malloc (bytes total) (M) *,193
+mac,after,GMSetzer CommonMark parse 1 MB,1000100,mixed-v1,23.593,212,Malloc (total) (K) *,57,Malloc (bytes total) (M) *,56
+mac,after,GMSetzer CommonMark parse 100 KB,100284,mixed-v1,2.265,2195,Malloc (total) *,5713,Malloc (bytes total) (K) *,5643
+mac,after,GMSetzer CommonMark parse 5 MB,5000500,mixed-v1,124.649,40,Malloc (total) (K) *,283,Malloc (bytes total) (M) *,280
+mac,after,GMSetzer GFM parse 1 MB,1000100,mixed-v1,27.525,180,Malloc (total) (K) *,64,Malloc (bytes total) (M) *,65
+mac,after,GMSetzer GFM parse 100 KB,100284,mixed-v1,2.703,1803,Malloc (total) *,6460,Malloc (bytes total) (K) *,8583
+mac,after,GMSetzer GFM parse 5 MB,5000500,mixed-v1,145.752,35,Malloc (total) (K) *,319,Malloc (bytes total) (M) *,424
+mac,after,GMSetzer selected inline parse 1 MB,1000100,mixed-v1,24.920,200,Malloc (total) (K) *,60,Malloc (bytes total) (M) *,56
+mac,after,GMSetzer selected inline parse 100 KB,100284,mixed-v1,2.396,2078,Malloc (total) *,6084,Malloc (bytes total) (K) *,5655
+mac,after,GMSetzer selected inline parse 5 MB,5000500,mixed-v1,131.203,39,Malloc (total) (K) *,301,Malloc (bytes total) (M) *,280
+mac,after,GMSetzer selected registry parse 1 MB,1000100,mixed-v1,25.313,197,Malloc (total) (K) *,57,Malloc (bytes total) (M) *,56
+mac,after,GMSetzer selected registry parse 100 KB,100284,mixed-v1,2.423,2042,Malloc (total) *,5713,Malloc (bytes total) (K) *,5643
+mac,after,GMSetzer selected registry parse 5 MB,5000500,mixed-v1,132.186,38,Malloc (total) (K) *,283,Malloc (bytes total) (M) *,280
+mac,after,cmark-gfm (C) CommonMark parse 1 MB,1000100,mixed-v1,18.596,269,Malloc (total) (K) *,224,Malloc (bytes total) (M) *,30
+mac,after,cmark-gfm (C) CommonMark parse 100 KB,100284,mixed-v1,1.650,2994,Malloc (total) (K) *,23,Malloc (bytes total) (K) *,2971
+mac,after,cmark-gfm (C) CommonMark parse 5 MB,5000500,mixed-v1,92.668,54,Malloc (total) (K) *,1122,Malloc (bytes total) (M) *,148
+mac,after,cmark-gfm (C) GFM parse 1 MB,1000100,mixed-v1,36.766,136,Malloc (total) (K) *,431,Malloc (bytes total) (M) *,39
+mac,after,cmark-gfm (C) GFM parse 100 KB,100284,mixed-v1,2.939,1695,Malloc (total) (K) *,43,Malloc (bytes total) (K) *,3878
+mac,after,cmark-gfm (C) GFM parse 5 MB,5000500,mixed-v1,191.627,26,Malloc (total) (K) *,2154,Malloc (bytes total) (M) *,193
+x64,before,GMSetzer CommonMark parse 1 MB,1000100,mixed-v1,44.761,111,Malloc (total) (K) *,115,Malloc (bytes total) (M) *,59
+x64,before,GMSetzer CommonMark parse 100 KB,100284,mixed-v1,3.971,1248,Malloc (total) (K) *,12,Malloc (bytes total) (K) *,5891
+x64,before,GMSetzer CommonMark parse 5 MB,5000500,mixed-v1,231.604,22,Malloc (total) (K) *,575,Malloc (bytes total) (M) *,294
+x64,before,GMSetzer GFM parse 1 MB,1000100,mixed-v1,55.411,90,Malloc (total) (K) *,142,Malloc (bytes total) (M) *,88
+x64,before,GMSetzer GFM parse 100 KB,100284,mixed-v1,4.858,1019,Malloc (total) (K) *,14,Malloc (bytes total) (K) *,8863
+x64,before,GMSetzer GFM parse 5 MB,5000500,mixed-v1,283.116,18,Malloc (total) (K) *,712,Malloc (bytes total) (M) *,441
+x64,before,GMSetzer selected inline parse 1 MB,1000100,mixed-v1,48.529,103,Malloc (total) (K) *,119,Malloc (bytes total) (M) *,59
+x64,before,GMSetzer selected inline parse 100 KB,100284,mixed-v1,4.342,1145,Malloc (total) (K) *,12,Malloc (bytes total) (K) *,5906
+x64,before,GMSetzer selected inline parse 5 MB,5000500,mixed-v1,250.085,20,Malloc (total) (K) *,593,Malloc (bytes total) (M) *,294
+x64,before,GMSetzer selected registry parse 1 MB,1000100,mixed-v1,47.907,104,Malloc (total) (K) *,115,Malloc (bytes total) (M) *,59
+x64,before,GMSetzer selected registry parse 100 KB,100284,mixed-v1,4.276,1157,Malloc (total) (K) *,12,Malloc (bytes total) (K) *,5894
+x64,before,GMSetzer selected registry parse 5 MB,5000500,mixed-v1,245.760,21,Malloc (total) (K) *,575,Malloc (bytes total) (M) *,294
+x64,before,cmark-gfm (C) CommonMark parse 1 MB,1000100,mixed-v1,33.980,149,Malloc (total) (K) *,224,Malloc (bytes total) (M) *,30
+x64,before,cmark-gfm (C) CommonMark parse 100 KB,100284,mixed-v1,2.421,2037,Malloc (total) (K) *,23,Malloc (bytes total) (K) *,2971
+x64,before,cmark-gfm (C) CommonMark parse 5 MB,5000500,mixed-v1,138.412,37,Malloc (total) (K) *,1122,Malloc (bytes total) (M) *,148
+x64,before,cmark-gfm (C) GFM parse 1 MB,1000100,mixed-v1,55.411,90,Malloc (total) (K) *,431,Malloc (bytes total) (M) *,39
+x64,before,cmark-gfm (C) GFM parse 100 KB,100284,mixed-v1,4.542,1085,Malloc (total) (K) *,43,Malloc (bytes total) (K) *,3878
+x64,before,cmark-gfm (C) GFM parse 5 MB,5000500,mixed-v1,271.057,19,Malloc (total) (K) *,2154,Malloc (bytes total) (M) *,193
+x64,after,GMSetzer CommonMark parse 1 MB,1000100,mixed-v1,42.172,118,Malloc (total) (K) *,57,Malloc (bytes total) (M) *,56
+x64,after,GMSetzer CommonMark parse 100 KB,100284,mixed-v1,3.688,1344,Malloc (total) *,5714,Malloc (bytes total) (K) *,5628
+x64,after,GMSetzer CommonMark parse 5 MB,5000500,mixed-v1,215.745,24,Malloc (total) (K) *,283,Malloc (bytes total) (M) *,280
+x64,after,GMSetzer GFM parse 1 MB,1000100,mixed-v1,50.758,98,Malloc (total) (K) *,64,Malloc (bytes total) (M) *,85
+x64,after,GMSetzer GFM parse 100 KB,100284,mixed-v1,4.461,1094,Malloc (total) *,6461,Malloc (bytes total) (K) *,8520
+x64,after,GMSetzer GFM parse 5 MB,5000500,mixed-v1,263.848,19,Malloc (total) (K) *,319,Malloc (bytes total) (M) *,425
+x64,after,GMSetzer selected inline parse 1 MB,1000100,mixed-v1,45.974,109,Malloc (total) (K) *,60,Malloc (bytes total) (M) *,56
+x64,after,GMSetzer selected inline parse 100 KB,100284,mixed-v1,4.080,1217,Malloc (total) *,6085,Malloc (bytes total) (K) *,5639
+x64,after,GMSetzer selected inline parse 5 MB,5000500,mixed-v1,235.536,22,Malloc (total) (K) *,301,Malloc (bytes total) (M) *,281
+x64,after,GMSetzer selected registry parse 1 MB,1000100,mixed-v1,44.597,112,Malloc (total) (K) *,57,Malloc (bytes total) (M) *,56
+x64,after,GMSetzer selected registry parse 100 KB,100284,mixed-v1,3.906,1272,Malloc (total) *,5714,Malloc (bytes total) (K) *,5628
+x64,after,GMSetzer selected registry parse 5 MB,5000500,mixed-v1,231.604,22,Malloc (total) (K) *,283,Malloc (bytes total) (M) *,280
+x64,after,cmark-gfm (C) CommonMark parse 1 MB,1000100,mixed-v1,33.948,147,Malloc (total) (K) *,224,Malloc (bytes total) (M) *,30
+x64,after,cmark-gfm (C) CommonMark parse 100 KB,100284,mixed-v1,2.454,2015,Malloc (total) (K) *,23,Malloc (bytes total) (K) *,2971
+x64,after,cmark-gfm (C) CommonMark parse 5 MB,5000500,mixed-v1,140.247,36,Malloc (total) (K) *,1122,Malloc (bytes total) (M) *,148
+x64,after,cmark-gfm (C) GFM parse 1 MB,1000100,mixed-v1,56.001,89,Malloc (total) (K) *,431,Malloc (bytes total) (M) *,39
+x64,after,cmark-gfm (C) GFM parse 100 KB,100284,mixed-v1,4.534,1089,Malloc (total) (K) *,43,Malloc (bytes total) (K) *,3878
+x64,after,cmark-gfm (C) GFM parse 5 MB,5000500,mixed-v1,271.843,19,Malloc (total) (K) *,2154,Malloc (bytes total) (M) *,193

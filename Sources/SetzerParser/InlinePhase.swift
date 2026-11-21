@@ -30,6 +30,10 @@ extension MarkdownParser {
         inline.enableGFM(strikethrough: registry.contains(.strikethrough), autolink: registry.contains(.autolink))
         let gfm = GFMInlineTriggers(strikethrough: inline.strikethrough, autolink: inline.autolink)
         var pending = document.children(of: 0).reversed().map { ($0, 0) }
+        // These buffers are local to one parse. Their contents never escape
+        // into the resulting tree or the inline controller's projected input.
+        var children: [Int] = []
+        var events: [(Int, Int)] = []
         while let (old, parent) = pending.popLast() {
             let node = document.nodes[old]
             let data: NodeData
@@ -39,7 +43,7 @@ extension MarkdownParser {
             let index = try! builder.append(data, range: node.range, segments: node.segments,
                                             fallbackLiteral: document.customLeafFallbacks[old], to: parent)
             mapped[old] = index
-            let children = document.children(of: old)
+            document.children(of: old, into: &children)
             let inlineBlock: Bool
             switch node.data { case .paragraph, .heading, .tableCell: inlineBlock = true; default: inlineBlock = false }
             if inlineBlock, !children.isEmpty,
@@ -54,7 +58,6 @@ extension MarkdownParser {
                 inline.reset(to: input)
                 inline.parse()
                 for diagnostic in inline.diagnostics { builder.report(diagnostic) }
-                var events: [(Int, Int)] = []
                 if let first = inline.first { events.append((first, index)) }
                 while let (itemIndex, owner) = events.popLast() {
                     let item = inline.items[itemIndex]

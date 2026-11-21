@@ -466,14 +466,21 @@ public struct Document: Sendable {
     }
 
     public func children(of index: Int) -> [Int] {
-        precondition(nodes.indices.contains(index), "node index belongs to this document")
         var result: [Int] = []
+        children(of: index, into: &result)
+        return result
+    }
+
+    /// Reuse caller-owned scratch storage while walking this immutable tree.
+    /// No node or document retains the buffer after this call.
+    package func children(of index: Int, into result: inout [Int]) {
+        precondition(nodes.indices.contains(index), "node index belongs to this document")
+        result.removeAll(keepingCapacity: true)
         var child = nodes[index].firstChild
         while let current = child {
             result.append(current)
             child = nodes[current].nextSibling
         }
-        return result
     }
 }
 

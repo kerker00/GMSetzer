@@ -20,9 +20,9 @@ whole-document fallbacks for raw HTML and document-order hooks. The
 [API and limits](Docs/ProgressiveHTML.md), [self-review](Docs/Review-M6.md)
 and [M6 acceptance](Docs/M6Acceptance.md) describe the supported contract.
 
-The 42-case Linux ARM64 stage/RSS/allocation matrix meets the reviewed
-post-baseline budgets. Mixed 1 MB/5 MB inputs reach first HTML in about half
-the parse-plus-full-output time on that host. Full parsing still precedes
+For the accepted M6 snapshot, the 42-case Linux ARM64 stage/RSS/allocation
+matrix meets the reviewed post-baseline budgets. Mixed 1 MB/5 MB inputs reach
+first HTML in about half the parse-plus-full-output time on that host. Full parsing still precedes
 output; giant blocks remain indivisible and no general peak-memory reduction
 is established. The existing [0.5.0 installation](#installation) stays valid.
 
@@ -33,17 +33,23 @@ follow the existing approval requirement.
 
 The initial `feature/m7-hardening` step adds bounded deterministic mutation
 coverage: 1,024 profile/input combinations and 24 depth cases across strict,
-GFM and selected M5 configurations. All 245 tests pass in Debug and Release
-on macOS and native Linux ARM64/x64 with Swift 6.4.2. The owner-approved
-[72-case Apple M2 baseline](Docs/Validation/M7/baseline-2026-11-21.md)
+GFM and selected M5 configurations. At that preparation checkpoint, all 245
+tests pass in Debug and Release on macOS and native Linux ARM64/x64 with
+Swift 6.4.2. The owner-approved [72-case Apple M2 baseline](Docs/Validation/M7/baseline-2026-11-21.md)
 passes all six parser/C budgets and nine frozen M2 checks. The separate
 [72-case Raspberry Pi baseline](Docs/Validation/M7/linux-arm64-2026-11-21.md)
 satisfies all six same-host C ratios, with high-load/sample-count limitations.
 The [direct x64 baseline](Docs/Validation/M7/linux-x64-2026-11-21.md) also
 passes all six C ratios: GFM is within about 7% of C on this corpus; CommonMark
 is 33–62% slower and remains the parser profiling priority toward parity.
-Minimum-compiler checks for the new tests, real-M5/hostile-input scaling and
-broader fuzzing remain open. See [M7 hardening](Docs/M7Hardening.md)
+
+The [first measured optimization](Docs/Validation/M7/inline-scratch-2026-11-21.md)
+reuses inline scratch buffers: CommonMark time improves 15–17% on M2 and 6–7%
+on x64; the 1 MB Mac allocation profile records about 48% fewer requests.
+Current macOS/x64 Debug/Release suites and Release C-reference tests pass;
+CommonMark remains 24–54% slower than C on x64. Candidate ARM64/minimum-compiler
+checks, fresh progressive resource measurements, real-M5/hostile-input scaling
+and broader fuzzing remain open. See [M7 hardening](Docs/M7Hardening.md)
 for scope, reproduction and remaining portability/performance gates.
 
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native

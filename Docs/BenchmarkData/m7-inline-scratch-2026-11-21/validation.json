@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "results": {
+    "mac": {
+      "library-debug": {
+        "tests": 245,
+        "suites": 29,
+        "seconds": 2.56,
+        "passed": true
+      },
+      "library-release": {
+        "tests": 245,
+        "suites": 29,
+        "seconds": 0.498,
+        "passed": true
+      },
+      "tools-release": {
+        "tests": 6,
+        "suites": 4,
+        "seconds": 1.111,
+        "passed": true
+      }
+    },
+    "x64": {
+      "library-debug": {
+        "tests": 245,
+        "suites": 29,
+        "seconds": 4.556,
+        "passed": true
+      },
+      "library-release": {
+        "tests": 245,
+        "suites": 29,
+        "seconds": 0.878,
+        "passed": true
+      },
+      "tools-release": {
+        "tests": 6,
+        "suites": 4,
+        "seconds": 1.97,
+        "passed": true
+      }
+    }
+  },
+  "scope": "Current two-file runtime candidate: complete macOS and Linux x64 Debug/Release library suites plus Release C/reference tools. Candidate Linux ARM64 and minimum Swift 6.2 not repeated here. Historical M6 resource receipt fails current-source identity as expected and is not reused as fresh resource evidence."
+}

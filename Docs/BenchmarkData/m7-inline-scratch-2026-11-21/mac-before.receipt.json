@@ -1,0 +1,240 @@
+{
+  "schema": 1,
+  "label": "before",
+  "started_utc": "2026-11-21T20:07:54.264577+00:00",
+  "source_base_commit": "9e7bc71e9f069f4b1ed282bead75fdcb85a8b2f8",
+  "driver": "Direct Release BenchmarkTool; no profiling instrumentation or SwiftPM parent",
+  "filter": "(GMSetzer (CommonMark parse|GFM parse|selected registry parse|selected inline parse)|cmark-gfm \\(C\\) (CommonMark|GFM) parse) (100 KB|1 MB|5 MB).*",
+  "binary_sha256": {
+    "BenchmarkTool": "c92d6668c05e13d7392ca2de57f8f8beeebc65ec8e2535c7dbe6649ec835a399",
+    "ParserBenchmarks": "13503a2e1d5cc551448570eaec99c61ecbab78d6a292455c22b405e3f7690050",
+    "libMallocInterposerSwift.dylib": "6487998cd11e9ef40af797d6437947f8aaf5d52693f9d456951b079f0a2c5f62"
+  },
+  "load_before": [
+    3.1728515625,
+    3.1728515625,
+    3.7197265625
+  ],
+  "host_samples": [
+    {
+      "utc": "2026-11-21T20:07:54.272240+00:00",
+      "load": [
+        3.1728515625,
+        3.1728515625,
+        3.7197265625
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:07:59.276816+00:00",
+      "load": [
+        3.15869140625,
+        3.169921875,
+        3.71533203125
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:08:04.278098+00:00",
+      "load": [
+        3.5458984375,
+        3.25,
+        3.740234375
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:08:09.278802+00:00",
+      "load": [
+        3.58203125,
+        3.26220703125,
+        3.74169921875
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:08:14.280881+00:00",
+      "load": [
+        3.615234375,
+        3.2744140625,
+        3.7431640625
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:08:19.283817+00:00",
+      "load": [
+        3.56591796875,
+        3.26953125,
+        3.73876953125
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:08:24.285302+00:00",
+      "load": [
+        3.4404296875,
+        3.248046875,
+        3.728515625
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:08:29.290431+00:00",
+      "load": [
+        3.48486328125,
+        3.26025390625,
+        3.72998046875
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:08:34.294340+00:00",
+      "load": [
+        3.36572265625,
+        3.2392578125,
+        3.7197265625
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:08:39.295324+00:00",
+      "load": [
+        3.41650390625,
+        3.25146484375,
+        3.72119140625
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:08:44.295582+00:00",
+      "load": [
+        3.302734375,
+        3.23046875,
+        3.7109375
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:08:49.295787+00:00",
+      "load": [
+        3.4384765625,
+        3.259765625,
+        3.71826171875
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:08:54.296097+00:00",
+      "load": [
+        3.4833984375,
+        3.27197265625,
+        3.7197265625
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:08:59.296274+00:00",
+      "load": [
+        3.6044921875,
+        3.30029296875,
+        3.72705078125
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:09:04.297505+00:00",
+      "load": [
+        3.7158203125,
+        3.328125,
+        3.734375
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:09:09.302568+00:00",
+      "load": [
+        3.73828125,
+        3.3388671875,
+        3.73583984375
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:09:14.304426+00:00",
+      "load": [
+        3.6787109375,
+        3.3330078125,
+        3.7314453125
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:09:19.309521+00:00",
+      "load": [
+        3.4638671875,
+        3.2939453125,
+        3.71533203125
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:09:24.314108+00:00",
+      "load": [
+        3.50634765625,
+        3.3056640625,
+        3.716796875
+      ]
+    },
+    {
+      "utc": "2026-11-21T20:09:29.319182+00:00",
+      "load": [
+        3.46533203125,
+        3.30029296875,
+        3.71240234375
+      ]
+    }
+  ],
+  "source_sha256": {
+    "Package.swift": "346f8bb999e3cf632d2ffda5516708f7285a75d1566ced8fa4ff08d04989faf7",
+    "Sources/GMSetzer/AdmonitionHTML.swift": "50abea941c46e550a041f7e08f6e0a79580bfbb2e5923a1450ed2befb345e31e",
+    "Sources/GMSetzer/FootnotesHTMLRenderer.swift": "51b919cb3d336fa3ded30e2ac762e6aae305255d035f41f812be58860bb575f0",
+    "Sources/GMSetzer/GMSetzer.swift": "9a3debebd1be48c9f9484edc39aea9833e8ce827baf6819b2f0eaab5f531f1a2",
+    "Sources/SetzerAnalysis/NativeAnalysisMessages.swift": "967894ab8e1daa9e1b10ca3f88dc009601ee0cf6c8315a08921df399cbc40a8e",
+    "Sources/SetzerAnalysis/NativeAnalyzer.swift": "cddb100432fc0937c0d6894d5e9de4cbcc78b1ec898863d94849b3b16539b4d4",
+    "Sources/SetzerExtensions/Admonitions.swift": "b2e4531264c154a4d70510f2ffc822019230cd25c776118012eb7431deff2eda",
+    "Sources/SetzerExtensions/Extensions.swift": "69f27fe354caba6e8ba124cf3db7dd77fcdfba7d1c27b1c95b41175b5878b873",
+    "Sources/SetzerExtensions/Footnotes.swift": "caea51d8a68be509adc7957ab1eb0a4427c8da5615794c54ec1af85502f1b57e",
+    "Sources/SetzerExtensions/FrontMatter.swift": "b32bd855b58c112b8c8ecc45f72a94da30b9c8f07ddec94cc9cb005c65fc13f2",
+    "Sources/SetzerExtensions/Math.swift": "096bd8c9cbc10edea841761427d3a34995462a6938944e4a739da3849b4dd6ea",
+    "Sources/SetzerHTML/HTMLComments.swift": "1b14a2d9b16a37b92f78128288fb9dd6d4f509f8b48859411be25028afb6a3ba",
+    "Sources/SetzerHTML/HTMLRenderPlan.swift": "6e059730c328cc97e8555b11d4da92134dc3a2f71c041be3aff11337c75512d4",
+    "Sources/SetzerHTML/HTMLRenderer.swift": "0610a0dc7338ff148ef85f714148e8bfb626f8220f0e0d5f6f27411b1e90cc7f",
+    "Sources/SetzerHTML/HTMLURLScheme.swift": "cff30a677f10c94b8c165dfde0ea55170428219dacf388365a6e1f783f413707",
+    "Sources/SetzerParser/BlockTransform.swift": "b66ebb51d2d36b9d9154effd07106e62e4db91e43328ea5230336e2d6f1f2d0a",
+    "Sources/SetzerParser/ContainerParsing.swift": "6f354d47a75a08ae8bb8e3af4b5066bf8363ae7df46dab052596f08691ab8a2c",
+    "Sources/SetzerParser/GFMBlocks.swift": "28d5335109672068d750cb984e92d9540a5b20aebff19092298b3b5e587ad66e",
+    "Sources/SetzerParser/HTMLBlocks.swift": "135fb0544903f76b7bc6810bd02738bc965eee744ad9e23af7074bc8499da848",
+    "Sources/SetzerParser/InlineAutolinks.swift": "c90637fa3bac3ea23f18f9f1136dcf2b2ed7ad541edd78e9f7c0249b0b7eed69",
+    "Sources/SetzerParser/InlineDecoding.swift": "52d8ec69bea0df006154f00106d0bf5bd35135ea0ad2bfa050b7ef139522cce1",
+    "Sources/SetzerParser/InlineExtensions.swift": "b61c5191ddec38dcf49838b6dbe6ae708a2350c03367e43d843f943839eea74e",
+    "Sources/SetzerParser/InlineLinks.swift": "ad2927d6aac1d9234b28a6a624be397d31081dd05a4d5781367959ebf1292187",
+    "Sources/SetzerParser/InlineParser.swift": "c26069894e918dc1d078fe9db5a5a76c6866d3cd47fd4818f39616a6ad01b9f3",
+    "Sources/SetzerParser/InlinePhase.swift": "29a12efe23289d9452bdfba1cac1e458fbd7fc91446f1510abb4370f1d2cc160",
+    "Sources/SetzerParser/InlineRule.swift": "15759b5b1d0041983dd084775b957cb3470591d1e508b5f19dd1a91a17f98f74",
+    "Sources/SetzerParser/InlineTables.swift": "4efdccb56eb518e631939153541ec4291eb209e4ea5be5a96bfd44a2edb51062",
+    "Sources/SetzerParser/MarkdownParser.swift": "5e9c6a7c1fdb9db8eb3a58d5e760ba6d514525f81983c02e2c3640cdf268fc66",
+    "Sources/SetzerParser/Profile.swift": "67dc50de9dbe4d44fefc38501f8b8ac2b4978f22d589135f91c29f344b0c9ac4",
+    "Sources/SetzerParser/ReferenceDefinitions.swift": "f44d21348b8235cf36b74ed08f2b5e1fabc678d30ca5fc0ec38a9fcac9bfa188",
+    "Sources/SetzerParser/RuleRegistry.swift": "98ea059a468d61505d758b9e24b78139303d84377bbadd2a98158164384e5666",
+    "Sources/SetzerParser/SourceCursor.swift": "bc7b8342bc9738b4c0ac6e45bd13ce23521b99a82a1fd151ed3881efb27d563a",
+    "Sources/SetzerSyntax/ByteSearch.swift": "4fda31cc4d0c18a2e633343d017ef29c590461bc787df4970534394c49e259ab",
+    "Sources/SetzerSyntax/Document.swift": "20067240532d79fc946d1e42ff2bfe2ad0deff543ada5ac4a4a51a8e4f000bdc",
+    "Sources/SetzerSyntax/DocumentDiagnostic.swift": "8e7041b9f7357993a89f191ce1e5bde1ceb532ffe9958d975a2ad657cc528853",
+    "Sources/SetzerSyntax/DocumentIndex.swift": "e25e75fa6536517b763fdcb211efbe59b49a485b629b98a2bdc643f8e76430e1",
+    "Sources/SetzerSyntax/DocumentTraversal.swift": "e15459f20d5598fc7e4696304fa6f38832779b5a777c15034156c5843b40e2b3",
+    "Sources/SetzerSyntax/ExtensionDescriptor.swift": "d7620b9aa850c4cdd5fd65e845069acdcd42f5c15c9a54d0cd52ccf96f0b305d",
+    "Sources/SetzerSyntax/HTMLBlock.swift": "5e1f0febf1ef80e8ec824d79055a8791c75a398ff201597362a1db7d0169586c",
+    "Sources/SetzerSyntax/LibraryIdentity.swift": "b05f275c3faadc1e8a5b2a58ccb3af876299708ff5b342fbd1a084fa366dcca5",
+    "Sources/SetzerSyntax/SourceIndex.swift": "75c83ad3cd20c653fd52f51517855c81877d151f97a69b395627994d54219850",
+    "Sources/SetzerSyntax/SourceRange.swift": "8c4ff9c38677252c2642da6ff0824b613fdeb4b311b98859388fe92c74902460",
+    "Sources/SetzerSyntax/SyntaxToken.swift": "d2028656d614538e83fff7241cefd6d358a0c520865b9dcf03686438fae321b6",
+    "Tools/Package.swift": "853fa1537996a7ee801620937fd5d3c0b5f107021934ef2a0068d2342f1b80b4",
+    "Tools/Package.resolved": "b04f6826b9801a9655860ce82f86725f8fc6204915ca0771b7028f76cfcf6002",
+    "Tools/Sources/BenchmarkCorpus/Corpus.swift": "3c3423dac5442d14257c0ea364bad0faf87dbbc83439ff1cf9fdb77452f4a101",
+    "Tools/Sources/BenchmarkCorpus/ParserProbes.swift": "3c3e6a8afbb51aef5040f5239e1b7e226e142e8e2c115d8adeb7be91e3c6cc05",
+    "Tools/Benchmarks/ParserBenchmarks/ParserBenchmarks.swift": "ba80c7e4fde0ce79501d3d550cd699e1db10ca15764646b82337d1a15f523c81"
+  },
+  "exit_code": 0,
+  "cases_completed": 18,
+  "finished_utc": "2026-11-21T20:09:31.891780+00:00",
+  "stdout_sha256": "2ba6e3c98ccc145e5a82bbca501c016116194b9ca234101ffbaaf8317d2903e6",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "load_after": [
+    3.46533203125,
+    3.30029296875,
+    3.71240234375
+  ]
+}
