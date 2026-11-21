@@ -44,10 +44,12 @@ public struct HTMLRenderer: Sendable {
     private let escapedAnchorPrefix: String?
     private let contextualHooks: [NodeKind: ContextualHTMLRendererHook]
     private let hooks: [NodeKind: HTMLRendererHook]
+    private let independentlyRenderableHooks: Bool
 
     public init(includeSourceRanges: Bool = false, sourceAnchorPrefix: String? = nil, allowRawHTML: Bool = false,
                 preserveHTMLComments: Bool = false, allowUnsafeURLs: Bool = false, allowedURLSchemes: Set<HTMLURLScheme> = [.http, .https, .mailto], hooks: [NodeKind: HTMLRendererHook] = [:],
-                contextualHooks: [NodeKind: ContextualHTMLRendererHook] = [:]) {
+                contextualHooks: [NodeKind: ContextualHTMLRendererHook] = [:],
+                hookBehavior: HTMLHookBehavior = .documentOrder) {
         self.includeSourceRanges = includeSourceRanges
         self.sourceAnchorPrefix = sourceAnchorPrefix
         self.escapedAnchorPrefix = sourceAnchorPrefix.map(Self.escape)
@@ -57,6 +59,7 @@ public struct HTMLRenderer: Sendable {
         self.allowedURLSchemes = allowedURLSchemes
         self.hooks = hooks
         self.contextualHooks = contextualHooks
+        self.independentlyRenderableHooks = (hooks.isEmpty && contextualHooks.isEmpty) || hookBehavior == .independent
     }
 
     /// `flag` carries the one bit of context a node needs from its parent:
@@ -66,40 +69,74 @@ public struct HTMLRenderer: Sendable {
 
     public func render(_ document: Document) -> String {
         let tree = contextualHooks.isEmpty ? nil : DocumentIndex(document)
-        return render(document, events: [.enter(0)], tree: tree)
+        return render(document, events: [.enter(0)], tree: tree, checkpoint: {})
+    }
+
+    /// Prepares opt-in, pull-based structural HTML. The complete document is
+    /// retained, not reparsed or rendered eagerly. Source-byte size is a soft
+    /// grouping budget; a larger block stays intact.
+    public func prepare(_ document: Document, maximumSourceBytesPerGroup: Int = 32_768) throws -> HTMLRenderPlan {
+        try HTMLRenderPlan(document: document, renderer: self, maximumSourceBytesPerGroup: maximumSourceBytesPerGroup)
+    }
+
+    package var needsContextIndex: Bool { !contextualHooks.isEmpty }
+    package var omitsReferenceDefinitions: Bool {
+        hooks[.referenceDefinition] == nil && contextualHooks[.referenceDefinition] == nil
+    }
+    package var groupFallback: HTMLRenderPlan.Fallback? {
+        if allowRawHTML { return .rawHTML }
+        if hooks[.document] != nil || contextualHooks[.document] != nil { return .documentHook }
+        if !independentlyRenderableHooks { return .documentOrderHooks }
+        return nil
     }
 
     /// Package-level composition keeps extension HTML in the convenience
     /// module without making the syntax renderer depend on parser extensions.
-    package func addingHooks(_ additional: [NodeKind: HTMLRendererHook]) -> HTMLRenderer {
+    package func addingHooks(_ additional: [NodeKind: HTMLRendererHook], independent: Bool = false) -> HTMLRenderer {
         HTMLRenderer(includeSourceRanges: includeSourceRanges, sourceAnchorPrefix: sourceAnchorPrefix,
             allowRawHTML: allowRawHTML, preserveHTMLComments: preserveHTMLComments,
             allowUnsafeURLs: allowUnsafeURLs, allowedURLSchemes: allowedURLSchemes,
             hooks: hooks.merging(additional) { _, replacement in replacement },
-            contextualHooks: contextualHooks.filter { additional[$0.key] == nil })
+            contextualHooks: contextualHooks.filter { additional[$0.key] == nil },
+            hookBehavior: independentlyRenderableHooks && (additional.isEmpty || independent) ? .independent : .documentOrder)
     }
 
-    package func addingContextualHooks(_ additional: [NodeKind: ContextualHTMLRendererHook]) -> HTMLRenderer {
+    package func addingContextualHooks(_ additional: [NodeKind: ContextualHTMLRendererHook], independent: Bool = false) -> HTMLRenderer {
         HTMLRenderer(includeSourceRanges: includeSourceRanges, sourceAnchorPrefix: sourceAnchorPrefix,
             allowRawHTML: allowRawHTML, preserveHTMLComments: preserveHTMLComments,
             allowUnsafeURLs: allowUnsafeURLs, allowedURLSchemes: allowedURLSchemes,
-            hooks: hooks, contextualHooks: contextualHooks.merging(additional) { _, replacement in replacement })
+            hooks: hooks, contextualHooks: contextualHooks.merging(additional) { _, replacement in replacement },
+            hookBehavior: independentlyRenderableHooks && (additional.isEmpty || independent) ? .independent : .documentOrder)
     }
 
     package func render(_ document: Document, tree: DocumentIndex) -> String {
-        render(document, events: [.enter(0)], tree: tree)
+        render(document, events: [.enter(0)], tree: tree, checkpoint: {})
     }
 
     package func renderChildren(_ document: Document, of index: Int, tree: DocumentIndex) -> String {
         var pending: [Event] = []
         scheduleChildren(index, document: document, pending: &pending)
-        return render(document, events: pending, tree: tree)
+        return render(document, events: pending, tree: tree, checkpoint: {})
     }
 
-    private func render(_ document: Document, events: [Event], tree: DocumentIndex?) -> String {
+    package func renderNodes(_ document: Document, nodes: [Int], tree: DocumentIndex?,
+                             checkpoint: () throws -> Void) rethrows -> String {
+        try render(document, events: nodes.reversed().map { .enter($0) }, tree: tree, checkpoint: checkpoint)
+    }
+
+    package func renderChildren(_ document: Document, of index: Int, tree: DocumentIndex,
+                                checkpoint: () throws -> Void) rethrows -> String {
+        var pending: [Event] = []
+        scheduleChildren(index, document: document, pending: &pending)
+        return try render(document, events: pending, tree: tree, checkpoint: checkpoint)
+    }
+
+    private func render(_ document: Document, events: [Event], tree: DocumentIndex?,
+                        checkpoint: () throws -> Void) rethrows -> String {
         var output = ""
         var pending = events
         while let event = pending.popLast() {
+            try checkpoint()
             switch event {
             case .output(let text): output += text
             case .enter(let index, let tightItem):
@@ -243,6 +280,7 @@ public struct HTMLRenderer: Sendable {
                 }
             }
         }
+        try checkpoint()
         return output
     }
 

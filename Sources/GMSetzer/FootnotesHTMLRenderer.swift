@@ -19,6 +19,31 @@ public struct FootnotesHTMLRenderer: Sendable {
     }
 
     public func render(_ document: Document) -> String {
+        let context = prepareContext(document)
+        return context.renderer.render(document, tree: context.tree) + renderAppendix(document, context: context, checkpoint: {})
+    }
+
+    /// Number references once over the full document. The appendix remains a
+    /// single insertable group and is generated only when requested.
+    public func prepare(_ document: Document, maximumSourceBytesPerGroup: Int = 32_768) throws -> HTMLRenderPlan {
+        guard maximumSourceBytesPerGroup > 0 else { throw HTMLRenderPlanError.invalidGroupSize }
+        let context = prepareContext(document)
+        let appendix: (@Sendable (_ checkpoint: () throws -> Void) throws -> String)?
+        if context.notes.isEmpty { appendix = nil }
+        else { appendix = { checkpoint in try renderAppendix(document, context: context, checkpoint: checkpoint) } }
+        return try HTMLRenderPlan(document: document, renderer: context.renderer, tree: context.tree,
+                                  maximumSourceBytesPerGroup: maximumSourceBytesPerGroup,
+                                  omittingTopLevelKinds: [Footnotes.definitionKind], appendix: appendix)
+    }
+
+    private struct Context: Sendable {
+        let notes: [Footnotes.Note]
+        let prefix: String
+        let renderer: HTMLRenderer
+        let tree: DocumentIndex
+    }
+
+    private func prepareContext(_ document: Document) -> Context {
         let index = Footnotes.Index(document)
         let prefix = safePrefix(idPrefix)
         var references: [SourceRange: String] = [:]
@@ -32,16 +57,22 @@ public struct FootnotesHTMLRenderer: Sendable {
         let composed = renderer.addingHooks([
             Footnotes.definitionKind: { _, _ in .replace("") },
             Footnotes.referenceKind: { node, _ in renderedReferences[node.range].map { .replace($0) } },
-        ])
-        let tree = DocumentIndex(document)
-        var output = composed.render(document, tree: tree)
-        guard !index.notes.isEmpty else { return output }
-        output += "<section class=\"footnotes\" data-footnotes=\"\">\n<ol>\n"
-        for note in index.notes {
+        ], independent: true)
+        return Context(notes: index.notes, prefix: prefix, renderer: composed, tree: DocumentIndex(document))
+    }
+
+    private func renderAppendix(_ document: Document, context: Context,
+                                checkpoint: () throws -> Void) rethrows -> String {
+        guard !context.notes.isEmpty else { return "" }
+        let prefix = context.prefix
+        var output = "<section class=\"footnotes\" data-footnotes=\"\">\n<ol>\n"
+        for note in context.notes {
+            try checkpoint()
             output += "<li id=\"\(prefix)note-\(note.number)\">\n"
-            output += composed.renderChildren(document, of: note.definition, tree: tree)
+            output += try context.renderer.renderChildren(document, of: note.definition, tree: context.tree, checkpoint: checkpoint)
             output += "<p>"
             for occurrence in 1...note.references.count {
+                try checkpoint()
                 if occurrence > 1 { output += " " }
                 let label = HTMLRenderer.escape("\(backlinkLabel) \(note.number).\(occurrence)")
                 output += "<a href=\"#\(prefix)ref-\(note.number)-\(occurrence)\" data-footnote-backref=\"\" aria-label=\"\(label)\">↩</a>"

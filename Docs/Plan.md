@@ -1,7 +1,10 @@
 # GMSetzer – Plan and Requirements
 
-**Status: 20 November 2026, M1–M5 merged and functionally accepted; the
-source-only v0.5.0 preview is published after successful tag-triggered CI.** This document is the
+**Status: 21 November 2026, M1–M5 merged and functionally accepted; the
+source-only v0.5.0 preview is published. Initial M6 progressive HTML is
+implemented on `feature/m6-progressive-html`, not merged or released, for
+the 0.6 development stage; general speed/hardening moves to M7 and the 1.0
+API/documentation/release milestone to M8.** This document is the
 reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
@@ -88,8 +91,9 @@ An isolated public-HTTPS SwiftPM consumer resolves exact version 0.5.0 to the
 same commit and exercises all M5 APIs. GitHub supplies ZIP/tar.gz archives;
 there are zero uploaded build assets. The annotated tag remains unchanged.
 See [release notes](Releases/0.5.0.md) and
-[release validation](Validation/Release/0.5.0.md). M6 measurements/hardening and
-consumer UI/device acceptance remain separate work.
+[release validation](Validation/Release/0.5.0.md). Progressive HTML (new M6),
+general measurements/hardening (now M7) and consumer UI/device acceptance
+remain planned work.
 
 GMSetzer is an independent, general-purpose Markdown library intended for
 open-source use under the MIT licence. Editors, command-line tools, servers
@@ -165,7 +169,7 @@ All taken by the project owner on 19 November 2026.
 | GFM | Tables, task lists, strikethrough, extended autolinks and disallowed raw HTML (tag filtering); all 672 examples in the pinned GFM 0.29-derived cmark corpus, including the two task list examples marked `disabled` upstream | – |
 | Further syntax | Footnotes; front matter (YAML/TOML at the start, delivered as raw text); math inline `$…$`, display `$$…$$` and ` ```math ` blocks; GitHub alerts `> [!NOTE]` (NOTE, TIP, IMPORTANT, WARNING, CAUTION); Obsidian callouts `> [!type]` with optional `+`/`-` folding marker and title | – |
 | Profiles | Every extension switchable on its own; shipped profiles "CommonMark strict" and "GFM" | Obsidian (wikilinks, embeds `![[…]]`, `==highlight==`, tags), Pandoc (definition lists, attributes `{.class}`, fenced divs, sub-/superscript, citations `[@key]`), MultiMarkdown, kramdown, user-defined profiles |
-| Output | Syntax tree with source ranges; HTML renderer with block anchors | Markdown serialiser (for converting between profiles), other output formats |
+| Output | Syntax tree with source ranges; HTML renderer with block anchors; planned opt-in progressive HTML from a complete document (M6) | Markdown serialiser (for converting between profiles), other output formats |
 | Outline | Query for headings and block structure with their ranges | – |
 | Editor syntax | Optional source-spelled syntax/delimiter spans and precisely located document diagnostics; UTF-16 mapping in the caller's snapshot | – |
 | Native analysis | Optional `SetzerAnalysis` module over the same tree/source; configurable named rule subset, portable findings and explicit suggested fixes | Further rules and separately verified markdownlint compatibility |
@@ -231,6 +235,7 @@ their own application architecture, revision model and presentation adapter.
 | --- | --- |
 | Exact UTF-16 ranges for every node | The editor (TextKit 2) highlights, folds and links syntax in `NSRange` terms |
 | Block anchors in the HTML (source line or byte offset on block elements) | Scroll synchronisation between editor and preview |
+| Planned block-oriented HTML output with source ranges and complete-document context | Consumers can show an initial section before all HTML is generated; scheduling, viewport choice and revision ownership stay outside the library (M6, section 10.1) |
 | An outline query (headings and blocks with ranges and levels) | Folding, a breadcrumb of the current section and an outline overview all read the same model |
 | Switchable extensions and named profiles | Consumers choose the effective dialect; changing the profile never changes the file |
 | A renderer hook per node kind | Math becomes MathML through Temml, code blocks get syntax highlighting, Mermaid diagrams are rendered elsewhere |
@@ -469,12 +474,118 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; portable syntax/finding APIs | Security/position/analysis tests and standalone package validation pass; application adapters remain outside this package | re-estimate | **merged in PR #12 (`651af17`)** after review corrections: exact position/outline queries, safe configurable URL scheme allowlist/anchors and three optional native rules. 106 library tests passed across macOS/debug/release/Swift 6.2/Linux; after the [review](Review-M3.md) corrections 108 pass on macOS (Swift 6.2/Linux not re-run) with byte-identical differential results. Index/analysis timings and optimisations: [Benchmarks](Benchmarks.md#m3-editor-services-20-november-2026). See [M3EditorServices](M3EditorServices.md) |
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | **merged in PR #14 (`e163e6f`)**: tables, task lists, strikethrough, extended autolinks and tag filter as built-in payloads (owner decision 1A); 672/672 GFM and 652/652 CommonMark; generated documents agree with cmark-gfm. Library and reference tests pass on macOS; GFM parses at 0.88× cmark-gfm and both budget checks pass. Swift 6.2/Linux not re-run. See [M4GFM](M4GFM.md) |
 | M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Declared extension fixtures and profile/combination tests pass | 5–8 | **first step merged in PR #19 (`4b0f105`)**: raw YAML/TOML front matter; 153 tests pass on both hosts and macOS/Swift 6.2. PR/main CI pass on both hosts. Named footnotes merged in PR #20 (`a6a2da6`), with 178 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on macOS/Linux. Opaque inline/display/fenced TeX is merged in PR #21 (`6f166b7`), with 202 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on both hosts. Alerts and callouts merged in PR #22 (`c9543fe`); all 227 local tests pass on both hosts and macOS/Swift 6.2, and PR/main CI pass on both hosts. **Functional M5 accepted** against the declared extension/profile/combination criterion; see [M5Acceptance](M5Acceptance.md). See [FrontMatter](FrontMatter.md), [Footnotes](Footnotes.md), [Math](Math.md) and [Admonitions](Admonitions.md) |
-| M6 | Speed and hardening: measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met | 5–8 | |
-| M7 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | 3–5 | |
+| M6 / 0.6 development | Progressive HTML: stage measurements, prepared complete-document context, structural output groups and bounded/on-demand emission | First group is available before full HTML construction; assembled output matches the existing renderer; source/safety/extension/cancellation contracts and macOS/Linux checks pass (10.1) | re-estimate after the complete measurement matrix | **in progress on `feature/m6-progressive-html`**: initial API, M5 composition and 239 tests pass on macOS Debug/Release and Linux ARM64; both hosts pass 17 script tests, Linux optimised build passes. Bounded 1 MB probe recorded; full workload/allocation matrix and minimum-compiler acceptance remain open. See [ProgressiveHTML](ProgressiveHTML.md) |
+| M7 | General speed and hardening: selected-extension measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met; robustness and allocation evidence recorded | previous 5–8; re-estimate after M6 | **planned; former M6 moved back one milestone** |
+| M8 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | previous 3–5; re-estimate after M7 | **planned; former M7 moved back one milestone** |
 | | **Original total before explicit editor-analysis scope** | | **38–59; re-estimate required** | |
 
 After 1.0: further profiles (Obsidian, Pandoc), a Markdown serialiser for
 profile conversions, incremental parsing if measurements call for it.
+
+### 10.1 M6 progressive HTML for large documents
+
+**Owner decision, 21 November 2026:** make progressive HTML the next milestone,
+referred to as M6 / the 0.6 development stage. Its initial implementation is
+on the feature branch below; it is not merged, accepted as complete or
+released. The previous M6 hardening scope becomes M7; the previous M7
+1.0 scope becomes M8. Version-tag publication remains a separate confirmed
+step. Historical validation/release documents retain their original M6/M7
+references; this section is authoritative for the new work order.
+
+The goal is a shorter wait for the first useful section of a large document,
+without changing Markdown meaning or requiring a complete HTML string before
+any output can be consumed. First output latency, total completion time and
+memory use are separate measurements. A latency improvement does not by itself
+claim faster parsing or lower total cost.
+
+#### Processing and library boundary
+
+1. **Measure before selecting the optimisation.** Record parse time, document
+   preparation, first HTML-group availability, complete HTML generation and
+   allocation/peak-memory cost in an optimised library build. Consumers measure
+   their own transfer, layout and first-visible-output stages separately. Start
+   with the existing full-document renderer as the comparison baseline.
+2. **Keep one complete semantic document.** Initially parse the full source,
+   or reuse a matching immutable parse supplied by the caller. Prepare global
+   reference/extension context once. Later definitions can affect earlier
+   references; independent parses of arbitrary byte/line slices are outside M6.
+   Full parsing remains part of first-output latency.
+3. **Plan structural groups.** Expose ordered, snapshot-local descriptors for
+   complete top-level blocks or groups of blocks, with original source ranges.
+   Keep lists, tables, code fences and custom wrappers structurally valid.
+   Descriptor identity is not a stable cross-edit identity. Concrete public API
+   types are selected during design; existing full-string rendering remains
+   supported.
+4. **Render groups without materialising the full result first.** Support
+   bounded consumption and requested groups against the same prepared document
+   and rendering options. A consumer can request the visible group and nearby
+   groups first, then assemble them in document order. Shared context must keep
+   references, source anchors, list tightness, hooks, footnote numbering/backlinks
+   and document-level appendices consistent. Appendices are emitted once in
+   their documented position. If a composition cannot support independent group
+   requests, expose a documented fallback rather than silently changing output.
+5. **Bound obsolete work.** Define stopping between groups, cooperative
+   cancellation/progress checkpoints and ownership of prepared results.
+   Consumers must be able to avoid an unbounded queue of chunks. A stop during
+   emission does not imply that synchronous full parsing was interrupted.
+
+Keep the library independent of Foundation, UI frameworks, JavaScript and
+application revision/session types. A caller associates each plan/result with
+its own immutable snapshot and configuration. Viewport selection, transfer to a
+web view, DOM insertion, scroll anchoring, caches shared by consumer features
+and rejection of results from obsolete revisions belong to the consumer.
+No particular application or consumer checkout is required for acceptance.
+
+Very large individual blocks need an explicit policy: a single multi-megabyte
+table or code block is not made small by top-level grouping. Start with a
+correct indivisible-block fallback and report its latency/memory limits.
+Subdividing such structures needs a separate validated contract. Full viewport
+virtualisation, offscreen DOM eviction and incremental parsing are later
+options, selected only after measurements justify their added complexity.
+
+#### Implementation sequence and acceptance
+
+First establish the baseline and the smallest correct prepared/group-output
+API; then implement safe bounded emission and requested-group rendering.
+Measure again before selecting further optimisation. Targeted correctness and
+resource tests are part of M6; broad fuzzing, final speed budgets and general
+hardening remain required in M7 before the stable API review in M8.
+
+| Gate | Required evidence |
+| --- | --- |
+| Semantic equivalence | Assembling every group and any appendix in order is byte-identical to the existing full renderer under the same options, including conformance and safe-default modes. No protected CommonMark/GFM ID regresses. |
+| Global context | Cross-group/forward link references, footnotes including repeated/cyclic references, front matter, math hooks and alert/callout combinations retain the existing complete-document behavior. |
+| Order and identity | Requested groups can be associated with one prepared snapshot and reassembled deterministically; out-of-order requests do not change numbering or anchors. Document any hook/composition fallback. |
+| Structure and positions | Every insertable group is structurally valid, preserves source ranges and document-order placement, and does not invent stable identities across document edits. |
+| Safe output | Existing escaping, URL policy and caller-hook trust boundaries are identical for full and grouped output. |
+| Resource behavior | First output does not depend on constructing the full HTML string; bounded consumption, stopping and superseded-work scenarios have targeted tests. Largest-block fallbacks are explicit. |
+| Measurements | Compare 100 KB, 1 MB and 5 MB prose, many small blocks, GFM tables, long code blocks, multibyte text and selected M5 combinations. Record toolchain/host/options, first-group latency, full time and memory; set improvement targets after the baseline. No universal instant-display promise. |
+| Portability and scope | Validate standalone behavior on macOS/Linux and the minimum supported Swift compiler; UI/device results are recorded by consumers, not used as a library API/release gate. |
+
+#### Initial implementation checkpoint
+
+`feature/m6-progressive-html` adds `HTMLRenderer.prepare`, immutable
+`HTMLRenderPlan` / `HTMLRenderGroup`, requested-group output, bounded pull
+consumption and throwing checkpoints. Built-in footnote/admonition composition
+shares complete-document context; raw HTML, document hooks and uncertified
+order-dependent hooks have explicit whole-document fallbacks. Existing
+full-string output stays supported. Development identity is `0.6.0-dev.1`.
+
+The complete local macOS/Swift 6.4.2 Debug and Release suites and the
+Linux ARM64/Swift 6.4.2 suite each pass 239 tests, including safe and
+conformance grouped/full comparison over all 1,324 specification examples.
+Both hosts pass 17 offline script tests; Linux's optimised build passes.
+The [validation record](Validation/M6/initial-html-groups.md) records source
+identity, toolchain installation and remaining coverage.
+A bounded, three-sample 1 MB Release probe establishes an initial first-group
+baseline; [ProgressiveHTML](ProgressiveHTML.md) describes the API and
+[Benchmarks](Benchmarks.md#m6-progressive-html-first-stage-probe) records scope
+and raw data. No full benchmark/allocation matrix, new minimum-Swift-6.2 CI,
+consumer WebView proof or versioned publication is claimed. M6 remains open.
+
+Full benchmark/long-test series still require the existing execution approval.
+The original total estimate above excludes this added scope and must be
+revised before scheduling the remainder.
 
 <a id="repository"></a>
 
@@ -618,13 +729,12 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: M6 speed/hardening preparation. Fresh selected-extension
-measurements, broader hostile-input checks and fuzzing remain open; full
-benchmark/long-test execution still requires owner confirmation. The source-only
-0.5.0 preview is published under [Releasing](Releasing.md).
-M6 performance/hardening and any versioned publication remain separate work.
-Front matter is merged in PR #19 and named footnotes in PR #20.
-Localization and container markers are merged;
-neither completes M5's extension scope. Consumer scheduling, dependency pinning and
-device acceptance belong to consumer repositories. No new benchmark series or
-publication was part of these follow-ups.
+Current next work: complete M6's measurement/portability gates after the
+initial prepared/group-output implementation in section 10.1. General selected-extension
+performance acceptance, broad hostile-input checks and fuzzing move to M7;
+API/DocC/1.0 completion moves to M8. Full benchmark/long-test execution still
+requires the existing owner confirmation. M1–M5 and the source-only 0.5.0
+preview are complete under the documented functional/publication gates;
+consumer scheduling, dependency pinning and device acceptance stay in their
+own repositories. The initial M6 branch is not merged or released, and its
+bounded probe does not complete the full milestone.

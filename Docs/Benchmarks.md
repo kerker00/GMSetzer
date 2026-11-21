@@ -492,4 +492,69 @@ add passes when transforms are selected. Composed HTML shares the existing
 contextual tree index and renders custom title inlines once, retaining current
 hooks. The 300-callout case is a functional check, not a timing measurement.
 No new benchmark, allocation or reference-tool series was run for
-`0.5.0-dev.4`; M6 must measure these costs before making a new speed claim.
+`0.5.0-dev.4`; M6 in the original milestone numbering must measure these costs
+before making a new speed claim (general hardening is now M7; see below).
+
+## Planned progressive HTML measurements
+
+On 21 November 2026 the owner inserted progressive HTML as M6 / the 0.6
+development stage, moving general speed/hardening to M7 and API/1.0 to M8.
+[Plan 10.1](Plan.md#101-m6-progressive-html-for-large-documents) defines the
+planned output contract and acceptance gates. Historical results above retain
+their original milestone identities.
+
+M6 starts with a fresh optimised baseline that separates parsing, complete
+document preparation, first HTML-group availability, full HTML completion and
+allocation/peak-memory costs. Compare full and progressive output for 100 KB,
+1 MB and 5 MB inputs with prose, many small blocks, GFM tables, long code
+blocks, multibyte text and selected M5 combinations. Record annotation,
+extension/hook selection, toolchain and host. The first group must become
+available before materialising all HTML; total cost and largest-block fallback
+cost must also be reported. Consumers measure transfer, layout and first
+visible output separately.
+
+The initial bounded probe below provides first timing evidence, not the full
+M6 matrix or improvement targets. Execution of full benchmark/long-test runs
+still follows the existing approval requirement.
+
+## M6 progressive HTML first stage probe
+
+21 November 2026, local macOS arm64, Xcode 27.2 / Swift 6.4.2, optimised
+Release builds using SwiftPM's native build system. This is a bounded
+wall-clock probe of one deterministic 1,000,125-byte GFM document, three samples
+per variant. It is not a statistically controlled benchmark series or an
+allocation/peak-memory measurement. The corpus contains paragraphs, lists,
+tables, code, Unicode and forward references; source-range and node-anchor
+attributes are enabled. Full output is 6,272,445 UTF-8 bytes.
+
+| Stage, median milliseconds | 0.5.0-source baseline | Initial M6 implementation |
+| --- | ---: | ---: |
+| Complete parse | 35.713 | 37.161 |
+| Full HTML rendering | 63.427 | 64.014 |
+| Group-plan preparation | – | 1.533 |
+| First group after preparation | – | 2.032 |
+| Preparation plus first group, paired samples | – | 3.565 |
+| All groups including preparation | – | 64.438 |
+
+The first group contains 197,220 HTML bytes; the plan has 31 groups with a
+32,768-source-byte soft budget. Full parsing still precedes preparation. The
+probe measures full rendering before grouped output on the same document, so
+cache/order effects apply. Do not subtract the independent parse medians to
+claim a parser improvement, or treat first-group time as first-visible-output
+time. Full-output times are similar in this limited sample; the gain is
+availability of an initial part before complete HTML construction.
+
+Reproduce with `swift run --package-path Tools/ProgressiveHTMLProbe -c release
+ProgressiveHTMLProbe 1000000 3`; choose the same build system/toolchain when
+comparing variants. The probe caps input size at 5 MB and iterations at nine;
+it verifies equal output byte counts, while tests verify exact HTML equality.
+The raw [baseline](BenchmarkData/m6-progressive-html/baseline-1mb.json),
+[grouped results](BenchmarkData/m6-progressive-html/progressive-1mb.json) and
+[source hashes](BenchmarkData/m6-progressive-html/source-hashes.json) accompany
+this record. Baseline library sources are `13f0094`; the baseline driver only
+measures the unchanged parse/full-render stages of the same bounded probe.
+
+The 100 KB/5 MB and full workload/selected-extension matrix, allocator/peak
+memory data, minimum-Swift-6.2 verification and consumer transfer/layout/device
+measurements remain open. This record neither completes M6 nor changes the
+existing overall parser speed gates.

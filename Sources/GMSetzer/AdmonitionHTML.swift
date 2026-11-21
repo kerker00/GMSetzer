@@ -34,7 +34,7 @@ public enum AdmonitionHTML {
                     close: "</details>\n")
             },
             Callout.titleKind: { _ in .replace("") },
-        ])
+        ], independent: true)
     }
 
     private static func anchors(_ context: HTMLRendererContext, includeRanges: Bool) -> String {
