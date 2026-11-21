@@ -2,22 +2,23 @@
 
 **Status: 21 November 2026, M1–M6 merged and accepted under their declared
 library gates. PR #24 (`a8a0351`) adds progressive HTML on `main`; the latest
-published source-only preview remains v0.5.0. M7 now addresses general speed
+published source-only preview is v0.6.0. M7 now addresses general speed
 and hardening; API/DocC/1.0 completion stays M8.** This document is the
 reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
 
-**0.6.0 release preparation:** `release/0.6.0` starts at accepted main
-`0cf6690`, changes only the result identity from `0.6.0-dev.1` to `0.6.0`
-in runtime sources and adds release documentation/checks. No M7 mutation or
-optimization commit is included. See [release notes](Releases/0.6.0.md) and
-[validation](Validation/Release/0.6.0.md). [PR #25](https://github.com/kerker00/GMSetzer/pull/25)
-passes minimum-compiler CI on both platforms and an exact-commit public-HTTPS
-consumer check. Owner review/merge and the subsequent
-confirmed tag/publication remain pending; v0.5.0 remains the published preview.
-M7 speed/hardening development is assigned to `0.7.0-dev.1` on its separate
-branch. M8 retains the API/DocC/1.0 scope.
+**0.6.0 published:** [PR #25](https://github.com/kerker00/GMSetzer/pull/25)
+merged at `8ff206178bb07664e89fdc6a119da039fadcd581`; that exact commit is
+published as [v0.6.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0)
+on 21 November 2026. Tagged CI passes 242 Swift tests, both complete protected
+corpora, optimized builds and 31 Python tests on macOS/Swift 6.2.3 and Linux/
+Swift 6.2. A fresh public-HTTPS consumer resolves exact version 0.6.0 to the
+tagged commit and exercises M5/GFM and progressive HTML. There are no uploaded
+binary assets. See [notes](Releases/0.6.0.md) and
+[release validation](Validation/Release/0.6.0.md). M7 changes are excluded;
+speed/hardening development continues separately as `0.7.0-dev.1`, with M8
+retaining API/DocC/1.0 completion.
 
 The M4 follow-ups are merged in PR #15 (`1473d49`). The source-only v0.4.0
 release preparation and macOS/Linux CI are merged in PR #16 (`6a0eb8e`);
@@ -497,7 +498,7 @@ profile conversions, incremental parsing if measurements call for it.
 **Owner decision, 21 November 2026:** make progressive HTML the next milestone,
 referred to as M6 / the 0.6 development stage. PR #24 (`a8a0351`) is now
 merged and [accepted](M6Acceptance.md) against the declared gates. The
-implementation remains unreleased. The previous M6 hardening scope becomes
+implementation is published in the source-only v0.6.0 preview. The previous M6 hardening scope becomes
 M7; the previous M7 1.0 scope becomes M8. Version-tag publication remains a separate confirmed
 step. Historical validation/release documents retain their original M6/M7
 references; this section is authoritative for the new work order.
@@ -580,7 +581,7 @@ consumption and throwing checkpoints. Built-in footnote/admonition composition
 shares complete-document context; raw HTML, document hooks and uncertified
 order-dependent hooks have explicit whole-document fallbacks. Existing
 full-string output stays supported. The accepted M6 snapshot used development
-identity `0.6.0-dev.1`; release preparation selects `0.6.0`.
+identity `0.6.0-dev.1`; the published release uses `0.6.0`.
 
 The complete local macOS/Swift 6.4.2 Debug and Release suites and the
 Linux ARM64/Swift 6.4.2 suite each pass 239 tests, including safe and
@@ -765,4 +766,4 @@ Fresh general performance acceptance, broader hostile-input/fuzzing campaigns
 and allocation work remain M7; API/DocC/1.0 completion stays M8. Full benchmark
 and long-test execution still requires the existing owner confirmation.
 Consumer scheduling, dependency pinning and device acceptance remain in their
-own repositories. No 0.6 tag or release has been published.
+own repositories. The source-only v0.6.0 preview is published; 0.7 work remains separate.

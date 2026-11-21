@@ -1,0 +1,303 @@
+{
+  "conclusion": "success",
+  "headSha": "8ff206178bb07664e89fdc6a119da039fadcd581",
+  "jobs": [
+    {
+      "completedAt": "2026-11-21T21:12:27Z",
+      "conclusion": "success",
+      "databaseId": 136986533314,
+      "name": "Validate release tag",
+      "startedAt": "2026-11-21T21:12:17Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-21T21:12:20Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-21T21:12:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:12:24Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-11-21T21:12:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:12:25Z",
+          "conclusion": "success",
+          "name": "Require a versioned release from main with release notes",
+          "number": 3,
+          "startedAt": "2026-11-21T21:12:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:12:25Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 6,
+          "startedAt": "2026-11-21T21:12:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:12:25Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 7,
+          "startedAt": "2026-11-21T21:12:25Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/kerker00/GMSetzer/actions/runs/44950301780/job/136986533314"
+    },
+    {
+      "completedAt": "2026-11-21T21:14:38Z",
+      "conclusion": "success",
+      "databaseId": 136986597529,
+      "name": "Release checks / Swift 6.2 / ubuntu-24.04",
+      "startedAt": "2026-11-21T21:12:30Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-21T21:12:32Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-21T21:12:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:12:33Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-11-21T21:12:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:12:33Z",
+          "conclusion": "skipped",
+          "name": "Select Xcode 26.2",
+          "number": 3,
+          "startedAt": "2026-11-21T21:12:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:13:13Z",
+          "conclusion": "success",
+          "name": "Install Swift 6.2",
+          "number": 4,
+          "startedAt": "2026-11-21T21:12:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:13:13Z",
+          "conclusion": "success",
+          "name": "Report toolchain",
+          "number": 5,
+          "startedAt": "2026-11-21T21:13:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:13:52Z",
+          "conclusion": "success",
+          "name": "Test library and protected specification corpora",
+          "number": 6,
+          "startedAt": "2026-11-21T21:13:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:14:31Z",
+          "conclusion": "success",
+          "name": "Build optimized library",
+          "number": 7,
+          "startedAt": "2026-11-21T21:13:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:14:35Z",
+          "conclusion": "success",
+          "name": "Test offline development scripts",
+          "number": 8,
+          "startedAt": "2026-11-21T21:14:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:14:35Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 16,
+          "startedAt": "2026-11-21T21:14:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:14:35Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "startedAt": "2026-11-21T21:14:35Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/kerker00/GMSetzer/actions/runs/44950301780/job/136986597529"
+    },
+    {
+      "completedAt": "2026-11-21T21:14:42Z",
+      "conclusion": "success",
+      "databaseId": 136986597536,
+      "name": "Release checks / Swift 6.2 / macos-26",
+      "startedAt": "2026-11-21T21:12:31Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-21T21:12:32Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-21T21:12:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:12:34Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-11-21T21:12:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:12:34Z",
+          "conclusion": "success",
+          "name": "Select Xcode 26.2",
+          "number": 3,
+          "startedAt": "2026-11-21T21:12:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:12:34Z",
+          "conclusion": "skipped",
+          "name": "Install Swift 6.2",
+          "number": 4,
+          "startedAt": "2026-11-21T21:12:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:12:40Z",
+          "conclusion": "success",
+          "name": "Report toolchain",
+          "number": 5,
+          "startedAt": "2026-11-21T21:12:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:13:42Z",
+          "conclusion": "success",
+          "name": "Test library and protected specification corpora",
+          "number": 6,
+          "startedAt": "2026-11-21T21:12:40Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:14:32Z",
+          "conclusion": "success",
+          "name": "Build optimized library",
+          "number": 7,
+          "startedAt": "2026-11-21T21:13:42Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:14:36Z",
+          "conclusion": "success",
+          "name": "Test offline development scripts",
+          "number": 8,
+          "startedAt": "2026-11-21T21:14:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:14:37Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 16,
+          "startedAt": "2026-11-21T21:14:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:14:39Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "startedAt": "2026-11-21T21:14:37Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/kerker00/GMSetzer/actions/runs/44950301780/job/136986597536"
+    },
+    {
+      "completedAt": "2026-11-21T21:14:54Z",
+      "conclusion": "success",
+      "databaseId": 136987191892,
+      "name": "Create source-only release draft",
+      "startedAt": "2026-11-21T21:14:44Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-21T21:14:47Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-21T21:14:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:14:50Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-11-21T21:14:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:14:52Z",
+          "conclusion": "success",
+          "name": "Create draft for owner review",
+          "number": 3,
+          "startedAt": "2026-11-21T21:14:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:14:53Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 6,
+          "startedAt": "2026-11-21T21:14:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-21T21:14:53Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 7,
+          "startedAt": "2026-11-21T21:14:53Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/kerker00/GMSetzer/actions/runs/44950301780/job/136987191892"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/kerker00/GMSetzer/actions/runs/44950301780",
+  "result_log_lines": [
+    "Release checks / Swift 6.2 / ubuntu-24.04\tUNKNOWN STEP\t2026-11-21T21:13:13.6297142Z Swift version 6.2 (swift-6.2-RELEASE)",
+    "Release checks / Swift 6.2 / ubuntu-24.04\tUNKNOWN STEP\t2026-11-21T21:13:13.7047661Z Swift version 6.2 (swift-6.2-RELEASE)",
+    "Release checks / Swift 6.2 / ubuntu-24.04\tUNKNOWN STEP\t2026-11-21T21:13:52.5084459Z \u2714 Test run with 242 tests in 28 suites passed after 2.362 seconds.",
+    "Release checks / Swift 6.2 / ubuntu-24.04\tUNKNOWN STEP\t2026-11-21T21:14:35.4858630Z Ran 31 tests in 3.477s",
+    "Release checks / Swift 6.2 / ubuntu-24.04\tUNKNOWN STEP\t2026-11-21T21:14:35.4858967Z OK",
+    "Release checks / Swift 6.2 / macos-26\tUNKNOWN STEP\t2026-11-21T21:12:40.9312320Z Apple Swift version 6.2.3 (swiftlang-6.2.3.3.21 clang-1700.6.3.2)",
+    "Release checks / Swift 6.2 / macos-26\tUNKNOWN STEP\t2026-11-21T21:13:42.2156970Z \u2714 Test run with 242 tests in 28 suites passed after 2.138 seconds.",
+    "Release checks / Swift 6.2 / macos-26\tUNKNOWN STEP\t2026-11-21T21:14:36.7687130Z Ran 31 tests in 2.630s",
+    "Release checks / Swift 6.2 / macos-26\tUNKNOWN STEP\t2026-11-21T21:14:36.7687360Z OK"
+  ]
+}

@@ -47,7 +47,7 @@ Consumers can pin the version with:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/kerker00/GMSetzer.git", exact: "0.5.0"),
+    .package(url: "https://github.com/kerker00/GMSetzer.git", exact: "0.6.0"),
 ],
 targets: [
     .target(name: "MyTarget", dependencies: [
@@ -69,7 +69,7 @@ passed tag validation, macOS/Linux CI and draft creation. The draft was checked
 against [version-specific notes](Releases/0.5.0.md), then published as a preview
 with zero uploaded assets. GitHub supplies the two automatic source archives.
 
-The latest published preview is
+At that checkpoint the published preview was
 [v0.5.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.5.0).
 An isolated public-HTTPS SwiftPM consumer resolves exact version 0.5.0 to
 `2d8ecef4050976b0e817f0aaeba30fea4b3ac3d1` and exercises the library successfully.
@@ -77,21 +77,26 @@ See [executed release evidence](Validation/Release/0.5.0.md). Products,
 dependencies, workflow definitions and protected fixtures are unchanged.
 
 
-## 0.6.0 preparation and 0.7 development
+## 0.6.0 publication and 0.7 development
 
-The owner selected the accepted M6 main snapshot (`0cf6690`, after PR #24)
-for source-only 0.6.0 preparation on 21 November 2026. The release branch
-changes only `GMSetzerVersion.current` to `0.6.0` in runtime sources and adds
-[notes](Releases/0.6.0.md) / [executed checks](Validation/Release/0.6.0.md).
-It excludes the M7 mutation tests, baseline additions and parser optimization;
-that work continues separately as `0.7.0-dev.1`.
+The owner merged [PR #25](https://github.com/kerker00/GMSetzer/pull/25) at
+`8ff206178bb07664e89fdc6a119da039fadcd581`. With the agreed publication,
+annotated `v0.6.0` was created at that exact commit. The
+[release workflow](https://github.com/kerker00/GMSetzer/actions/runs/44950301780)
+passes tag validation, macOS/Linux minimum-toolchain checks and draft creation.
+The draft's notes, immutable tag target, prerelease flag and zero uploaded
+assets were checked before publication.
 
-[Preparation PR #25](https://github.com/kerker00/GMSetzer/pull/25) passes
-minimum Swift 6.2 CI on both platforms; a fresh public-HTTPS consumer resolves
-and exercises its exact source commit. See the validation record for exact
-versions, results and receipt links. The 0.6.0 candidate is not a published tag. The owner merges its preparation
-PR; the exact merged commit is then verified before the separately confirmed
-tag and publication sequence above. v0.5.0 remains the published preview until
-those steps complete. Historical M6 resource measurements describe the accepted
-M6 source; the candidate differs only in its identity constant and makes no
-new timing/resource claim.
+The latest published source-only preview is
+[v0.6.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0).
+Both automatic source archives return HTTP 200. A fresh public-HTTPS SwiftPM
+consumer resolves exact version 0.6.0 to the tagged commit and passes the
+M5/GFM/progressive HTML and identity checks. See [notes](Releases/0.6.0.md) and
+[executed release checks](Validation/Release/0.6.0.md) for receipts and limits.
+
+The release retains the accepted M6 implementation and changes only its result
+identity to `0.6.0` in runtime sources. Historical M6 timings keep their original
+hashes and are not relabelled as fresh release measurements. M7 mutation,
+benchmark and parser optimization changes are excluded; that work continues
+separately as `0.7.0-dev.1`. No tag is moved or rewritten by documentation
+follow-up or development-branch synchronization.

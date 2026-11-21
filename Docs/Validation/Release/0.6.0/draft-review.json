@@ -1,0 +1,12 @@
+{
+  "tag": "v0.6.0",
+  "tag_object": "c1914a85cf90eacd890200df902887e59c52dbc8",
+  "commit": "8ff206178bb07664e89fdc6a119da039fadcd581",
+  "release_workflow": "44950301780",
+  "all_four_release_jobs_passed": true,
+  "notes_sha256": "2670071adaa7f37dff61e3687e51aa4502aaebb44f82f729d85cb0db47ef03fa",
+  "exact_notes_match": true,
+  "prerelease": true,
+  "uploaded_assets": 0,
+  "exact_version_consumer_passed": true
+}

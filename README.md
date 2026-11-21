@@ -10,12 +10,12 @@ wherever Swift runs, including Linux.
 > [library gates are accepted](Docs/M6Acceptance.md). Merged-main CI passes
 > 242 Swift tests, all 652 CommonMark and 672 GFM examples, optimized builds
 > and 31 Python tests on macOS/Swift 6.2.3 and Linux/Swift 6.2. The latest
-> published source-only preview remains v0.5.0; M6 is not in that release.
+> published source-only preview is [v0.6.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0), including M6.
 
 [PR #24](https://github.com/kerker00/GMSetzer/pull/24) (`a8a0351`) adds
-**progressive HTML**. The `release/0.6.0` preparation selects result identity
-`0.6.0`; its source-only tag/release is not published yet.
-[PR #25](https://github.com/kerker00/GMSetzer/pull/25) contains this preparation. See the
+**progressive HTML**. [PR #25](https://github.com/kerker00/GMSetzer/pull/25)
+merged the source-only 0.6.0 preparation at `8ff2061`; that exact commit is
+published as **v0.6.0**, with parser/native-provider identity `0.6.0`. See the
 [release notes](Docs/Releases/0.6.0.md) and
 [preparation checks](Docs/Validation/Release/0.6.0.md).
 `HTMLRenderer.prepare` and `FootnotesHTMLRenderer.prepare` retain complete
@@ -24,13 +24,13 @@ whole-document fallbacks for raw HTML and document-order hooks. The
 [API and limits](Docs/ProgressiveHTML.md), [self-review](Docs/Review-M6.md)
 and [M6 acceptance](Docs/M6Acceptance.md) describe the supported contract.
 
-The 42-case Linux ARM64 stage/RSS/allocation matrix meets the reviewed
+The accepted M6 snapshot's 42-case Linux ARM64 stage/RSS/allocation matrix meets the reviewed
 post-baseline budgets. Mixed 1 MB/5 MB inputs reach first HTML in about half
 the parse-plus-full-output time on that host. Full parsing still precedes
 output; giant blocks remain indivisible and no general peak-memory reduction
-is established. The existing [0.5.0 installation](#installation) stays valid.
+is established. The [0.6.0 installation](#installation) includes progressive output.
 
-The accepted M6 snapshot is the basis of **0.6.0**; the M7 changes remain
+The accepted M6 snapshot is published in **0.6.0**; the M7 changes remain
 on their separate development branch for **0.7.0**. Next is **M7: general
 speed and hardening**, beginning with reproducible
 adversarial/mutation coverage and a measured investigation of remaining costs.
@@ -75,16 +75,16 @@ registry are required.
 
 ## Installation
 
-Pin the **0.5.0 preview release** with Swift Package Manager:
+Pin the **0.6.0 preview release** with Swift Package Manager:
 
 ```swift
-.package(url: "https://github.com/kerker00/GMSetzer.git", exact: "0.5.0")
+.package(url: "https://github.com/kerker00/GMSetzer.git", exact: "0.6.0")
 ```
 
 Add `.product(name: "GMSetzer", package: "GMSetzer")` to your target's
 dependencies. APIs may change before 1.0. GitHub provides source ZIP and tar.gz
 archives; no binary assets are uploaded. See the
-[release notes](Docs/Releases/0.5.0.md) and
+[release notes](Docs/Releases/0.6.0.md) and
 [release process](Docs/Releasing.md) for scope, checks and publication steps.
 
 ## Independence
