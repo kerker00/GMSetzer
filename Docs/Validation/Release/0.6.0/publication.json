@@ -1,0 +1,19 @@
+{
+  "assets": [],
+  "isDraft": false,
+  "isPrerelease": true,
+  "name": "GMSetzer v0.6.0",
+  "publishedAt": "2026-11-21T21:15:52Z",
+  "tagName": "v0.6.0",
+  "url": "https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0",
+  "source_archives": [
+    {
+      "url": "https://github.com/kerker00/GMSetzer/archive/refs/tags/v0.6.0.zip",
+      "http_status": 200
+    },
+    {
+      "url": "https://github.com/kerker00/GMSetzer/archive/refs/tags/v0.6.0.tar.gz",
+      "http_status": 200
+    }
+  ]
+}

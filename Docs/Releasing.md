@@ -47,7 +47,7 @@ Consumers can pin the version with:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/kerker00/GMSetzer.git", exact: "0.5.0"),
+    .package(url: "https://github.com/kerker00/GMSetzer.git", exact: "0.6.0"),
 ],
 targets: [
     .target(name: "MyTarget", dependencies: [
@@ -69,7 +69,7 @@ passed tag validation, macOS/Linux CI and draft creation. The draft was checked
 against [version-specific notes](Releases/0.5.0.md), then published as a preview
 with zero uploaded assets. GitHub supplies the two automatic source archives.
 
-The latest published preview is
+At that checkpoint the published preview was
 [v0.5.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.5.0).
 An isolated public-HTTPS SwiftPM consumer resolves exact version 0.5.0 to
 `2d8ecef4050976b0e817f0aaeba30fea4b3ac3d1` and exercises the library successfully.
@@ -77,17 +77,37 @@ See [executed release evidence](Validation/Release/0.5.0.md). Products,
 dependencies, workflow definitions and protected fixtures are unchanged.
 
 
-## 0.6.0 / 0.7 development boundary
+## 0.6.0 publication and 0.7 development
 
-The owner selected accepted main `0cf6690` for separate source-only 0.6.0
-preparation on 21 November 2026. [PR #25](https://github.com/kerker00/GMSetzer/pull/25)
-from `release/0.6.0` retains the accepted M6
-parser/rendering implementation and changes only its result identity to
-`0.6.0` in runtime sources. It excludes all M7 commits. Owner review/merge,
-exact merged-commit selection and the confirmed tag/publication sequence
-remain required; v0.5.0 remains the published preview until then.
+The owner merged [PR #25](https://github.com/kerker00/GMSetzer/pull/25) at
+`8ff206178bb07664e89fdc6a119da039fadcd581`. With the agreed publication,
+annotated `v0.6.0` was created at that exact commit. The
+[release workflow](https://github.com/kerker00/GMSetzer/actions/runs/44950301780)
+passes tag validation, macOS/Linux minimum-toolchain checks and draft creation.
+The draft's notes, immutable tag target, prerelease flag and zero uploaded
+assets were checked before publication.
 
-`feature/m7-hardening` continues separately as `0.7.0-dev.1`. Its mutation
-coverage, baseline data and parser optimization are not part of the 0.6.0
-release. Existing M7 measurements keep their recorded identity/hashes; the
-version-only transition does not retarget them or imply 0.7 acceptance.
+The latest published source-only preview is
+[v0.6.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0).
+Both automatic source archives return HTTP 200. A fresh public-HTTPS SwiftPM
+consumer resolves exact version 0.6.0 to the tagged commit and passes the
+M5/GFM/progressive HTML and identity checks. See [notes](Releases/0.6.0.md) and
+[executed release checks](Validation/Release/0.6.0.md) for receipts and limits.
+
+The release retains the accepted M6 implementation and changes only its result
+identity to `0.6.0` in runtime sources. Historical M6 timings keep their original
+hashes and are not relabelled as fresh release measurements. M7 mutation,
+benchmark and parser optimization changes are excluded; that work continues
+separately as `0.7.0-dev.1`. No tag is moved or rewritten by documentation
+follow-up or development-branch synchronization.
+
+
+## Current M7 development
+
+`feature/m7-hardening` continues as `0.7.0-dev.1`, with mutation coverage,
+benchmark data and parser optimization kept outside the published 0.6.0 tag.
+The published main is merged into this local development branch while retaining
+its tested parser/rendering source and original measurement commit history.
+Version-only or documentation integration does not retarget historical timing
+receipts or imply M7 acceptance; the remaining validation is in
+[M7Hardening](M7Hardening.md).

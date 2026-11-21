@@ -2,9 +2,9 @@
 
 M6 is merged in PR #24 (`a8a0351`) and [accepted](M6Acceptance.md),
 21 November 2026.
-The accepted M6 snapshot used `0.6.0-dev.1`; its 0.6.0 release is being
-prepared separately. This M7 development branch uses `0.7.0-dev.1`, not a
-published version. This API consumes
+The accepted M6 snapshot used `0.6.0-dev.1` and is published separately as
+[v0.6.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0). This M7
+branch uses `0.7.0-dev.1`, which is not a published version. This API consumes
 an already parsed, complete `Document` and returns structural HTML on demand.
 It does not stream or incrementally parse Markdown.
 

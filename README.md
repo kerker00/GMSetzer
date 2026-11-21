@@ -10,12 +10,14 @@ wherever Swift runs, including Linux.
 > [library gates are accepted](Docs/M6Acceptance.md). Merged-main CI passes
 > 242 Swift tests, all 652 CommonMark and 672 GFM examples, optimized builds
 > and 31 Python tests on macOS/Swift 6.2.3 and Linux/Swift 6.2. The latest
-> published source-only preview remains v0.5.0; M6 is not in that release.
+> published source-only preview is [v0.6.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0), including M6.
 
 [PR #24](https://github.com/kerker00/GMSetzer/pull/24) (`a8a0351`) adds
 **progressive HTML**; its accepted M6 snapshot used identity `0.6.0-dev.1`.
-That implementation is being prepared separately as source-only **0.6.0**
-in [PR #25](https://github.com/kerker00/GMSetzer/pull/25).
+That implementation is published separately as source-only **v0.6.0** at
+`8ff2061`, after [PR #25](https://github.com/kerker00/GMSetzer/pull/25) merged.
+See its [release notes](Docs/Releases/0.6.0.md) and
+[validation](Docs/Validation/Release/0.6.0.md).
 This M7 branch now reports **`0.7.0-dev.1`** and retains the new hardening/
 optimization work for the next preview.
 `HTMLRenderer.prepare` and `FootnotesHTMLRenderer.prepare` retain complete
@@ -28,7 +30,7 @@ For the accepted M6 snapshot, the 42-case Linux ARM64 stage/RSS/allocation
 matrix meets the reviewed post-baseline budgets. Mixed 1 MB/5 MB inputs reach
 first HTML in about half the parse-plus-full-output time on that host. Full parsing still precedes
 output; giant blocks remain indivisible and no general peak-memory reduction
-is established. The existing [0.5.0 installation](#installation) stays valid.
+is established. The [0.6.0 installation](#installation) includes progressive output.
 
 Next is **M7: general speed and hardening**, beginning with reproducible
 adversarial/mutation coverage and a measured investigation of remaining costs.
@@ -94,16 +96,16 @@ registry are required.
 
 ## Installation
 
-Pin the **0.5.0 preview release** with Swift Package Manager:
+Pin the **0.6.0 preview release** with Swift Package Manager:
 
 ```swift
-.package(url: "https://github.com/kerker00/GMSetzer.git", exact: "0.5.0")
+.package(url: "https://github.com/kerker00/GMSetzer.git", exact: "0.6.0")
 ```
 
 Add `.product(name: "GMSetzer", package: "GMSetzer")` to your target's
 dependencies. APIs may change before 1.0. GitHub provides source ZIP and tar.gz
 archives; no binary assets are uploaded. See the
-[release notes](Docs/Releases/0.5.0.md) and
+[release notes](Docs/Releases/0.6.0.md) and
 [release process](Docs/Releasing.md) for scope, checks and publication steps.
 
 ## Independence

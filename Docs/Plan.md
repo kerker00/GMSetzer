@@ -2,21 +2,22 @@
 
 **Status: 21 November 2026, M1–M6 merged and accepted under their declared
 library gates. PR #24 (`a8a0351`) adds progressive HTML on `main`; the latest
-published source-only preview remains v0.5.0. M7 now addresses general speed
+published source-only preview is v0.6.0. M7 now addresses general speed
 and hardening; API/DocC/1.0 completion stays M8.** This document is the
 reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
 
-**Version boundary, 21 November 2026:** the owner selected accepted main
-`0cf6690` for separate source-only 0.6.0 preparation on `release/0.6.0`
-in [PR #25](https://github.com/kerker00/GMSetzer/pull/25).
-The release excludes all M7 commits. This `feature/m7-hardening` branch now
-uses result identity `0.7.0-dev.1`; its parser optimization and new hardening
-tests belong to 0.7 development. The latest published preview remains v0.5.0
-until owner merge and the confirmed 0.6.0 tag/publication sequence complete.
-Existing measurement receipts retain their original identities and hashes;
-changing the development version does not create new performance evidence.
+**Version boundary, 21 November 2026:** [PR #25](https://github.com/kerker00/GMSetzer/pull/25)
+merged at `8ff206178bb07664e89fdc6a119da039fadcd581`, published as the
+source-only [v0.6.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0)
+preview. Tagged macOS/Linux Swift 6.2 CI, both source archives and an independent
+public-HTTPS exact-version consumer pass; see [release validation](Validation/Release/0.6.0.md).
+The release excludes all M7 commits. This `feature/m7-hardening` branch uses
+`0.7.0-dev.1` and retains its mutation tests, benchmark evidence and parser
+optimization. Main is integrated without rewriting that recorded commit
+history. Existing measurements keep their original identities/hashes; this
+integration changes no M7 parser/rendering code, tests, scripts or workflow.
 M8 remains the API/DocC/1.0 stage.
 
 The M4 follow-ups are merged in PR #15 (`1473d49`). The source-only v0.4.0
@@ -497,7 +498,7 @@ profile conversions, incremental parsing if measurements call for it.
 **Owner decision, 21 November 2026:** make progressive HTML the next milestone,
 referred to as M6 / the 0.6 development stage. PR #24 (`a8a0351`) is now
 merged and [accepted](M6Acceptance.md) against the declared gates. The
-implementation remains unreleased. The previous M6 hardening scope becomes
+implementation is published in the source-only v0.6.0 preview. The previous M6 hardening scope becomes
 M7; the previous M7 1.0 scope becomes M8. Version-tag publication remains a separate confirmed
 step. Historical validation/release documents retain their original M6/M7
 references; this section is authoritative for the new work order.
@@ -785,4 +786,4 @@ Fresh general performance acceptance, broader hostile-input/fuzzing campaigns
 and allocation work remain M7; API/DocC/1.0 completion stays M8. Full benchmark
 and long-test execution still requires the existing owner confirmation.
 Consumer scheduling, dependency pinning and device acceptance remain in their
-own repositories. No 0.6 tag or release has been published.
+own repositories. The source-only v0.6.0 preview is published; 0.7 work remains separate.
