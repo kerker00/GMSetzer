@@ -69,6 +69,16 @@ For `> [α]: <>\r\n> "t"\r\n`, the label is `[3, 5)`, the empty destination
 `[9, 9)`, and the title `[15, 16)`. Tests validate these exact values and reject
 metadata outside its definition node.
 
+## Prepared output in M6
+
+The initial M6 implementation adds opt-in `HTMLRenderer.prepare` and a
+snapshot-local group plan; see [ProgressiveHTML](ProgressiveHTML.md). Full
+rendering is unchanged. Safe/default grouped output uses the same escaping,
+decoded-URL checks, comment and source-anchor rules. Allowing raw HTML uses an
+explicit whole-document fallback, because a source wrapper can cross block
+boundaries. Document hooks and uncertified order-dependent hooks also fall
+back; declaring independent hooks remains a caller trust/structure contract.
+
 ## Initial HTML/reference verification (historical)
 
 - 49 library Swift Testing tests pass: original tree/container checks, HTML

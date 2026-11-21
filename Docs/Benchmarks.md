@@ -492,4 +492,151 @@ add passes when transforms are selected. Composed HTML shares the existing
 contextual tree index and renders custom title inlines once, retaining current
 hooks. The 300-callout case is a functional check, not a timing measurement.
 No new benchmark, allocation or reference-tool series was run for
-`0.5.0-dev.4`; M6 must measure these costs before making a new speed claim.
+`0.5.0-dev.4`; M6 in the original milestone numbering must measure these costs
+before making a new speed claim (general hardening is now M7; see below).
+
+## Planned progressive HTML measurements
+
+On 21 November 2026 the owner inserted progressive HTML as M6 / the 0.6
+development stage, moving general speed/hardening to M7 and API/1.0 to M8.
+[Plan 10.1](Plan.md#101-m6-progressive-html-for-large-documents) defines the
+planned output contract and acceptance gates. Historical results above retain
+their original milestone identities.
+
+M6 starts with a fresh optimised baseline that separates parsing, complete
+document preparation, first HTML-group availability, full HTML completion and
+allocation/peak-memory costs. Compare full and progressive output for 100 KB,
+1 MB and 5 MB inputs with prose, many small blocks, GFM tables, long code
+blocks, multibyte text and selected M5 combinations. Record annotation,
+extension/hook selection, toolchain and host. The first group must become
+available before materialising all HTML; total cost and largest-block fallback
+cost must also be reported. Consumers measure transfer, layout and first
+visible output separately.
+
+The initial bounded probe below supplies the first timing evidence. The
+owner-authorised 42-case Linux ARM64 follow-up now records the workload/size/
+annotation matrix, allocation requests and whole-process peak RSS. Quantitative
+M6 acceptance targets remain open. Further full benchmark/long-test runs still
+follow the existing approval requirement.
+
+## M6 progressive HTML first stage probe
+
+21 November 2026, local macOS arm64, Xcode 27.2 / Swift 6.4.2, optimised
+Release builds using SwiftPM's native build system. This is a bounded
+wall-clock probe of one deterministic 1,000,125-byte GFM document, three samples
+per variant. It is not a statistically controlled benchmark series or an
+allocation/peak-memory measurement. The corpus contains paragraphs, lists,
+tables, code, Unicode and forward references; source-range and node-anchor
+attributes are enabled. Full output is 6,272,445 UTF-8 bytes.
+
+| Stage, median milliseconds | 0.5.0-source baseline | Initial M6 implementation |
+| --- | ---: | ---: |
+| Complete parse | 35.713 | 37.161 |
+| Full HTML rendering | 63.427 | 64.014 |
+| Group-plan preparation | – | 1.533 |
+| First group after preparation | – | 2.032 |
+| Preparation plus first group, paired samples | – | 3.565 |
+| All groups including preparation | – | 64.438 |
+
+The first group contains 197,220 HTML bytes; the plan has 31 groups with a
+32,768-source-byte soft budget. Full parsing still precedes preparation. The
+probe measures full rendering before grouped output on the same document, so
+cache/order effects apply. Do not subtract the independent parse medians to
+claim a parser improvement, or treat first-group time as first-visible-output
+time. Full-output times are similar in this limited sample; the gain is
+availability of an initial part before complete HTML construction.
+
+Reproduce the historical v1 probe from commit `087e694` with
+`swift run --package-path Tools/ProgressiveHTMLProbe -c release
+ProgressiveHTMLProbe 1000000 3`; choose the same build system/toolchain when
+comparing variants. The current driver is the expanded v2 probe below; the
+v1 driver hash remains evidence for its original source at that commit. The probe caps input size at 5 MB and iterations at nine;
+it verifies equal output byte counts, while tests verify exact HTML equality.
+The raw [baseline](BenchmarkData/m6-progressive-html/baseline-1mb.json),
+[grouped results](BenchmarkData/m6-progressive-html/progressive-1mb.json) and
+[source hashes](BenchmarkData/m6-progressive-html/source-hashes.json) accompany
+this record. Baseline library sources are `13f0094`; the baseline driver only
+measures the unchanged parse/full-render stages of the same bounded probe.
+
+The Linux follow-up below adds the 100 KB/5 MB workload and one representative
+M5-composition matrix, gross allocation requests and peak RSS. Minimum Swift
+6.2 verification, M6 target acceptance and consumer transfer/layout/device
+measurements remain separate. Neither record completes M6 or changes the
+existing overall parser speed gates.
+
+
+## M6 Linux ARM64 workload and resource matrix
+
+21 November 2026, owner-provided Raspberry Pi 5 (four cores, approximately
+8 GiB RAM), Debian 13.7/aarch64, Swift 6.4.2, native Release build. Library
+sources are unchanged from `087e694`; the development driver is expanded to
+`progressive-<workload>-v2`. This compares full/grouped output at the same
+revision and host, not the historical macOS probe or the frozen C ratio gates.
+
+All **42 cases** pass exact HTML equality: seven workloads (mixed GFM, prose,
+many small blocks, tables, one long code block, multibyte text and all five M5
+extensions together), three sizes (100 KB/1 MB/5 MB), syntax details off/on.
+Source ranges and node anchors are enabled. Eight uninstrumented timing samples
+follow one warmup, alternating operation order. Separate fresh processes
+measure whole-process peak RSS (three repeats per pipeline) and calling-thread
+allocation requests (one instrumented run per pipeline). Raw records contain
+actual rounded source/HTML byte counts and every sample. The sequential series
+uses 756 subprocesses and takes 13.9 minutes, excluding build and smoke checks.
+
+Mixed GFM, syntax details off, medians in milliseconds. `First` includes
+preparation and the first group, after parsing; combined values are paired
+sums of timed intervals, excluding harness bookkeeping.
+
+| Nominal size (actual bytes) | Parse | Full HTML | First | All groups | Parse + first | Parse + full |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 100 KB (100,172) | 11.55 | 13.42 | 4.63 | 13.36 | 16.14 | 24.90 |
+| 1 MB (1,000,140) | 116.70 | 137.08 | 9.07 | 131.79 | 125.79 | 253.63 |
+| 5 MB (5,000,068) | 562.75 | 673.74 | 27.85 | 658.84 | 590.13 | 1,229.37 |
+
+The 1 MB/5 MB mixed cases deliver initial HTML in approximately half the
+parse-plus-full-output time. Full completion stays similar in these samples;
+these numbers establish no statistically controlled overall speed-up.
+
+The resource and fallback results limit that benefit:
+
+- One 5 MB code block remains one group: first output 64.34 ms versus full
+  rendering 64.22 ms after parsing, with no early-output gain.
+- The 5 MB many-small-blocks input takes 124.91 ms to first output versus
+  1,957.99 ms for full HTML, after 1,114.40 ms parsing. Its source expands to
+  102.8 MB HTML with anchors/ranges. Peak RSS is approximately 811 MiB for
+  parse-only, full and grouped modes. Mixed 5 MB peaks around 255 MiB in all
+  three modes. No general peak-memory reduction is established.
+- Allocation volume varies by workload: grouping reduces gross requested
+  render/preparation bytes for mixed/table/M5 cases but increases them for
+  prose and multibyte text. Counts/bytes are single synchronous-thread
+  samples, not live memory or all process allocations.
+- All-M5 1 MB parsing takes 506.27 ms without syntax details and 947.60 ms
+  with them. Group preparation/global context remains necessary; first output
+  then takes 67.19/67.96 ms. At 5 MB with details, parsing takes 4,966.99 ms
+  before 354.29 ms to first output. Grouping does not solve that parser cost,
+  and the footnote appendix remains indivisible.
+
+The [full report](Validation/M6/linux-arm64-measurements.md) includes all
+syntax-off timings, peak/allocation tables, annotation costs and environment
+limits. [CSV](BenchmarkData/m6-progressive-html/linux-arm64-2026-11-21/summary.csv),
+[summary JSON](BenchmarkData/m6-progressive-html/linux-arm64-2026-11-21/summary.json),
+[receipt/source hashes](BenchmarkData/m6-progressive-html/linux-arm64-2026-11-21/receipt.json)
+and [all raw records](BenchmarkData/m6-progressive-html/linux-arm64-2026-11-21/raw-results.tar.gz)
+retain the evidence. The [probe instructions](../Tools/ProgressiveHTMLProbe/README.md)
+describe reproduction and metric boundaries. The [review follow-up](Validation/M6/review-readiness.md)
+adds explicit post-baseline first-output/completion/RSS budgets: all 42
+archived cases pass with matching runtime sources. The checker validates raw
+records and completeness offline; this is not a fresh timing series or a
+statistical regression verdict. macOS/Swift 6.2 tests and the optimized build
+pass; [PR #24 CI](https://github.com/kerker00/GMSetzer/actions/runs/44926163013)
+also passes on macOS/Swift 6.2.3 and Linux/Swift 6.2. Owner review and merge remain open. Application transfer,
+layout and first-visible-output measurements remain outside this library work.
+
+
+The [pre-push self-review](Review-M6.md) corrects source inventory checks and
+measurement provenance without changing the runtime or old results. The
+current runtime matches all 43 manifest/Swift hashes and its complete source
+set. The full historical harness additionally matches all 48 files read from
+`fe6a505`; its updated runner intentionally differs. New receipts use schema 2
+with actual Git/dirty state and the selected compiler. No new timing, RSS or
+allocation series was run for these tool/test corrections.

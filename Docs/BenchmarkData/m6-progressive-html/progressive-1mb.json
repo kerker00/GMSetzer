@@ -1,0 +1,44 @@
+{
+  "corpus" : "progressive-mixed-v1",
+  "iterations" : 3,
+  "samples" : [
+    {
+      "all_groups_including_preparation_ms" : 64.438209000000001,
+      "first_group_bytes" : 197220,
+      "first_group_ms" : 2.032375,
+      "first_group_ready_after_parse_ms" : 3.5652089999999999,
+      "full_html_ms" : 65.586708999999999,
+      "groups" : 31,
+      "html_bytes" : 6272445,
+      "nodes" : 158751,
+      "parse_ms" : 57.089708000000002,
+      "prepare_ms" : 1.532834
+    },
+    {
+      "all_groups_including_preparation_ms" : 63.976292000000001,
+      "first_group_bytes" : 197220,
+      "first_group_ms" : 1.98075,
+      "first_group_ready_after_parse_ms" : 3.4654590000000001,
+      "full_html_ms" : 64.013750000000002,
+      "groups" : 31,
+      "html_bytes" : 6272445,
+      "nodes" : 158751,
+      "parse_ms" : 37.161458000000003,
+      "prepare_ms" : 1.4847090000000001
+    },
+    {
+      "all_groups_including_preparation_ms" : 65.608707999999993,
+      "first_group_bytes" : 197220,
+      "first_group_ms" : 2.0786660000000001,
+      "first_group_ready_after_parse_ms" : 3.6324160000000001,
+      "full_html_ms" : 63.275208999999997,
+      "groups" : 31,
+      "html_bytes" : 6272445,
+      "nodes" : 158751,
+      "parse_ms" : 35.990707999999998,
+      "prepare_ms" : 1.55375
+    }
+  ],
+  "scope" : "bounded wall-clock stage probe; no allocation\/peak-memory or web-view measurement",
+  "source_bytes" : 1000125
+}

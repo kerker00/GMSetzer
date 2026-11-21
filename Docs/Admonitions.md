@@ -125,6 +125,12 @@ boundary.
 
 ## Rendering and other services
 
+On the initial M6 branch, `AdmonitionHTML.renderer` certifies its built-in
+hooks as independent for [prepared HTML groups](ProgressiveHTML.md). A custom
+base hook still requires an explicit `HTMLHookBehavior.independent` promise;
+otherwise composition keeps the documented whole-document fallback. Existing
+full-string rendering and complete-document title/footnote context are unchanged.
+
 `AdmonitionHTML.renderer(base, alertTitles:calloutTitles:)` lives in the
 `GMSetzer` convenience product. It returns an ordinary `HTMLRenderer` with
 contextual hooks. Alerts use `<aside>` plus a generated title. Plain callouts

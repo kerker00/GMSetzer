@@ -12,6 +12,33 @@ wherever Swift runs, including Linux.
 > source-only preview is [v0.5.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.5.0),
 > published at `2d8ecef` after successful release CI and exact-version SwiftPM validation.
 
+Work toward **M6 / the 0.6 development stage: progressive HTML** is implemented
+on `feature/m6-progressive-html`, with review follow-up on
+`feature/m6-validation` and development identity `0.6.0-dev.1`.
+`HTMLRenderer.prepare` and `FootnotesHTMLRenderer.prepare` retain full-document
+context and make structural HTML groups available on demand. Whole-document
+fallbacks preserve raw HTML and order-dependent hooks. See the
+[API and limits](Docs/ProgressiveHTML.md). The concept and remaining gates are in
+[Plan 10.1](Docs/Plan.md#101-m6-progressive-html-for-large-documents).
+General performance/hardening moves to **M7** and API/DocC/1.0 completion to
+**M8**. The branch is not merged/released and M6's full measurement acceptance
+awaits owner review and PR CI; these additions are not capabilities of the published 0.5.0.
+The initial implementation passes 239 tests on macOS (Debug/Release) and
+Linux ARM64, plus 17 script tests on each host; see the
+[M6 validation record](Docs/Validation/M6/initial-html-groups.md).
+The owner-authorised [42-case Linux ARM64 measurement matrix](Docs/Validation/M6/linux-arm64-measurements.md)
+records stage timing, peak RSS and allocation requests. Mixed 1 MB/5 MB inputs
+reach first HTML in about half the parse-plus-full-output time on that host;
+giant blocks have no early-output gain and no general peak-memory reduction is
+established. A [review-readiness follow-up](Docs/Validation/M6/review-readiness.md)
+passes all 242 tests with Swift 6.2 on macOS and checks all 42 measurement cases
+against explicit post-baseline budgets. The optimized Swift 6.2 build and all
+31 offline Python tests pass, including optimised-Python guard checks. The
+[self-review](Docs/Review-M6.md) records corrected source/provenance checks and
+expanded cancellation coverage. [PR #24 CI](https://github.com/kerker00/GMSetzer/actions/runs/44926163013)
+now passes all 242 Swift tests, optimized builds and 31 Python tests on macOS
+and Linux with Swift 6.2; owner review and merge remain open.
+
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented
 [message-key/argument catalogue](Docs/NativeAnalysisMessages.md). The v0.4.0
@@ -103,6 +130,8 @@ and device acceptance do not determine this package's API or release readiness.
 
 - [Docs/Plan.md](Docs/Plan.md) – requirements, decisions, architecture,
   milestones and licence rules. Start here.
+- [Docs/ProgressiveHTML.md](Docs/ProgressiveHTML.md) – prepared structural HTML,
+  pull consumption/cancellation, complete-document context and explicit fallbacks.
 - [Docs/Benchmarks.md](Docs/Benchmarks.md) – measurements against cmark-gfm.
 - [Docs/Portability.md](Docs/Portability.md) – Swift 6.2 tests, Linux ARM64
   execution evidence, SDK selection, span availability and remaining coverage.
@@ -146,7 +175,7 @@ M5 selection/rendering examples are documented in [FrontMatter](Docs/FrontMatter
 | `SetzerSyntax` | Validated block/inline tree, source ranges/tokens, parent/offset/outline index, position conversion, diagnostic/fix values | Additional query conveniences |
 | `SetzerParser` | Block/inline parser, custom rules/children, pre/post transforms and profiles | Additional dialect syntax |
 | `SetzerExtensions` | GFM profile; raw YAML/TOML front matter; named footnotes; opaque TeX; alerts/callouts | Further dialects |
-| `SetzerHTML` | CommonMark and GFM HTML, source anchors, escaping, comment policy, tag filter and decoded URL checks | – |
+| `SetzerHTML` | CommonMark/GFM HTML, source anchors and safe defaults; initial M6 prepared/grouped output on this feature branch | M6 review and CI acceptance |
 | `SetzerAnalysis` | Three optional native rules over the existing document | Broader rule catalogue |
 | `GMSetzer` | Imports the five modules above; composed footnote HTML and admonition HTML recipe | Additional convenience APIs |
 

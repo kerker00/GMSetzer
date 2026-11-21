@@ -109,6 +109,13 @@ Disable rules independently through `Profile.disabledRules` using
 
 ## HTML and other services
 
+The initial M6 branch also exposes `FootnotesHTMLRenderer.prepare` for
+[progressive HTML](ProgressiveHTML.md). It prepares numbering/reference context
+once, omits top-level definitions from body groups and emits cited notes as
+one lazy final appendix. Out-of-order requests preserve numbering/backlinks;
+raw HTML or non-independent caller hooks retain a whole-document fallback.
+This addition does not change the 0.5.0 grammar or full-string output.
+
 `FootnotesHTMLRenderer(renderer:idPrefix:backlinkLabel:)` renders body calls as
 numbered links, then appends a `section.footnotes` with an ordered list of cited
 definitions and one backlink per reachable call. Unused and duplicate

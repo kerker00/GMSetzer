@@ -1,0 +1,26 @@
+{
+  "corpus" : "progressive-mixed-v1",
+  "iterations" : 3,
+  "samples" : [
+    {
+      "full_html_ms" : 65.167292000000003,
+      "html_bytes" : 6272445,
+      "nodes" : 158751,
+      "parse_ms" : 65.145957999999993
+    },
+    {
+      "full_html_ms" : 63.426583000000001,
+      "html_bytes" : 6272445,
+      "nodes" : 158751,
+      "parse_ms" : 35.497292000000002
+    },
+    {
+      "full_html_ms" : 62.649709000000001,
+      "html_bytes" : 6272445,
+      "nodes" : 158751,
+      "parse_ms" : 35.713290999999998
+    }
+  ],
+  "scope" : "bounded wall-clock stage probe; no allocation\/peak-memory or web-view measurement",
+  "source_bytes" : 1000125
+}

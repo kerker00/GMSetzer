@@ -1,0 +1,12 @@
+{
+  "base_commit": "13f0094623b182c70c3925e9b1f082207db75c97",
+  "development_identity": "0.6.0-dev.1",
+  "sha256": {
+    "Sources/SetzerHTML/HTMLRenderer.swift": "0610a0dc7338ff148ef85f714148e8bfb626f8220f0e0d5f6f27411b1e90cc7f",
+    "Sources/SetzerHTML/HTMLRenderPlan.swift": "6e059730c328cc97e8555b11d4da92134dc3a2f71c041be3aff11337c75512d4",
+    "Sources/GMSetzer/AdmonitionHTML.swift": "50abea941c46e550a041f7e08f6e0a79580bfbb2e5923a1450ed2befb345e31e",
+    "Sources/GMSetzer/FootnotesHTMLRenderer.swift": "51b919cb3d336fa3ded30e2ac762e6aae305255d035f41f812be58860bb575f0",
+    "Sources/SetzerSyntax/LibraryIdentity.swift": "b05f275c3faadc1e8a5b2a58ccb3af876299708ff5b342fbd1a084fa366dcca5",
+    "Tools/ProgressiveHTMLProbe/Sources/ProgressiveHTMLProbe/main.swift": "8491ad110a85645013f0bb2a6e2fb5f53d379b54071fc33ddb710f50af1bb5d3"
+  }
+}
