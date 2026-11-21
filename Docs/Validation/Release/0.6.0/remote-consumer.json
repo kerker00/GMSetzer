@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "candidate_commit": "397f3a44402682dd820e5c02faa3ac153aa8a80b",
+  "dependency": {
+    "identity": "gmsetzer",
+    "kind": "remoteSourceControl",
+    "location": "https://github.com/kerker00/GMSetzer.git",
+    "state": {
+      "revision": "397f3a44402682dd820e5c02faa3ac153aa8a80b"
+    }
+  },
+  "exit_code": 0,
+  "stdout_sha256": "8c846cce323f72096135eaa509245c006f39cc79325f1b9efa9091c86fd220ff",
+  "stderr_sha256": "21a4d4d05563e3f389a7ebec02ccf0c81b321e0a218c2cbb2d7c447d4eccb9e8",
+  "scope": "Fresh standalone public HTTPS revision consumer, isolated caches; global/system Git configuration, credential helpers and SwiftPM netrc/keychain disabled. All public-API probe preconditions passed.",
+  "retained_stream_sha256": {
+    "probe-remote.stdout": "8c846cce323f72096135eaa509245c006f39cc79325f1b9efa9091c86fd220ff",
+    "probe-remote.stderr": "21a4d4d05563e3f389a7ebec02ccf0c81b321e0a218c2cbb2d7c447d4eccb9e8"
+  },
+  "redaction": "Task/user paths redacted in retained logs; original stream hashes remain separate."
+}

@@ -86,7 +86,10 @@ changes only `GMSetzerVersion.current` to `0.6.0` in runtime sources and adds
 It excludes the M7 mutation tests, baseline additions and parser optimization;
 that work continues separately as `0.7.0-dev.1`.
 
-The 0.6.0 candidate is not a published tag. The owner merges its preparation
+[Preparation PR #25](https://github.com/kerker00/GMSetzer/pull/25) passes
+minimum Swift 6.2 CI on both platforms; a fresh public-HTTPS consumer resolves
+and exercises its exact source commit. See the validation record for exact
+versions, results and receipt links. The 0.6.0 candidate is not a published tag. The owner merges its preparation
 PR; the exact merged commit is then verified before the separately confirmed
 tag and publication sequence above. v0.5.0 remains the published preview until
 those steps complete. Historical M6 resource measurements describe the accepted

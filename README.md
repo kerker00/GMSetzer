@@ -14,7 +14,8 @@ wherever Swift runs, including Linux.
 
 [PR #24](https://github.com/kerker00/GMSetzer/pull/24) (`a8a0351`) adds
 **progressive HTML**. The `release/0.6.0` preparation selects result identity
-`0.6.0`; its source-only tag/release is not published yet. See the
+`0.6.0`; its source-only tag/release is not published yet.
+[PR #25](https://github.com/kerker00/GMSetzer/pull/25) contains this preparation. See the
 [release notes](Docs/Releases/0.6.0.md) and
 [preparation checks](Docs/Validation/Release/0.6.0.md).
 `HTMLRenderer.prepare` and `FootnotesHTMLRenderer.prepare` retain complete

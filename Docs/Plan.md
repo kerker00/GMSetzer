@@ -12,7 +12,9 @@ no knowledge of earlier discussions is needed.
 `0cf6690`, changes only the result identity from `0.6.0-dev.1` to `0.6.0`
 in runtime sources and adds release documentation/checks. No M7 mutation or
 optimization commit is included. See [release notes](Releases/0.6.0.md) and
-[validation](Validation/Release/0.6.0.md). Owner review/merge and the subsequent
+[validation](Validation/Release/0.6.0.md). [PR #25](https://github.com/kerker00/GMSetzer/pull/25)
+passes minimum-compiler CI on both platforms and an exact-commit public-HTTPS
+consumer check. Owner review/merge and the subsequent
 confirmed tag/publication remain pending; v0.5.0 remains the published preview.
 M7 speed/hardening development is assigned to `0.7.0-dev.1` on its separate
 branch. M8 retains the API/DocC/1.0 scope.
