@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "started_utc": "2026-11-21T19:33:12.223280+00:00",
+  "phases": {
+    "library-debug": {
+      "started_utc": "2026-11-21T19:33:12.264300+00:00",
+      "finished_utc": "2026-11-21T19:34:15.721175+00:00",
+      "elapsed_seconds": 63.457,
+      "exit_code": 0,
+      "original_log_sha256": "bf080955b0ecabe66d36eac2172da019d263f5e153eee341002152a391db4bd5"
+    },
+    "library-release": {
+      "started_utc": "2026-11-21T19:34:15.721634+00:00",
+      "finished_utc": "2026-11-21T19:36:10.252924+00:00",
+      "elapsed_seconds": 114.531,
+      "exit_code": 0,
+      "original_log_sha256": "2a9558174dd99551c551e5918fb85f5c4a83a1cdce6897f08294cd819dfdbffd"
+    },
+    "python": {
+      "started_utc": "2026-11-21T19:36:10.253389+00:00",
+      "finished_utc": "2026-11-21T19:36:12.406406+00:00",
+      "elapsed_seconds": 2.153,
+      "exit_code": 0,
+      "original_log_sha256": "64ea3d38e95bc46e16333bfc292d301e2d04f3b4d006dd72b2a68eec8bca95b8"
+    },
+    "python-optimized": {
+      "started_utc": "2026-11-21T19:36:12.406703+00:00",
+      "finished_utc": "2026-11-21T19:36:14.629236+00:00",
+      "elapsed_seconds": 2.223,
+      "exit_code": 0,
+      "original_log_sha256": "dba91bbbda83278c18a6076a2a87dad40d3d95ab86f89bd49f7f1989ce077411"
+    },
+    "tools-debug": {
+      "started_utc": "2026-11-21T19:36:14.629559+00:00",
+      "finished_utc": "2026-11-21T19:37:38.857862+00:00",
+      "elapsed_seconds": 84.228,
+      "exit_code": 0,
+      "original_log_sha256": "c25601b44fd8777e64c18e264380e46c86103abb10421682ada9b71a156d09f5"
+    },
+    "tools-release": {
+      "started_utc": "2026-11-21T19:37:38.858270+00:00",
+      "finished_utc": "2026-11-21T19:39:43.604599+00:00",
+      "elapsed_seconds": 124.746,
+      "exit_code": 0,
+      "original_log_sha256": "f62f6a38af954f82a3b4ffa0fd8433741fbf0ca70e9fb87e2da95c6d4e61203a"
+    },
+    "benchmark-list": {
+      "started_utc": "2026-11-21T19:44:18.874666+00:00",
+      "finished_utc": "2026-11-21T19:44:40.746711+00:00",
+      "elapsed_seconds": 21.872,
+      "exit_code": 0,
+      "original_log_sha256": "4cbfef03b1fbe092461ade268afc5dbddbeffb78e64288ebadcc8f40912e908e",
+      "original_stderr_sha256": "5a71bbb6c2cd1351945bc2116c0fd2d0d0fb80026cca9e1d8e0aa31cf1fca924"
+    },
+    "benchmark-run": {
+      "started_utc": "2026-11-21T19:50:26.643114+00:00",
+      "finished_utc": "2026-11-21T19:56:45.326928+00:00",
+      "elapsed_seconds": 378.681,
+      "exit_code": 0
+    }
+  },
+  "exit_code": 0,
+  "source_commit": "4443e72446b6980e85dea9906da4c01b4906f6f0",
+  "source_files_verified_before": 121,
+  "phase": "complete",
+  "finished_utc": "2026-11-21T19:56:45.326941+00:00",
+  "preparation_issue": "Initial list command exited 0 but combined stdout/stderr allowed a SwiftPM warning to split one case name. Identity guard stopped before measurement. Resume repeats list with separate streams; successful test phases are preserved. No benchmark samples preceded this retry.",
+  "measurement_restart": "Abort the first incomplete measurement: the SwiftPM caller consumes multiple CPU cores while its benchmark child is running. Repeat all 72 cases using the same built BenchmarkTool and Release executable directly, without the SwiftPM/plugin parents. No runtime or benchmark-source change.",
+  "source_files_verified_after": 121
+}

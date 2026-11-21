@@ -1,7 +1,16 @@
 # Benchmarks
 
-Measured with `cd Tools && swift package benchmark` (package-benchmark, release
-build). Every entry names the commit, machine and OS. Times are medians (p50).
+Measured with package-benchmark in Release configuration; historical entries
+use `cd Tools && swift package benchmark` unless stated otherwise. Every entry
+names the commit, machine and OS. Times are medians (p50).
+
+For native Linux measurements, build/list through SwiftPM, then invoke the
+built `BenchmarkTool` directly as documented in the
+[M7 x64 report](Validation/M7/linux-x64-2026-11-21.md). The x64 follow-up
+observed substantial CPU competition from the native SwiftPM parent while
+its benchmark child was running. Keep caller/setup work outside measurement
+and record host conditions. Historical commands/results below remain as run;
+they are not silently relabelled as direct-driver measurements.
 
 ## How to read the numbers
 
@@ -734,3 +743,53 @@ artifact hashes. Retained allocation metrics are gross request counts/volume,
 not peak or retained memory; OS/backend differences are not code attribution.
 M7's real-M5/hostile scaling, isolated fuzzing/sanitizers and new-test minimum
 compiler validation remain open.
+
+
+## M7 native Linux x64 direct baseline, 21 November 2026
+
+Owner-authorised repetition at clean snapshot `4443e72`: Intel i5-6600K, four
+logical CPUs, 32,789,280 KiB RAM, CachyOS Linux 7.3.4-1-cachyos / glibc 2.44,
+Swift 6.4.2, Clang 23.1.5. The library passes all 245 tests / 29 suites and
+the tools pass all 6 tests / 4 suites in both Debug and Release; all 31 Python
+tests pass in both isolated modes. Runtime/benchmark hashes match both earlier
+M7 hosts.
+
+A preliminary wrapped measurement is cancelled after observing the native
+SwiftPM parent consuming **251.78% CPU** while its benchmark child runs.
+The same existing Release BenchmarkTool and ParserBenchmarks then run directly,
+with the same options and workloads; all **72/72 cases** complete in one fresh
+series, final export at **378.64 s**, exit 0. No interrupted-run values are
+spliced in. A separate initial list-output interleaving issue is corrected by
+separating stdout/stderr; both preparation issues are retained in the evidence.
+
+P50 milliseconds, matching `mixed-v1` inputs with source positions enabled:
+
+| Profile | Size | GMSetzer | C | GM/C | ≤2× C |
+| --- | --- | ---: | ---: | ---: | --- |
+| CommonMark | 100 KB | 3.946 | 2.435 | 1.621× | Pass |
+| CommonMark | 1 MB | 44.990 | 33.718 | 1.334× | Pass |
+| CommonMark | 5 MB | 231.342 | 144.835 | 1.597× | Pass |
+| GFM | 100 KB | 4.854 | 4.538 | 1.070× | Pass |
+| GFM | 1 MB | 55.378 | 56.033 | 0.988× | Pass |
+| GFM | 5 MB | 282.329 | 271.843 | 1.039× | Pass |
+
+GFM is within about 7% of C on this corpus/series. CommonMark is 33–62% slower;
+its GMSetzer elapsed time needs roughly 25–38% reduction to meet the matching
+C medians. **Parity remains the optimization aim**, not merely the 2× ceiling.
+Next profile CommonMark; these timings alone do not identify a hot function.
+Apple-M2 absolute/frozen M2 gates are not applied or changed on this host.
+
+Across 77 five-second host snapshots, aggregate CPU busy time is **26.19%**
+(four CPUs/all processes), the sampled thermal zone ranges 31–48 °C and free
+swap stays unchanged. CPU0 frequency ranges 0.8–3.88 GHz under the existing
+`powersave` governor; snapshots do not prove absence of throttling. Prior
+Mac/Pi wrapped measurements remain historical; the caller observation is
+measured on x64, not isolated retroactively on the other hosts. Do not attribute
+cross-host differences to architecture or optimization alone.
+
+The [full report and direct command](Validation/M7/linux-x64-2026-11-21.md)
+link all 72 rows, hashes, executable identities, host samples, test logs and
+interrupted/preparation receipts in the
+[data directory](BenchmarkData/m7-linux-x64-2026-11-21/). No runtime optimization
+or M7 completion is claimed. Real-M5/hostile scaling, isolated fuzzing/sanitizers
+and minimum-compiler execution of the new tests remain.

@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "checked_utc": "2026-11-21T19:49:19.874202+00:00",
+  "sample_seconds": 5.0123471269998845,
+  "process_cpu_percent": {
+    "swift-package": 251.78,
+    "BenchmarkComman": 0.0,
+    "BenchmarkTool": 0.6,
+    "python3": 0.0
+  },
+  "benchmark_tool_relative_path": "build-bench/x86_64-unknown-linux-gnu/release/BenchmarkTool",
+  "reason": "Abort the first incomplete measurement: the SwiftPM caller consumes multiple CPU cores while its benchmark child is running. Repeat all 72 cases using the same built BenchmarkTool and Release executable directly, without the SwiftPM/plugin parents. No runtime or benchmark-source change."
+}

@@ -52,7 +52,7 @@ to ordinary tests.
 
 ## Executed validation
 
-macOS arm64, Xcode 27.2 / Apple Swift 6.4.2, and the native Linux follow-up:
+macOS arm64, Xcode 27.2 / Apple Swift 6.4.2, and the native Linux follow-ups:
 
 - Complete Debug suite: **245 tests in 29 suites pass**, including all eight
   mutation cases and all 652 CommonMark / 672 GFM protected examples.
@@ -64,6 +64,11 @@ macOS arm64, Xcode 27.2 / Apple Swift 6.4.2, and the native Linux follow-up:
   6.4.2: all **245 tests / 29 suites pass in Debug and Release**, plus all
   **31 Python tests** in both isolated normal and optimized modes. The
   [Linux report](Validation/M7/linux-arm64-2026-11-21.md) retains receipts/logs.
+- Native Linux x64 on an existing Intel i5-6600K / CachyOS / Swift 6.4.2:
+  **245 library tests / 29 suites** and **6 development-tool tests / 4 suites**
+  pass in both Debug and Release; all **31 Python tests** pass in both modes.
+  This includes direct generated-document C comparisons; see the
+  [x64 report](Validation/M7/linux-x64-2026-11-21.md).
 - Minimum Swift 6.2 execution of the three new tests remains for PR CI. Their
   M6 predecessor has merged-main CI on both hosts; that is not substituted
   for running the new tests on the minimum compiler.
@@ -148,9 +153,21 @@ applied to the Pi. See the [Linux report](Validation/M7/linux-arm64-2026-11-21.m
 for commands, allocation data, sanitized logs and measurement limits. No
 installation or replacement execution environment was needed.
 
-The first Mac series supplies the existing C/absolute/frozen-M2 baseline. Next
-profile HTML emission and add real-M5/hostile-input scaling/resource cases,
-then expand the isolated fuzz/sanitizer campaign with minimized regressions.
+The subsequent [x64 series](Validation/M7/linux-x64-2026-11-21.md) completes
+72/72 cases using the same built Release benchmark tool directly. A SwiftPM
+parent consumed about 2.52 CPU cores during an interrupted preliminary run;
+the direct series removes that competing caller and averages 26.19% total
+host CPU busy time on four cores. Use its documented direct invocation for
+future native Linux measurements. Earlier wrapped Mac/Pi series retain their
+recorded conditions; the x64 observation does not quantify their interference.
+All six direct x64 C ratios pass: GFM is within about 7% of C; CommonMark is
+33–62% slower. Parity remains the aim, so CommonMark is the next parser
+profiling priority. No runtime optimization is claimed by changing the driver.
+
+The first Mac series supplies the historical C/absolute/frozen-M2 baseline.
+Profile CommonMark toward parity and HTML emission, and add real-M5/hostile-input
+scaling/resource cases, then expand the isolated fuzz/sanitizer campaign with
+minimized regressions.
 Full benchmark and long-test/fuzz execution retain the owner-confirmation gate
 in `CLAUDE.md`. M7 completion requires both the existing speed budgets and
 documented robustness/allocation evidence; a passing small campaign alone does

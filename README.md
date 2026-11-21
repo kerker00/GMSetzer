@@ -34,11 +34,14 @@ follow the existing approval requirement.
 The initial `feature/m7-hardening` step adds bounded deterministic mutation
 coverage: 1,024 profile/input combinations and 24 depth cases across strict,
 GFM and selected M5 configurations. All 245 tests pass in Debug and Release
-on macOS and native Linux ARM64 with Swift 6.4.2. The owner-approved
+on macOS and native Linux ARM64/x64 with Swift 6.4.2. The owner-approved
 [72-case Apple M2 baseline](Docs/Validation/M7/baseline-2026-11-21.md)
 passes all six parser/C budgets and nine frozen M2 checks. The separate
 [72-case Raspberry Pi baseline](Docs/Validation/M7/linux-arm64-2026-11-21.md)
 satisfies all six same-host C ratios, with high-load/sample-count limitations.
+The [direct x64 baseline](Docs/Validation/M7/linux-x64-2026-11-21.md) also
+passes all six C ratios: GFM is within about 7% of C on this corpus; CommonMark
+is 33–62% slower and remains the parser profiling priority toward parity.
 Minimum-compiler checks for the new tests, real-M5/hostile-input scaling and
 broader fuzzing remain open. See [M7 hardening](Docs/M7Hardening.md)
 for scope, reproduction and remaining portability/performance gates.
@@ -244,7 +247,8 @@ Service contracts, the native rule catalogue and validation limits are in
 - `GMSETZER_SPEC_DIAGNOSTICS=1 swift test --filter SpecTests` also prints each
   mismatching example with source, expected HTML and actual HTML as JSON.
 - `Tools/` is a separate package for benchmarks against cmark-gfm in C and
-  swift-markdown: `cd Tools && swift package benchmark`.
+  swift-markdown: see the build/measurement instructions in
+  [Docs/Benchmarks.md](Docs/Benchmarks.md), including the direct Linux driver.
 - [M1 measurements](Docs/M1Measurements.md) describe the recorded block-only
   baseline, optional syntax costs and local performance gate. Run
   `python3 -I Scripts/check_benchmark_budget.py <results.log>` against a full

@@ -19,9 +19,10 @@ checkout may be required. Preserve historical validation records as history.
    remove a protected example to hide a regression.
 3. Run `swift test`; after changes to spec tools, also run
    `python3 -I -m unittest discover -s Scripts`. For speed-relevant changes,
-   prepare the benchmarks (`cd Tools && swift package benchmark`) and record
-   measurements in [Docs/Benchmarks.md](Docs/Benchmarks.md); obtain the owner's
-   confirmation before full benchmark runs or long test runs.
+   prepare the benchmark build/list and follow the measurement instructions
+   in [Docs/Benchmarks.md](Docs/Benchmarks.md), including the direct driver for
+   native Linux. Obtain the owner's confirmation before full benchmark runs
+   or long test runs.
 4. Follow [feature-docs](.claude/skills/feature-docs/SKILL.md) to update the
    affected documentation with the implementation, including milestone,
    contract and validation changes.

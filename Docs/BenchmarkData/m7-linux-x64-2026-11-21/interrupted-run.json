@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "usable_for_comparison": false,
+  "reason": "SwiftPM parent CPU interference; cancelled before a complete export. None of its measurements are used in the direct 72-case baseline.",
+  "original_stream_sha256": {
+    "interrupted-benchmark.md": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "interrupted-benchmark-build.log": "9fdec855d6ff71c29783982c70cc8a75213a3e9b0167775b51ea8f0e9a200ce8",
+    "interrupted-benchmark-receipt.json": "1d7cf938b69d0cb734db7271ed1800c47e5f629914a7f5d153363151c7852950",
+    "interrupted-host-samples.jsonl": "fcb28469c43091b93316c7229a808c0f1e081fcd3b085daa3e2525e8ae2776a5",
+    "interrupted-run-status.json": "5474b5b4efd2bdac9edbc0134b06fb89b3e4b550924a47ba91f17cdb8d142d7c",
+    "interrupted-driver.log": "94f5279047148f134aa701dd487af0c1e2d4ae0d5637520b3a630a9f3ad2081f"
+  },
+  "retained_stream_sha256": {
+    "interrupted-benchmark.md": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "interrupted-benchmark-build.log": "9fdec855d6ff71c29783982c70cc8a75213a3e9b0167775b51ea8f0e9a200ce8",
+    "interrupted-benchmark-receipt.json": "1d7cf938b69d0cb734db7271ed1800c47e5f629914a7f5d153363151c7852950",
+    "interrupted-host-samples.jsonl": "fcb28469c43091b93316c7229a808c0f1e081fcd3b085daa3e2525e8ae2776a5",
+    "interrupted-run-status.json": "5474b5b4efd2bdac9edbc0134b06fb89b3e4b550924a47ba91f17cdb8d142d7c",
+    "interrupted-driver.log": "94f5279047148f134aa701dd487af0c1e2d4ae0d5637520b3a630a9f3ad2081f"
+  },
+  "redaction": "Task/user-home paths and host labels are redacted, process addresses normalized and line endings use LF. Original stdout/stderr hashes remain separate. Readable export removes warning preamble and trailing blank lines. All case identities and metric rows are unchanged."
+}
