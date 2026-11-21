@@ -60,10 +60,15 @@ Each case runs exact HTML verification, an uninstrumented eight-sample timing
 process, three fresh uninstrumented processes per `parse`/`full`/`first`/`groups`
 RSS mode and one fresh instrumented process per mode. The runner preserves raw
 JSON, writes summaries incrementally and records source/executable hashes and
-host state. The revision label is fixed to this initial M6 measurement (087e694);
-verify source hashes against that revision before using this receipt for another
-checkout. All processes are sequential; affinity/governor settings are read,
-not changed. A failed case stops the run with previous data preserved.
+host state. Receipt schema 2 records the actual Git revision and runtime
+dirty/file-inventory state; a source transfer without its own Git checkout
+records these as unknown. The compiler is selected from `--swift` or PATH;
+use the same compiler used for the documented build. This reports the declared
+toolchain, not proof that an arbitrary supplied binary was built with it.
+Source/binary hashes and the build record remain necessary provenance. Actual
+runtime stderr messages are retained with process addresses normalised. The
+archived schema-1 baseline remains unchanged. All processes are sequential;
+affinity/governor settings are read, not changed. A failed case stops the run with previous data preserved.
 
 RSS is Linux `/proc/self/status` **VmHWM in KiB for the whole process**. It
 includes runtime, generated source, parsing and that process's requested
@@ -101,8 +106,13 @@ python3 -I Scripts/check_progressive_html_budget.py \
 ```
 
 This reads the archived matrix without executing the probe. It verifies all
-42 cases, artifacts/source hashes, raw verification/timing/RSS records and
-per-case post-baseline budgets. Source matching is required before applying
-historical results to a current checkout. The candidate budgets and limitations
-are in [review readiness](../../Docs/Validation/M6/review-readiness.md). A
+42 cases, artifact hashes, raw verification/timing/RSS records and per-case
+post-baseline budgets. `--source-root` verifies the runtime manifest, complete
+Swift source inventory and all 43 hashes; additions/removals invalidate the
+comparison too. Add `--include-measurement-tools` to require the full historical
+harness inventory/hashes as well. That stricter mode is intended for the
+recorded harness checkout (`fe6a505` for this baseline), and correctly rejects
+the subsequently improved runner. Source matching is required before applying
+historical results to a current runtime checkout. The candidate budgets and
+limitations are in [review readiness](../../Docs/Validation/M6/review-readiness.md). A
 passed check is not owner acceptance, a new run or application UI evidence.

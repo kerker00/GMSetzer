@@ -107,7 +107,7 @@ struct ProgressiveHTMLTests {
         #expect(grouped.groups.count == 1)
     }
 
-    @Test func cancellationStopsBeforeAndDuringOutputWithoutChangingTheReusablePlan() throws {
+    @Test func cancellationBeforeTheFirstEventDoesNotDeliverOutputAndLeavesThePlanReusable() throws {
         let document = MarkdownParser().parse("# one\n\n*two* **three**\n\nfour\n")
         let renderer = HTMLRenderer()
         let plan = try renderer.prepare(document, maximumSourceBytesPerGroup: 1)
@@ -120,6 +120,66 @@ struct ProgressiveHTMLTests {
         }
         #expect(checkpoints == 2 && delivered == 0)
         #expect(try Self.assembled(plan) == renderer.render(document))
+    }
+
+    @Test func cancellationAfterAnOpeningTagDoesNotDeliverAPartialGroupOrRunLaterHooks() throws {
+        let started = Counter(), later = Counter()
+        let renderer = HTMLRenderer(hooks: [
+            .heading: { _, _ in started.increment(); return .wrapChildren(open: "<h1>", close: "</h1>\n") },
+            .paragraph: { _, _ in later.increment(); return nil },
+        ], hookBehavior: .independent)
+        let document = MarkdownParser().parse("# started\n\nlater\n")
+        let plan = try renderer.prepare(document)
+        var delivered = 0
+        #expect(throws: Stop.requested) {
+            try plan.forEachGroup(checkpoint: {
+                if started.count > 0 { throw Stop.requested }
+            }) { _, _ in delivered += 1; return true }
+        }
+        #expect(started.count == 1 && later.count == 0 && delivered == 0)
+        #expect(try Self.assembled(plan) == renderer.render(document))
+    }
+
+    @Test func cancellingTheConsumingTaskPreventsRenderingTheNextGroup() async throws {
+        let rendered = Counter()
+        let renderer = HTMLRenderer(hooks: [.paragraph: { _, _ in rendered.increment(); return nil }], hookBehavior: .independent)
+        let document = MarkdownParser().parse("one\n\ntwo\n\nthree\n")
+        let plan = try renderer.prepare(document, maximumSourceBytesPerGroup: 1)
+        let task = Task {
+            try plan.forEachGroup(checkpoint: { try Task.checkCancellation() }) { _, _ in
+                withUnsafeCurrentTask { $0?.cancel() }
+                return true
+            }
+        }
+        do {
+            _ = try await task.value
+            Issue.record("Cancelled consumption completed without observing cancellation")
+        } catch is CancellationError {
+            #expect(rendered.count == 1)
+        }
+        #expect(try Self.assembled(plan) == renderer.render(document))
+    }
+
+    @Test func footnoteAppendixHooksStayDeferredWhenBodyConsumptionStops() throws {
+        let noteBodies = Counter()
+        let document = FootnoteTests.parser().parse("Body[^a]\n\n[^a]: Note body\n")
+        let definition = try #require(document.nodes.firstIndex { $0.kind == Footnotes.definitionKind })
+        let noteRange = document.nodes[definition].range
+        let renderer = FootnotesHTMLRenderer(renderer: HTMLRenderer(hooks: [.paragraph: { node, _ in
+            if noteRange.contains(node.range) { noteBodies.increment() }
+            return nil
+        }], hookBehavior: .independent))
+        let plan = try renderer.prepare(document, maximumSourceBytesPerGroup: 1)
+        #expect(noteBodies.count == 0)
+        try plan.forEachGroup { group, _ in
+            #expect(group.kind == .body)
+            return false
+        }
+        #expect(noteBodies.count == 0)
+        let appendix = try #require(plan.groups.last)
+        #expect(appendix.kind == .appendix)
+        #expect(try plan.renderGroup(at: appendix.ordinal).contains("Note body"))
+        #expect(noteBodies.count == 1)
     }
 
     @Test func nonRenderingDefinitionsDoNotDelayTheFirstUsefulGroup() throws {

@@ -630,3 +630,12 @@ records and completeness offline; this is not a fresh timing series or a
 statistical regression verdict. macOS/Swift 6.2 tests and the optimized build
 pass; Linux/Swift 6.2 PR CI and owner review remain open. Application transfer,
 layout and first-visible-output measurements remain outside this library work.
+
+
+The [pre-push self-review](Review-M6.md) corrects source inventory checks and
+measurement provenance without changing the runtime or old results. The
+current runtime matches all 43 manifest/Swift hashes and its complete source
+set. The full historical harness additionally matches all 48 files read from
+`fe6a505`; its updated runner intentionally differs. New receipts use schema 2
+with actual Git/dirty state and the selected compiler. No new timing, RSS or
+allocation series was run for these tool/test corrections.

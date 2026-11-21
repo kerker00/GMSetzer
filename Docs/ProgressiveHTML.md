@@ -127,8 +127,11 @@ RSS and separate allocation counts/volume. It confirms earlier output for
 independent blocks, unchanged giant-block limits and no general peak-RSS gain.
 The subsequent [review follow-up](Validation/M6/review-readiness.md) defines
 post-baseline budgets, verifies all 42 cases against raw records and matching
-source hashes, and passes all 239 tests plus an optimized build on macOS/Swift
-6.2. Its seven checker regression tests bring the local Python suite to 24.
+runtime source inventory/hashes, and passes all 242 tests plus an optimized
+build on macOS/Swift 6.2. The [self-review](Review-M6.md) adds cancellation and
+deferred-appendix coverage, corrects measurement provenance and validates
+31 Python tests in normal and optimised modes. All 14 progressive tests also
+pass in Swift 6.2 Release.
 These are candidate budgets for owner review, not pre-registered goals or a
 fresh measurement series. Linux/Swift 6.2 PR CI, owner review and merge remain
 open. M6 remains in progress; consumer UI integration stays separate.

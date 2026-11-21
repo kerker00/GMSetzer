@@ -1,10 +1,12 @@
 import copy
 import hashlib
+import io
 import json
 from pathlib import Path
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 import unittest
 
@@ -22,6 +24,47 @@ class ProgressiveHTMLBudgetTests(unittest.TestCase):
     def change_timing(self, row, stage, value):
         row["timing_samples_ms"][stage] = [value] * 8
         row[{"first_ready": "first_ready_ms_p50", "all_groups": "all_groups_ms_p50"}[stage]] = value
+
+    def refresh_hash(self, evidence, filename):
+        hashes = json.loads((evidence / "sha256.json").read_text())
+        hashes[filename] = hashlib.sha256((evidence / filename).read_bytes()).hexdigest()
+        (evidence / "sha256.json").write_text(json.dumps(hashes))
+
+    def source_fixture(self, scratch):
+        base = Path(scratch)
+        evidence, source = base / "evidence", base / "checkout"
+        shutil.copytree(EVIDENCE, evidence)
+        files = {"Package.swift": "// manifest", "Sources/Example.swift": "enum Example {}",
+                 "Tools/ProgressiveHTMLProbe/Package.swift": "// tool manifest",
+                 "Tools/ProgressiveHTMLProbe/run-linux-matrix.py": "# measurement tool"}
+        for name, content in files.items():
+            path = source / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(content)
+        receipt = json.loads((evidence / "receipt.json").read_text())
+        receipt["schema"] = 2
+        receipt["source_sha256"] = {name: hashlib.sha256((source / name).read_bytes()).hexdigest() for name in files}
+        (evidence / "receipt.json").write_text(json.dumps(receipt))
+        self.refresh_hash(evidence, "receipt.json")
+        return evidence, source
+
+    def change_raw_record(self, evidence, filename, change):
+        target = "results/" + self.rows[0]["case"] + "/" + filename + ".json"
+        output = evidence / "changed.tar.gz"
+        with tarfile.open(evidence / "raw-results.tar.gz") as original, tarfile.open(output, "w:gz") as rewritten:
+            for member in original:
+                if not member.isfile():
+                    rewritten.addfile(member)
+                    continue
+                data = original.extractfile(member).read()
+                if member.name == target:
+                    record = json.loads(data)
+                    change(record)
+                    data = json.dumps(record).encode()
+                    member.size = len(data)
+                rewritten.addfile(member, io.BytesIO(data))
+        output.replace(evidence / "raw-results.tar.gz")
+        self.refresh_hash(evidence, "raw-results.tar.gz")
 
     def test_archived_matrix_and_isolated_cli_pass(self):
         # Historical evidence remains testable when later runtime sources change.
@@ -80,9 +123,7 @@ class ProgressiveHTMLBudgetTests(unittest.TestCase):
 
     def test_corrupted_archives_and_changed_source_are_rejected(self):
         with tempfile.TemporaryDirectory() as scratch:
-            root = Path(scratch)
-            evidence = root / "evidence"
-            shutil.copytree(EVIDENCE, evidence)
+            evidence, root = self.source_fixture(scratch)
             with self.assertRaisesRegex(ValueError, "measured source changed"):
                 (root / "Package.swift").write_text("changed")
                 load_evidence(evidence, root)
@@ -97,6 +138,53 @@ class ProgressiveHTMLBudgetTests(unittest.TestCase):
             hashes["summary.json"] = hashlib.sha256((evidence / "summary.json").read_bytes()).hexdigest()
             (evidence / "sha256.json").write_text(json.dumps(hashes))
             with self.assertRaisesRegex(ValueError, "raw timing/summary mismatch"):
+                load_evidence(evidence)
+
+    def test_source_inventory_detects_additions_deletions_and_harness_changes(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            evidence, source = self.source_fixture(scratch)
+            load_evidence(evidence, source, include_measurement_tools=True)
+            extra = source / "Sources/Unmeasured.swift"
+            extra.write_text("enum Unmeasured {}")
+            with self.assertRaisesRegex(ValueError, "inventory changed"):
+                load_evidence(evidence, source)
+            extra.unlink()
+            original = source / "Sources/Example.swift"
+            original.rename(extra)
+            with self.assertRaisesRegex(ValueError, "inventory changed"):
+                load_evidence(evidence, source)
+            extra.rename(original)
+            original.unlink()
+            with self.assertRaisesRegex(ValueError, "inventory changed"):
+                load_evidence(evidence, source)
+            original.write_text("enum Example {}")
+            (source / "Tools/ProgressiveHTMLProbe/run-linux-matrix.py").write_text("# improved harness")
+            load_evidence(evidence, source)
+            with self.assertRaisesRegex(ValueError, "measured source changed"):
+                load_evidence(evidence, source, include_measurement_tools=True)
+
+    def test_incomplete_verification_and_mislabelled_rss_fail_as_invalid_evidence(self):
+        changes = [("verify", lambda record: record.update(samples=[])),
+                   ("rss-first-1", lambda record: record.update(mode="full"))]
+        for filename, change in changes:
+            with self.subTest(filename=filename), tempfile.TemporaryDirectory() as scratch:
+                evidence, _ = self.source_fixture(scratch)
+                self.change_raw_record(evidence, filename, change)
+                with self.assertRaisesRegex(ValueError, "invalid raw sample count|raw record configuration changed"):
+                    load_evidence(evidence)
+                result = subprocess.run([sys.executable, "-I", str(ROOT / "Scripts/check_progressive_html_budget.py"),
+                                         str(evidence)], capture_output=True, text=True, timeout=10)
+                self.assertEqual(result.returncode, 2)
+                self.assertNotIn("Traceback", result.stderr)
+
+    def test_structural_metadata_is_checked_against_raw_output(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            evidence, _ = self.source_fixture(scratch)
+            rows = copy.deepcopy(self.rows)
+            rows[0]["groups"] += 1
+            (evidence / "summary.json").write_text(json.dumps(rows))
+            self.refresh_hash(evidence, "summary.json")
+            with self.assertRaisesRegex(ValueError, "verification structure changed"):
                 load_evidence(evidence)
 
 

@@ -6,6 +6,8 @@ import json
 import os
 from pathlib import Path
 import platform
+import re
+import shutil
 import statistics
 import subprocess
 import time
@@ -13,6 +15,31 @@ import time
 WORKLOADS = ("mixed", "prose", "small-blocks", "tables", "long-code", "multibyte", "extensions")
 SIZES = (100_000, 1_000_000, 5_000_000)
 MODES = ("parse", "full", "first", "groups")
+
+
+def measurement_files(root):
+    probe = root / "Tools/ProgressiveHTMLProbe"
+    return sorted([root / "Package.swift", *(root / "Sources").rglob("*.swift"),
+                   probe / "Package.swift", *probe.glob("*.py"),
+                   *(probe / "Sources").rglob("*.swift"), *(probe / "Support").glob("*.c")])
+
+
+def source_revision(root):
+    """A source-only transfer has hashes, but no known Git revision/dirty state."""
+    if shutil.which("git") is None:
+        return None, None
+    top = subprocess.run(["git", "-C", str(root), "rev-parse", "--show-toplevel"], capture_output=True, text=True)
+    if top.returncode or Path(top.stdout.strip()).resolve() != root.resolve():
+        return None, None
+    revision = subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip()
+    diff = subprocess.run(["git", "-C", str(root), "diff", "--quiet", "HEAD", "--", "Package.swift", "Sources"])
+    if diff.returncode not in (0, 1):
+        raise RuntimeError("cannot inspect runtime source changes")
+    tracked = subprocess.check_output(["git", "-C", str(root), "ls-tree", "-r", "--name-only", "HEAD", "--", "Package.swift", "Sources"], text=True)
+    recorded = {name for name in tracked.splitlines() if name == "Package.swift" or name.endswith(".swift")}
+    actual = {str(path.relative_to(root)) for path in (root / "Sources").rglob("*.swift")}
+    actual.add("Package.swift")
+    return revision, diff.returncode == 1 or recorded != actual
 
 
 def read_text(path):
@@ -40,10 +67,11 @@ def execute(binary, size, workload, syntax, mode, iterations=1, allocator=None):
     start = time.monotonic()
     completed = subprocess.run(command, env=env, capture_output=True, text=True, timeout=240, check=True)
     record = json.loads(completed.stdout)
-    assert record["allocation_interposition"] == bool(allocator)
+    if record["allocation_interposition"] is not (allocator is not None):
+        raise ValueError("allocation interposition does not match the requested pipeline")
     record["driver_wall_seconds"] = time.monotonic() - start
     # Runtime startup messages are preserved once in the receipt, not mixed into JSON.
-    return record, completed.stderr.strip()
+    return record, re.sub(r"0x[0-9a-fA-F]+", "0x<address>", completed.stderr.strip())
 
 
 def stage_median(samples, *stages):
@@ -55,25 +83,27 @@ def main():
     parser.add_argument("--binary", required=True, type=Path)
     parser.add_argument("--allocator", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--swift", default="swift", help="Compiler used to build the probe; defaults to swift on PATH")
     parser.add_argument("--smoke", action="store_true", help="Only 100 KB mixed, syntax off")
     args = parser.parse_args()
     args.binary = args.binary.resolve()
     args.allocator = args.allocator.resolve()
+    compiler = shutil.which(args.swift)
+    if compiler is None:
+        parser.error("Swift compiler not found; pass --swift or set PATH")
     args.output.mkdir(parents=True, exist_ok=False)
     root = Path(__file__).resolve().parents[2]
-    files = [root / "Package.swift", *sorted((root / "Sources").rglob("*.swift")),
-             Path(__file__).resolve(), root / "Tools/ProgressiveHTMLProbe/Package.swift",
-             root / "Tools/ProgressiveHTMLProbe/Sources/ProgressiveHTMLProbe/main.swift",
-             *sorted((root / "Tools/ProgressiveHTMLProbe/Support").glob("*.c"))]
+    files = measurement_files(root)
+    revision, changed = source_revision(root)
     receipt = {
-        "schema": 1, "date_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-        "library_revision": "087e694", "library_changes_after_revision": False,
-        "harness": "progressive-v2 (source hashes identify uncommitted measurement tools)",
+        "schema": 2, "date_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "library_revision": revision, "library_changes_after_revision": changed,
+        "harness": "progressive-v2 (source hashes identify runtime and measurement tools)",
         "os_release": read_text("/etc/os-release"), "architecture": platform.machine(),
         "kernel": platform.release(), "hardware_model": read_text("/proc/device-tree/model"),
         "meminfo": read_text("/proc/meminfo"), "logical_cpus": os.cpu_count(),
         "affinity": sorted(os.sched_getaffinity(0)), "before": host_state(),
-        "swift": subprocess.check_output([str(Path.home() / ".local/opt/swift-6.4.2/usr/bin/swift"), "--version"], text=True).strip(),
+        "swift": subprocess.check_output([compiler, "--version"], text=True).strip(),
         "cc": subprocess.check_output(["cc", "--version"], text=True).splitlines()[0],
         "source_sha256": {str(path.relative_to(root)): hashlib.sha256(path.read_bytes()).hexdigest() for path in files},
         "binary_sha256": hashlib.sha256(args.binary.read_bytes()).hexdigest(),
@@ -94,7 +124,8 @@ def main():
         path.mkdir()
         verified, warning = execute(args.binary, size, workload, syntax, "verify")
         warnings.add(warning)
-        assert verified["samples"][0]["exact_html_equal"]
+        if verified["samples"][0]["exact_html_equal"] is not True:
+            raise ValueError("full and grouped HTML differ")
         (path / "verify.json").write_text(json.dumps(verified, indent=2) + "\n")
         timing, warning = execute(args.binary, size, workload, syntax, "timing", iterations=8)
         warnings.add(warning)
@@ -139,8 +170,8 @@ def main():
     receipt["after"] = host_state()
     receipt["elapsed_seconds"] = time.monotonic() - started
     receipt["cases_completed"] = len(summaries)
-    # Backtrace warnings contain per-process addresses: keep a stable description.
-    receipt["runtime_startup_warning"] = "swift-backtrace protection unavailable; runtime disables backtracing" if any(warnings) else None
+    # Preserve actual messages; only process-specific addresses are normalised.
+    receipt["runtime_startup_messages"] = sorted(warning for warning in warnings if warning)
     (args.output / "receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
 
 

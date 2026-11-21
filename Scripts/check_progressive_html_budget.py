@@ -33,6 +33,15 @@ def median(values, count):
     return statistics.median(positive(value) for value in values)
 
 
+def source_files(root, include_measurement_tools=False):
+    paths = [root / "Package.swift", *(root / "Sources").rglob("*.swift")]
+    if include_measurement_tools:
+        probe = root / "Tools/ProgressiveHTMLProbe"
+        paths.extend([probe / "Package.swift", *probe.glob("*.py"),
+                      *(probe / "Sources").rglob("*.swift"), *(probe / "Support").glob("*.c")])
+    return {str(path.relative_to(root)) for path in paths}
+
+
 def evaluate(rows):
     """No faster case can compensate for another case exceeding its target."""
     if not isinstance(rows, list) or len(rows) != len(EXPECTED_CASES):
@@ -47,10 +56,15 @@ def evaluate(rows):
         size = int(nominal)
         if not isinstance(row["syntax_details"], bool) or row["syntax_details"] != (annotation == "on"):
             raise ValueError(f"syntax configuration changed: {name}")
-        if not size <= positive(row["source_bytes"]) < size + 1024:
+        if type(row["source_bytes"]) is not int or not size <= row["source_bytes"] < size + 1024:
             raise ValueError(f"unexpected input size: {name}")
         if row["plan_mode"] != "structural":
             raise ValueError(f"unexpected whole-document fallback: {name}")
+        for key in ("groups", "nodes", "html_bytes", "first_group_bytes", "largest_group_source_bytes"):
+            if type(row[key]) is not int or row[key] <= 0:
+                raise ValueError(f"invalid structural metadata: {name}/{key}")
+        if type(row["appendix_groups"]) is not int or row["appendix_groups"] != (1 if workload == "extensions" else 0):
+            raise ValueError(f"unexpected appendix count: {name}")
         samples = row["timing_samples_ms"]
         full = median(samples["full"], 8)
         first = median(samples["first_ready"], 8)
@@ -62,7 +76,14 @@ def evaluate(rows):
         for mode in MODES:
             if positive(row["rss_kib_p50"][mode]) != rss[mode]:
                 raise ValueError(f"RSS summary/sample mismatch: {name}/{mode}")
-        latency_limit = None if workload == "long-code" else (0.75 if size == 100_000 else 0.50 if workload == "extensions" else 0.25)
+        if workload == "long-code":
+            latency_limit = None
+        elif size == 100_000:
+            latency_limit = 0.75
+        elif workload == "extensions":
+            latency_limit = 0.50
+        else:
+            latency_limit = 0.25
         if workload == "long-code" and row["groups"] != 1:
             raise ValueError(f"indivisible code-block workload changed: {name}")
         if latency_limit is not None and row["groups"] < 2:
@@ -79,7 +100,7 @@ def evaluate(rows):
                 scope="M6 post-baseline stage/RSS targets only; parsing precedes output; no UI latency or memory-reduction claim.")
 
 
-def load_evidence(directory, source_root=None):
+def load_evidence(directory, source_root=None, include_measurement_tools=False):
     """Verify archived evidence without extracting files or executing the probe."""
     hashes = json.loads((directory / "sha256.json").read_text())
     for name in ("raw-results.tar.gz", "receipt.json", "summary.csv", "summary.json"):
@@ -87,10 +108,21 @@ def load_evidence(directory, source_root=None):
             raise ValueError(f"archived artifact hash mismatch: {name}")
     receipt = json.loads((directory / "receipt.json").read_text())
     rows = json.loads((directory / "summary.json").read_text())
+    if not isinstance(receipt, dict) or not isinstance(receipt.get("source_sha256"), dict):
+        raise ValueError("invalid source measurement receipt")
+    if type(receipt.get("schema")) is not int or receipt["schema"] not in (1, 2):
+        raise ValueError("unsupported measurement receipt schema")
+    # Validate shape, case identity and measurements before opening raw members.
+    evaluate(rows)
     if receipt["cases_completed"] != 42 or receipt["timing_iterations"] != 8 or receipt["rss_fresh_process_repeats"] != 3:
         raise ValueError("incomplete measurement receipt")
     if source_root is not None:
-        for name, expected in receipt["source_sha256"].items():
+        recorded = {name: digest for name, digest in receipt["source_sha256"].items()
+                    if name == "Package.swift" or name.startswith("Sources/")
+                    or (include_measurement_tools and name.startswith("Tools/"))}
+        if set(recorded) != source_files(source_root, include_measurement_tools):
+            raise ValueError("measured source file inventory changed")
+        for name, expected in recorded.items():
             path = (source_root / name).resolve()
             if not path.is_relative_to(source_root.resolve()):
                 raise ValueError("source path outside checkout")
@@ -108,8 +140,15 @@ def load_evidence(directory, source_root=None):
                             source_bytes=row["source_bytes"], syntax_details=annotation == "on",
                             source_ranges=True, source_anchor_prefix="block-", group_source_budget=32768,
                             profile="commonmark" if workload == "prose" else "gfm")
-            if any(value[key] != setting for key, setting in expected.items()):
+            mode = filename.split("-")[1] if filename.startswith("rss-") else filename
+            expected.update(mode=mode, iterations=8 if mode == "timing" else 1, allocation_interposition=False)
+            if not isinstance(value, dict) or any(type(value[key]) is not type(setting) or value[key] != setting
+                                                  for key, setting in expected.items()):
                 raise ValueError(f"raw record configuration changed: {case}/{filename}")
+            if not isinstance(value["samples"], list) or len(value["samples"]) != expected["iterations"]:
+                raise ValueError(f"invalid raw sample count: {case}/{filename}")
+            if not all(isinstance(sample, dict) for sample in value["samples"]):
+                raise ValueError(f"invalid raw samples: {case}/{filename}")
             return value
 
         for row in rows:
@@ -117,24 +156,27 @@ def load_evidence(directory, source_root=None):
             verified = record(row, "verify")
             if verified["samples"][0]["exact_html_equal"] is not True:
                 raise ValueError(f"HTML equality failed: {name}")
-            if verified["source_bytes"] != row["source_bytes"] or verified["syntax_details"] != row["syntax_details"]:
-                raise ValueError(f"verification configuration changed: {name}")
+            for key in ("nodes", "groups", "html_bytes"):
+                if verified["samples"][0][key] != row[key]:
+                    raise ValueError(f"verification structure changed: {name}/{key}")
             timing = record(row, "timing")
             samples = timing["samples"]
-            if timing["allocation_interposition"] is not False or len(samples) != 8:
-                raise ValueError(f"invalid timing process: {name}")
             if [sample["order"] for sample in samples] != ["full-first", "groups-first"] * 4:
                 raise ValueError(f"timing order changed: {name}")
+            for sample in samples:
+                for key in ("nodes", "groups", "html_bytes", "first_group_bytes", "largest_group_source_bytes", "appendix_groups", "plan_mode"):
+                    if type(sample[key]) is not type(row[key]) or sample[key] != row[key]:
+                        raise ValueError(f"raw structure/summary mismatch: {name}/{key}")
+                if sample["grouped_html_bytes"] != row["html_bytes"]:
+                    raise ValueError(f"grouped output size changed: {name}")
             for label, stages in {"parse": ("parse",), "full": ("full",), "first_ready": ("prepare", "first"),
                                   "all_groups": ("prepare", "first", "remaining_groups")}.items():
-                raw = [sum(sample[stage]["ms"] for stage in stages) for sample in samples]
+                raw = [sum(positive(sample[stage]["ms"]) for stage in stages) for sample in samples]
                 summary = row["timing_samples_ms"][label]
                 if len(raw) != len(summary) or any(not math.isclose(a, b, rel_tol=1e-12) for a, b in zip(raw, summary)):
                     raise ValueError(f"raw timing/summary mismatch: {name}/{label}")
             for mode in MODES:
                 memory = [record(row, f"rss-{mode}-{repeat}") for repeat in (1, 2, 3)]
-                if any(sample["allocation_interposition"] is not False for sample in memory):
-                    raise ValueError(f"instrumented RSS process: {name}/{mode}")
                 if [sample["process_peak_rss_kib"] for sample in memory] != row["rss_kib"][mode]:
                     raise ValueError(f"raw RSS/summary mismatch: {name}/{mode}")
     return rows
@@ -143,10 +185,16 @@ def load_evidence(directory, source_root=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("results", type=Path, help="Archived matrix directory with receipt, hashes, summary and raw results")
-    parser.add_argument("--source-root", type=Path, help="Also require all measured source/tool hashes to match this checkout")
+    parser.add_argument("--source-root", type=Path, help="Require the measured runtime manifest, complete source inventory and hashes to match")
+    parser.add_argument("--include-measurement-tools", action="store_true", help="Also require the archived measurement harness to match --source-root")
     args = parser.parse_args()
+    if args.include_measurement_tools and args.source_root is None:
+        parser.error("--include-measurement-tools requires --source-root")
     try:
-        report = evaluate(load_evidence(args.results, args.source_root))
+        report = evaluate(load_evidence(args.results, args.source_root, args.include_measurement_tools))
+        report["source_verification"] = "not requested"
+        if args.source_root is not None:
+            report["source_verification"] = "runtime and measurement tools" if args.include_measurement_tools else "runtime"
     except (OSError, ValueError, KeyError, TypeError, tarfile.TarError) as error:
         print(str(error), file=sys.stderr)
         return 2

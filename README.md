@@ -31,9 +31,11 @@ records stage timing, peak RSS and allocation requests. Mixed 1 MB/5 MB inputs
 reach first HTML in about half the parse-plus-full-output time on that host;
 giant blocks have no early-output gain and no general peak-memory reduction is
 established. A [review-readiness follow-up](Docs/Validation/M6/review-readiness.md)
-passes all 239 tests with Swift 6.2 on macOS and checks all 42 measurement cases
+passes all 242 tests with Swift 6.2 on macOS and checks all 42 measurement cases
 against explicit post-baseline budgets. The optimized Swift 6.2 build and all
-24 offline Python tests pass. Linux/Swift 6.2 PR CI and owner review remain open.
+31 offline Python tests pass, including optimised-Python guard checks. The
+[self-review](Docs/Review-M6.md) records corrected source/provenance checks and
+expanded cancellation coverage. Linux/Swift 6.2 PR CI and owner review remain open.
 
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented

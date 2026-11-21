@@ -4,9 +4,12 @@
 M6 implementation at `087e694`. Development identity remains `0.6.0-dev.1`.
 This follow-up adds an offline evidence/budget checker and documentation;
 runtime sources, package manifest, parser grammar and protected fixtures are
-unchanged. The original implementation branch was recovered into a persistent
-workspace worktree; the original `main` checkout and its uncommitted plan
-changes are preserved.
+unchanged. This records the initial checkpoint at `5711a3a`; the subsequent
+[self-review](../../Review-M6.md) corrects the measurement tools and expands
+coverage to 242 Swift and 31 Python tests without changing runtime sources.
+The original implementation branch was recovered into a persistent workspace
+worktree; the original `main` checkout and its uncommitted plan changes are
+preserved.
 
 ## Quantitative criteria for review
 
@@ -58,18 +61,23 @@ The checker verifies artifact SHA-256 values, all 42 exact HTML verification
 records, eight alternating uninstrumented timing samples per case, raw timing/
 summary agreement, three fresh uninstrumented RSS processes per mode, sample
 medians, configuration and completeness. It reads archive members without
-extracting them. `--source-root` additionally checks all 48 measured source/
-tool hashes, and must be used when applying historical evidence to a checkout.
-Omit it only when inspecting the historical measurements themselves. A changed
+extracting them. Following self-review, `--source-root` checks the runtime
+manifest, complete source inventory and all 43 runtime/manifest hashes, and
+must be used when applying historical evidence to a runtime checkout. Add
+`--include-measurement-tools` to require the historical harness inventory and
+hashes as well (48 files for this record). This stricter check passes at
+`fe6a505` and correctly rejects the subsequently improved runner. Omit source
+matching only when inspecting the historical measurements themselves. A changed
 runtime needs fresh measurements before the old evidence can be applied again.
 Exit codes are 0 for passing budgets, 1 for budget failures, 2 for invalid or
 incomplete evidence. No benchmark, network access or measured binary is run.
 
 The check passes **42/42 cases** against the unchanged implementation. Seven
-new Python regression tests cover per-case failures, the giant-block exception,
+initial Python regression tests cover per-case failures, the giant-block exception,
 RSS overruns, missing/duplicate cases, invalid samples, changed configuration,
 corrupt artifacts, source mismatch and isolated CLI execution. All **24 offline
-Python tests** pass. Normal regression tests inspect historical evidence without
+Python tests** passed at `5711a3a`; [self-review](../../Review-M6.md) expands
+this to 31. Normal regression tests inspect historical evidence without
 freezing future library sources to the baseline's hashes.
 
 ## Fresh compiler validation
@@ -98,7 +106,10 @@ minimum remains macOS 15; this does not prove minimum-OS runtime behavior.
   with the SDK/Testing flags: **239 tests in 28 suites pass**, 0.597 s runtime.
 - `swift build -c release --disable-sandbox` with the same SDK and isolated
   paths: all runtime modules build, 25.92 s.
-- All 48 measured source/tool hashes still match the Linux baseline exactly.
+- At this initial checkpoint, all 48 measured source/tool hashes matched the
+  Linux baseline exactly. After self-review, the unchanged runtime matches all
+  43 runtime/manifest hashes and the historical `fe6a505` checkout still matches
+  all 48; the current runner intentionally differs.
 
 ## Remaining review and CI
 
