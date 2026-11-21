@@ -1,6 +1,7 @@
 # Progressive HTML output
 
-M6 implementation on `feature/m6-progressive-html`, 21 November 2026.
+M6 is merged in PR #24 (`a8a0351`) and [accepted](M6Acceptance.md),
+21 November 2026.
 Development identity: `0.6.0-dev.1`; not a published version. This API consumes
 an already parsed, complete `Document` and returns structural HTML on demand.
 It does not stream or incrementally parse Markdown.
@@ -107,7 +108,7 @@ and complete-document context. A caller hook requiring document order keeps
 the combined renderer in fallback mode. Math hooks and front-matter omission
 remain caller policies; pure custom hooks must explicitly opt into independence.
 
-## Validation and remaining M6 work
+## Validation and declared limits
 
 `ProgressiveHTMLTests` covers deferred hook evaluation, early stopping,
 out-of-order/concurrent requests, cancellation, source ranges, giant blocks,
@@ -135,4 +136,6 @@ pass in Swift 6.2 Release.
 These are candidate budgets for owner review, not pre-registered goals or a
 fresh measurement series. [PR #24 CI](https://github.com/kerker00/GMSetzer/actions/runs/44926163013)
 now passes all 242 Swift tests, optimized builds and 31 Python tests on macOS
-and Linux with Swift 6.2. Owner review and merge remain open. M6 remains in progress; consumer UI integration stays separate.
+and Linux with Swift 6.2. The owner merged PR #24 at `a8a0351`; [M6 acceptance](M6Acceptance.md)
+maps all declared gates to evidence, including merged-main CI. General
+hardening continues in M7; consumer UI integration stays separate.

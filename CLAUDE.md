@@ -6,6 +6,9 @@ describes the workflow.
 
 ## Always
 
+- Credit Codex-assisted work in new commits with `Assisted-by: Codex (OpenAI)`
+  and in PR descriptions (owner preference, 21 November 2026).
+
 - Keep public APIs and current documentation consumer-neutral. Application
   adapters, session/revision types, UI and device acceptance belong in the
   consuming repository. No consumer checkout may be needed to build, test or

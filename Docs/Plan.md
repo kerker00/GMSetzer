@@ -1,10 +1,9 @@
 # GMSetzer – Plan and Requirements
 
-**Status: 21 November 2026, M1–M5 merged and functionally accepted; the
-source-only v0.5.0 preview is published. Initial M6 progressive HTML is
-implemented on `feature/m6-progressive-html`, not merged or released, for
-the 0.6 development stage; general speed/hardening moves to M7 and the 1.0
-API/documentation/release milestone to M8.** This document is the
+**Status: 21 November 2026, M1–M6 merged and accepted under their declared
+library gates. PR #24 (`a8a0351`) adds progressive HTML on `main`; the latest
+published source-only preview remains v0.5.0. M7 now addresses general speed
+and hardening; API/DocC/1.0 completion stays M8.** This document is the
 reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
@@ -91,9 +90,9 @@ An isolated public-HTTPS SwiftPM consumer resolves exact version 0.5.0 to the
 same commit and exercises all M5 APIs. GitHub supplies ZIP/tar.gz archives;
 there are zero uploaded build assets. The annotated tag remains unchanged.
 See [release notes](Releases/0.5.0.md) and
-[release validation](Validation/Release/0.5.0.md). Progressive HTML (new M6),
-general measurements/hardening (now M7) and consumer UI/device acceptance
-remain planned work.
+[release validation](Validation/Release/0.5.0.md). Progressive HTML is now
+merged and accepted under [M6](M6Acceptance.md); general measurements/
+hardening remain M7, and consumer UI/device acceptance stays separate.
 
 GMSetzer is an independent, general-purpose Markdown library intended for
 open-source use under the MIT licence. Editors, command-line tools, servers
@@ -169,7 +168,7 @@ All taken by the project owner on 19 November 2026.
 | GFM | Tables, task lists, strikethrough, extended autolinks and disallowed raw HTML (tag filtering); all 672 examples in the pinned GFM 0.29-derived cmark corpus, including the two task list examples marked `disabled` upstream | – |
 | Further syntax | Footnotes; front matter (YAML/TOML at the start, delivered as raw text); math inline `$…$`, display `$$…$$` and ` ```math ` blocks; GitHub alerts `> [!NOTE]` (NOTE, TIP, IMPORTANT, WARNING, CAUTION); Obsidian callouts `> [!type]` with optional `+`/`-` folding marker and title | – |
 | Profiles | Every extension switchable on its own; shipped profiles "CommonMark strict" and "GFM" | Obsidian (wikilinks, embeds `![[…]]`, `==highlight==`, tags), Pandoc (definition lists, attributes `{.class}`, fenced divs, sub-/superscript, citations `[@key]`), MultiMarkdown, kramdown, user-defined profiles |
-| Output | Syntax tree with source ranges; HTML renderer with block anchors; planned opt-in progressive HTML from a complete document (M6) | Markdown serialiser (for converting between profiles), other output formats |
+| Output | Syntax tree with source ranges; HTML renderer with block anchors; opt-in progressive HTML from a complete document (M6) | Markdown serialiser (for converting between profiles), other output formats |
 | Outline | Query for headings and block structure with their ranges | – |
 | Editor syntax | Optional source-spelled syntax/delimiter spans and precisely located document diagnostics; UTF-16 mapping in the caller's snapshot | – |
 | Native analysis | Optional `SetzerAnalysis` module over the same tree/source; configurable named rule subset, portable findings and explicit suggested fixes | Further rules and separately verified markdownlint compatibility |
@@ -474,7 +473,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | M3 | Safe HTML, anchors/hooks, position conversion, outline; optional native analysis with a named rule subset; portable syntax/finding APIs | Security/position/analysis tests and standalone package validation pass; application adapters remain outside this package | re-estimate | **merged in PR #12 (`651af17`)** after review corrections: exact position/outline queries, safe configurable URL scheme allowlist/anchors and three optional native rules. 106 library tests passed across macOS/debug/release/Swift 6.2/Linux; after the [review](Review-M3.md) corrections 108 pass on macOS (Swift 6.2/Linux not re-run) with byte-identical differential results. Index/analysis timings and optimisations: [Benchmarks](Benchmarks.md#m3-editor-services-20-november-2026). See [M3EditorServices](M3EditorServices.md) |
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | **merged in PR #14 (`e163e6f`)**: tables, task lists, strikethrough, extended autolinks and tag filter as built-in payloads (owner decision 1A); 672/672 GFM and 652/652 CommonMark; generated documents agree with cmark-gfm. Library and reference tests pass on macOS; GFM parses at 0.88× cmark-gfm and both budget checks pass. Swift 6.2/Linux not re-run. See [M4GFM](M4GFM.md) |
 | M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Declared extension fixtures and profile/combination tests pass | 5–8 | **first step merged in PR #19 (`4b0f105`)**: raw YAML/TOML front matter; 153 tests pass on both hosts and macOS/Swift 6.2. PR/main CI pass on both hosts. Named footnotes merged in PR #20 (`a6a2da6`), with 178 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on macOS/Linux. Opaque inline/display/fenced TeX is merged in PR #21 (`6f166b7`), with 202 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on both hosts. Alerts and callouts merged in PR #22 (`c9543fe`); all 227 local tests pass on both hosts and macOS/Swift 6.2, and PR/main CI pass on both hosts. **Functional M5 accepted** against the declared extension/profile/combination criterion; see [M5Acceptance](M5Acceptance.md). See [FrontMatter](FrontMatter.md), [Footnotes](Footnotes.md), [Math](Math.md) and [Admonitions](Admonitions.md) |
-| M6 / 0.6 development | Progressive HTML: stage measurements, prepared complete-document context, structural output groups and bounded/on-demand emission | First group is available before full HTML construction; assembled output matches the existing renderer; source/safety/extension/cancellation contracts and macOS/Linux checks pass (10.1) | re-estimate after the complete measurement matrix | **in progress on `feature/m6-progressive-html`**: initial API, M5 composition and 239 tests pass on macOS Debug/Release and Linux ARM64; both hosts pass 17 script tests, Linux optimised build passes. Initial macOS probe and owner-authorised 42-case Linux ARM64 stage/RSS/allocation matrix recorded; follow-up `feature/m6-validation` passes all 242 tests and an optimised build with macOS/Swift 6.2, plus 31 script tests. The [self-review](Review-M6.md) corrects measurement provenance/evidence checks and expands cancellation tests; 14 progressive tests also pass in Swift 6.2 Release. All 42 cases meet explicit post-baseline review budgets; [PR #24 CI](https://github.com/kerker00/GMSetzer/actions/runs/44926163013) passes on macOS/Swift 6.2.3 and Linux/Swift 6.2 with 242 Swift tests, optimized builds and 31 Python tests; owner review and merge remain open. See [ProgressiveHTML](ProgressiveHTML.md) and [review readiness](Validation/M6/review-readiness.md) |
+| M6 / 0.6 development | Progressive HTML: prepared complete-document context, structural groups and bounded/on-demand emission | Plan 10.1 gates pass | Accepted; no remaining implementation estimate | **merged in PR #24 (`a8a0351`) and accepted**: exact grouped/full output, explicit fallbacks, source/cancellation/M5 contracts, 42-case measurements with matching runtime hashes and reviewed budgets; merged-main macOS/Swift 6.2.3 and Linux/Swift 6.2 CI pass 242 Swift tests, optimized builds and 31 Python tests. See [M6Acceptance](M6Acceptance.md) |
 | M7 | General speed and hardening: selected-extension measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met; robustness and allocation evidence recorded | previous 5–8; re-estimate after M6 | **planned; former M6 moved back one milestone** |
 | M8 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | previous 3–5; re-estimate after M7 | **planned; former M7 moved back one milestone** |
 | | **Original total before explicit editor-analysis scope** | | **38–59; re-estimate required** | |
@@ -485,10 +484,10 @@ profile conversions, incremental parsing if measurements call for it.
 ### 10.1 M6 progressive HTML for large documents
 
 **Owner decision, 21 November 2026:** make progressive HTML the next milestone,
-referred to as M6 / the 0.6 development stage. Its initial implementation is
-on the feature branch below; it is not merged, accepted as complete or
-released. The previous M6 hardening scope becomes M7; the previous M7
-1.0 scope becomes M8. Version-tag publication remains a separate confirmed
+referred to as M6 / the 0.6 development stage. PR #24 (`a8a0351`) is now
+merged and [accepted](M6Acceptance.md) against the declared gates. The
+implementation remains unreleased. The previous M6 hardening scope becomes
+M7; the previous M7 1.0 scope becomes M8. Version-tag publication remains a separate confirmed
 step. Historical validation/release documents retain their original M6/M7
 references; this section is authoritative for the new work order.
 
@@ -595,9 +594,10 @@ Python tests pass locally in normal and optimised modes. The
 [self-review](Review-M6.md) records tool/evidence corrections and expanded
 cancellation tests; the 14 progressive tests pass in Swift 6.2 Release. [PR #24 CI](https://github.com/kerker00/GMSetzer/actions/runs/44926163013)
 passes all 242 Swift tests, optimized builds and 31 Python tests on macOS and
-Linux with Swift 6.2. Owner API/budget review and merge remain open. Consumer WebView proof and publication remain separate.
-The broader parser/C and selected-extension hardening matrix stays M7. M6 is
-not complete.
+Linux with Swift 6.2. The owner merged PR #24 at `a8a0351`, and merged-main
+CI also passes on both hosts; [M6Acceptance](M6Acceptance.md) maps every declared gate to its evidence.
+Consumer WebView proof and publication remain separate. The broader parser/C
+and selected-extension hardening matrix stays M7.
 
 Full benchmark/long-test series still require the existing execution approval.
 The original total estimate above excludes this added scope and must be
@@ -745,15 +745,12 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: owner review of the M6 API/post-baseline budgets and merge
-of PR #24. Its macOS/Swift 6.2.3 and Linux/Swift 6.2 CI pass all 242 Swift
-tests, optimized builds and 31 Python tests. The `feature/m6-validation`
-follow-up passes macOS/Swift 6.2 tests/build and checks 42/42 archived cases
-against the review budgets; see [review readiness](Validation/M6/review-readiness.md). General selected-extension
-performance acceptance, broad hostile-input checks and fuzzing move to M7;
-API/DocC/1.0 completion moves to M8. Full benchmark/long-test execution still
-requires the existing owner confirmation. M1–M5 and the source-only 0.5.0
-preview are complete under the documented functional/publication gates;
-consumer scheduling, dependency pinning and device acceptance stay in their
-own repositories. The initial M6 branch is not merged or released, and its
-initial probe and 42-case Linux measurement record do not complete the full milestone.
+Current next work: M7 general speed/hardening, beginning with bounded,
+reproducible adversarial/mutation coverage across strict/GFM/M5 configurations.
+The M6 progressive-output API and reviewed post-baseline budgets are accepted;
+merged-main CI passes on macOS/Linux at the minimum Swift 6.2 toolchain.
+Fresh general performance acceptance, broader hostile-input/fuzzing campaigns
+and allocation work remain M7; API/DocC/1.0 completion stays M8. Full benchmark
+and long-test execution still requires the existing owner confirmation.
+Consumer scheduling, dependency pinning and device acceptance remain in their
+own repositories. No 0.6 tag or release has been published.

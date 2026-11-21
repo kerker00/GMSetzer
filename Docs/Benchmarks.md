@@ -516,7 +516,7 @@ visible output separately.
 The initial bounded probe below supplies the first timing evidence. The
 owner-authorised 42-case Linux ARM64 follow-up now records the workload/size/
 annotation matrix, allocation requests and whole-process peak RSS. Quantitative
-M6 acceptance targets remain open. Further full benchmark/long-test runs still
+M6 post-baseline targets are now reviewed and accepted in [M6Acceptance](M6Acceptance.md). Further full benchmark/long-test runs still
 follow the existing approval requirement.
 
 ## M6 progressive HTML first stage probe
@@ -629,7 +629,9 @@ archived cases pass with matching runtime sources. The checker validates raw
 records and completeness offline; this is not a fresh timing series or a
 statistical regression verdict. macOS/Swift 6.2 tests and the optimized build
 pass; [PR #24 CI](https://github.com/kerker00/GMSetzer/actions/runs/44926163013)
-also passes on macOS/Swift 6.2.3 and Linux/Swift 6.2. Owner review and merge remain open. Application transfer,
+also passes on macOS/Swift 6.2.3 and Linux/Swift 6.2. PR #24 is merged at `a8a0351`; [M6 acceptance](M6Acceptance.md)
+records the reviewed budgets and successful merged-main CI. General speed
+and hardening continue in M7. Application transfer,
 layout and first-visible-output measurements remain outside this library work.
 
 
