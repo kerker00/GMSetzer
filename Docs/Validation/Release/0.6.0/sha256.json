@@ -1,0 +1,10 @@
+{
+  "candidate-ci.json": "017a66541934d50e93026770da0f94c2060260dc2f511bd2ec5c0c6d88dcb62d",
+  "consumer-Package.resolved": "4c97f83136529d2743cbd46fa203cdb0b4154bef2c7f89df969dcbb8f5fbb472",
+  "consumer-probe.swift": "98cbd446cc43fbdbfe60e5b86beae5b49762da7d277ad8391290ff0db4427c6a",
+  "local-logs.tar.gz": "88febc892cfaa4670b11880702abbf8efc3a497edb8cb2cb2b1818446e33ca04",
+  "local-validation.json": "7b97fa8d66d7e02e997f1d2cd92ce8d11d3b8c225871fe50ba619115d9e1b476",
+  "remote-consumer-logs.tar.gz": "0e652c78856ebf3a1b97cb43a379f582278476b7d67d9c69d68892f1145b7ff1",
+  "remote-consumer.json": "be803439f4bec94ad4ad919839d2069c18a808080b9c136bb356eccfb9cd31f6",
+  "source-identity.json": "cc9e1dabe30c89353acdbedf96406bb6c849dafa64a5d88e8bbd8a2cada9f591"
+}

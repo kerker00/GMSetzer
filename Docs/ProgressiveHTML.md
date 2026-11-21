@@ -2,7 +2,8 @@
 
 M6 is merged in PR #24 (`a8a0351`) and [accepted](M6Acceptance.md),
 21 November 2026.
-Development identity: `0.6.0-dev.1`; not a published version. This API consumes
+Release candidate identity: `0.6.0`; its version tag is not published yet.
+The accepted M6 snapshot used `0.6.0-dev.1`. This API consumes
 an already parsed, complete `Document` and returns structural HTML on demand.
 It does not stream or incrementally parse Markdown.
 

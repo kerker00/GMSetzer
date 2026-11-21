@@ -13,7 +13,11 @@ wherever Swift runs, including Linux.
 > published source-only preview remains v0.5.0; M6 is not in that release.
 
 [PR #24](https://github.com/kerker00/GMSetzer/pull/24) (`a8a0351`) adds
-**progressive HTML** with development identity `0.6.0-dev.1`.
+**progressive HTML**. The `release/0.6.0` preparation selects result identity
+`0.6.0`; its source-only tag/release is not published yet.
+[PR #25](https://github.com/kerker00/GMSetzer/pull/25) contains this preparation. See the
+[release notes](Docs/Releases/0.6.0.md) and
+[preparation checks](Docs/Validation/Release/0.6.0.md).
 `HTMLRenderer.prepare` and `FootnotesHTMLRenderer.prepare` retain complete
 Markdown context and emit structural HTML groups on demand, with explicit
 whole-document fallbacks for raw HTML and document-order hooks. The
@@ -26,7 +30,9 @@ the parse-plus-full-output time on that host. Full parsing still precedes
 output; giant blocks remain indivisible and no general peak-memory reduction
 is established. The existing [0.5.0 installation](#installation) stays valid.
 
-Next is **M7: general speed and hardening**, beginning with reproducible
+The accepted M6 snapshot is the basis of **0.6.0**; the M7 changes remain
+on their separate development branch for **0.7.0**. Next is **M7: general
+speed and hardening**, beginning with reproducible
 adversarial/mutation coverage and a measured investigation of remaining costs.
 API/DocC/1.0 completion stays **M8**. Full benchmark and long fuzzing execution
 follow the existing approval requirement.

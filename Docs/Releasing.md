@@ -75,3 +75,23 @@ An isolated public-HTTPS SwiftPM consumer resolves exact version 0.5.0 to
 `2d8ecef4050976b0e817f0aaeba30fea4b3ac3d1` and exercises the library successfully.
 See [executed release evidence](Validation/Release/0.5.0.md). Products,
 dependencies, workflow definitions and protected fixtures are unchanged.
+
+
+## 0.6.0 preparation and 0.7 development
+
+The owner selected the accepted M6 main snapshot (`0cf6690`, after PR #24)
+for source-only 0.6.0 preparation on 21 November 2026. The release branch
+changes only `GMSetzerVersion.current` to `0.6.0` in runtime sources and adds
+[notes](Releases/0.6.0.md) / [executed checks](Validation/Release/0.6.0.md).
+It excludes the M7 mutation tests, baseline additions and parser optimization;
+that work continues separately as `0.7.0-dev.1`.
+
+[Preparation PR #25](https://github.com/kerker00/GMSetzer/pull/25) passes
+minimum Swift 6.2 CI on both platforms; a fresh public-HTTPS consumer resolves
+and exercises its exact source commit. See the validation record for exact
+versions, results and receipt links. The 0.6.0 candidate is not a published tag. The owner merges its preparation
+PR; the exact merged commit is then verified before the separately confirmed
+tag and publication sequence above. v0.5.0 remains the published preview until
+those steps complete. Historical M6 resource measurements describe the accepted
+M6 source; the candidate differs only in its identity constant and makes no
+new timing/resource claim.
