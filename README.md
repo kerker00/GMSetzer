@@ -33,10 +33,14 @@ follow the existing approval requirement.
 
 The initial `feature/m7-hardening` step adds bounded deterministic mutation
 coverage: 1,024 profile/input combinations and 24 depth cases across strict,
-GFM and selected M5 configurations. All 245 local macOS/Swift 6.4.2 tests
-pass in Debug and Release. The owner-approved [72-case baseline](Docs/Validation/M7/baseline-2026-11-21.md)
-passes all six parser/C budgets and nine frozen M2 checks. Real-M5/hostile-input
-scaling and broader fuzzing remain open. See [M7 hardening](Docs/M7Hardening.md)
+GFM and selected M5 configurations. All 245 tests pass in Debug and Release
+on macOS and native Linux ARM64 with Swift 6.4.2. The owner-approved
+[72-case Apple M2 baseline](Docs/Validation/M7/baseline-2026-11-21.md)
+passes all six parser/C budgets and nine frozen M2 checks. The separate
+[72-case Raspberry Pi baseline](Docs/Validation/M7/linux-arm64-2026-11-21.md)
+satisfies all six same-host C ratios, with high-load/sample-count limitations.
+Minimum-compiler checks for the new tests, real-M5/hostile-input scaling and
+broader fuzzing remain open. See [M7 hardening](Docs/M7Hardening.md)
 for scope, reproduction and remaining portability/performance gates.
 
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native

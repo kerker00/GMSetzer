@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "cases": [
+    {
+      "profile": "CommonMark",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 9.249,
+      "c_ms": 8.405,
+      "gm_samples": 424,
+      "c_samples": 529,
+      "ratio": 1.1004164187983345,
+      "max_ratio": 2.0,
+      "passed": true
+    },
+    {
+      "profile": "CommonMark",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 130.286,
+      "c_ms": 93.913,
+      "gm_samples": 38,
+      "c_samples": 47,
+      "ratio": 1.387305271900589,
+      "max_ratio": 2.0,
+      "passed": true
+    },
+    {
+      "profile": "CommonMark",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 619.708,
+      "c_ms": 508.297,
+      "gm_samples": 9,
+      "c_samples": 10,
+      "ratio": 1.2191848466546131,
+      "max_ratio": 2.0,
+      "passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 12.96,
+      "c_ms": 20.07,
+      "gm_samples": 356,
+      "c_samples": 245,
+      "ratio": 0.6457399103139014,
+      "max_ratio": 2.0,
+      "passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 145.883,
+      "c_ms": 201.064,
+      "gm_samples": 34,
+      "c_samples": 25,
+      "ratio": 0.7255550471491665,
+      "max_ratio": 2.0,
+      "passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 759.693,
+      "c_ms": 1032.847,
+      "gm_samples": 7,
+      "c_samples": 5,
+      "ratio": 0.735532949217067,
+      "max_ratio": 2.0,
+      "passed": true
+    }
+  ],
+  "failures": [],
+  "scope": "Same-host relative parser/C ceiling only. Apple-M2 absolute deadlines and frozen M2 allowances/drift are not evaluated or changed. First native Linux baseline; high load and small large-input sample counts limit generalization."
+}

@@ -52,7 +52,7 @@ to ordinary tests.
 
 ## Executed validation
 
-macOS arm64, Xcode 27.2 / Apple Swift 6.4.2:
+macOS arm64, Xcode 27.2 / Apple Swift 6.4.2, and the native Linux follow-up:
 
 - Complete Debug suite: **245 tests in 29 suites pass**, including all eight
   mutation cases and all 652 CommonMark / 672 GFM protected examples.
@@ -60,13 +60,18 @@ macOS arm64, Xcode 27.2 / Apple Swift 6.4.2:
 - The standalone public API and runtime dependencies are unchanged; the M6
   offline evidence checker still matches all 43 runtime/manifest files and
   passes 42/42 historical cases. This is no new timing/resource measurement.
-- Minimum Swift 6.2 and Linux execution of the new tests remain for subsequent
-  validation/PR CI. Their M6 predecessor has merged-main CI on both hosts;
-  that is not substituted for running the three new tests there.
+- Native Linux ARM64 on an existing Raspberry Pi 5 / Debian 13.7 / Swift
+  6.4.2: all **245 tests / 29 suites pass in Debug and Release**, plus all
+  **31 Python tests** in both isolated normal and optimized modes. The
+  [Linux report](Validation/M7/linux-arm64-2026-11-21.md) retains receipts/logs.
+- Minimum Swift 6.2 execution of the three new tests remains for PR CI. Their
+  M6 predecessor has merged-main CI on both hosts; that is not substituted
+  for running the new tests on the minimum compiler.
 
 Commands use the native SwiftPM build system, `--disable-sandbox`, isolated
-scratch/cache/configuration/security/module directories under `/private/tmp`,
-and `-c release` for the optimized suite. The focused reproducer is:
+scratch/cache/configuration/security/module directories under `/private/tmp`
+on macOS and a task-specific `/tmp` directory on Linux, and `-c release`
+for the optimized suite. The focused reproducer is:
 
 ```sh
 swift test --filter HardeningTests
@@ -135,7 +140,15 @@ or attribution.
 The current suite includes registry/inline dispatch and optional editor services;
 further real-M5 and hostile-input scaling/resource cases remain M7 work.
 
-The first series supplies the existing C/absolute/frozen-M2 baseline. Next
+A subsequent owner-authorised native Linux ARM64 series at `c299783` completes
+all **72 cases** with matching runtime/tool hashes. All six same-host parser/C
+ratios satisfy ≤2× C. High reported load and small large-input sample counts
+limit conclusions; Mac absolute deadlines and frozen M2 controls are not
+applied to the Pi. See the [Linux report](Validation/M7/linux-arm64-2026-11-21.md)
+for commands, allocation data, sanitized logs and measurement limits. No
+installation or replacement execution environment was needed.
+
+The first Mac series supplies the existing C/absolute/frozen-M2 baseline. Next
 profile HTML emission and add real-M5/hostile-input scaling/resource cases,
 then expand the isolated fuzz/sanitizer campaign with minimized regressions.
 Full benchmark and long-test/fuzz execution retain the owner-confirmation gate

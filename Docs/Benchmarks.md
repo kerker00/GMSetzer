@@ -694,3 +694,43 @@ allocation observations and limits. [Raw export](BenchmarkData/m7-baseline-2026-
 and [artifact hashes](BenchmarkData/m7-baseline-2026-11-21/sha256.json) retain
 the evidence. Real-M5 and hostile-input scaling/resource measurements and
 broader isolated fuzzing remain required before M7 acceptance.
+
+
+## M7 native Linux ARM64 baseline, 21 November 2026
+
+Owner-authorised source-only snapshot `c299783` on an existing Raspberry Pi 5,
+four logical CPUs, 8,251,584 KiB RAM, Debian 13.7/glibc 2.41, Swift 6.4.2 and
+toolchain Clang 21.0.0. Native Release, no debug information, pinned development
+dependencies and unchanged runtime/benchmark hashes matching the Mac series.
+All **72 cases** complete; the final export is written **490.73 seconds** after
+the recorded post-cold-build start, including incremental run-command setup.
+The complete Linux Debug/Release suites pass 245 tests / 29 suites each;
+31 Python tests pass in both normal and optimized isolated modes.
+
+P50 milliseconds on identical `mixed-v1` inputs and source-positioned C controls:
+
+| Profile | Size | GMSetzer | C | GM/C | ≤2× C |
+| --- | --- | ---: | ---: | ---: | --- |
+| CommonMark | 100 KB | 9.249 | 8.405 | 1.100× | Pass |
+| CommonMark | 1 MB | 130.286 | 93.913 | 1.387× | Pass |
+| CommonMark | 5 MB | 619.708 | 508.297 | 1.219× | Pass |
+| GFM | 100 KB | 12.960 | 20.070 | 0.646× | Pass |
+| GFM | 1 MB | 145.883 | 201.064 | 0.726× | Pass |
+| GFM | 5 MB | 759.693 | 1,032.847 | 0.736× | Pass |
+
+These are same-host relative comparisons only; Apple-M2 absolute limits and
+frozen M2 allowances/control drift are not applied or changed. High reported
+load (1-minute averages 21.18 before / 13.78 after) and only 5–10 samples for
+the large core parser/C cases limit generalization. This is the first Linux
+baseline at unchanged runtime code, not a new optimization or controlled
+cross-host comparison. A repeat under observed steady conditions is needed
+before tuning from timing differences or declaring a stable Linux envelope.
+
+The [full report](Validation/M7/linux-arm64-2026-11-21.md) records configuration,
+commands, transport/toolchain warnings and limits. The
+[data directory](BenchmarkData/m7-linux-arm64-2026-11-21/) retains all 72 cases,
+CSV, relative comparison, source/host receipts, sanitized complete logs and
+artifact hashes. Retained allocation metrics are gross request counts/volume,
+not peak or retained memory; OS/backend differences are not code attribution.
+M7's real-M5/hostile scaling, isolated fuzzing/sanitizers and new-test minimum
+compiler validation remain open.

@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "client_date": "2026-11-21",
+  "source_commit": "c299783e7cac4783105f882db111905e6227e8d0",
+  "hardware": "Raspberry Pi 5 Model B Rev 1.0",
+  "architecture": "aarch64",
+  "os": "Debian 13.7",
+  "glibc": "2.41",
+  "compiler": "Swift 6.4.2 (swift-6.4.2-RELEASE)",
+  "build_jobs": 2,
+  "results": {
+    "debug": {
+      "tests": 245,
+      "suites": 29,
+      "test_seconds": 7.16,
+      "passed": true
+    },
+    "release": {
+      "tests": 245,
+      "suites": 29,
+      "test_seconds": 2.432,
+      "passed": true
+    },
+    "python": {
+      "tests": 31,
+      "seconds": 4.412,
+      "passed": true
+    },
+    "python-optimized": {
+      "tests": 31,
+      "seconds": 4.417,
+      "passed": true
+    }
+  },
+  "original_log_sha256": {
+    "debug.log": "e85bdec09107f4a685955fb8453ab9c1d261abd8b04643d046fe9bad54594403",
+    "python-optimized.log": "7d5e8769c0183d5e4553be5926524668bc0e7c6037855054990614cab9dcd31c",
+    "python.log": "6857c7372d4b0da409be115049234e8d39d1b16ecc9efca4c26267067b35be69",
+    "release.log": "afb44f5c3c1630ebab266a43e1209bd696d7c868c49e5ba00929194482e1c8f0"
+  },
+  "scope": "Existing native owner-provided Linux host. No VM/container or installation. Source-only transfer verified 121 file hashes before execution. Original monitoring SSH session disconnected; all four completed logs report success.",
+  "retained_log_sha256": {
+    "debug.log": "52daf459ee63d27cd29f3bd8822b3a9f07673d015c68891d4f38ac1161ba4e8d",
+    "release.log": "fb9d802aaad7520c98ab0dce0a37dd6584f53ac276c015a9d97ab5166750d09e",
+    "python.log": "6857c7372d4b0da409be115049234e8d39d1b16ecc9efca4c26267067b35be69",
+    "python-optimized.log": "7d5e8769c0183d5e4553be5926524668bc0e7c6037855054990614cab9dcd31c"
+  },
+  "redaction": "Task/user-home paths and host labels are redacted; process addresses normalized; line endings use LF. Test names, counts, times and result lines are unchanged. Original log hashes are retained separately."
+}
