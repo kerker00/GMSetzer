@@ -1,0 +1,242 @@
+{
+  "schema": 1,
+  "profile": "CommonMark (no optional extensions)",
+  "scope": "AST construction/destruction versus consumed callback/offset events; HTML includes fresh output allocation. Not equivalent-work parser or C-parity evidence.",
+  "started_utc": "2026-11-22T17:18:22Z",
+  "load_before": [
+    35.22802734375,
+    45.48193359375,
+    28.517578125
+  ],
+  "external_build": {
+    "sources": {
+      "md4c": {
+        "repository": "https://github.com/mity/md4c",
+        "tag": "v0.6.0",
+        "commit": "7fc1815a5eeba2af7d6120a76202bf59f3b6e6e4",
+        "license": "MIT",
+        "source_sha256": {
+          "md4c.c": "b9102e0ddfdfd494fdda903f79c554ffaab7e87b4eeb85b4c113057dee3e0728",
+          "md4c.h": "d0c14762f1eac3cd9d1c08c3a287b61d93ee2382e5a22ee48f5a6f3ad2c2349d",
+          "md4c-html.c": "bf6f4f856e7352526c08b22916d1a840054b027a28f2b2a89482f50bf23e55b0",
+          "md4c-html.h": "6a045ecec5d8cf17a771654a31af06641df195d7ea8486a140a121b6c6e0191f",
+          "entity.c": "7ea50d695d9210958e01b12b3e4d1db78d783d03d95b040fd7d2d9cfe1f1d39c",
+          "entity.h": "99a8952be6629e4114947cb61a901bf4f73b10d84d1ac5e17ad8299dfbad708e",
+          "LICENSE.md": "e547c9a66c120b19f9838a1f7c2f51137f5c71ba27b70c3611b673f2cdb4e02e"
+        }
+      },
+      "pulldown-cmark": {
+        "repository": "https://github.com/pulldown-cmark/pulldown-cmark",
+        "tag": "v0.13.6",
+        "commit": "014b61d38d235f382935bb676bab872b7680afa2",
+        "license": "MIT",
+        "crate_version": "0.13.6"
+      }
+    },
+    "commands": [
+      {
+        "label": "cc-version",
+        "command": [
+          "cc",
+          "--version"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.004992808000679361
+      },
+      {
+        "label": "rust-version",
+        "command": [
+          "rustc",
+          "--version"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.06526147900149226
+      },
+      {
+        "label": "cargo-version",
+        "command": [
+          "cargo",
+          "--version"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.0651168280019192
+      },
+      {
+        "label": "md4c-build",
+        "command": [
+          "cc",
+          "-O3",
+          "-std=c11",
+          "-Wall",
+          "-Wextra",
+          "-I<NATIVE_TASK>/external/md4c",
+          "<NATIVE_TASK>/GMSetzer/Tools/ParserComparison/md4c-probe.c",
+          "<NATIVE_TASK>/external/md4c/md4c.c",
+          "<NATIVE_TASK>/external/md4c/md4c-html.c",
+          "<NATIVE_TASK>/external/md4c/entity.c",
+          "-o",
+          "<NATIVE_TASK>/external/md4c-probe"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 4.095857365002303
+      },
+      {
+        "label": "cargo-lock",
+        "command": [
+          "cargo",
+          "generate-lockfile",
+          "--manifest-path",
+          "<NATIVE_TASK>/external/pulldown/Cargo.toml"
+        ],
+        "exit_code": 101,
+        "elapsed_seconds": 0.16625267900235485
+      },
+      {
+        "label": "cargo-lock-corrected",
+        "command": [
+          "cargo",
+          "generate-lockfile",
+          "--manifest-path",
+          "<NATIVE_TASK>/external/pulldown/Cargo.toml"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.21747545800099033
+      },
+      {
+        "label": "pulldown-build",
+        "command": [
+          "cargo",
+          "build",
+          "--release",
+          "--locked",
+          "--manifest-path",
+          "<NATIVE_TASK>/external/pulldown/Cargo.toml",
+          "--target-dir",
+          "<NATIVE_TASK>/external/rust-build"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 8.975097321999783
+      },
+      {
+        "label": "cargo-metadata",
+        "command": [
+          "cargo",
+          "metadata",
+          "--locked",
+          "--format-version",
+          "1",
+          "--manifest-path",
+          "<NATIVE_TASK>/external/pulldown/Cargo.toml"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.03470200499941711
+      }
+    ],
+    "rust_packages": [
+      {
+        "name": "bitflags",
+        "version": "2.13.2",
+        "license": "MIT OR Apache-2.0"
+      },
+      {
+        "name": "gmsetzer-pulldown-probe",
+        "version": "0.1.0",
+        "license": null
+      },
+      {
+        "name": "memchr",
+        "version": "2.8.3",
+        "license": "Unlicense OR MIT"
+      },
+      {
+        "name": "pulldown-cmark",
+        "version": "0.13.6",
+        "license": "MIT"
+      },
+      {
+        "name": "pulldown-cmark-escape",
+        "version": "0.11.0",
+        "license": "MIT"
+      },
+      {
+        "name": "unicase",
+        "version": "2.10.0",
+        "license": "MIT OR Apache-2.0"
+      }
+    ],
+    "crate_vcs": {
+      "git": {
+        "sha1": "014b61d38d235f382935bb676bab872b7680afa2"
+      },
+      "path_in_vcs": "pulldown-cmark"
+    },
+    "status": "passed",
+    "binary_sha256": {
+      "md4c-probe": "0f157b6f7169708a6141cd0d184d0a048cdf11f5e9ea02bfe9373f400dbdcdab",
+      "rust-build/release/gmsetzer-pulldown-probe": "d1b87ef87219852086335655c665dc43c4f452896fd0d4ced76c583f617b394b"
+    }
+  },
+  "source_sha256": {
+    "Package.swift": "346f8bb999e3cf632d2ffda5516708f7285a75d1566ced8fa4ff08d04989faf7",
+    "Sources/SetzerSyntax/SyntaxToken.swift": "d2028656d614538e83fff7241cefd6d358a0c520865b9dcf03686438fae321b6",
+    "Sources/SetzerSyntax/SourceRange.swift": "8c4ff9c38677252c2642da6ff0824b613fdeb4b311b98859388fe92c74902460",
+    "Sources/SetzerSyntax/SourceIndex.swift": "75c83ad3cd20c653fd52f51517855c81877d151f97a69b395627994d54219850",
+    "Sources/SetzerSyntax/LibraryIdentity.swift": "4a20726619344ac89cac5b37d603dd33e3a829a6bed59541b1d55eee46cb5b8d",
+    "Sources/SetzerSyntax/HTMLBlock.swift": "5e1f0febf1ef80e8ec824d79055a8791c75a398ff201597362a1db7d0169586c",
+    "Sources/SetzerSyntax/ExtensionDescriptor.swift": "d7620b9aa850c4cdd5fd65e845069acdcd42f5c15c9a54d0cd52ccf96f0b305d",
+    "Sources/SetzerSyntax/DocumentTraversal.swift": "e15459f20d5598fc7e4696304fa6f38832779b5a777c15034156c5843b40e2b3",
+    "Sources/SetzerSyntax/DocumentIndex.swift": "e25e75fa6536517b763fdcb211efbe59b49a485b629b98a2bdc643f8e76430e1",
+    "Sources/SetzerSyntax/DocumentDiagnostic.swift": "8e7041b9f7357993a89f191ce1e5bde1ceb532ffe9958d975a2ad657cc528853",
+    "Sources/SetzerSyntax/Document.swift": "995458b565cd30258242f40e26da6fb9fa4d13c4caa1803a33485dab531e8d19",
+    "Sources/SetzerSyntax/ByteSearch.swift": "4fda31cc4d0c18a2e633343d017ef29c590461bc787df4970534394c49e259ab",
+    "Sources/SetzerParser/SourceCursor.swift": "bc7b8342bc9738b4c0ac6e45bd13ce23521b99a82a1fd151ed3881efb27d563a",
+    "Sources/SetzerParser/RuleRegistry.swift": "98ea059a468d61505d758b9e24b78139303d84377bbadd2a98158164384e5666",
+    "Sources/SetzerParser/ReferenceDefinitions.swift": "f44d21348b8235cf36b74ed08f2b5e1fabc678d30ca5fc0ec38a9fcac9bfa188",
+    "Sources/SetzerParser/Profile.swift": "67dc50de9dbe4d44fefc38501f8b8ac2b4978f22d589135f91c29f344b0c9ac4",
+    "Sources/SetzerParser/MarkdownParser.swift": "5e9c6a7c1fdb9db8eb3a58d5e760ba6d514525f81983c02e2c3640cdf268fc66",
+    "Sources/SetzerParser/InlineTables.swift": "4efdccb56eb518e631939153541ec4291eb209e4ea5be5a96bfd44a2edb51062",
+    "Sources/SetzerParser/InlineRule.swift": "15759b5b1d0041983dd084775b957cb3470591d1e508b5f19dd1a91a17f98f74",
+    "Sources/SetzerParser/InlinePhase.swift": "4a8d5e1d04d4b53385e502780276ded6cf06815f56b2b2ff385d9bdc22c214cd",
+    "Sources/SetzerParser/InlineParser.swift": "1863a596c4139b1304f7617a78e5fdcedf5a820c0fd845cb0065754ca1aff2e5",
+    "Sources/SetzerParser/InlineLinks.swift": "ad2927d6aac1d9234b28a6a624be397d31081dd05a4d5781367959ebf1292187",
+    "Sources/SetzerParser/InlineExtensions.swift": "38db90e7160946bebe8da5289febca9fde1aa0713f390402e70b52a4a32ef3bc",
+    "Sources/SetzerParser/InlineDecoding.swift": "a24b4e66c345dd436be742e518fe074e3661d1ab42909078c3a127f49fb57671",
+    "Sources/SetzerParser/InlineAutolinks.swift": "c90637fa3bac3ea23f18f9f1136dcf2b2ed7ad541edd78e9f7c0249b0b7eed69",
+    "Sources/SetzerParser/HTMLBlocks.swift": "135fb0544903f76b7bc6810bd02738bc965eee744ad9e23af7074bc8499da848",
+    "Sources/SetzerParser/GFMBlocks.swift": "28d5335109672068d750cb984e92d9540a5b20aebff19092298b3b5e587ad66e",
+    "Sources/SetzerParser/ContainerParsing.swift": "6f354d47a75a08ae8bb8e3af4b5066bf8363ae7df46dab052596f08691ab8a2c",
+    "Sources/SetzerParser/BlockTransform.swift": "b66ebb51d2d36b9d9154effd07106e62e4db91e43328ea5230336e2d6f1f2d0a",
+    "Sources/SetzerHTML/HTMLURLScheme.swift": "cff30a677f10c94b8c165dfde0ea55170428219dacf388365a6e1f783f413707",
+    "Sources/SetzerHTML/HTMLRenderer.swift": "312cae6b705ca3bcd4c007a4efff1df191c79339b786f1e3f48ab7e076534feb",
+    "Sources/SetzerHTML/HTMLRenderPlan.swift": "6e059730c328cc97e8555b11d4da92134dc3a2f71c041be3aff11337c75512d4",
+    "Sources/SetzerHTML/HTMLComments.swift": "1b14a2d9b16a37b92f78128288fb9dd6d4f509f8b48859411be25028afb6a3ba",
+    "Sources/SetzerExtensions/Math.swift": "096bd8c9cbc10edea841761427d3a34995462a6938944e4a739da3849b4dd6ea",
+    "Sources/SetzerExtensions/FrontMatter.swift": "b32bd855b58c112b8c8ecc45f72a94da30b9c8f07ddec94cc9cb005c65fc13f2",
+    "Sources/SetzerExtensions/Footnotes.swift": "caea51d8a68be509adc7957ab1eb0a4427c8da5615794c54ec1af85502f1b57e",
+    "Sources/SetzerExtensions/Extensions.swift": "69f27fe354caba6e8ba124cf3db7dd77fcdfba7d1c27b1c95b41175b5878b873",
+    "Sources/SetzerExtensions/Admonitions.swift": "b2e4531264c154a4d70510f2ffc822019230cd25c776118012eb7431deff2eda",
+    "Sources/SetzerAnalysis/NativeAnalyzer.swift": "cddb100432fc0937c0d6894d5e9de4cbcc78b1ec898863d94849b3b16539b4d4",
+    "Sources/SetzerAnalysis/NativeAnalysisMessages.swift": "967894ab8e1daa9e1b10ca3f88dc009601ee0cf6c8315a08921df399cbc40a8e",
+    "Sources/GMSetzer/GMSetzer.swift": "9a3debebd1be48c9f9484edc39aea9833e8ce827baf6819b2f0eaab5f531f1a2",
+    "Sources/GMSetzer/FootnotesHTMLRenderer.swift": "51b919cb3d336fa3ded30e2ac762e6aae305255d035f41f812be58860bb575f0",
+    "Sources/GMSetzer/AdmonitionHTML.swift": "50abea941c46e550a041f7e08f6e0a79580bfbb2e5923a1450ed2befb345e31e",
+    "Tools/Package.swift": "b9e344558465edd6f88ff11e0f64f391eae87be5034836a47b29544d7f3ac26e",
+    "Tools/Package.resolved": "b04f6826b9801a9655860ce82f86725f8fc6204915ca0771b7028f76cfcf6002",
+    "Tools/Sources/BenchmarkCorpus/Corpus.swift": "3c3423dac5442d14257c0ea364bad0faf87dbbc83439ff1cf9fdb77452f4a101",
+    "Tools/Sources/ParserComparisonProbe/main.swift": "1cfa604e1699e51c179bed6c0685aba64afd7fce0c05c87b1ac343fa5b5cebec",
+    "Tools/ParserComparison/run.py": "05bdd7504556c3fcc208fa90751c348d748ab1dfabbfeedbaf6d922a6b749e7a",
+    "Tools/ParserComparison/md4c-probe.c": "963518ee2c2ca67e7eb89164d57ecec63b134d0eda535babfb8aba1a10201650",
+    "Tools/ParserComparison/pulldown/Cargo.toml": "53e8860ca3edfa0266df822969a800033261aff70c698257a682d223dbf4e9e8",
+    "Tools/ParserComparison/pulldown/Cargo.lock": "7bc42da75ddc4ebf143ee8edf3e931d233a8dc842ce9173a9731cca7dfe0c2eb",
+    "Tools/ParserComparison/pulldown/src/main.rs": "2c1ffd76a7c0a33292df17ebecfc0d1c85cacbf0510be613fda532a04c59f292"
+  },
+  "binary_sha256": {
+    "gmsetzer": "f7b1eef7407ac056be1a83f9c21a9eff48f020a8b44ec50c69dbc37fa9eeadd5",
+    "cmark": "f7b1eef7407ac056be1a83f9c21a9eff48f020a8b44ec50c69dbc37fa9eeadd5",
+    "md4c": "0f157b6f7169708a6141cd0d184d0a048cdf11f5e9ea02bfe9373f400dbdcdab",
+    "pulldown": "d1b87ef87219852086335655c665dc43c4f452896fd0d4ced76c583f617b394b"
+  },
+  "html_verification": [],
+  "calibration": [],
+  "cases": []
+}

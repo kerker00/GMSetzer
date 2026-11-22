@@ -1,0 +1,31 @@
+{
+  "command": [
+    "<TASK>/before-mac/BenchmarkTool",
+    "--command",
+    "run",
+    "--format",
+    "markdown",
+    "--grouping",
+    "benchmark",
+    "--baseline-storage-path",
+    "<TASK>/profile-before",
+    "--no-progress",
+    "--time-units",
+    "microseconds",
+    "--targets",
+    "ParserBenchmarks",
+    "--benchmark-executable-paths",
+    "<TASK>/before-mac/ParserBenchmarks",
+    "--filter",
+    "^GMSetzer CommonMark parse 1 MB$",
+    "--export-allocation-stacks",
+    "--allocation-stacks-export-format",
+    "json",
+    "--allocation-stacks-export-path",
+    "<TASK>/profile-before",
+    "--allocation-stack-limit",
+    "0"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 8.289673542000001
+}

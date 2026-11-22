@@ -63,8 +63,7 @@ extension MarkdownParser {
                 // Block transforms may already have annotated original text.
                 // Preserve those exact ranges on the containing inline block.
                 for child in children { mapped[child] = index }
-                let input = InlineInput(document, children: children)
-                inline.reset(to: input)
+                inline.reset(to: document, children: children)
                 inline.parse()
                 // Provisional items bound the emitted count, including any
                 // delimiter/link items later unlinked by the controller.
@@ -73,10 +72,10 @@ extension MarkdownParser {
                 if let first = inline.first { events.append((first, index)) }
                 while let (itemIndex, owner) = events.popLast() {
                     let item = inline.items[itemIndex]
-                    let mapped = input.mapped(item.start, item.end)
+                    let mapped = inline.input.mapped(item.start, item.end)
                     let data: NodeData
                     if case .text("") = item.data {
-                        data = .text(String(decoding: input.bytes[item.start..<item.end], as: UTF8.self))
+                        data = .text(String(decoding: inline.bytes[item.start..<item.end], as: UTF8.self))
                     } else { data = item.data }
                     let inlineIndex = try! builder.append(data, range: mapped.range,
                                                           segments: mapped.segments, fallbackLiteral: item.fallback, to: owner)
@@ -91,7 +90,7 @@ extension MarkdownParser {
                         }
                         for tokenIndex in tokenOrder.reversed() {
                             let token = inline.tokens[tokenIndex]
-                            switch input.mapped(token.start, token.end).segments {
+                            switch inline.input.mapped(token.start, token.end).segments {
                             case .none: break
                             case .one(let range):
                                 builder.record(SyntaxToken(token.role, range: range, owner: inlineIndex))

@@ -107,6 +107,25 @@ source-matched progressive resources pass all 42 cases / 126 checks, verifying
 The owner merged [PR #28](https://github.com/kerker00/GMSetzer/pull/28) at
 `ce5dedc`; its source remains unreleased.
 
+**Inline-input follow-up, 22 November 2026:** the owner-approved
+[three-runtime-file candidate](Validation/M7/inline-input-2026-11-22.md) over
+PR #28 reuses built-in-only inline projections, decodes slices without copying
+their input, and adds an ASCII reference-label path with unchanged Unicode
+fallback. Review rejects unrestricted projection reuse because retained
+callback snapshots could inherit oversized capacity; custom-inline-rule
+documents keep fresh per-leaf projections. In
+[PR #29](https://github.com/kerker00/GMSetzer/pull/29), corrected B passes 256-test
+Mac/x64 Debug/Release and Mac ASan suites, 8,192 bounded ASan stress parses,
+minimum Swift 6.2 CI, complete 72/69/36-case timing targets and 42 source-matched
+resource cases / 126 checks. Measured 1 MB allocation requests fall 19.34%,
+gross bytes 2.22%; mixed parse gains remain small, with stronger reference-label
+rows and explicitly retained control anomalies. Optional source-pinned MD4C/Rust
+comparisons stay development-only and distinguish consumed events from full
+source-positioned AST services. The eight-sample comparison still measures
+1 MB HTML at 60.632 ms (GMSetzer), 25.094 ms (cmark), 7.031 ms (MD4C), 8.989 ms
+(pulldown); no general C parity follows. APIs, limits, budgets and release state
+remain unchanged; PR #29 is not merged.
+
 The M4 follow-ups are merged in PR #15 (`1473d49`). The source-only v0.4.0
 release preparation and macOS/Linux CI are merged in PR #16 (`6a0eb8e`);
 their merged branches are cleaned up.

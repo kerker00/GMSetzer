@@ -15,15 +15,19 @@ package enum InlineDecoding {
     }
 
     static func entity(_ bytes: [UInt8], at start: Int) -> (end: Int, text: String)? {
-        guard start + 2 < bytes.count, bytes[start] == 38 else { return nil }
+        entity(bytes[...], at: start)
+    }
+
+    private static func entity(_ bytes: ArraySlice<UInt8>, at start: Int) -> (end: Int, text: String)? {
+        guard start + 2 < bytes.endIndex, bytes[start] == 38 else { return nil }
         var end = start + 1
         if bytes[end] == 35 {
             end += 1
-            let hex = end < bytes.count && (bytes[end] == 120 || bytes[end] == 88)
+            let hex = end < bytes.endIndex && (bytes[end] == 120 || bytes[end] == 88)
             if hex { end += 1 }
             let first = end
             var value: UInt32 = 0
-            while end < bytes.count, end - first < (hex ? 6 : 7) {
+            while end < bytes.endIndex, end - first < (hex ? 6 : 7) {
                 let byte = bytes[end]
                 let digit: UInt32
                 if (48...57).contains(byte) { digit = UInt32(byte - 48) }
@@ -33,11 +37,11 @@ package enum InlineDecoding {
                 value = value * (hex ? 16 : 10) + digit
                 end += 1
             }
-            guard end > first, end < bytes.count, bytes[end] == 59 else { return nil }
+            guard end > first, end < bytes.endIndex, bytes[end] == 59 else { return nil }
             let scalar = value == 0 ? Unicode.Scalar(0xFFFD)! : Unicode.Scalar(value) ?? Unicode.Scalar(0xFFFD)!
             return (end + 1, String(scalar))
         }
-        while end < bytes.count && end - start <= 32 {
+        while end < bytes.endIndex && end - start <= 32 {
             let byte = bytes[end]
             if byte == 59 {
                 let name = String(decoding: bytes[(start + 1)..<end], as: UTF8.self)
@@ -49,33 +53,31 @@ package enum InlineDecoding {
         return nil
     }
 
-    static func decode(_ bytes: ArraySlice<UInt8>, escapes: Bool = true, entities: Bool = true) -> String {
-        if !bytes.contains(0) && (!escapes || !bytes.contains(92)) && (!entities || !bytes.contains(38)) {
-            return String(decoding: bytes, as: UTF8.self)
-        }
-        return decode(Array(bytes), escapes: escapes, entities: entities)
-    }
-
     static func decode(_ text: String, escapes: Bool = true, entities: Bool = true) -> String {
         if !text.utf8.contains(0) && (!escapes || !text.utf8.contains(92)) && (!entities || !text.utf8.contains(38)) { return text }
         return decode(Array(text.utf8), escapes: escapes, entities: entities)
     }
 
     static func decode(_ bytes: [UInt8], escapes: Bool = true, entities: Bool = true) -> String {
+        decode(bytes[...], escapes: escapes, entities: entities)
+    }
+
+    static func decode(_ bytes: ArraySlice<UInt8>, escapes: Bool = true, entities: Bool = true) -> String {
         if !bytes.contains(0) && (!escapes || !bytes.contains(92)) && (!entities || !bytes.contains(38)) {
             return String(decoding: bytes, as: UTF8.self)
         }
         var output: [UInt8] = []
         output.reserveCapacity(bytes.count)
-        var cursor = 0
-        while cursor < bytes.count {
+        var cursor = bytes.startIndex
+        let end = bytes.endIndex
+        while cursor < end {
             let byte = bytes[cursor]
-            if escapes && byte == 92 && cursor + 1 < bytes.count && punctuation(bytes[cursor + 1]) {
+            if escapes && byte == 92 && cursor + 1 < end && punctuation(bytes[cursor + 1]) {
                 output.append(bytes[cursor + 1]); cursor += 2
             } else if entities && byte == 38, let match = entity(bytes, at: cursor) {
                 output.append(contentsOf: match.text.utf8); cursor = match.end
             } else if byte == 0 {
-                output.append(contentsOf: [0xEF, 0xBF, 0xBD]); cursor += 1
+                output.append(0xEF); output.append(0xBF); output.append(0xBD); cursor += 1
             } else { output.append(byte); cursor += 1 }
         }
         return String(decoding: output, as: UTF8.self)
@@ -84,6 +86,20 @@ package enum InlineDecoding {
     /// Labels keep their source spelling: escapes/entities are not decoded.
     /// Unicode full folding and whitespace collapse are independent of locale.
     package static func label(_ text: String) -> ReferenceLabel {
+        if text.utf8.allSatisfy({ $0 < 128 }) {
+            var bytes: [UInt8] = []
+            bytes.reserveCapacity(text.utf8.count)
+            var pendingSpace = false
+            for byte in text.utf8 {
+                switch byte {
+                case 9, 10, 13, 32: pendingSpace = !bytes.isEmpty
+                default:
+                    if pendingSpace { bytes.append(32); pendingSpace = false }
+                    bytes.append((65...90).contains(byte) ? byte + 32 : byte)
+                }
+            }
+            return ReferenceLabel(normalizedBytes: bytes)
+        }
         var output = ""
         var pendingSpace = false
         for scalar in text.unicodeScalars {
@@ -100,6 +116,7 @@ package enum InlineDecoding {
 package struct ReferenceLabel: Hashable, Sendable {
     package let bytes: [UInt8]
     init(_ value: String) { bytes = Array(value.utf8) }
+    init(normalizedBytes: [UInt8]) { bytes = normalizedBytes }
     package static func == (lhs: Self, rhs: Self) -> Bool { lhs.bytes == rhs.bytes }
     package func hash(into hasher: inout Hasher) {
         bytes.withUnsafeBufferPointer { hasher.combine(bytes: UnsafeRawBufferPointer($0)) }

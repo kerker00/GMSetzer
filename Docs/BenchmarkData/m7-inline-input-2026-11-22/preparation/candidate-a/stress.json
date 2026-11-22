@@ -1,0 +1,9 @@
+{
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 61.967454124999996,
+  "inputs": 1024,
+  "parses": 8192,
+  "sanitizer": "address",
+  "coverage_guided": false
+}

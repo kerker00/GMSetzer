@@ -426,3 +426,12 @@ header spans cover marker/type/fold/title bytes. Empty wrappers have empty
 fallbacks. `AdmonitionHTML` in the convenience module composes safe title/body
 HTML and native `<details>` folding with the existing renderer and other hooks.
 There are no new core payload cases or module dependencies.
+
+## Inline projection storage follow-up
+
+The [M7 inline-input candidate](Validation/M7/inline-input-2026-11-22.md)
+changes private scratch ownership only. Built-in-only inline parsing reuses
+byte/projection storage inside one parse. Custom inline callbacks retain fresh
+per-leaf projections so stored contexts preserve bytes/ranges without inheriting
+an earlier large leaf's capacity. Final document nodes, original-source ranges,
+tokens and Unicode repair/folding contracts remain unchanged.

@@ -1,0 +1,14 @@
+import hashlib,importlib.util,json,os,platform,subprocess,time
+from pathlib import Path
+p=Path(__file__).resolve().parent;root=p/'GMSetzer';bins=Path('<NATIVE_CACHE>/GMSetzer/build-tools/x86_64-unknown-linux-gnu/release');old=Path('<NATIVE_CACHE>/GMSetzer')
+spec=importlib.util.spec_from_file_location('driver',root/'Tools/run_hardening_benchmarks.py');d=importlib.util.module_from_spec(spec);spec.loader.exec_module(d)
+assert json.loads((p/'validation.json').read_text())['status']=='passed';assert json.loads((p/'comparison-preflight-corrected/receipt.json').read_text())['status']=='passed'
+source=json.loads((p/'candidate-b-source.json').read_text());measured={n:d.digest(root/n) for n in source};changed=[n for n in source if measured[n]!=source[n]];assert set(changed)=={'Scripts/test_parser_comparison.py','Tools/ParserComparison/run.py'},changed
+(p/'candidate-b-measured-source.json').write_text(json.dumps(measured,indent=2)+'\n')
+r={'candidate':'B','code_commit':'f2e0a0e','source_identity_note':'Transferred runtime/test bytes match f2e0a0e; optional verifier formatting/test correction is recorded separately. No Git metadata exists on this host.','swift':subprocess.check_output(['swift','--version'],text=True),'host':platform.platform(),'load_before':os.getloadavg(),'phases':{}}
+commands=[('parser-after',['python3',str(p/'run-parser.py'),'parser-after',str(bins)],1200),('hardening-after',['python3','Tools/run_hardening_benchmarks.py','--tool',str(bins/'BenchmarkTool'),'--binary',str(bins/'HardeningBenchmarks'),'--output',str(p/'hardening-after'),'--run-all','--timeout-seconds','60'],1200),('utf8-after',['python3',str(p/'run-utf8.py'),'utf8-after',str(bins)],900),('resource-after',['python3','Tools/ProgressiveHTMLProbe/run-linux-matrix.py','--binary',str(old/'build-probe/x86_64-unknown-linux-gnu/release/ProgressiveHTMLProbe'),'--allocator',str(old/'libgm-alloc.so'),'--output',str(p/'resource-after'),'--swift','swift'],1800),('parser-comparison',['python3','Tools/ParserComparison/run.py','--swift-probe',str(bins/'ParserComparisonProbe'),'--md4c-probe',str(p/'external/md4c-probe'),'--pulldown-probe',str(p/'external/rust-build/release/gmsetzer-pulldown-probe'),'--external-receipt',str(p/'external/build.json'),'--output',str(p/'parser-comparison'),'--run-all'],900)]
+os.chdir(root)
+for label,command,bound in commands:
+ print('Starting',label,flush=True);start=time.monotonic();code,timed=d.execute(command,p/(label+'.stdout'),p/(label+'.stderr'),bound);r['phases'][label]={'command':command,'exit_code':code,'timed_out':timed,'elapsed_seconds':time.monotonic()-start};(p/'native-b-matrices.json').write_text(json.dumps(r,indent=2)+'\n');assert code==0 and not timed,(label,code,timed);print('Completed',label,flush=True)
+for n,h in measured.items():assert d.digest(root/n)==h,n
+r.update(status='passed',load_after=os.getloadavg(),source_packet_unchanged=True);(p/'native-b-matrices.json').write_text(json.dumps(r,indent=2)+'\n')

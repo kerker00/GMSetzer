@@ -1,0 +1,434 @@
+[
+  {
+    "name": "GMSetzer 10k caret queries 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 1.85,
+    "after_ms": 1.885,
+    "change_percent": 1.8918918918918948
+  },
+  {
+    "name": "GMSetzer 10k caret queries 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 0.77,
+    "after_ms": 0.807,
+    "change_percent": 4.805194805194812
+  },
+  {
+    "name": "GMSetzer 10k caret queries 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 3.803,
+    "after_ms": 3.805,
+    "change_percent": 0.05259006047857451
+  },
+  {
+    "name": "GMSetzer 10k position round trips 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 3.613,
+    "after_ms": 3.527,
+    "change_percent": -2.3802933849986108
+  },
+  {
+    "name": "GMSetzer 10k position round trips 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 2.697,
+    "after_ms": 2.654,
+    "change_percent": -1.5943641082684534
+  },
+  {
+    "name": "GMSetzer 10k position round trips 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 4.42,
+    "after_ms": 4.268,
+    "change_percent": -3.43891402714932
+  },
+  {
+    "name": "GMSetzer CommonMark parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 41.583,
+    "after_ms": 40.01,
+    "change_percent": -3.782795854074983
+  },
+  {
+    "name": "GMSetzer CommonMark parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 3.674,
+    "after_ms": 3.582,
+    "change_percent": -2.5040827436037083
+  },
+  {
+    "name": "GMSetzer CommonMark parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 214.041,
+    "after_ms": 213.647,
+    "change_percent": -0.18407688246644405
+  },
+  {
+    "name": "GMSetzer GFM parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 50.528,
+    "after_ms": 50.135,
+    "change_percent": -0.7777865737808698
+  },
+  {
+    "name": "GMSetzer GFM parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 4.391,
+    "after_ms": 4.268,
+    "change_percent": -2.8011842404919163
+  },
+  {
+    "name": "GMSetzer GFM parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 266.338,
+    "after_ms": 254.149,
+    "change_percent": -4.576515555422067
+  },
+  {
+    "name": "GMSetzer editor snapshot 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 50.692,
+    "after_ms": 48.857,
+    "change_percent": -3.619900576027779
+  },
+  {
+    "name": "GMSetzer editor snapshot 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 4.391,
+    "after_ms": 4.252,
+    "change_percent": -3.1655659303120087
+  },
+  {
+    "name": "GMSetzer editor snapshot 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 261.489,
+    "after_ms": 259.654,
+    "change_percent": -0.7017503604358044
+  },
+  {
+    "name": "GMSetzer inline syntax on 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 45.056,
+    "after_ms": 48.464,
+    "change_percent": 7.563920454545459
+  },
+  {
+    "name": "GMSetzer inline syntax on 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 4.045,
+    "after_ms": 3.863,
+    "change_percent": -4.499381953028426
+  },
+  {
+    "name": "GMSetzer inline syntax on 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 235.536,
+    "after_ms": 232.915,
+    "change_percent": -1.1127810610692235
+  },
+  {
+    "name": "GMSetzer native analysis 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 5.001,
+    "after_ms": 4.973,
+    "change_percent": -0.5598880223955272
+  },
+  {
+    "name": "GMSetzer native analysis 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 0.408,
+    "after_ms": 0.403,
+    "change_percent": -1.225490196078416
+  },
+  {
+    "name": "GMSetzer native analysis 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 26.395,
+    "after_ms": 26.165,
+    "change_percent": -0.8713771547641636
+  },
+  {
+    "name": "GMSetzer outline 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 1.13,
+    "after_ms": 1.164,
+    "change_percent": 3.0088495575221197
+  },
+  {
+    "name": "GMSetzer outline 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 0.065,
+    "after_ms": 0.061,
+    "change_percent": -6.153846153846154
+  },
+  {
+    "name": "GMSetzer outline 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 6.656,
+    "after_ms": 6.427,
+    "change_percent": -3.440504807692313
+  },
+  {
+    "name": "GMSetzer parent index 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 1.452,
+    "after_ms": 1.548,
+    "change_percent": 6.6115702479338845
+  },
+  {
+    "name": "GMSetzer parent index 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 0.107,
+    "after_ms": 0.105,
+    "change_percent": -1.869158878504673
+  },
+  {
+    "name": "GMSetzer parent index 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 8.413,
+    "after_ms": 8.188,
+    "change_percent": -2.674432426007367
+  },
+  {
+    "name": "GMSetzer position index 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 0.908,
+    "after_ms": 0.874,
+    "change_percent": -3.7444933920704915
+  },
+  {
+    "name": "GMSetzer position index 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 0.091,
+    "after_ms": 0.088,
+    "change_percent": -3.296703296703296
+  },
+  {
+    "name": "GMSetzer position index 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 4.841,
+    "after_ms": 4.645,
+    "change_percent": -4.048750258211131
+  },
+  {
+    "name": "GMSetzer position index multibyte 1 MB (bytes: 1000192, corpus: multibyte-v1)",
+    "before_ms": 2.677,
+    "after_ms": 2.705,
+    "change_percent": 1.04594695554725
+  },
+  {
+    "name": "GMSetzer position index multibyte 100 KB (bytes: 100096, corpus: multibyte-v1)",
+    "before_ms": 0.262,
+    "after_ms": 0.266,
+    "change_percent": 1.526717557251911
+  },
+  {
+    "name": "GMSetzer position index multibyte 5 MB (bytes: 5000192, corpus: multibyte-v1)",
+    "before_ms": 13.885,
+    "after_ms": 13.869,
+    "change_percent": -0.11523226503420414
+  },
+  {
+    "name": "GMSetzer reference syntax off 1 MB (bytes: 1000098, corpus: references-v1)",
+    "before_ms": 35.193,
+    "after_ms": 32.539,
+    "change_percent": -7.541272412127398
+  },
+  {
+    "name": "GMSetzer reference syntax off 100 KB (bytes: 100188, corpus: references-v1)",
+    "before_ms": 3.355,
+    "after_ms": 2.808,
+    "change_percent": -16.304023845007453
+  },
+  {
+    "name": "GMSetzer reference syntax off 5 MB (bytes: 5000094, corpus: references-v1)",
+    "before_ms": 181.273,
+    "after_ms": 155.976,
+    "change_percent": -13.955194651161506
+  },
+  {
+    "name": "GMSetzer reference syntax on 1 MB (bytes: 1000098, corpus: references-v1)",
+    "before_ms": 42.795,
+    "after_ms": 39.911,
+    "change_percent": -6.739105035635006
+  },
+  {
+    "name": "GMSetzer reference syntax on 100 KB (bytes: 100188, corpus: references-v1)",
+    "before_ms": 3.963,
+    "after_ms": 3.441,
+    "change_percent": -13.171839515518558
+  },
+  {
+    "name": "GMSetzer reference syntax on 5 MB (bytes: 5000094, corpus: references-v1)",
+    "before_ms": 222.429,
+    "after_ms": 198.836,
+    "change_percent": -10.606980204919314
+  },
+  {
+    "name": "GMSetzer render 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 22.692,
+    "after_ms": 22.839,
+    "change_percent": 0.6478053939714457
+  },
+  {
+    "name": "GMSetzer render 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 2.118,
+    "after_ms": 2.136,
+    "change_percent": 0.8498583569405138
+  },
+  {
+    "name": "GMSetzer render 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 114.557,
+    "after_ms": 115.147,
+    "change_percent": 0.5150274535820731
+  },
+  {
+    "name": "GMSetzer segment reconstruction 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 10.019,
+    "after_ms": 10.027,
+    "change_percent": 0.07984828825231549
+  },
+  {
+    "name": "GMSetzer segment reconstruction 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 0.919,
+    "after_ms": 0.927,
+    "change_percent": 0.8705114254624613
+  },
+  {
+    "name": "GMSetzer segment reconstruction 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 52.429,
+    "after_ms": 52.593,
+    "change_percent": 0.3128039825287532
+  },
+  {
+    "name": "GMSetzer selected inline parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 45.056,
+    "after_ms": 44.564,
+    "change_percent": -1.0919744318181768
+  },
+  {
+    "name": "GMSetzer selected inline parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 4.069,
+    "after_ms": 3.946,
+    "change_percent": -3.022855738510688
+  },
+  {
+    "name": "GMSetzer selected inline parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 229.9,
+    "after_ms": 230.162,
+    "change_percent": 0.11396259243148243
+  },
+  {
+    "name": "GMSetzer selected registry parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 44.335,
+    "after_ms": 42.762,
+    "change_percent": -3.547986917785051
+  },
+  {
+    "name": "GMSetzer selected registry parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 3.93,
+    "after_ms": 3.783,
+    "change_percent": -3.7404580152671785
+  },
+  {
+    "name": "GMSetzer selected registry parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 227.017,
+    "after_ms": 225.182,
+    "change_percent": -0.8083095098604942
+  },
+  {
+    "name": "GMSetzer text reconstruction 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 2.255,
+    "after_ms": 2.251,
+    "change_percent": -0.17738359201774356
+  },
+  {
+    "name": "GMSetzer text reconstruction 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 0.214,
+    "after_ms": 0.215,
+    "change_percent": 0.4672897196261738
+  },
+  {
+    "name": "GMSetzer text reconstruction 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 11.821,
+    "after_ms": 11.657,
+    "change_percent": -1.3873614753404984
+  },
+  {
+    "name": "GMSetzer validate 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 3.91,
+    "after_ms": 3.946,
+    "change_percent": 0.9207161125319718
+  },
+  {
+    "name": "GMSetzer validate 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 0.174,
+    "after_ms": 0.179,
+    "change_percent": 2.8735632183908066
+  },
+  {
+    "name": "GMSetzer validate 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 21.873,
+    "after_ms": 22.102,
+    "change_percent": 1.046952864261863
+  },
+  {
+    "name": "Swift String UTF-16 count multibyte 1 MB (bytes: 1000192, corpus: multibyte-v1)",
+    "before_ms": 2.998,
+    "after_ms": 2.998,
+    "change_percent": 0.0
+  },
+  {
+    "name": "Swift String UTF-16 count multibyte 100 KB (bytes: 100096, corpus: multibyte-v1)",
+    "before_ms": 0.297,
+    "after_ms": 0.298,
+    "change_percent": 0.33670033670034627
+  },
+  {
+    "name": "Swift String UTF-16 count multibyte 5 MB (bytes: 5000192, corpus: multibyte-v1)",
+    "before_ms": 15.466,
+    "after_ms": 15.475,
+    "change_percent": 0.058192163455328405
+  },
+  {
+    "name": "cmark-gfm (C) CommonMark parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 27.574,
+    "after_ms": 34.374,
+    "change_percent": 24.660912453760787
+  },
+  {
+    "name": "cmark-gfm (C) CommonMark parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 2.419,
+    "after_ms": 2.425,
+    "change_percent": 0.24803637866885886
+  },
+  {
+    "name": "cmark-gfm (C) CommonMark parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 137.626,
+    "after_ms": 138.412,
+    "change_percent": 0.5711130164358424
+  },
+  {
+    "name": "cmark-gfm (C) GFM parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 55.771,
+    "after_ms": 55.771,
+    "change_percent": 0.0
+  },
+  {
+    "name": "cmark-gfm (C) GFM parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 4.559,
+    "after_ms": 4.567,
+    "change_percent": 0.1754770783066517
+  },
+  {
+    "name": "cmark-gfm (C) GFM parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 271.581,
+    "after_ms": 271.057,
+    "change_percent": -0.19294427813433268
+  },
+  {
+    "name": "cmark-gfm (C) references 1 MB (bytes: 1000098, corpus: references-v1)",
+    "before_ms": 23.396,
+    "after_ms": 23.495,
+    "change_percent": 0.4231492562831285
+  },
+  {
+    "name": "cmark-gfm (C) references 100 KB (bytes: 100188, corpus: references-v1)",
+    "before_ms": 1.989,
+    "after_ms": 1.991,
+    "change_percent": 0.10055304172951196
+  },
+  {
+    "name": "cmark-gfm (C) references 5 MB (bytes: 5000094, corpus: references-v1)",
+    "before_ms": 127.205,
+    "after_ms": 126.878,
+    "change_percent": -0.25706536692740034
+  },
+  {
+    "name": "swift-markdown parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 140.902,
+    "after_ms": 142.213,
+    "change_percent": 0.9304339186100963
+  },
+  {
+    "name": "swift-markdown parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 13.074,
+    "after_ms": 13.132,
+    "change_percent": 0.44362857579929305
+  },
+  {
+    "name": "swift-markdown parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 720.896,
+    "after_ms": 716.702,
+    "change_percent": -0.5817760120738535
+  }
+]

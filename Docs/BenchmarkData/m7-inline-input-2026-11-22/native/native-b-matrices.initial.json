@@ -1,0 +1,43 @@
+{
+  "candidate": "B",
+  "code_commit": "f2e0a0e",
+  "source_identity_note": "Transferred runtime/test bytes match f2e0a0e; optional verifier formatting/test correction is recorded separately. No Git metadata exists on this host.",
+  "swift": "Swift version 6.4.2 (swift-6.4.2-RELEASE)\nTarget: x86_64-unknown-linux-gnu\n",
+  "host": "Linux-7.3.4-1-cachyos-x86_64-with-glibc2.44",
+  "load_before": [
+    0.189453125,
+    15.865234375,
+    20.31640625
+  ],
+  "phases": {
+    "parser-after": {
+      "command": [
+        "python3",
+        "<NATIVE_TASK>/run-parser.py",
+        "parser-after",
+        "<NATIVE_CACHE>/GMSetzer/build-tools/x86_64-unknown-linux-gnu/release"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 376.37135889800265
+    },
+    "hardening-after": {
+      "command": [
+        "python3",
+        "Tools/run_hardening_benchmarks.py",
+        "--tool",
+        "<NATIVE_CACHE>/GMSetzer/build-tools/x86_64-unknown-linux-gnu/release/BenchmarkTool",
+        "--binary",
+        "<NATIVE_CACHE>/GMSetzer/build-tools/x86_64-unknown-linux-gnu/release/HardeningBenchmarks",
+        "--output",
+        "<NATIVE_TASK>/hardening-after",
+        "--run-all",
+        "--timeout-seconds",
+        "60"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "elapsed_seconds": 0.11440277899964713
+    }
+  }
+}

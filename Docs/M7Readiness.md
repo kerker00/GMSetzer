@@ -13,6 +13,14 @@ adds a byte-fidelity regression test (253 total), profiled renderer gains,
 fresh native resource/ASan checks and passing minimum Swift 6.2 CI. Its own
 source hashes identify that changed renderer; earlier receipts remain history.
 
+The later [inline-input follow-up](Validation/M7/inline-input-2026-11-22.md),
+in PR #29, records 256-test current suites, a retained-context capacity
+review correction, 19.34% fewer 1 MB allocation requests, complete native
+72/69/36-case refreshes, 42 source-matched resource cases / 126 checks and
+minimum Swift 6.2 CI. Optional MD4C/pulldown comparisons expose a remaining
+full-HTML throughput gap; the original ≤2× C parser gate and general C parity
+remain distinct. This follow-up is not merged or released.
+
 | Library gate | Candidate evidence |
 | --- | --- |
 | Protected grammar / public contracts | All 652 CommonMark / 672 GFM protected examples pass; 1,324 exact old/new snapshots retain 7,994 nodes / 4,422 tokens |

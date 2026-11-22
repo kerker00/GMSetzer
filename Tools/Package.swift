@@ -20,6 +20,12 @@ let package = Package(
         .package(url: "https://github.com/swiftlang/swift-cmark.git", from: "0.9.0"),
     ],
     targets: [
+        // Optional cross-language comparison driver; third-party source builds
+        // are kept outside SwiftPM and outside the library dependency graph.
+        .executableTarget(name: "ParserComparisonProbe", dependencies: [
+            "BenchmarkCorpus", .product(name: "GMSetzer", package: "GMSetzer"),
+            .product(name: "cmark-gfm", package: "swift-cmark"),
+        ]),
         // Deterministic Markdown documents of a given size.
         .target(name: "BenchmarkCorpus", dependencies: [.product(name: "GMSetzer", package: "GMSetzer")]),
         .testTarget(name: "BenchmarkCorpusTests", dependencies: [
