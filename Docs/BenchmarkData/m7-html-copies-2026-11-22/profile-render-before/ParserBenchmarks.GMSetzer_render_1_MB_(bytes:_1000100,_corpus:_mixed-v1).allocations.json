@@ -1,0 +1,511 @@
+{
+  "iterations" : 2,
+  "stacks" : [
+    {
+      "bytes" : 5734150,
+      "count" : 127750,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized static HTMLRenderer.escape(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 5836704,
+      "count" : 98578,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "Document.children(of:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.scheduleChildren(_:document:tightItem:pending:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 2628000,
+      "count" : 36500,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized static HTMLRenderer.escape(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 7866496,
+      "count" : 21932,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 1109600,
+      "count" : 21900,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _copySequenceToContiguousArray<A>(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized Sequence.reversed()"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 730000,
+      "count" : 18250,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "Document.children(of:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 730000,
+      "count" : 18250,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ContiguousArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized ContiguousArray._createNewBuffer(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 708100,
+      "count" : 14600,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.url(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 514650,
+      "count" : 14600,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ContiguousArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized ContiguousArray._createNewBuffer(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.url(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 467200,
+      "count" : 7300,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.url(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 350400,
+      "count" : 7300,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ContiguousArrayBuffer.init(_uninitializedCount:minimumCapacity:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _copyCollectionToContiguousArray<A>(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.url(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 273750,
+      "count" : 7300,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ContiguousArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized ContiguousArray._createNewBuffer(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLURLScheme.init(rawValue:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.url(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 273750,
+      "count" : 7300,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ContiguousArrayBuffer.init(_uninitializedCount:minimumCapacity:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _copyCollectionToContiguousArray<A>(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLURLScheme.init(rawValue:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.url(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 233600,
+      "count" : 3650,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized Collection.split(maxSplits:omittingEmptySubsequences:whereSeparator:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 2062496,
+      "count" : 28,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.scheduleChildren(_:document:tightItem:pending:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 112,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized HTMLRenderer.render(_:events:tree:checkpoint:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "HTMLRenderer.render(_:)"
+        },
+        {
+          "image" : "ParserBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #5 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    }
+  ]
+}

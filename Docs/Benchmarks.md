@@ -1008,3 +1008,25 @@ whole-parser speedup follows. The [data](BenchmarkData/m7-scan-evaluation-2026-1
 retains all samples, checksums, preparation results, exact harness and hashes.
 The unchanged production runtime retains its existing M7 evidence; new
 prototype minimum-Swift/minimum-OS and full-parser checks precede adoption.
+
+## HTML intermediate copies, 22 November 2026
+
+The [one-runtime-file candidate](Validation/M7/html-copies-2026-11-22.md)
+reuses renderer-local child-index storage, avoids enumerated/reversed temporary
+arrays and returns existing text values when escaping is unnecessary. It keeps
+the public API, String accumulator, trust boundaries and grouping contract.
+The 1 MB allocation profile records **202,620 → 42,020 requests (−79.26%)** and
+**14,759,504 → 6,767,829 gross requested bytes (−54.15%)**; no peak-RSS reduction
+follows from those totals.
+
+Unprofiled pre-parsed mixed rendering improves **48–53% on M2 / 34–37% on x64**
+across the measured sizes. A focused M2 repeat after drifting controls records
+1 MB **28.115 → 13.558 ms (−51.78%)**, with stable parser/C controls. All raw
+rows and the unstable initial series remain retained. Composed M5 parse/render
+results are mixed/small; do not generalize isolated render gains to full
+pipelines. Mac/x64 Debug/Release each pass 253 library tests and 12 Release tool
+tests; Mac ASan passes 253 and the bounded 1,024-input / 8,192-parse probe. Fresh
+source-matched resources pass all 42 cases / 126 checks with 43 runtime / 5
+tool hashes verified. Minimum Swift 6.2 CI passes on macOS/Linux at `ad8179f`;
+the report retains the run and logs.
+Existing limits, pins and historical receipts remain unchanged.

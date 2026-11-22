@@ -5,6 +5,14 @@ M1 foundation. M2 adds CommonMark inlines, exact lexical spans and decoded
 reference lookup; M3 adds UTF-16 conversion, native analysis, safe URL allowlisting and escaped per-node preview IDs (see [M3EditorServices](M3EditorServices.md)). See
 [M2Inlines.md](M2Inlines.md) for current functional/acceptance status.
 
+The [M7 HTML-copy candidate](Validation/M7/html-copies-2026-11-22.md) changes
+allocation strategy only: plain text retains its existing String value,
+while text needing escaping keeps the same replacement rules. Renderer-local
+child scratch and index iteration preserve event order, list/table/GFM context,
+hook trust boundaries and checkpoints. No mutable storage is shared across
+renders or progressive groups. Exact byte-fidelity, protected HTML examples
+and existing composition/cancellation contracts remain tested.
+
 ## HTML blocks
 
 `NodeData.htmlBlock(HTMLBlock)` stores the seven CommonMark start/end classes

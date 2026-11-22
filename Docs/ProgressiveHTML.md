@@ -150,3 +150,14 @@ historical 42-case M6 stage/RSS/allocation receipt above is not current-source
 resource evidence for that candidate; the strict source-identity check rejects
 reuse as expected. Fresh resource measurements remain pending. The merged M6
 acceptance record continues to describe its measured source snapshot.
+
+
+The later [M7 current-source report](Validation/M7/final-x64-2026-11-22.md)
+closes that earlier hash gap for the merged M7 parser, with all 42 cases / 126
+checks and the complete runtime/tool inventory passing. The subsequent
+[HTML-copy candidate](Validation/M7/html-copies-2026-11-22.md) changes the renderer
+again and passes a fresh 42-case / 126-check matrix for its own 43 runtime / 5
+measurement-tool hashes; raw records and budget results are retained there.
+Scratch storage is local to the requested render call, with no eager full-
+document output reservation. Parsing still precedes output; no input-streaming
+or general peak-memory reduction is introduced.

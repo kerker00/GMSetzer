@@ -1,0 +1,31 @@
+{
+  "command": [
+    "<TASK>/before/BenchmarkTool",
+    "--command",
+    "run",
+    "--format",
+    "markdown",
+    "--grouping",
+    "benchmark",
+    "--baseline-storage-path",
+    "<TASK>/profile-render-before",
+    "--no-progress",
+    "--time-units",
+    "microseconds",
+    "--targets",
+    "ParserBenchmarks",
+    "--benchmark-executable-paths",
+    "<TASK>/before/ParserBenchmarks",
+    "--filter",
+    "^GMSetzer render 1 MB$",
+    "--export-allocation-stacks",
+    "--allocation-stacks-export-format",
+    "json",
+    "--allocation-stacks-export-path",
+    "<TASK>/profile-render-before",
+    "--allocation-stack-limit",
+    "0"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 9.578295542
+}

@@ -1,0 +1,469 @@
+{
+  "cases": [
+    {
+      "case": "mixed-100000-syntax-off",
+      "first_over_full": 0.33912781072917914,
+      "first_limit": 0.75,
+      "complete_over_full": 1.0202829405795382,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "mixed-100000-syntax-on",
+      "first_over_full": 0.3353104154068294,
+      "first_limit": 0.75,
+      "complete_over_full": 1.0121163978763745,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "mixed-1000000-syntax-off",
+      "first_over_full": 0.06358643653469982,
+      "first_limit": 0.25,
+      "complete_over_full": 1.0154527843782322,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "mixed-1000000-syntax-on",
+      "first_over_full": 0.06378040631362418,
+      "first_limit": 0.25,
+      "complete_over_full": 1.0233052578252708,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "mixed-5000000-syntax-off",
+      "first_over_full": 0.04120097963746334,
+      "first_limit": 0.25,
+      "complete_over_full": 1.0104336191106742,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "mixed-5000000-syntax-on",
+      "first_over_full": 0.04195001848954412,
+      "first_limit": 0.25,
+      "complete_over_full": 1.016380440513805,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "prose-100000-syntax-off",
+      "first_over_full": 0.3406402739284554,
+      "first_limit": 0.75,
+      "complete_over_full": 1.017727360091058,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "prose-100000-syntax-on",
+      "first_over_full": 0.3366262268717065,
+      "first_limit": 0.75,
+      "complete_over_full": 1.0021304920939111,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "prose-1000000-syntax-off",
+      "first_over_full": 0.06220484681573183,
+      "first_limit": 0.25,
+      "complete_over_full": 1.0284406754255013,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "prose-1000000-syntax-on",
+      "first_over_full": 0.061124658819711374,
+      "first_limit": 0.25,
+      "complete_over_full": 1.0226054062140406,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "prose-5000000-syntax-off",
+      "first_over_full": 0.03835238164185705,
+      "first_limit": 0.25,
+      "complete_over_full": 1.0300338446711315,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "prose-5000000-syntax-on",
+      "first_over_full": 0.03794680918956076,
+      "first_limit": 0.25,
+      "complete_over_full": 1.0185994212101694,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "small-blocks-100000-syntax-off",
+      "first_over_full": 0.36971043304255524,
+      "first_limit": 0.75,
+      "complete_over_full": 1.0348752819517846,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "small-blocks-100000-syntax-on",
+      "first_over_full": 0.36959350944941843,
+      "first_limit": 0.75,
+      "complete_over_full": 1.0298855700681495,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "small-blocks-1000000-syntax-off",
+      "first_over_full": 0.10098294308924308,
+      "first_limit": 0.25,
+      "complete_over_full": 1.0111034627968318,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "small-blocks-1000000-syntax-on",
+      "first_over_full": 0.0992438137636765,
+      "first_limit": 0.25,
+      "complete_over_full": 1.031167847346366,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "small-blocks-5000000-syntax-off",
+      "first_over_full": 0.07899257700612236,
+      "first_limit": 0.25,
+      "complete_over_full": 1.0146168983214663,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "small-blocks-5000000-syntax-on",
+      "first_over_full": 0.07825225152010658,
+      "first_limit": 0.25,
+      "complete_over_full": 1.0137356829276116,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "tables-100000-syntax-off",
+      "first_over_full": 0.33139469231636365,
+      "first_limit": 0.75,
+      "complete_over_full": 1.0203509952568564,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "tables-100000-syntax-on",
+      "first_over_full": 0.32780917506716706,
+      "first_limit": 0.75,
+      "complete_over_full": 1.0188070516066903,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "tables-1000000-syntax-off",
+      "first_over_full": 0.0423168373001108,
+      "first_limit": 0.25,
+      "complete_over_full": 1.0188951951831695,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "tables-1000000-syntax-on",
+      "first_over_full": 0.04221086841472519,
+      "first_limit": 0.25,
+      "complete_over_full": 1.0151271893909997,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "tables-5000000-syntax-off",
+      "first_over_full": 0.017040269639974508,
+      "first_limit": 0.25,
+      "complete_over_full": 1.0030657902895808,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "tables-5000000-syntax-on",
+      "first_over_full": 0.01737964282497188,
+      "first_limit": 0.25,
+      "complete_over_full": 1.000109577442419,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "long-code-100000-syntax-off",
+      "first_over_full": 0.9947612584644284,
+      "first_limit": null,
+      "complete_over_full": 0.9948025705860124,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "long-code-100000-syntax-on",
+      "first_over_full": 1.063379036972856,
+      "first_limit": null,
+      "complete_over_full": 1.0634278594851017,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "long-code-1000000-syntax-off",
+      "first_over_full": 1.0066074759285308,
+      "first_limit": null,
+      "complete_over_full": 1.006613143099767,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "long-code-1000000-syntax-on",
+      "first_over_full": 1.0309923786333437,
+      "first_limit": null,
+      "complete_over_full": 1.0309995389261055,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "long-code-5000000-syntax-off",
+      "first_over_full": 0.9984706638384062,
+      "first_limit": null,
+      "complete_over_full": 0.9984716542917565,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "long-code-5000000-syntax-on",
+      "first_over_full": 0.9963857367078572,
+      "first_limit": null,
+      "complete_over_full": 0.9963866064392388,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "multibyte-100000-syntax-off",
+      "first_over_full": 0.3375784618381097,
+      "first_limit": 0.75,
+      "complete_over_full": 1.0010995723885157,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "multibyte-100000-syntax-on",
+      "first_over_full": 0.33455348168670807,
+      "first_limit": 0.75,
+      "complete_over_full": 0.9887387446033986,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "multibyte-1000000-syntax-off",
+      "first_over_full": 0.08052322942724978,
+      "first_limit": 0.25,
+      "complete_over_full": 1.034198619477026,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "multibyte-1000000-syntax-on",
+      "first_over_full": 0.08045137455051521,
+      "first_limit": 0.25,
+      "complete_over_full": 1.0197006555557024,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "multibyte-5000000-syntax-off",
+      "first_over_full": 0.0569161689928668,
+      "first_limit": 0.25,
+      "complete_over_full": 1.040154644608157,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "multibyte-5000000-syntax-on",
+      "first_over_full": 0.05854942978177082,
+      "first_limit": 0.25,
+      "complete_over_full": 1.037485061419757,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "extensions-100000-syntax-off",
+      "first_over_full": 0.4411559266321175,
+      "first_limit": 0.75,
+      "complete_over_full": 1.0043352675604094,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "extensions-100000-syntax-on",
+      "first_over_full": 0.4485210662929443,
+      "first_limit": 0.75,
+      "complete_over_full": 1.0091659067705967,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "extensions-1000000-syntax-off",
+      "first_over_full": 0.34002540859372926,
+      "first_limit": 0.5,
+      "complete_over_full": 0.9966202901146807,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "extensions-1000000-syntax-on",
+      "first_over_full": 0.34147936011717756,
+      "first_limit": 0.5,
+      "complete_over_full": 0.9938829393490272,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "extensions-5000000-syntax-off",
+      "first_over_full": 0.34809015943893223,
+      "first_limit": 0.5,
+      "complete_over_full": 0.9959951966553633,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    },
+    {
+      "case": "extensions-5000000-syntax-on",
+      "first_over_full": 0.3487519540948802,
+      "first_limit": 0.5,
+      "complete_over_full": 0.9979783963361886,
+      "checks": {
+        "first_output": true,
+        "completion": true,
+        "peak_rss": true
+      }
+    }
+  ],
+  "failures": [],
+  "scope": "M6 post-baseline stage/RSS targets only; parsing precedes output; no UI latency or memory-reduction claim.",
+  "source_verification": "runtime and measurement tools"
+}
