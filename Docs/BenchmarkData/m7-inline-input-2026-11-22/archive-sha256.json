@@ -30,14 +30,14 @@
     "retained_sha256": "79a77ff4a7ee627d9db2a9c39e04a38805e0d5609042e2ffb390aace6804f07d"
   },
   {
-    "path": "profile-before/stdout",
+    "path": "profile-before/stdout.gz",
     "original_sha256": "895e1037c2b6af8dcdab8f950cc4a5b4a890325cb869aac1ff4f96c448d5e047",
-    "retained_sha256": "895e1037c2b6af8dcdab8f950cc4a5b4a890325cb869aac1ff4f96c448d5e047"
+    "retained_sha256": "6be2b5556f2e84ebc510e11fa90dbd5009a15982fe6fd59a22d13fb9da0b0352"
   },
   {
-    "path": "profile-before/stderr",
+    "path": "profile-before/stderr.gz",
     "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    "retained_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
   },
   {
     "path": "profile-before/run.json",
@@ -130,14 +130,14 @@
     "retained_sha256": "f288790457c4461d77674f35ff6e2b0b93aa5f0d2fc41e6093156c08b78d2db4"
   },
   {
-    "path": "profile-b/stdout",
+    "path": "profile-b/stdout.gz",
     "original_sha256": "0582d9da594ac3493f91d346a2fd5731725206dc39fb91e4993afc6650699d03",
-    "retained_sha256": "0582d9da594ac3493f91d346a2fd5731725206dc39fb91e4993afc6650699d03"
+    "retained_sha256": "22411f296796a3dde59dc2c2f6a3886a9f130bbe33d19ec9387a128660e136fe"
   },
   {
-    "path": "profile-b/stderr",
+    "path": "profile-b/stderr.gz",
     "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    "retained_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
   },
   {
     "path": "profile-b/run.json",
@@ -175,14 +175,14 @@
     "retained_sha256": "b440ed66ae4fc6efb2855190529015e49a9f451fcc89c49ece4fcc10f469498a"
   },
   {
-    "path": "preparation/candidate-a/profile-after/stdout",
+    "path": "preparation/candidate-a/profile-after/stdout.gz",
     "original_sha256": "16d8b74e2766b9126870e24cfbdfb917f02934a667cbb1039c5677786269b148",
-    "retained_sha256": "16d8b74e2766b9126870e24cfbdfb917f02934a667cbb1039c5677786269b148"
+    "retained_sha256": "8c04aa912e1666eb2568c36b3294ab6cf6bde4e3cff0032576672d6bfdfb0749"
   },
   {
-    "path": "preparation/candidate-a/profile-after/stderr",
+    "path": "preparation/candidate-a/profile-after/stderr.gz",
     "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    "retained_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
   },
   {
     "path": "preparation/candidate-a/profile-after/run.json",
