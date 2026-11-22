@@ -1,0 +1,10 @@
+[0/1] Planning build
+Building for debugging...
+[0/4] Write sources
+[1/4] Write swift-version--58304C5D6DBC2206.txt
+[3/6] Compiling ParserStressProbe main.swift
+[4/6] Emitting module ParserStressProbe
+[4/7] Write Objects.LinkFileList
+[5/7] Linking ParserStressProbe
+[6/7] Applying ParserStressProbe
+Build complete! (1.23s)

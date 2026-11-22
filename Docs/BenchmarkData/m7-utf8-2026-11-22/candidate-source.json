@@ -1,0 +1,18 @@
+{
+  "base_commit": "e3b4b0c83416e2200d0012b4f8d7caadb951c65a",
+  "dirty": true,
+  "description": "Overlay of changed/new runtime, tests, manifest and UTF8/stress harness over base. Existing historical evidence stays unchanged.",
+  "files": {
+    "Sources/SetzerParser/InlinePhase.swift": "5f09cd5af5efb6575677b1a891898a5aa984dc5931efb76827ac0559455645ff",
+    "Tests/SetzerParserTests/InlineTests.swift": "8a3478ceeb4fa080c9c40613395fc7b88f7bd54f8c91eeb70ff882a12bf026cb",
+    "Tests/SetzerParserTests/PreparedInlineTests.swift": "8e189fd11a53cbb5c98ff6161a6783b41c9ee20d3e0f5fb2edfc65666d90d7bc",
+    "Tests/SetzerParserTests/TransformTests.swift": "b39b0d51e76164a7048741974f1e326f2c98f4dd21bf8643f457ddaef5f4f5cb",
+    "Tools/Benchmarks/UTF8Benchmarks/UTF8Benchmarks.swift": "21b07a1c3e714037b31a2246f6288aa2757e5443094b562213cacc43a213b19b",
+    "Tools/Package.swift": "696e54400a988c212aa02bcc34cb2798e130c8acd598d188704a00ad2789bc93",
+    "Tools/ParserStressProbe/Package.swift": "04ac573aa637e690bcd20e83875a73ec330415cbd4de7884a286bb7a252c1d35",
+    "Tools/ParserStressProbe/README.md": "3e636475c9208c2c390582a6680b0d593758a8e5877076d1db8e109a39c4ad97",
+    "Tools/ParserStressProbe/Sources/ParserStressProbe/main.swift": "b007b45ed89ab4de08465a2b7ae3cf612b3c8e3964526db8e7f639daffab4438",
+    "Tools/Sources/BenchmarkCorpus/UTF8Workload.swift": "a3b2ea8f6a5c05e2f61eb47963ddd4ea36584279c0a6e8e7509a3566d9fbdbb2",
+    "Tools/Tests/ContainerReferenceTests/UTF8ReferenceTests.swift": "862997ed1d39678f1e729e42c26808f5f322a2f5340e72337c9994b49ea84945"
+  }
+}

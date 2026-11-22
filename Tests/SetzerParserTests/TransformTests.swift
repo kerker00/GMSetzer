@@ -2,6 +2,25 @@ import GMSetzer
 import Testing
 
 struct TransformTests {
+    @Test func reorderedPlainParagraphStorageStillBecomesCanonical() throws {
+        let reorder = BlockTransform("reorder") { document in
+            let order = [0] + Array(document.nodes.indices.dropFirst().reversed())
+            var mapping = [Int](repeating: 0, count: order.count)
+            for (new, old) in order.enumerated() { mapping[old] = new }
+            return try Document(source: document.source, nodes: order.map { old in
+                let node = document.nodes[old]
+                return Node(data: node.data, range: node.range, sourceSegments: node.sourceSegments,
+                    firstChild: node.firstChild.map { mapping[$0] }, nextSibling: node.nextSibling.map { mapping[$0] })
+            })
+        }
+        let parser = try MarkdownParser(profile: Profile(name: "test", extensions: [ExtensionConfiguration("test")]),
+            extensions: [MarkdownExtension("test", nodeKinds: [], transforms: [reorder])]).validated()
+        let source = "first\r\nsecond"
+        let document = parser.parse(source)
+        #expect(document.nodes == MarkdownParser().parse(source).nodes)
+        #expect(document.diagnostics.isEmpty)
+    }
+
     static let kind = NodeKind("alert.block")
 
     static let alerts = MarkdownExtension("alert", nodeKinds: [kind], transforms: [BlockTransform("recognise") { document in

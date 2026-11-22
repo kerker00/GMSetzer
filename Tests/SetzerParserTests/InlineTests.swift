@@ -4,6 +4,29 @@ import Testing
 struct InlineTests {
     func render(_ source: String) -> String { HTMLRenderer.conformance.render(MarkdownParser().parse(source)) }
 
+    @Test func plainParagraphRepairKeepsOriginalByteCoordinates() {
+        let fragments: [[UInt8]] = [[0xff], [0x80], [0xc0, 0xaf], [0xed, 0xa0, 0x80],
+            [0xf4, 0x90, 0x80, 0x80], [0xf0, 0x9f, 0x98], Array("ä😀日本語".utf8)]
+        for fragment in fragments {
+            for position in 0...fragment.count {
+                var bytes = fragment
+                bytes.insert(0, at: position)
+                bytes = Array("text ".utf8) + bytes + Array(" tail".utf8)
+                let repaired = bytes.flatMap { $0 == 0 ? [UInt8(0xef), 0xbf, 0xbd] : [$0] }
+                let text = String(decoding: repaired, as: UTF8.self)
+                for profile in [Profile.commonMark, .gfm] {
+                    let annotated = MarkdownParser(profile: profile, collectSyntaxDetails: true).parse(bytes: bytes)
+                    let plain = MarkdownParser(profile: profile).parse(bytes: bytes)
+                    #expect(annotated.source == bytes && annotated.nodes == plain.nodes)
+                    #expect(annotated.nodes.count == 3 && annotated.nodes[2].data == .text(text))
+                    #expect(annotated.nodes[2].range == SourceRange(0, bytes.count))
+                    #expect(annotated.tokens?.isEmpty == true && annotated.diagnostics.isEmpty)
+                    #expect(HTMLRenderer.conformance.render(annotated) == "<p>" + HTMLRenderer.escape(text) + "</p>\n")
+                }
+            }
+        }
+    }
+
     @Test func longBracketLeavesRetainLiteralNodesAndLeafBoundaries() throws {
         for count in [1_023, 1_024, 1_025, 4_095, 4_096, 4_097] {
             let run = "x " + String(repeating: "[", count: count)

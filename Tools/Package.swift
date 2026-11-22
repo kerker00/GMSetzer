@@ -28,10 +28,22 @@ let package = Package(
         .testTarget(
             name: "ContainerReferenceTests",
             dependencies: [
+                "BenchmarkCorpus",
                 .product(name: "GMSetzer", package: "GMSetzer"),
                 .product(name: "cmark-gfm", package: "swift-cmark"),
                 .product(name: "cmark-gfm-extensions", package: "swift-cmark"),
             ]
+        ),
+        .executableTarget(
+            name: "UTF8Benchmarks",
+            dependencies: [
+                "BenchmarkCorpus",
+                .product(name: "GMSetzer", package: "GMSetzer"),
+                .product(name: "cmark-gfm", package: "swift-cmark"),
+                .product(name: "Benchmark", package: "package-benchmark"),
+            ],
+            path: "Benchmarks/UTF8Benchmarks",
+            plugins: [.plugin(name: "BenchmarkPlugin", package: "package-benchmark")]
         ),
         .executableTarget(
             name: "HardeningBenchmarks",

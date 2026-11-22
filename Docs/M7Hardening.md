@@ -313,3 +313,25 @@ C control. Current x64/minimum Swift 6.2, Linux tool timings, full 69/72 refresh
 fresh progressive stage/RSS/allocation evidence and broader fuzz/sanitizer
 checks remain open. Historical measurements keep their earlier identities;
 this local step does not accept or merge M7.
+
+## Explicit UTF-8 controls and validated snapshot reuse
+
+The [UTF-8 report](Validation/M7/utf8-2026-11-22.md) follows the malformed-byte
+profiling priority. A separate 36-case target selects C validation off/on for
+legacy malformed, compatible malformed and valid multibyte inputs. It verifies
+matching repaired HTML where intended and preserves the known legacy policy
+difference; original-byte source-coordinate work still differs between parsers.
+
+One runtime file avoids rebuilding an already validated canonical plain
+paragraph when no inline rules, triggers or rendering-policy work remain.
+At compatible malformed 256 KiB, M2 syntax-off time improves 12.812 → 10.297 ms
+(19.63%), with validating C 5.259 → 5.251 ms. Swift/C is 1.96× after; parity
+remains an aim. Gross requested bytes fall 53.05%, with almost unchanged
+allocation count and no peak-memory claim.
+
+All 252 Mac tests pass in Debug, Release and AddressSanitizer; 12 Release tool
+tests pass, all 1,324 public snapshots match, and the standalone bounded ASan
+stress probe completes 8,192 parses. Coverage-guided fuzzing remains open due
+to the recorded installed-toolchain limits. Full current cross-host, resource
+and minimum-compiler evidence is tracked in the report. This candidate does
+not accept M7 or publish 0.7.0.

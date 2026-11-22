@@ -87,8 +87,16 @@ its capacity in batches; public nodes stay identical. All **249 library tests**
 pass in Debug/Release on macOS/Linux ARM64, with 10 Mac tool tests and all
 C/M2 gates passing. Independent snapshots match all 1,324 spec trees/tokens.
 Bracket timing is broadly maintained; no peak-RSS reduction is established.
-Next is malformed-byte processing with a validation-enabled C control, plus
-the remaining full-resource, minimum-compiler and current-x64 checks.
+The [UTF-8 follow-up](Docs/Validation/M7/utf8-2026-11-22.md) adds explicit
+validation-on/off C controls without changing the legacy corpus or Swift's
+replacement policy. Reusing an already validated plain-paragraph tree reduces
+the compatible malformed 256 KiB case from **12.812 to 10.297 ms** and gross
+requested bytes by **53%** on M2. Validating C takes 5.251 ms; this is still
+1.96× C time, with different source-coordinate services. All **252 Mac library
+tests**, 12 Release tool tests, the full AddressSanitizer suite and a bounded
+8,192-parse ASan mutation run pass. This is not coverage-guided fuzzing.
+Current x64/full-resource/minimum-compiler results are tracked in the report;
+M7 acceptance and general C parity remain open.
 
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented

@@ -2,6 +2,15 @@ import SetzerSyntax
 
 extension MarkdownParser {
     internal func parseInlines(_ document: Document) -> Document {
+        let gfm = GFMInlineTriggers(strikethrough: registry.contains(.strikethrough), autolink: registry.contains(.autolink))
+        // Reuse the validated snapshot when a canonical plain paragraph needs
+        // no inline work. Custom rule preparation must still run when selected.
+        if resolvedInlineRules.isEmpty, document.renderingPolicy.isEmpty,
+           isCanonicalPlainParagraph(document),
+           !needsInlineParsing(2..<document.nodes.count, document: document,
+                               triggers: ByteSet(), hasRules: false, gfm: gfm) {
+            return document
+        }
         var references: [ReferenceLabel: InlineParser.Reference] = [:]
         for node in document.nodes {
             if case .referenceDefinition(let definition) = node.data {
@@ -28,7 +37,6 @@ extension MarkdownParser {
         var inline = InlineParser(input: InlineInput(), references: references, collectSyntax: collectSyntaxDetails,
                                   source: document.source, rules: inlineRules, triggers: triggers, maximumDepth: limits.maximumInlineExtensionDepth)
         inline.enableGFM(strikethrough: registry.contains(.strikethrough), autolink: registry.contains(.autolink))
-        let gfm = GFMInlineTriggers(strikethrough: inline.strikethrough, autolink: inline.autolink)
         var pending = document.children(of: 0).reversed().map { ($0, 0) }
         // These buffers are local to one parse. Their contents never escape
         // into the resulting tree or the inline controller's projected input.
@@ -106,7 +114,20 @@ extension MarkdownParser {
         return try! builder.build()
     }
 
-    private func needsInlineParsing(_ children: [Int], document: Document,
+    private func isCanonicalPlainParagraph(_ document: Document) -> Bool {
+        guard document.nodes.count >= 3, document.nodes[0].firstChild == 1,
+              document.nodes[1].kind == .paragraph, document.nodes[1].nextSibling == nil,
+              document.nodes[1].firstChild == 2 else { return false }
+        for index in 2..<document.nodes.count {
+            let node = document.nodes[index]
+            let next = index + 1 < document.nodes.count ? index + 1 : nil
+            guard node.firstChild == nil, node.nextSibling == next else { return false }
+            switch node.data { case .text, .softBreak: break; default: return false }
+        }
+        return true
+    }
+
+    private func needsInlineParsing(_ children: some Sequence<Int>, document: Document,
                                     triggers: ByteSet, hasRules: Bool, gfm: GFMInlineTriggers) -> Bool {
         for child in children {
             guard case .text(let text) = document.nodes[child].data else { continue }

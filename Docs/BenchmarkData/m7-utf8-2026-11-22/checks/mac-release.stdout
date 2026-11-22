@@ -1,0 +1,711 @@
+Test Suite 'All tests' started at 2026-11-22 11:56:33.389.
+Test Suite 'All tests' passed at 2026-11-22 11:56:33.389.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite M1CombinationTests started.
+◇ Suite DocumentTests started.
+◇ Suite HTMLNormalizationTests started.
+◇ Suite ExtensionTests started.
+◇ Suite SyntaxTreeTests started.
+◇ Suite MathTests started.
+◇ Suite ContainerTests started.
+◇ Suite InlineTests started.
+◇ Suite AdmonitionTests started.
+◇ Suite HTMLSecurityTests started.
+◇ Suite SpecTests started.
+◇ Suite NativeAnalysisTests started.
+◇ Suite ContainerMarkerTests started.
+◇ Suite SourceIndexTests started.
+◇ Suite LeafBlockTests started.
+◇ Suite ContainerExtensionTests started.
+◇ Suite FrontMatterTests started.
+◇ Suite InlineExtensionTests started.
+◇ Suite NativeAnalysisMessagesTests started.
+◇ Suite DiagnosticTests started.
+◇ Suite ReferenceDefinitionTests started.
+◇ Suite PreparedInlineTests started.
+◇ Suite RegistryTests started.
+◇ Suite ProgressiveHTMLTests started.
+◇ Suite FootnoteTests started.
+◇ Suite TransformTests started.
+◇ Suite HTMLBlockTests started.
+◇ Suite HardeningTests started.
+◇ Suite GFMTests started.
+◇ Test wrappingListsPreservesTightnessAndContainerBoundaries(_:) started.
+◇ Test handBuiltCustomLeavesCanUseRawSourceWithoutFallbackMetadata() started.
+◇ Test onlyOneBOMAtByteZeroIsIgnored() started.
+◇ Test fallbackMetadataIsValidatedAndBuilderSnapshotsRemainIndependent() started.
+◇ Test leadingBOMPreservesBytesAndShiftsOnlySourceOffsets(_:) started.
+◇ Test wrappersComposeAcrossBuiltInContainers() started.
+◇ Test customLeafFallbackUsesProjectedLinesNotSemanticSegments(_:) started.
+◇ Test codeRawHTMLCommentsAndWhitespaceStayExact() started.
+◇ Test deeplyNestedCustomTreesValidateAndRenderIteratively() started.
+◇ Test everyDocumentHasARootCoveringTheSource() started.
+◇ Test builderRejectsUnknownParents() started.
+◇ Test rejectsInvalidContentModelsAndPayloads() started.
+◇ Test rejectsRangesOutsideParentsAndOverlappingSiblings() started.
+◇ Test onlyGeneratedVoidTagSlashesAreNormalized() started.
+◇ Test mathCodeFencesReuseCoreGrammarAndNormalization() started.
+◇ Test customFallbackEscapesInvalidSourceAndHooksCanReplaceIt() started.
+◇ Test documentedTreesAreExecutableContracts() started.
+◇ Test builderPreservesSourceSegmentsAndSiblingOrder() started.
+◇ Test multilineDisplayKeepsOpaqueTeXAndExactProjectedCRLFSegments() started.
+◇ Test rejectsInvalidTopologyWithoutTraversingForever() started.
+◇ Test parserBoundsNestingAndRetainsOverflowSyntax() started.
+◇ Test displayCannotConsumeAcrossEnclosingContainerBoundaries() started.
+◇ Test annotationsOffPreserveAllFormatsAndExactOwnerRanges() started.
+◇ Test fencedMathUsesDecodedLanguageAndLeavesOtherCodeLanguagesAlone() started.
+◇ Test looseInnerListDoesNotLoosenItsParent() started.
+◇ Test partialTabsRetainOriginalProvenance() started.
+◇ Test displaySupportsEmptyBodiesLineEndingsAndClosingAtEOF() started.
+◇ Test codeHTMLDestinationsTitlesAndReferenceDefinitionsRemainProtected() started.
+◇ Test nestedRangesExcludeAncestorPrefixesAndPreserveCRLFAndUnicode() started.
+◇ Test typedViewRejectsOtherNodesBadIndicesAndMalformedPayloads() started.
+◇ Test controllerReuseKeepsCodeAndDelimiterStateLocalToEachLeaf() started.
+◇ Test prefixHeavyInputsKeepValidTopologyAndOriginalBytes() started.
+◇ Test validatesListPayloadsAndItemParents() started.
+◇ Test escapesEntitiesAndCodeAreDecodedOnlyInTheirOwnContexts() started.
+◇ Test containerContinuationAndListRendering(_:) started.
+◇ Test mathGFMFrontMatterAndFootnotesComposeWithoutInterpretingOpaqueBodies() started.
+◇ Test BOMInvalidUTF8NULAndUnicodeKeepOriginalBytesInEveryFormat() started.
+◇ Test modesAreIndependentlyDisabledAndStrictProfilesRemainUnselected() started.
+◇ Test fenceTokensRetainOriginalSpellingAndEmptyInfo() started.
+◇ Test whitespaceAndCurrencyDoNotAccidentallyBecomeInlineMath() started.
+◇ Test displayIndentationAndPartialTabsKeepSemanticAndRawFormsDistinct() started.
+◇ Test inlineTeXIsOpaqueAndPreservesOriginalSpelling() started.
+◇ Test linksKeepProtectedDestinationsAndPreciseEmptyComponents() started.
+◇ Test emptyAndUnclosedMathCodeFencesFollowCoreEOFPolicy() started.
+◇ Test multilineRuleCannotConsumePastAContainerBoundary() started.
+◇ Test deepEmphasisTokensKeepExactOwnerOrderAcrossLeaves() started.
+◇ Test legalLiteralFallbacksDoNotProduceDocumentErrors() started.
+◇ Test safeRenderingChecksDecodedURLsAndDoesNotTrustRawHTMLPermission() started.
+◇ Test rendererHooksChoosePresentationAndDefaultFallbackEscapesSource() started.
+◇ Test escapedDollarsAndBackslashParityAreRespected() started.
+◇ Test unmatchedAndWrongWidthDisplayFencesFallBackNormally() started.
+◇ Test foldingUsesDetailsAndTitleOnlyCalloutsStayValid() started.
+◇ Test referencesUseUnicodeFoldingSourceSpellingAndFirstDefinition() started.
+◇ Test manySmallInlineLeavesRetainTreeAndTokens() started.
+◇ Test plainParagraphRepairKeepsOriginalByteCoordinates() started.
+◇ Test dollarsInProtectedCodeDoNotStealSubsequentPairs() started.
+◇ Test UnicodeWhitespaceMatchesTheSpecificationClass() started.
+◇ Test hooksCanWrapChildrenWithoutIntroducingParserDependencies() started.
+◇ Test alertHeadersRequireExactUppercaseTypeOnTheFirstPhysicalQuoteLine() started.
+◇ Test prioritiesThenProfileOrderDetermineRuleSelection() started.
+◇ Test profileOptionsReachRulesAndRendererHooksAreSeparate() started.
+◇ Test inlineMathKeepsEmphasisAndLinkLabelContext() started.
+◇ Test oneLineDisplayBlocksPreserveWhitespaceAndResumeBody() started.
+◇ Test generatedCalloutTitlesAliasesAndUnknownTypesArePortable() started.
+◇ Test invalidPayloadsAndSegmentsAreRejectedBeforeDocumentConstruction() started.
+◇ Test longRunsAndManyFailedOpenersRemainBounded() started.
+◇ Test analysisAndOutlineKeepTheirOpaqueCustomContentPolicy() started.
+◇ Test malformedCalloutMarkersRemainOrdinaryQuotes() started.
+◇ Test alertBodyKeepsMultipleBlocksAndNestedContainers() started.
+◇ Test NULReplacementAppliesToReferenceLabelsAndURLSyntax() started.
+◇ Test bodySeparatorsAndTablesCannotConsumeTheHeaderAsSetextOrHeaderCells() started.
+◇ Test sourceRangesPreserveEmojiPrefixesCRLFAndOriginalDelimiters() started.
+◇ Test rulesOnlyRunWhenSelectedAndStayOutOfCodeBlocks() started.
+◇ Test manyCalloutsAndNestedContainersRemainFinite() started.
+◇ Test autolinksDeactivateOuterLinksAndDeclarationsFollow0312() started.
+◇ Test allM5FeaturesComposeIncludingMathAndFootnoteCallsInTheTitle() started.
+◇ Test longBracketLeavesRetainLiteralNodesAndLeafBoundaries() started.
+◇ Test invalidConsumptionFallsBackWithoutLosingSource(_:) started.
+◇ Test safeURLAllowlistAndEscapedDocumentContent() started.
+◇ Test anchorsAreUniqueEscapedAndAvailableToTrustedHooks() started.
+◇ Test unavailableAndDuplicateRegistrationsAreVisible() started.
+◇ Test BOMAllLineEndingsMalformedBytesAndNULRetainOriginalSource() started.
+◇ Test manyUnmatchedCandidatesAndLongDollarRunsRetainInput() started.
+◇ Test exactHeaderAndQuoteTokensSurviveCRLFUnicodeAndTreeReindexing() started.
+◇ Test labelMatchingDoesNotApplyCanonicalNormalizationOrUnicodeSpaceCollapse() started.
+◇ Test overlappingSelectionUsesRulePrecedenceAndDefaultProfileOrder() started.
+◇ Test titleHTMLAndURLsStayUnderTheBaseRenderersSafetyPolicy() started.
+◇ Test ruleDisablingAndUnselectedImplementationsPreserveCoreBehavior() started.
+◇ Test allFiveAlertTypesRetainBodyMarkdownAndGenerateTitles() started.
+◇ Test outlineIncludesBodyHeadingsWhileNativeAnalysisKeepsCustomBodiesOpaque() started.
+◇ Test sourceAnchorsLocalizedTitlesAndExistingHooksArePreserved() started.
+◇ Test allowedURLSchemesAreExplicitAndValidated() started.
+◇ Test headerIndentationAndPartialTabPrefixesStayInsideQuotes() started.
+◇ Test multilineRulesSeeProjectedLinesInsideContainers() started.
+◇ Test metadataCodeAndOrdinaryQuotesDoNotInventAdmonitions() started.
+◇ Test emptyAlertsAndBlankSeparatedBodiesHaveNoPhantomParagraph() started.
+◇ Test emptyListMarkerWhitespaceNeverBecomesADestructiveFix() started.
+◇ Test customTitlesAreParsedAsInlineMarkdownWithoutJoiningTheBody() started.
+◇ Test unselectedAdmonitionsAndComposedRendererPreserveEverySpecification() started.
+◇ Test nestedCalloutsKeepNormalListQuoteSemantics() started.
+◇ Test annotationModesHaveIdenticalTreesViewsAndHTML() started.
+◇ Test invalidConfigurationIsNotADocumentFinding() started.
+◇ Test disabledRulesAndDepthFallbackDoNotInventMarkers() started.
+◇ Test typedViewsRejectWrongIndicesKindsAndPayloads() started.
+◇ Test scopesExcludeCodeHTMLAndUnknownExtensionsAndKeepHardBreaks() started.
+◇ Test taskCheckboxesAndListMarkersAreSeparateTokensOfTheSameItem() started.
+◇ Test unselectedFootnotesPreserveEverySpecificationAndRenderer() started.
+◇ Test explicitRulesDeterministicConfigurationAndRelatedHeadings() started.
+◇ Test commonMarkExamplesNeverRegress() started.
+◇ Test aNewPassCannotHideARegression() started.
+◇ Test quoteProvenanceSurvivesATransformIntoACustomContainer() started.
+◇ Test referenceDefinitionSectionsHaveTheRequiredBlockShapes() started.
+◇ Test unselectedFrontMatterImplementationPreservesEverySpecification() started.
+◇ Test unselectedMathPreservesEverySpecification() started.
+◇ Test annotationModePreservesArbitraryByteTreesAndDiagnostics() started.
+◇ Test nestedMarkersKeepBOMUnicodeCRLFAndUTF16Offsets() started.
+◇ Test quotesOwnOnlyTheirExplicitPrefixesIncludingBlankLines() started.
+◇ Test gfmExamplesNeverRegress() started.
+◇ Test multilineExtensionsCaptureOnlyConsumedParentPrefixes() started.
+◇ Test partialTabsNeverBecomePartOfAMarker() started.
+◇ Test outlineAndCaretAffinityUseOriginalNodes() started.
+◇ Test listItemsOwnOriginalBulletOrOrderedSpellingWithoutPadding() started.
+◇ Test projectedExtensionChildrenRetainOriginalRangesAndRemappedOwners() started.
+◇ Test lineQueriesAndASCIIRunsAcrossCheckpoints() started.
+◇ Test maximalInvalidSubpartsAndCheckpoints() started.
+◇ Test literalCodeEscapesThematicBreaksAndSetextLinesDoNotProduceMarkers() started.
+◇ Test progressiveOutputPreservesBothCompleteCorpora() started.
+◇ Test originalUnicodeAndCRLFRoundTrips() started.
+◇ Test recursiveExtensionsAreBoundedAndRetainOverflowSource() started.
+◇ Test gfmCorpusIncludesTaskListsAndTagFiltering() started.
+◇ Test parsedChildrenRetainSnapshotOffsetsAndEnclosingBoundaries(_:) started.
+◇ Test syntaxCollectionPreservesEverySpecificationTreeAndHTML() started.
+◇ Test arbitraryBytesAgreeWithStandardLibraryReplacementDecoding() started.
+◇ Test treeIndexMatchesLinksForAnyNodeOrder() started.
+◇ Test blockPrecedenceAndHeadingDelimiters(_:) started.
+◇ Test renderingPolicyStaysWithTheCallerAndFallbackRemainsEscaped() started.
+◇ Test foreignRuleHandlesAreNotEligibleAndPrecedenceIsExplicit() started.
+◇ Test danglingOrMismatchedFencesFallBackWithoutSwallowingTheDocument() started.
+◇ Test onlyOneFrontMatterBlockIsRecognised() started.
+◇ Test invalidChildOrderTokensAndDiagnosticsFallBackAtomically() started.
+◇ Test nestedTokensKeepOrderAndEmptyCRLFPositionsAcrossLeaves() started.
+◇ Test completeChildMatchesAreBoundedAndPostInlineTransformsSeeResolvedNodes() started.
+◇ Test onlyTheOriginalFirstPhysicalLineCanStartFrontMatter() started.
+◇ Test basicReferenceDefinitionsAreCollectedAndDoNotRender() started.
+◇ Test invalidUTF8AndNULKeepOriginalSourceOffsets() started.
+◇ Test firstReferenceUsesSourceOrderAfterAValidStorageReordering() started.
+◇ Test headingsAndParagraphsHaveExactOriginalByteRanges() started.
+◇ Test declinedLongCustomRunsKeepProgressWithoutRescanningTheSuffix() started.
+◇ Test formatsAreIndependentlyDisabledUsingExistingRuleControls() started.
+◇ Test largeDanglingOpenerRetainsTheEntireDocument() started.
+◇ Test headingArgumentsDescribeTheActualPermittedLevel() started.
+◇ Test invalidInlineMatchesAreRejectedBeforeAnyMutation() started.
+◇ Test sourceHTMLIsEscapedAndBlockAnchorsAreExplicit() started.
+◇ Test trailingASCIIWhitespaceAndAllLineEndingsAreRetained() started.
+◇ Test selectionIsExplicitAndStrictProfilesDoNotChange() started.
+◇ Test customDelimitersShareTheCoreControllerAndRespectProtectedSyntax() started.
+◇ Test codeBlocksPreserveLiteralTextAndNormaliseLineEndings(_:) started.
+◇ Test typedViewRejectsWrongIndicesAndMalformedPayloads() started.
+◇ Test unknownKeysAndInvalidHeadingArgumentsNeverInventText() started.
+◇ Test BOMUnicodeCRLFInvalidUTF8AndNULPreserveOriginalBytes() started.
+◇ Test languageSelectionIsExplicitAndUnsupportedLanguagesKeepTheFallback() started.
+◇ Test nativeFindingsAndFixTitlesHaveEnglishAndGermanText() started.
+◇ Test projectedChildParsersCannotRestartDocumentStartRecognition() started.
+◇ Test validHeadingArgumentsAllowAdditionalConsumerMetadata() started.
+◇ Test gfmBodyStillHasTablesTasksAndInlineSyntax() started.
+◇ Test callbackProjectionsRetainOriginalCRLFAndContainerOffsets() started.
+◇ Test retainedHandlesFromPreviousParsesCannotCloseNewDelimiters() started.
+◇ Test emptyProjectedPositionsAfterCRLFStayAfterTheWholeEnding() started.
+◇ Test preInlineTokensSurviveTextReplacement() started.
+◇ Test arbitraryBytesAndLongDelimiterRunsRemainUsable() started.
+◇ Test fencesAreExactlyThreeMarkersAtColumnZero() started.
+◇ Test reportsValidateAndOrderFindingsWithinTheirSnapshot() started.
+◇ Test annotationModePreservesMetadataAndBody() started.
+◇ Test yamlAndTomlKeepRawTextAndResumeNormalMarkdown() started.
+◇ Test emptyMetadataKeepsAnInsertionRangeWithoutChildren() started.
+◇ Test syntaxDetailsKeepExactContainerAndCRLFOffsets() started.
+◇ Test codeBlockSegmentsExcludeFencesAndRemovedIndentation() started.
+◇ Test metadataIsOpaqueToInlinesReferencesOutlineAndNativeAnalysis() started.
+◇ Test fixesKeepOriginalBytesAndRejectStaleOrAmbiguousEdits() started.
+◇ Test labelLengthAndWhitespaceRulesAreEnforced() started.
+◇ Test metadataValidationRejectsRangesOutsideDefinition() started.
+◇ Test multilineDefinitionsAndOptionalTitleFallback() started.
+◇ Test locationsKeepZeroLengthRelatedAndPhysicalLineSemantics() started.
+◇ Test allM5CompositionsReuseContextAcrossGroupsAndPreserveCustomHookFallbacks() started.
+◇ Test independentPlanCanBeConsumedConcurrently() started.
+◇ Test definitionsDoNotCreatePhantomHeadingsOrLooseLists(_:) started.
+◇ Test replacementDecodingDoesNotShiftReferenceDetails() started.
+◇ Test nonRenderingDefinitionsDoNotDelayTheFirstUsefulGroup() started.
+◇ Test maximumLengthUnicodeLabelsRemainBoundedAndAddressable() started.
+◇ Test disabledRulesAlsoStopInterruptingParagraphsAndReferences() started.
+◇ Test snapshotIndexAndContextPreserveTightListSemantics() started.
+◇ Test protectedCodeEscapesHTMLLinksAndImagesDoNotBecomeCalls() started.
+◇ Test forwardAndBackwardReferencesRenderAtTheEndWithoutMovingSourceNodes() started.
+◇ Test completeBlocksRetainForwardLinksListsTablesAndSourceAnchors() started.
+◇ Test parserCanBeSharedAcrossConcurrentSnapshots() started.
+◇ Test tokensAndFallbackHaveExplicitSnapshotLifetimes() started.
+◇ Test emptyBodiesAndTabsAndIndentationUseCoreProjection() started.
+◇ Test footnotesUseGlobalNumberingAndALazySingleAppendix() started.
+◇ Test cancellingTheConsumingTaskPreventsRenderingTheNextGroup() started.
+◇ Test firstGroupDoesNotEvaluateLaterHooksAndConsumptionCanStop() started.
+◇ Test sourceBudgetKeepsOversizedBlocksIntactAndDoesNotSplitUTF8() started.
+◇ Test foreignOutputsAndDuplicateRuleIdentitiesAreRejected() started.
+◇ Test footnoteAppendixHooksStayDeferredWhenBodyConsumptionStops() started.
+◇ Test optInAndRuleDisablingAreIndependent() started.
+◇ Test unknownHooksAndDocumentWrappersUseExplicitWholeDocumentFallbacks() started.
+◇ Test reorderedPlainParagraphStorageStillBecomesCanonical() started.
+◇ Test optionDefaultsValidationNamespaceAndDisabledCustomRules() started.
+◇ Test explicitPrecedenceAppliesWithinTheOpeningPhase() started.
+◇ Test manyCallsAndNestedDefinitionsRespectResourceLimits() started.
+◇ Test cancellationAfterAnOpeningTagDoesNotDeliverAPartialGroupOrRunLaterHooks() started.
+◇ Test bodyAndCitedNoteGraphOrderIsFiniteEvenWithCycles() started.
+◇ Test rawHTMLCrossBlockWrappersAndUnsafeURLsKeepTheExistingPolicy() started.
+◇ Test rejectedOrThrowingTransformsKeepThePreviousSnapshot() started.
+◇ Test emptyDocumentsAndInvalidRequestsHaveDefinedResults() started.
+◇ Test bracketsRemainProtectedUnlessExplicitlyEnabledAndConsumedContextsStayProtected() started.
+◇ Test missingAndMalformedLabelsRetainOrdinaryMarkdown() started.
+◇ Test BOMLineEndingsInvalidUTF8AndNULKeepTheOriginalSnapshot() started.
+◇ Test alertsTransformBeforeInlinesWithoutLosingQuoteListContext() started.
+◇ Test renderingPreservesURLSafetyHooksAnchorsAndEscapesGeneratedAttributes() started.
+◇ Test cancellationBeforeTheFirstEventDoesNotDeliverOutputAndLeavesThePlanReusable() started.
+◇ Test escapedBracketsCanBePartOfAnOpaqueLabel() started.
+◇ Test plainParagraphsStillPrepareRegisteredInlineRules() started.
+◇ Test firstCallOrderRepeatedCallsAndFirstDefinitionWins() started.
+◇ Test gfmTablesTasksAndAutolinksWorkInsideAndOutsideNotes() started.
+◇ Test factoryPreparesEachSnapshotOnceAndDoesNotLeakStateBetweenParses() started.
+◇ Test unusedDefinitionsAreHiddenAndDefaultRenderingRemainsCallerPolicy() started.
+◇ Test rebuiltTreesMayRemapForeignOwnersButCannotForgeSpellingOrDuplicateTokens() started.
+◇ Test annotationsOffPreserveSemanticsAndNumbering() started.
+◇ Test noteHeadingsParticipateInOutlineWhileNativeAnalysisKeepsCustomContentOpaque() started.
+◇ Test bracketRulesCannotOpenDelimiterHandlesOrPartiallyMutateTheTree() started.
+◇ Test frontMatterAndFootnotesComposeWithoutInterpretingMetadata() started.
+◇ Test explicitContinuationStopsBeforeAnUnindentedBodyLine() started.
+◇ Test case passing 1 argument text → "- one
+- two
+" to wrappingListsPreservesTightnessAndContainerBoundaries(_:) started.
+◇ Test unicodeFullCaseFoldingDoesNotCanonicallyNormalizeOrDecodeLabels() started.
+◇ Test quotedAndListDefinitionsKeepExactCRLFMarkerRangesAndOwners() started.
+◇ Test commentsAreSuppressedOnlyInHTMLContext() started.
+◇ Test case passing 1 argument text → "> - one
+> - two
+" to wrappingListsPreservesTightnessAndContainerBoundaries(_:) started.
+◇ Test case passing 1 argument text → "- one
+
+  second
+" to wrappingListsPreservesTightnessAndContainerBoundaries(_:) started.
+◇ Test case passing 1 argument text → "- one
+
+- two
+" to wrappingListsPreservesTightnessAndContainerBoundaries(_:) started.
+◇ Test multilineDefinitionsParseParagraphsListsQuotesAndCode() started.
+◇ Test case passing 1 argument text → "- one
+  - nested
+- two
+" to wrappingListsPreservesTightnessAndContainerBoundaries(_:) started.
+◇ Test case passing 1 argument text → "- > quote
+- two
+" to wrappingListsPreservesTightnessAndContainerBoundaries(_:) started.
+◇ Test rawHTMLAndCommentPermissionAreSeparate() started.
+◇ Test recognisesAllSevenHTMLBlockClasses(_:) started.
+◇ Test case passing 1 argument text → "# Grüße 😀
+" to leadingBOMPreservesBytesAndShiftsOnlySourceOffsets(_:) started.
+◇ Test case passing 1 argument text → "- [a]: /u
+
+- two
+" to wrappingListsPreservesTightnessAndContainerBoundaries(_:) started.
+◇ Test case passing 1 argument text → "3. one
+4. two
+" to wrappingListsPreservesTightnessAndContainerBoundaries(_:) started.
+◇ Test case passing 1 argument text → "> quote
+" to leadingBOMPreservesBytesAndShiftsOnlySourceOffsets(_:) started.
+◇ Test case passing 1 argument text → "- one
+  two
+" to leadingBOMPreservesBytesAndShiftsOnlySourceOffsets(_:) started.
+◇ Test case passing 1 argument text → "3. one
+
+4. two
+" to wrappingListsPreservesTightnessAndContainerBoundaries(_:) started.
+◇ Test case passing 1 argument text → "	code
+" to leadingBOMPreservesBytesAndShiftsOnlySourceOffsets(_:) started.
+◇ Test case passing 1 argument fixture → ("::: &\r\nbody\r\n", "::: &amp;\nbody\n") to customLeafFallbackUsesProjectedLinesNotSemanticSegments(_:) started.
+◇ Test case passing 1 argument text → "```x
+z
+```
+" to leadingBOMPreservesBytesAndShiftsOnlySourceOffsets(_:) started.
+◇ Test case passing 1 argument fixture → ("> :::\r\n> body\r\n", "<blockquote>\n:::\nbody\n</blockquote>\n") to customLeafFallbackUsesProjectedLinesNotSemanticSegments(_:) started.
+◇ Test case passing 1 argument text → "<div>
+body
+" to leadingBOMPreservesBytesAndShiftsOnlySourceOffsets(_:) started.
+◇ Test case passing 1 argument text → "[a]: /u 'title'
+
+body
+" to leadingBOMPreservesBytesAndShiftsOnlySourceOffsets(_:) started.
+◇ Test HTMLStopsAtContainerBoundaryAndRetainsOriginalRanges() started.
+◇ Test case passing 1 argument text → "
+# afternext
+" to leadingBOMPreservesBytesAndShiftsOnlySourceOffsets(_:) started.
+◇ Test case passing 1 argument fixture → ("﻿> :::\r\n> body\r\n", "<blockquote>\n:::\nbody\n</blockquote>\n") to customLeafFallbackUsesProjectedLinesNotSemanticSegments(_:) started.
+◇ Test case passing 1 argument fixture → ("> :::\n> body", "<blockquote>\n:::\nbody</blockquote>\n") to customLeafFallbackUsesProjectedLinesNotSemanticSegments(_:) started.
+◇ Test case passing 1 argument fixture → ("> - :::\r\n>   body\r\n", "<blockquote>\n<ul>\n<li>\n:::\nbody\n</li>\n</ul>\n</blockquote>\n") to customLeafFallbackUsesProjectedLinesNotSemanticSegments(_:) started.
+◇ Test case passing 1 argument fixture → ("- :::\n  body\n", "<ul>\n<li>\n:::\nbody\n</li>\n</ul>\n") to customLeafFallbackUsesProjectedLinesNotSemanticSegments(_:) started.
+◇ Test case passing 1 argument fixture → ("- :::\n\tbody\n", "<ul>\n<li>\n:::\n  body\n</li>\n</ul>\n") to customLeafFallbackUsesProjectedLinesNotSemanticSegments(_:) started.
+◇ Test typeSevenCannotInterruptParagraphsAndSpecialTagNamesAreExact() started.
+◇ Test case passing 1 argument fixture → (">\t:::\r\n>\tbody\r\n", "<blockquote>\n  :::\n  body\n</blockquote>\n") to customLeafFallbackUsesProjectedLinesNotSemanticSegments(_:) started.
+◇ Test deepQuotesKeepTheDeclaredFallbackWithEveryProfile() started.
+◇ Test unmutatedExtendedSeedsActuallyExerciseEverySelectedExtension() started.
+◇ Test strikethroughPairsEqualRuns() started.
+◇ Test tableStructureIsValidated() started.
+◇ Test mutatedDocumentsRetainTreePositionsFindingsAndGroupedOutput(seedIndex:) started.
+◇ Test autolinksKeepSourceSpelling() started.
+◇ Test tableSyntaxTokensAndPreamble() started.
+◇ Test everyFeatureSwitchesIndependently() started.
+◇ Test profileSelectsBuiltinsWithoutImplementations() started.
+◇ Test lazyHeaderLinesKeepTheirIndentation() started.
+◇ Test tableCellsMapToOriginalBytes() started.
+◇ Test taskListItemsFollowTheMarkerLine() started.
+◇ Test case passing 1 argument fixture → ("> first\nsecond\n>\n> third\n\noutside\n", "<blockquote>\n<p>first\nsecond</p>\n<p>third</p>\n</blockquote>\n<p>outside</p>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("> # head\noutside\n", "<blockquote>\n<h1>head</h1>\n</blockquote>\n<p>outside</p>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("> a\n2. b\n", "<blockquote>\n<p>a</p>\n</blockquote>\n<ol start=\"2\">\n<li>b</li>\n</ol>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("> a\n-\n", "<blockquote>\n<p>a</p>\n</blockquote>\n<ul>\n<li></li>\n</ul>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("> ```\n> code\noutside\n", "<blockquote>\n<pre><code>code\n</code></pre>\n</blockquote>\n<p>outside</p>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("> a\n> 2. b\n", "<blockquote>\n<p>a\n2. b</p>\n</blockquote>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("- a\n- b\n", "<ul>\n<li>a</li>\n<li>b</li>\n</ul>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("- a\n\n- b\n", "<ul>\n<li>\n<p>a</p>\n</li>\n<li>\n<p>b</p>\n</li>\n</ul>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("3) three\n4) four\n", "<ol start=\"3\">\n<li>three</li>\n<li>four</li>\n</ol>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("- a\n+ b\n", "<ul>\n<li>a</li>\n</ul>\n<ul>\n<li>b</li>\n</ul>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("1. a\n2) b\n", "<ol>\n<li>a</li>\n</ol>\n<ol start=\"2\">\n<li>b</li>\n</ol>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("- a\n  - b\n  - c\n- d\n", "<ul>\n<li>a\n<ul>\n<li>b</li>\n<li>c</li>\n</ul>\n</li>\n<li>d</li>\n</ul>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("- > a\n  >\n  > b\n- c\n", "<ul>\n<li>\n<blockquote>\n<p>a</p>\n<p>b</p>\n</blockquote>\n</li>\n<li>c</li>\n</ul>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("-\n-\n", "<ul>\n<li></li>\n<li></li>\n</ul>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("- a\n\n  b\n", "<ul>\n<li>\n<p>a</p>\n<p>b</p>\n</li>\n</ul>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("2. a\n3.\n4. b\n", "<ol start=\"2\">\n<li>a</li>\n<li></li>\n<li>b</li>\n</ol>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("- a\n-\n- b\n", "<ul>\n<li>a</li>\n<li></li>\n<li>b</li>\n</ul>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("para\n2. continuation\n", "<p>para\n2. continuation</p>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("1.     code\n", "<ol>\n<li>\n<pre><code>code\n</code></pre>\n</li>\n</ol>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("  -\talpha\n\tbeta\n", "<ul>\n<li>alpha\nbeta</li>\n</ul>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("-\t\tX\r\n", "<ul>\n<li>\n<pre><code>  X\n</code></pre>\n</li>\n</ul>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument fixture → ("para\n1. item\n", "<p>para</p>\n<ol>\n<li>item</li>\n</ol>\n") to containerContinuationAndListRendering(_:) started.
+◇ Test case passing 1 argument count → 0 to invalidConsumptionFallsBackWithoutLosingSource(_:) started.
+◇ Test case passing 1 argument count → -1 to invalidConsumptionFallsBackWithoutLosingSource(_:) started.
+◇ Test case passing 1 argument count → 9223372036854775807 to invalidConsumptionFallsBackWithoutLosingSource(_:) started.
+commonmark: 652/652 examples pass (652 protected)
+gfm: 672/672 examples pass (672 protected)
+◇ Test case passing 1 argument text → "[^x]: body
+    second
+" to parsedChildrenRetainSnapshotOffsetsAndEnclosingBoundaries(_:) started.
+◇ Test case passing 1 argument text → "> [^x]: body
+>     second
+" to parsedChildrenRetainSnapshotOffsetsAndEnclosingBoundaries(_:) started.
+◇ Test case passing 1 argument text → "- [^x]: body
+      second
+" to parsedChildrenRetainSnapshotOffsetsAndEnclosingBoundaries(_:) started.
+◇ Test case passing 1 argument fixture → ("### title ###  \n", "<h3>title</h3>\n") to blockPrecedenceAndHeadingDelimiters(_:) started.
+◇ Test case passing 1 argument fixture → ("### ###\n", "<h3></h3>\n") to blockPrecedenceAndHeadingDelimiters(_:) started.
+◇ Test case passing 1 argument fixture → ("# title#\n", "<h1>title#</h1>\n") to blockPrecedenceAndHeadingDelimiters(_:) started.
+◇ Test case passing 1 argument fixture → ("# title \\#\n", "<h1>title #</h1>\n") to blockPrecedenceAndHeadingDelimiters(_:) started.
+◇ Test case passing 1 argument fixture → ("####### title\n", "<p>####### title</p>\n") to blockPrecedenceAndHeadingDelimiters(_:) started.
+◇ Test case passing 1 argument fixture → ("#title\n", "<p>#title</p>\n") to blockPrecedenceAndHeadingDelimiters(_:) started.
+◇ Test case passing 1 argument fixture → ("one\ntwo\n===\n", "<h1>one\ntwo</h1>\n") to blockPrecedenceAndHeadingDelimiters(_:) started.
+◇ Test case passing 1 argument fixture → ("one\n---\n", "<h2>one</h2>\n") to blockPrecedenceAndHeadingDelimiters(_:) started.
+◇ Test case passing 1 argument fixture → ("one\n\n---\n", "<p>one</p>\n<hr />\n") to blockPrecedenceAndHeadingDelimiters(_:) started.
+◇ Test case passing 1 argument fixture → ("---\n", "<hr />\n") to blockPrecedenceAndHeadingDelimiters(_:) started.
+◇ Test case passing 1 argument fixture → ("a\n* * *\nb\n", "<p>a</p>\n<hr />\n<p>b</p>\n") to blockPrecedenceAndHeadingDelimiters(_:) started.
+◇ Test case passing 1 argument fixture → ("a\n    b\n", "<p>a\nb</p>\n") to blockPrecedenceAndHeadingDelimiters(_:) started.
+◇ Test case passing 1 argument fixture → ("```swift\n<&>\n```\n", "<pre><code class=\"language-swift\">&lt;&amp;&gt;\n</code></pre>\n") to codeBlocksPreserveLiteralTextAndNormaliseLineEndings(_:) started.
+◇ Test case passing 1 argument fixture → ("~~~\nlast", "<pre><code>last\n</code></pre>\n") to codeBlocksPreserveLiteralTextAndNormaliseLineEndings(_:) started.
+◇ Test case passing 1 argument fixture → ("```\n```\n", "<pre><code></code></pre>\n") to codeBlocksPreserveLiteralTextAndNormaliseLineEndings(_:) started.
+◇ Test case passing 1 argument fixture → ("````\n```\n`````\n", "<pre><code>```\n</code></pre>\n") to codeBlocksPreserveLiteralTextAndNormaliseLineEndings(_:) started.
+◇ Test case passing 1 argument fixture → ("  ```\n\tx\n  ```\n", "<pre><code>  x\n</code></pre>\n") to codeBlocksPreserveLiteralTextAndNormaliseLineEndings(_:) started.
+◇ Test case passing 1 argument fixture → ("    first\n\n    second\n\nend\n", "<pre><code>first\n\nsecond\n</code></pre>\n<p>end</p>\n") to codeBlocksPreserveLiteralTextAndNormaliseLineEndings(_:) started.
+◇ Test case passing 1 argument fixture → ("\tcode\r\n", "<pre><code>code\n</code></pre>\n") to codeBlocksPreserveLiteralTextAndNormaliseLineEndings(_:) started.
+◇ Test case passing 1 argument fixture → ("[x]: /url\n---\n", "<p>---</p>\n") to definitionsDoNotCreatePhantomHeadingsOrLooseLists(_:) started.
+◇ Test case passing 1 argument fixture → ("[x]: /url\n-\n", "<p>-</p>\n") to definitionsDoNotCreatePhantomHeadingsOrLooseLists(_:) started.
+◇ Test case passing 1 argument fixture → ("[x]: /url\n===\n", "<p>===</p>\n") to definitionsDoNotCreatePhantomHeadingsOrLooseLists(_:) started.
+◇ Test case passing 1 argument fixture → ("[x]: /url\nbody\n===\n", "<h1>body</h1>\n") to definitionsDoNotCreatePhantomHeadingsOrLooseLists(_:) started.
+◇ Test case passing 1 argument fixture → ("- [x]: /url\n\n  body\n", "<ul>\n<li>body</li>\n</ul>\n") to definitionsDoNotCreatePhantomHeadingsOrLooseLists(_:) started.
+◇ Test case passing 1 argument fixture → ("- a\n\n  [x]: /url\n", "<ul>\n<li>a</li>\n</ul>\n") to definitionsDoNotCreatePhantomHeadingsOrLooseLists(_:) started.
+◇ Test case passing 1 argument fixture → ("[x]: /u\n[y]: /v\n\nbody\n", "<p>body</p>\n") to definitionsDoNotCreatePhantomHeadingsOrLooseLists(_:) started.
+◇ Test case passing 1 argument fixture → ("[x]: (balanced(url))\n", "") to definitionsDoNotCreatePhantomHeadingsOrLooseLists(_:) started.
+◇ Test case passing 1 argument fixture → ("[x]: (unbalanced\n", "<p>[x]: (unbalanced</p>\n") to definitionsDoNotCreatePhantomHeadingsOrLooseLists(_:) started.
+✔ Test wrappingListsPreservesTightnessAndContainerBoundaries(_:) with 9 test cases passed after 0.077 seconds.
+✔ Test handBuiltCustomLeavesCanUseRawSourceWithoutFallbackMetadata() passed after 0.077 seconds.
+◇ Test case passing 1 argument fixture → ("<script>\n\ncode\n</STYLE>\nafter\n", SetzerSyntax.HTMLBlockKind.rawText) to recognisesAllSevenHTMLBlockClasses(_:) started.
+◇ Test case passing 1 argument fixture → ("<!-- note\n\nend -->\nafter\n", SetzerSyntax.HTMLBlockKind.comment) to recognisesAllSevenHTMLBlockClasses(_:) started.
+◇ Test case passing 1 argument fixture → ("<?pi\nend ?>\nafter\n", SetzerSyntax.HTMLBlockKind.processingInstruction) to recognisesAllSevenHTMLBlockClasses(_:) started.
+◇ Test case passing 1 argument fixture → ("<!DOCTYPE\nhtml>\nafter\n", SetzerSyntax.HTMLBlockKind.declaration) to recognisesAllSevenHTMLBlockClasses(_:) started.
+◇ Test case passing 1 argument fixture → ("<![CDATA[\n\ntext\n]]>\nafter\n", SetzerSyntax.HTMLBlockKind.cdata) to recognisesAllSevenHTMLBlockClasses(_:) started.
+✔ Test leadingBOMPreservesBytesAndShiftsOnlySourceOffsets(_:) with 8 test cases passed after 0.078 seconds.
+◇ Test case passing 1 argument fixture → ("<DIV class=oops\ntext\n\nafter\n", SetzerSyntax.HTMLBlockKind.blockTag) to recognisesAllSevenHTMLBlockClasses(_:) started.
+◇ Test case passing 1 argument fixture → ("<custom a=\'>\' bool other=x>\ntext\n\nafter\n", SetzerSyntax.HTMLBlockKind.completeTag) to recognisesAllSevenHTMLBlockClasses(_:) started.
+✔ Test onlyOneBOMAtByteZeroIsIgnored() passed after 0.078 seconds.
+✔ Test wrappersComposeAcrossBuiltInContainers() passed after 0.078 seconds.
+✔ Test customLeafFallbackUsesProjectedLinesNotSemanticSegments(_:) with 8 test cases passed after 0.078 seconds.
+✔ Test codeRawHTMLCommentsAndWhitespaceStayExact() passed after 0.078 seconds.
+✔ Test fallbackMetadataIsValidatedAndBuilderSnapshotsRemainIndependent() passed after 0.078 seconds.
+✔ Test builderRejectsUnknownParents() passed after 0.078 seconds.
+✔ Test everyDocumentHasARootCoveringTheSource() passed after 0.078 seconds.
+✔ Test onlyGeneratedVoidTagSlashesAreNormalized() passed after 0.078 seconds.
+◇ Test case passing 1 argument seedIndex → 0 to mutatedDocumentsRetainTreePositionsFindingsAndGroupedOutput(seedIndex:) started.
+✔ Test mathCodeFencesReuseCoreGrammarAndNormalization() passed after 0.079 seconds.
+◇ Test case passing 1 argument seedIndex → 1 to mutatedDocumentsRetainTreePositionsFindingsAndGroupedOutput(seedIndex:) started.
+✔ Test documentedTreesAreExecutableContracts() passed after 0.079 seconds.
+◇ Test case passing 1 argument seedIndex → 2 to mutatedDocumentsRetainTreePositionsFindingsAndGroupedOutput(seedIndex:) started.
+✔ Test builderPreservesSourceSegmentsAndSiblingOrder() passed after 0.083 seconds.
+◇ Test case passing 1 argument seedIndex → 3 to mutatedDocumentsRetainTreePositionsFindingsAndGroupedOutput(seedIndex:) started.
+◇ Test case passing 1 argument seedIndex → 4 to mutatedDocumentsRetainTreePositionsFindingsAndGroupedOutput(seedIndex:) started.
+✔ Test customFallbackEscapesInvalidSourceAndHooksCanReplaceIt() passed after 0.106 seconds.
+◇ Test case passing 1 argument seedIndex → 5 to mutatedDocumentsRetainTreePositionsFindingsAndGroupedOutput(seedIndex:) started.
+✔ Test rejectsRangesOutsideParentsAndOverlappingSiblings() passed after 0.173 seconds.
+◇ Test case passing 1 argument seedIndex → 6 to mutatedDocumentsRetainTreePositionsFindingsAndGroupedOutput(seedIndex:) started.
+◇ Test case passing 1 argument seedIndex → 7 to mutatedDocumentsRetainTreePositionsFindingsAndGroupedOutput(seedIndex:) started.
+✔ Test multilineDisplayKeepsOpaqueTeXAndExactProjectedCRLFSegments() passed after 0.398 seconds.
+✔ Test deeplyNestedCustomTreesValidateAndRenderIteratively() passed after 0.398 seconds.
+✔ Test fencedMathUsesDecodedLanguageAndLeavesOtherCodeLanguagesAlone() passed after 0.398 seconds.
+✔ Test rejectsInvalidTopologyWithoutTraversingForever() passed after 0.398 seconds.
+✔ Test looseInnerListDoesNotLoosenItsParent() passed after 0.398 seconds.
+✔ Test displayCannotConsumeAcrossEnclosingContainerBoundaries() passed after 0.399 seconds.
+✔ Test partialTabsRetainOriginalProvenance() passed after 0.399 seconds.
+✔ Test nestedRangesExcludeAncestorPrefixesAndPreserveCRLFAndUnicode() passed after 0.398 seconds.
+✔ Test displaySupportsEmptyBodiesLineEndingsAndClosingAtEOF() passed after 0.399 seconds.
+✔ Test annotationsOffPreserveAllFormatsAndExactOwnerRanges() passed after 0.399 seconds.
+✔ Test typedViewRejectsOtherNodesBadIndicesAndMalformedPayloads() passed after 0.399 seconds.
+✔ Test parserBoundsNestingAndRetainsOverflowSyntax() passed after 0.399 seconds.
+✔ Test controllerReuseKeepsCodeAndDelimiterStateLocalToEachLeaf() passed after 0.399 seconds.
+✔ Test codeHTMLDestinationsTitlesAndReferenceDefinitionsRemainProtected() passed after 0.399 seconds.
+✔ Test validatesListPayloadsAndItemParents() passed after 0.399 seconds.
+✔ Test containerContinuationAndListRendering(_:) with 22 test cases passed after 0.399 seconds.
+✔ Test rejectsInvalidContentModelsAndPayloads() passed after 0.399 seconds.
+✔ Test escapesEntitiesAndCodeAreDecodedOnlyInTheirOwnContexts() passed after 0.399 seconds.
+✔ Test BOMInvalidUTF8NULAndUnicodeKeepOriginalBytesInEveryFormat() passed after 0.399 seconds.
+✔ Test mathGFMFrontMatterAndFootnotesComposeWithoutInterpretingOpaqueBodies() passed after 0.399 seconds.
+✔ Test fenceTokensRetainOriginalSpellingAndEmptyInfo() passed after 0.399 seconds.
+✔ Test modesAreIndependentlyDisabledAndStrictProfilesRemainUnselected() passed after 0.399 seconds.
+✔ Test linksKeepProtectedDestinationsAndPreciseEmptyComponents() passed after 0.399 seconds.
+✔ Test displayIndentationAndPartialTabsKeepSemanticAndRawFormsDistinct() passed after 0.399 seconds.
+✔ Test inlineTeXIsOpaqueAndPreservesOriginalSpelling() passed after 0.399 seconds.
+✔ Test multilineRuleCannotConsumePastAContainerBoundary() passed after 0.399 seconds.
+✔ Test emptyAndUnclosedMathCodeFencesFollowCoreEOFPolicy() passed after 0.399 seconds.
+✔ Test safeRenderingChecksDecodedURLsAndDoesNotTrustRawHTMLPermission() passed after 0.399 seconds.
+✔ Test escapedDollarsAndBackslashParityAreRespected() passed after 0.399 seconds.
+✔ Test legalLiteralFallbacksDoNotProduceDocumentErrors() passed after 0.399 seconds.
+✔ Test rendererHooksChoosePresentationAndDefaultFallbackEscapesSource() passed after 0.399 seconds.
+✔ Test unmatchedAndWrongWidthDisplayFencesFallBackNormally() passed after 0.399 seconds.
+✔ Test foldingUsesDetailsAndTitleOnlyCalloutsStayValid() passed after 0.399 seconds.
+✔ Test deepEmphasisTokensKeepExactOwnerOrderAcrossLeaves() passed after 0.399 seconds.
+✔ Test referencesUseUnicodeFoldingSourceSpellingAndFirstDefinition() passed after 0.399 seconds.
+✔ Test dollarsInProtectedCodeDoNotStealSubsequentPairs() passed after 0.399 seconds.
+✔ Test UnicodeWhitespaceMatchesTheSpecificationClass() passed after 0.399 seconds.
+✔ Test hooksCanWrapChildrenWithoutIntroducingParserDependencies() passed after 0.399 seconds.
+✔ Test prioritiesThenProfileOrderDetermineRuleSelection() passed after 0.399 seconds.
+✔ Test inlineMathKeepsEmphasisAndLinkLabelContext() passed after 0.399 seconds.
+✔ Test profileOptionsReachRulesAndRendererHooksAreSeparate() passed after 0.399 seconds.
+✔ Test oneLineDisplayBlocksPreserveWhitespaceAndResumeBody() passed after 0.399 seconds.
+✔ Test invalidPayloadsAndSegmentsAreRejectedBeforeDocumentConstruction() passed after 0.399 seconds.
+✔ Test alertHeadersRequireExactUppercaseTypeOnTheFirstPhysicalQuoteLine() passed after 0.399 seconds.
+✔ Test whitespaceAndCurrencyDoNotAccidentallyBecomeInlineMath() passed after 0.399 seconds.
+✔ Test analysisAndOutlineKeepTheirOpaqueCustomContentPolicy() passed after 0.399 seconds.
+✔ Test alertBodyKeepsMultipleBlocksAndNestedContainers() passed after 0.399 seconds.
+✔ Test NULReplacementAppliesToReferenceLabelsAndURLSyntax() passed after 0.399 seconds.
+✔ Test bodySeparatorsAndTablesCannotConsumeTheHeaderAsSetextOrHeaderCells() passed after 0.399 seconds.
+✔ Test rulesOnlyRunWhenSelectedAndStayOutOfCodeBlocks() passed after 0.399 seconds.
+✔ Test sourceRangesPreserveEmojiPrefixesCRLFAndOriginalDelimiters() passed after 0.399 seconds.
+✔ Test autolinksDeactivateOuterLinksAndDeclarationsFollow0312() passed after 0.399 seconds.
+✔ Test malformedCalloutMarkersRemainOrdinaryQuotes() passed after 0.399 seconds.
+✔ Test plainParagraphRepairKeepsOriginalByteCoordinates() passed after 0.399 seconds.
+✔ Test safeURLAllowlistAndEscapedDocumentContent() passed after 0.399 seconds.
+✔ Test invalidConsumptionFallsBackWithoutLosingSource(_:) with 3 test cases passed after 0.399 seconds.
+✔ Test generatedCalloutTitlesAliasesAndUnknownTypesArePortable() passed after 0.399 seconds.
+✔ Test allM5FeaturesComposeIncludingMathAndFootnoteCallsInTheTitle() passed after 0.399 seconds.
+✔ Test anchorsAreUniqueEscapedAndAvailableToTrustedHooks() passed after 0.399 seconds.
+✔ Test BOMAllLineEndingsMalformedBytesAndNULRetainOriginalSource() passed after 0.399 seconds.
+✔ Test exactHeaderAndQuoteTokensSurviveCRLFUnicodeAndTreeReindexing() passed after 0.399 seconds.
+✔ Test labelMatchingDoesNotApplyCanonicalNormalizationOrUnicodeSpaceCollapse() passed after 0.399 seconds.
+✔ Test overlappingSelectionUsesRulePrecedenceAndDefaultProfileOrder() passed after 0.399 seconds.
+✔ Test titleHTMLAndURLsStayUnderTheBaseRenderersSafetyPolicy() passed after 0.399 seconds.
+✔ Test ruleDisablingAndUnselectedImplementationsPreserveCoreBehavior() passed after 0.399 seconds.
+✔ Test allFiveAlertTypesRetainBodyMarkdownAndGenerateTitles() passed after 0.399 seconds.
+✔ Test unavailableAndDuplicateRegistrationsAreVisible() passed after 0.399 seconds.
+✔ Test outlineIncludesBodyHeadingsWhileNativeAnalysisKeepsCustomBodiesOpaque() passed after 0.399 seconds.
+✔ Test allowedURLSchemesAreExplicitAndValidated() passed after 0.399 seconds.
+✔ Test sourceAnchorsLocalizedTitlesAndExistingHooksArePreserved() passed after 0.399 seconds.
+✔ Test multilineRulesSeeProjectedLinesInsideContainers() passed after 0.399 seconds.
+✔ Test metadataCodeAndOrdinaryQuotesDoNotInventAdmonitions() passed after 0.399 seconds.
+✔ Test headerIndentationAndPartialTabPrefixesStayInsideQuotes() passed after 0.399 seconds.
+✔ Test emptyListMarkerWhitespaceNeverBecomesADestructiveFix() passed after 0.399 seconds.
+✔ Test emptyAlertsAndBlankSeparatedBodiesHaveNoPhantomParagraph() passed after 0.399 seconds.
+✔ Test customTitlesAreParsedAsInlineMarkdownWithoutJoiningTheBody() passed after 0.399 seconds.
+✔ Test annotationModesHaveIdenticalTreesViewsAndHTML() passed after 0.399 seconds.
+✔ Test invalidConfigurationIsNotADocumentFinding() passed after 0.399 seconds.
+✔ Test disabledRulesAndDepthFallbackDoNotInventMarkers() passed after 0.399 seconds.
+✔ Test nestedCalloutsKeepNormalListQuoteSemantics() passed after 0.399 seconds.
+✔ Test typedViewsRejectWrongIndicesKindsAndPayloads() passed after 0.399 seconds.
+✔ Test scopesExcludeCodeHTMLAndUnknownExtensionsAndKeepHardBreaks() passed after 0.399 seconds.
+✔ Test taskCheckboxesAndListMarkersAreSeparateTokensOfTheSameItem() passed after 0.399 seconds.
+✔ Test manyCalloutsAndNestedContainersRemainFinite() passed after 0.399 seconds.
+✔ Test explicitRulesDeterministicConfigurationAndRelatedHeadings() passed after 0.399 seconds.
+✔ Test longRunsAndManyFailedOpenersRemainBounded() passed after 0.399 seconds.
+✔ Test aNewPassCannotHideARegression() passed after 0.399 seconds.
+✔ Test quoteProvenanceSurvivesATransformIntoACustomContainer() passed after 0.399 seconds.
+✔ Test referenceDefinitionSectionsHaveTheRequiredBlockShapes() passed after 0.399 seconds.
+✔ Test manySmallInlineLeavesRetainTreeAndTokens() passed after 0.400 seconds.
+✔ Test manyUnmatchedCandidatesAndLongDollarRunsRetainInput() passed after 0.399 seconds.
+✔ Test commonMarkExamplesNeverRegress() passed after 0.399 seconds.
+✔ Test nestedMarkersKeepBOMUnicodeCRLFAndUTF16Offsets() passed after 0.399 seconds.
+✔ Test quotesOwnOnlyTheirExplicitPrefixesIncludingBlankLines() passed after 0.399 seconds.
+✔ Test longBracketLeavesRetainLiteralNodesAndLeafBoundaries() passed after 0.400 seconds.
+✔ Test multilineExtensionsCaptureOnlyConsumedParentPrefixes() passed after 0.399 seconds.
+✔ Test partialTabsNeverBecomePartOfAMarker() passed after 0.399 seconds.
+✔ Test outlineAndCaretAffinityUseOriginalNodes() passed after 0.399 seconds.
+✔ Test listItemsOwnOriginalBulletOrOrderedSpellingWithoutPadding() passed after 0.399 seconds.
+✔ Test projectedExtensionChildrenRetainOriginalRangesAndRemappedOwners() passed after 0.399 seconds.
+✔ Test lineQueriesAndASCIIRunsAcrossCheckpoints() passed after 0.399 seconds.
+✔ Test maximalInvalidSubpartsAndCheckpoints() passed after 0.399 seconds.
+✔ Test literalCodeEscapesThematicBreaksAndSetextLinesDoNotProduceMarkers() passed after 0.399 seconds.
+✔ Test prefixHeavyInputsKeepValidTopologyAndOriginalBytes() passed after 0.400 seconds.
+✔ Test originalUnicodeAndCRLFRoundTrips() passed after 0.399 seconds.
+✔ Test recursiveExtensionsAreBoundedAndRetainOverflowSource() passed after 0.399 seconds.
+✔ Test gfmExamplesNeverRegress() passed after 0.400 seconds.
+✔ Test gfmCorpusIncludesTaskListsAndTagFiltering() passed after 0.400 seconds.
+✔ Test parsedChildrenRetainSnapshotOffsetsAndEnclosingBoundaries(_:) with 3 test cases passed after 0.400 seconds.
+✔ Test progressiveOutputPreservesBothCompleteCorpora() passed after 0.400 seconds.
+✔ Test blockPrecedenceAndHeadingDelimiters(_:) with 12 test cases passed after 0.400 seconds.
+✔ Test treeIndexMatchesLinksForAnyNodeOrder() passed after 0.400 seconds.
+✔ Test renderingPolicyStaysWithTheCallerAndFallbackRemainsEscaped() passed after 0.400 seconds.
+✔ Test foreignRuleHandlesAreNotEligibleAndPrecedenceIsExplicit() passed after 0.400 seconds.
+✔ Test danglingOrMismatchedFencesFallBackWithoutSwallowingTheDocument() passed after 0.400 seconds.
+✔ Test onlyOneFrontMatterBlockIsRecognised() passed after 0.400 seconds.
+✔ Test nestedTokensKeepOrderAndEmptyCRLFPositionsAcrossLeaves() passed after 0.400 seconds.
+✔ Test invalidChildOrderTokensAndDiagnosticsFallBackAtomically() passed after 0.400 seconds.
+✔ Test completeChildMatchesAreBoundedAndPostInlineTransformsSeeResolvedNodes() passed after 0.400 seconds.
+✔ Test onlyTheOriginalFirstPhysicalLineCanStartFrontMatter() passed after 0.400 seconds.
+✔ Test basicReferenceDefinitionsAreCollectedAndDoNotRender() passed after 0.400 seconds.
+✔ Test invalidUTF8AndNULKeepOriginalSourceOffsets() passed after 0.400 seconds.
+✔ Test firstReferenceUsesSourceOrderAfterAValidStorageReordering() passed after 0.400 seconds.
+✔ Test headingsAndParagraphsHaveExactOriginalByteRanges() passed after 0.400 seconds.
+✔ Test unselectedMathPreservesEverySpecification() passed after 0.400 seconds.
+✔ Test formatsAreIndependentlyDisabledUsingExistingRuleControls() passed after 0.400 seconds.
+✔ Test largeDanglingOpenerRetainsTheEntireDocument() passed after 0.400 seconds.
+✔ Test headingArgumentsDescribeTheActualPermittedLevel() passed after 0.400 seconds.
+✔ Test invalidInlineMatchesAreRejectedBeforeAnyMutation() passed after 0.400 seconds.
+✔ Test sourceHTMLIsEscapedAndBlockAnchorsAreExplicit() passed after 0.400 seconds.
+✔ Test trailingASCIIWhitespaceAndAllLineEndingsAreRetained() passed after 0.400 seconds.
+✔ Test selectionIsExplicitAndStrictProfilesDoNotChange() passed after 0.400 seconds.
+✔ Test customDelimitersShareTheCoreControllerAndRespectProtectedSyntax() passed after 0.400 seconds.
+✔ Test typedViewRejectsWrongIndicesAndMalformedPayloads() passed after 0.400 seconds.
+✔ Test codeBlocksPreserveLiteralTextAndNormaliseLineEndings(_:) with 7 test cases passed after 0.400 seconds.
+✔ Test unknownKeysAndInvalidHeadingArgumentsNeverInventText() passed after 0.400 seconds.
+✔ Test BOMUnicodeCRLFInvalidUTF8AndNULPreserveOriginalBytes() passed after 0.400 seconds.
+✔ Test languageSelectionIsExplicitAndUnsupportedLanguagesKeepTheFallback() passed after 0.400 seconds.
+✔ Test nativeFindingsAndFixTitlesHaveEnglishAndGermanText() passed after 0.400 seconds.
+✔ Test projectedChildParsersCannotRestartDocumentStartRecognition() passed after 0.400 seconds.
+✔ Test validHeadingArgumentsAllowAdditionalConsumerMetadata() passed after 0.400 seconds.
+✔ Test unselectedFrontMatterImplementationPreservesEverySpecification() passed after 0.401 seconds.
+✔ Test callbackProjectionsRetainOriginalCRLFAndContainerOffsets() passed after 0.400 seconds.
+✔ Test gfmBodyStillHasTablesTasksAndInlineSyntax() passed after 0.401 seconds.
+✔ Test emptyProjectedPositionsAfterCRLFStayAfterTheWholeEnding() passed after 0.400 seconds.
+✔ Test retainedHandlesFromPreviousParsesCannotCloseNewDelimiters() passed after 0.400 seconds.
+✔ Test preInlineTokensSurviveTextReplacement() passed after 0.401 seconds.
+✔ Test fencesAreExactlyThreeMarkersAtColumnZero() passed after 0.401 seconds.
+✔ Test reportsValidateAndOrderFindingsWithinTheirSnapshot() passed after 0.401 seconds.
+✔ Test annotationModePreservesMetadataAndBody() passed after 0.401 seconds.
+✔ Test yamlAndTomlKeepRawTextAndResumeNormalMarkdown() passed after 0.401 seconds.
+✔ Test emptyMetadataKeepsAnInsertionRangeWithoutChildren() passed after 0.401 seconds.
+✔ Test syntaxDetailsKeepExactContainerAndCRLFOffsets() passed after 0.401 seconds.
+✔ Test codeBlockSegmentsExcludeFencesAndRemovedIndentation() passed after 0.401 seconds.
+✔ Test metadataIsOpaqueToInlinesReferencesOutlineAndNativeAnalysis() passed after 0.401 seconds.
+✔ Test fixesKeepOriginalBytesAndRejectStaleOrAmbiguousEdits() passed after 0.401 seconds.
+✔ Test labelLengthAndWhitespaceRulesAreEnforced() passed after 0.401 seconds.
+✔ Test metadataValidationRejectsRangesOutsideDefinition() passed after 0.401 seconds.
+✔ Test multilineDefinitionsAndOptionalTitleFallback() passed after 0.401 seconds.
+✔ Test locationsKeepZeroLengthRelatedAndPhysicalLineSemantics() passed after 0.401 seconds.
+✔ Test unselectedAdmonitionsAndComposedRendererPreserveEverySpecification() passed after 0.402 seconds.
+✔ Test unselectedFootnotesPreserveEverySpecificationAndRenderer() passed after 0.402 seconds.
+✔ Test definitionsDoNotCreatePhantomHeadingsOrLooseLists(_:) with 9 test cases passed after 0.401 seconds.
+✔ Test replacementDecodingDoesNotShiftReferenceDetails() passed after 0.401 seconds.
+✔ Test declinedLongCustomRunsKeepProgressWithoutRescanningTheSuffix() passed after 0.401 seconds.
+✔ Test allM5CompositionsReuseContextAcrossGroupsAndPreserveCustomHookFallbacks() passed after 0.401 seconds.
+✔ Test nonRenderingDefinitionsDoNotDelayTheFirstUsefulGroup() passed after 0.401 seconds.
+✔ Test snapshotIndexAndContextPreserveTightListSemantics() passed after 0.401 seconds.
+✔ Test disabledRulesAlsoStopInterruptingParagraphsAndReferences() passed after 0.401 seconds.
+✔ Test protectedCodeEscapesHTMLLinksAndImagesDoNotBecomeCalls() passed after 0.401 seconds.
+✔ Test tokensAndFallbackHaveExplicitSnapshotLifetimes() passed after 0.401 seconds.
+✔ Test completeBlocksRetainForwardLinksListsTablesAndSourceAnchors() passed after 0.401 seconds.
+✔ Test firstGroupDoesNotEvaluateLaterHooksAndConsumptionCanStop() passed after 0.401 seconds.
+✔ Test forwardAndBackwardReferencesRenderAtTheEndWithoutMovingSourceNodes() passed after 0.401 seconds.
+✔ Test foreignOutputsAndDuplicateRuleIdentitiesAreRejected() passed after 0.401 seconds.
+✔ Test maximumLengthUnicodeLabelsRemainBoundedAndAddressable() passed after 0.401 seconds.
+✔ Test sourceBudgetKeepsOversizedBlocksIntactAndDoesNotSplitUTF8() passed after 0.401 seconds.
+✔ Test footnoteAppendixHooksStayDeferredWhenBodyConsumptionStops() passed after 0.401 seconds.
+✔ Test unknownHooksAndDocumentWrappersUseExplicitWholeDocumentFallbacks() passed after 0.401 seconds.
+✔ Test reorderedPlainParagraphStorageStillBecomesCanonical() passed after 0.401 seconds.
+✔ Test footnotesUseGlobalNumberingAndALazySingleAppendix() passed after 0.402 seconds.
+✔ Test explicitPrecedenceAppliesWithinTheOpeningPhase() passed after 0.402 seconds.
+✔ Test optInAndRuleDisablingAreIndependent() passed after 0.402 seconds.
+✔ Test cancellationAfterAnOpeningTagDoesNotDeliverAPartialGroupOrRunLaterHooks() passed after 0.402 seconds.
+✔ Test emptyBodiesAndTabsAndIndentationUseCoreProjection() passed after 0.402 seconds.
+✔ Test optionDefaultsValidationNamespaceAndDisabledCustomRules() passed after 0.402 seconds.
+✔ Test bodyAndCitedNoteGraphOrderIsFiniteEvenWithCycles() passed after 0.402 seconds.
+✔ Test rawHTMLCrossBlockWrappersAndUnsafeURLsKeepTheExistingPolicy() passed after 0.402 seconds.
+✔ Test rejectedOrThrowingTransformsKeepThePreviousSnapshot() passed after 0.402 seconds.
+✔ Test emptyDocumentsAndInvalidRequestsHaveDefinedResults() passed after 0.402 seconds.
+✔ Test bracketsRemainProtectedUnlessExplicitlyEnabledAndConsumedContextsStayProtected() passed after 0.402 seconds.
+✔ Test BOMLineEndingsInvalidUTF8AndNULKeepTheOriginalSnapshot() passed after 0.402 seconds.
+✔ Test alertsTransformBeforeInlinesWithoutLosingQuoteListContext() passed after 0.402 seconds.
+✔ Test missingAndMalformedLabelsRetainOrdinaryMarkdown() passed after 0.402 seconds.
+✔ Test cancellationBeforeTheFirstEventDoesNotDeliverOutputAndLeavesThePlanReusable() passed after 0.402 seconds.
+✔ Test renderingPreservesURLSafetyHooksAnchorsAndEscapesGeneratedAttributes() passed after 0.402 seconds.
+✔ Test plainParagraphsStillPrepareRegisteredInlineRules() passed after 0.402 seconds.
+✔ Test escapedBracketsCanBePartOfAnOpaqueLabel() passed after 0.402 seconds.
+✔ Test factoryPreparesEachSnapshotOnceAndDoesNotLeakStateBetweenParses() passed after 0.402 seconds.
+✔ Test unusedDefinitionsAreHiddenAndDefaultRenderingRemainsCallerPolicy() passed after 0.402 seconds.
+✔ Test rebuiltTreesMayRemapForeignOwnersButCannotForgeSpellingOrDuplicateTokens() passed after 0.402 seconds.
+✔ Test firstCallOrderRepeatedCallsAndFirstDefinitionWins() passed after 0.402 seconds.
+✔ Test gfmTablesTasksAndAutolinksWorkInsideAndOutsideNotes() passed after 0.402 seconds.
+✔ Test bracketRulesCannotOpenDelimiterHandlesOrPartiallyMutateTheTree() passed after 0.402 seconds.
+✔ Test annotationsOffPreserveSemanticsAndNumbering() passed after 0.402 seconds.
+✔ Test noteHeadingsParticipateInOutlineWhileNativeAnalysisKeepsCustomContentOpaque() passed after 0.402 seconds.
+✔ Test explicitContinuationStopsBeforeAnUnindentedBodyLine() passed after 0.402 seconds.
+✔ Test quotedAndListDefinitionsKeepExactCRLFMarkerRangesAndOwners() passed after 0.402 seconds.
+✔ Test frontMatterAndFootnotesComposeWithoutInterpretingMetadata() passed after 0.402 seconds.
+✔ Test commentsAreSuppressedOnlyInHTMLContext() passed after 0.402 seconds.
+✔ Test unicodeFullCaseFoldingDoesNotCanonicallyNormalizeOrDecodeLabels() passed after 0.402 seconds.
+✔ Test rawHTMLAndCommentPermissionAreSeparate() passed after 0.402 seconds.
+✔ Test recognisesAllSevenHTMLBlockClasses(_:) with 7 test cases passed after 0.402 seconds.
+✔ Test multilineDefinitionsParseParagraphsListsQuotesAndCode() passed after 0.403 seconds.
+✔ Test HTMLStopsAtContainerBoundaryAndRetainsOriginalRanges() passed after 0.402 seconds.
+✔ Test typeSevenCannotInterruptParagraphsAndSpecialTagNamesAreExact() passed after 0.402 seconds.
+✔ Test strikethroughPairsEqualRuns() passed after 0.402 seconds.
+✔ Test tableStructureIsValidated() passed after 0.402 seconds.
+✔ Test unmutatedExtendedSeedsActuallyExerciseEverySelectedExtension() passed after 0.402 seconds.
+✔ Test autolinksKeepSourceSpelling() passed after 0.402 seconds.
+✔ Test manyCallsAndNestedDefinitionsRespectResourceLimits() passed after 0.403 seconds.
+✔ Test tableSyntaxTokensAndPreamble() passed after 0.402 seconds.
+✔ Test deepQuotesKeepTheDeclaredFallbackWithEveryProfile() passed after 0.402 seconds.
+✔ Test syntaxCollectionPreservesEverySpecificationTreeAndHTML() passed after 0.404 seconds.
+✔ Test everyFeatureSwitchesIndependently() passed after 0.402 seconds.
+✔ Test arbitraryBytesAndLongDelimiterRunsRemainUsable() passed after 0.404 seconds.
+✔ Test annotationModePreservesArbitraryByteTreesAndDiagnostics() passed after 0.404 seconds.
+✔ Test arbitraryBytesAgreeWithStandardLibraryReplacementDecoding() passed after 0.404 seconds.
+✔ Test profileSelectsBuiltinsWithoutImplementations() passed after 0.402 seconds.
+✔ Test lazyHeaderLinesKeepTheirIndentation() passed after 0.402 seconds.
+✔ Test tableCellsMapToOriginalBytes() passed after 0.402 seconds.
+✔ Test taskListItemsFollowTheMarkerLine() passed after 0.402 seconds.
+✔ Suite HTMLNormalizationTests passed after 0.406 seconds.
+✔ Suite SyntaxTreeTests passed after 0.406 seconds.
+✔ Suite DocumentTests passed after 0.406 seconds.
+✔ Suite M1CombinationTests passed after 0.406 seconds.
+✔ Suite MathTests passed after 0.406 seconds.
+✔ Suite ContainerTests passed after 0.406 seconds.
+✔ Suite InlineTests passed after 0.406 seconds.
+✔ Suite AdmonitionTests passed after 0.406 seconds.
+✔ Suite ExtensionTests passed after 0.406 seconds.
+✔ Suite HTMLSecurityTests passed after 0.406 seconds.
+✔ Suite NativeAnalysisTests passed after 0.406 seconds.
+✔ Suite SpecTests passed after 0.406 seconds.
+✔ Suite ContainerMarkerTests passed after 0.406 seconds.
+✔ Suite SourceIndexTests passed after 0.406 seconds.
+✔ Suite ContainerExtensionTests passed after 0.406 seconds.
+✔ Suite FrontMatterTests passed after 0.406 seconds.
+✔ Suite InlineExtensionTests passed after 0.407 seconds.
+✔ Suite DiagnosticTests passed after 0.407 seconds.
+✔ Suite NativeAnalysisMessagesTests passed after 0.407 seconds.
+✔ Suite ReferenceDefinitionTests passed after 0.407 seconds.
+✔ Suite RegistryTests passed after 0.407 seconds.
+✔ Test independentPlanCanBeConsumedConcurrently() passed after 0.405 seconds.
+✔ Test cancellingTheConsumingTaskPreventsRenderingTheNextGroup() passed after 0.404 seconds.
+✔ Suite TransformTests passed after 0.407 seconds.
+✔ Suite PreparedInlineTests passed after 0.407 seconds.
+✔ Suite FootnoteTests passed after 0.407 seconds.
+✔ Test parserCanBeSharedAcrossConcurrentSnapshots() passed after 0.405 seconds.
+✔ Suite HTMLBlockTests passed after 0.407 seconds.
+✔ Suite GFMTests passed after 0.407 seconds.
+✔ Suite LeafBlockTests passed after 0.407 seconds.
+✔ Suite ProgressiveHTMLTests passed after 0.407 seconds.
+✔ Test mutatedDocumentsRetainTreePositionsFindingsAndGroupedOutput(seedIndex:) with 8 test cases passed after 0.467 seconds.
+✔ Suite HardeningTests passed after 0.470 seconds.
+✔ Test run with 252 tests in 29 suites passed after 0.471 seconds.

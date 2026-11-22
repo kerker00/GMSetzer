@@ -76,6 +76,14 @@ all indices have been checked. It remains iterative and active in release;
 there is no unchecked parser-only construction path. The M1-B benchmark and
 local budget gate cover the cost of this validated construction.
 
+The M7 inline phase may reuse an already validated immutable block snapshot
+for a single canonical paragraph containing only text/soft breaks and no
+inline triggers, custom inline rules or rendering-policy work. It does not
+bypass initial validation or change physical node order, source segments,
+replacement decoding or rule-factory execution. Other trees follow the normal
+builder path. The [UTF-8 report](Validation/M7/utf8-2026-11-22.md) records
+regressions and exact public-tree/token comparisons for all 1,324 spec examples.
+
 The parser treats a failure of its own builder validation as an implementation
 invariant violation. Extension match results are checked before insertion, so
 malformed returned ranges or consumption counts do not reach that boundary.

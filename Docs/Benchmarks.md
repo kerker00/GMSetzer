@@ -949,3 +949,27 @@ gate output and 45 archived files with hashes. No full 69/72 refresh or new
 Python-suite run is claimed. Malformed-byte processing with a validation-
 enabled C control, current x64/minimum compiler and fresh progressive resource/
 fuzz evidence remain open; M7 is still in progress.
+
+## M7 explicit UTF-8 controls, 22 November 2026
+
+The [UTF-8 report](Validation/M7/utf8-2026-11-22.md) adds a separate 36-case
+target, leaving the historical 69/72 identities untouched. Three original-byte
+corpora distinguish legacy malformed repair, compatible malformed repair and
+valid multibyte text; C validation is explicitly off/on. Compatible repaired
+HTML is checked against C, while Swift retains original-byte coordinates.
+Legacy `c0 af` replacement remains deliberately different. These distinctions
+prevent a raw C validation-off number from being treated as equivalent work.
+
+One runtime file reuses the already validated canonical plain-paragraph tree.
+On M2 at compatible malformed 256 KiB, syntax off, p50 improves **12.812 →
+10.297 ms (19.63%)**, with C validation-on **5.259 → 5.251 ms**. Swift/C time
+is **2.44× → 1.96×**, not parity. Separate stack exports record **52,475,775 →
+24,636,098 gross requested bytes (53.05% less)** and 52,478 → 52,437 requests.
+No peak-RSS claim follows. All 36 paired rows and control drift are retained.
+
+Current Mac correctness is 252 Debug/Release tests, 12 Release tool tests,
+252 AddressSanitizer tests and 8,192 bounded ASan mutation parses. Public
+snapshots for all 1,324 examples remain byte-identical. Bounded mutation is
+not coverage-guided fuzzing; minimum compiler and subsequent full cross-host/
+resource results are tracked separately in the report. Existing budgets and
+dependency pins remain unchanged. M7 is not accepted by this focused result.

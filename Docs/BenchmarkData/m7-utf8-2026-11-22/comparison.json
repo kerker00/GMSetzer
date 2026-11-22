@@ -1,0 +1,218 @@
+[
+  {
+    "name": "GMSetzer invalid-compatible-v1 parse syntax-off 16 KiB (bytes: 16385, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)",
+    "before_ms": 0.789,
+    "after_ms": 0.658,
+    "delta_percent": -16.60329531051965
+  },
+  {
+    "name": "GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)",
+    "before_ms": 12.812,
+    "after_ms": 10.297,
+    "delta_percent": -19.630034342803615
+  },
+  {
+    "name": "GMSetzer invalid-compatible-v1 parse syntax-off 64 KiB (bytes: 65545, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)",
+    "before_ms": 3.203,
+    "after_ms": 2.585,
+    "delta_percent": -19.294411489228846
+  },
+  {
+    "name": "GMSetzer invalid-compatible-v1 parse syntax-on 16 KiB (bytes: 16385, corpus: invalid-compatible-v1, profile: commonmark, syntax: on, validation: swift-repair)",
+    "before_ms": 0.791,
+    "after_ms": 0.656,
+    "delta_percent": -17.067003792667514
+  },
+  {
+    "name": "GMSetzer invalid-compatible-v1 parse syntax-on 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: on, validation: swift-repair)",
+    "before_ms": 12.755,
+    "after_ms": 10.158,
+    "delta_percent": -20.360642885143086
+  },
+  {
+    "name": "GMSetzer invalid-compatible-v1 parse syntax-on 64 KiB (bytes: 65545, corpus: invalid-compatible-v1, profile: commonmark, syntax: on, validation: swift-repair)",
+    "before_ms": 3.234,
+    "after_ms": 2.617,
+    "delta_percent": -19.078540507111942
+  },
+  {
+    "name": "GMSetzer invalid-utf8-v1 parse syntax-off 16 KiB (bytes: 16388, corpus: invalid-utf8-v1, profile: commonmark, syntax: off, validation: swift-repair)",
+    "before_ms": 0.769,
+    "after_ms": 0.633,
+    "delta_percent": -17.6853055916775
+  },
+  {
+    "name": "GMSetzer invalid-utf8-v1 parse syntax-off 256 KiB (bytes: 262148, corpus: invalid-utf8-v1, profile: commonmark, syntax: off, validation: swift-repair)",
+    "before_ms": 12.394,
+    "after_ms": 10.24,
+    "delta_percent": -17.379377117960303
+  },
+  {
+    "name": "GMSetzer invalid-utf8-v1 parse syntax-off 64 KiB (bytes: 65540, corpus: invalid-utf8-v1, profile: commonmark, syntax: off, validation: swift-repair)",
+    "before_ms": 3.047,
+    "after_ms": 2.576,
+    "delta_percent": -15.457827371184774
+  },
+  {
+    "name": "GMSetzer invalid-utf8-v1 parse syntax-on 16 KiB (bytes: 16388, corpus: invalid-utf8-v1, profile: commonmark, syntax: on, validation: swift-repair)",
+    "before_ms": 0.759,
+    "after_ms": 0.651,
+    "delta_percent": -14.229249011857704
+  },
+  {
+    "name": "GMSetzer invalid-utf8-v1 parse syntax-on 256 KiB (bytes: 262148, corpus: invalid-utf8-v1, profile: commonmark, syntax: on, validation: swift-repair)",
+    "before_ms": 12.05,
+    "after_ms": 10.314,
+    "delta_percent": -14.40663900414938
+  },
+  {
+    "name": "GMSetzer invalid-utf8-v1 parse syntax-on 64 KiB (bytes: 65540, corpus: invalid-utf8-v1, profile: commonmark, syntax: on, validation: swift-repair)",
+    "before_ms": 3.015,
+    "after_ms": 2.771,
+    "delta_percent": -8.092868988391388
+  },
+  {
+    "name": "GMSetzer valid-multibyte-v1 parse syntax-off 16 KiB (bytes: 16385, corpus: valid-multibyte-v1, profile: commonmark, syntax: off, validation: swift-repair)",
+    "before_ms": 0.149,
+    "after_ms": 0.11,
+    "delta_percent": -26.174496644295296
+  },
+  {
+    "name": "GMSetzer valid-multibyte-v1 parse syntax-off 256 KiB (bytes: 262155, corpus: valid-multibyte-v1, profile: commonmark, syntax: off, validation: swift-repair)",
+    "before_ms": 2.329,
+    "after_ms": 1.761,
+    "delta_percent": -24.38814942035209
+  },
+  {
+    "name": "GMSetzer valid-multibyte-v1 parse syntax-off 64 KiB (bytes: 65560, corpus: valid-multibyte-v1, profile: commonmark, syntax: off, validation: swift-repair)",
+    "before_ms": 0.586,
+    "after_ms": 0.426,
+    "delta_percent": -27.303754266211598
+  },
+  {
+    "name": "GMSetzer valid-multibyte-v1 parse syntax-on 16 KiB (bytes: 16385, corpus: valid-multibyte-v1, profile: commonmark, syntax: on, validation: swift-repair)",
+    "before_ms": 0.149,
+    "after_ms": 0.107,
+    "delta_percent": -28.18791946308725
+  },
+  {
+    "name": "GMSetzer valid-multibyte-v1 parse syntax-on 256 KiB (bytes: 262155, corpus: valid-multibyte-v1, profile: commonmark, syntax: on, validation: swift-repair)",
+    "before_ms": 2.32,
+    "after_ms": 1.705,
+    "delta_percent": -26.50862068965516
+  },
+  {
+    "name": "GMSetzer valid-multibyte-v1 parse syntax-on 64 KiB (bytes: 65560, corpus: valid-multibyte-v1, profile: commonmark, syntax: on, validation: swift-repair)",
+    "before_ms": 0.592,
+    "after_ms": 0.425,
+    "delta_percent": -28.209459459459463
+  },
+  {
+    "name": "cmark-gfm (C) invalid-compatible-v1 parse validation-off 16 KiB (bytes: 16385, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: off)",
+    "before_ms": 0.266,
+    "after_ms": 0.271,
+    "delta_percent": 1.8796992481203034
+  },
+  {
+    "name": "cmark-gfm (C) invalid-compatible-v1 parse validation-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: off)",
+    "before_ms": 4.383,
+    "after_ms": 4.53,
+    "delta_percent": 3.3538672142368275
+  },
+  {
+    "name": "cmark-gfm (C) invalid-compatible-v1 parse validation-off 64 KiB (bytes: 65545, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: off)",
+    "before_ms": 1.068,
+    "after_ms": 1.082,
+    "delta_percent": 1.3108614232209659
+  },
+  {
+    "name": "cmark-gfm (C) invalid-compatible-v1 parse validation-on 16 KiB (bytes: 16385, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: on)",
+    "before_ms": 0.308,
+    "after_ms": 0.307,
+    "delta_percent": -0.32467532467532756
+  },
+  {
+    "name": "cmark-gfm (C) invalid-compatible-v1 parse validation-on 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: on)",
+    "before_ms": 5.259,
+    "after_ms": 5.251,
+    "delta_percent": -0.1521201749381973
+  },
+  {
+    "name": "cmark-gfm (C) invalid-compatible-v1 parse validation-on 64 KiB (bytes: 65545, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: on)",
+    "before_ms": 1.232,
+    "after_ms": 1.222,
+    "delta_percent": -0.8116883116883078
+  },
+  {
+    "name": "cmark-gfm (C) invalid-utf8-v1 parse validation-off 16 KiB (bytes: 16388, corpus: invalid-utf8-v1, profile: commonmark, syntax: off, validation: off)",
+    "before_ms": 0.226,
+    "after_ms": 0.237,
+    "delta_percent": 4.867256637168138
+  },
+  {
+    "name": "cmark-gfm (C) invalid-utf8-v1 parse validation-off 256 KiB (bytes: 262148, corpus: invalid-utf8-v1, profile: commonmark, syntax: off, validation: off)",
+    "before_ms": 3.67,
+    "after_ms": 3.926,
+    "delta_percent": 6.975476839237071
+  },
+  {
+    "name": "cmark-gfm (C) invalid-utf8-v1 parse validation-off 64 KiB (bytes: 65540, corpus: invalid-utf8-v1, profile: commonmark, syntax: off, validation: off)",
+    "before_ms": 0.902,
+    "after_ms": 1.046,
+    "delta_percent": 15.964523281596454
+  },
+  {
+    "name": "cmark-gfm (C) invalid-utf8-v1 parse validation-on 16 KiB (bytes: 16388, corpus: invalid-utf8-v1, profile: commonmark, syntax: off, validation: on)",
+    "before_ms": 0.268,
+    "after_ms": 0.29,
+    "delta_percent": 8.208955223880587
+  },
+  {
+    "name": "cmark-gfm (C) invalid-utf8-v1 parse validation-on 256 KiB (bytes: 262148, corpus: invalid-utf8-v1, profile: commonmark, syntax: off, validation: on)",
+    "before_ms": 4.329,
+    "after_ms": 4.87,
+    "delta_percent": 12.497112497112518
+  },
+  {
+    "name": "cmark-gfm (C) invalid-utf8-v1 parse validation-on 64 KiB (bytes: 65540, corpus: invalid-utf8-v1, profile: commonmark, syntax: off, validation: on)",
+    "before_ms": 1.069,
+    "after_ms": 1.104,
+    "delta_percent": 3.2740879326473404
+  },
+  {
+    "name": "cmark-gfm (C) valid-multibyte-v1 parse validation-off 16 KiB (bytes: 16385, corpus: valid-multibyte-v1, profile: commonmark, syntax: off, validation: off)",
+    "before_ms": 0.079,
+    "after_ms": 0.08,
+    "delta_percent": 1.2658227848101333
+  },
+  {
+    "name": "cmark-gfm (C) valid-multibyte-v1 parse validation-off 256 KiB (bytes: 262155, corpus: valid-multibyte-v1, profile: commonmark, syntax: off, validation: off)",
+    "before_ms": 1.269,
+    "after_ms": 1.29,
+    "delta_percent": 1.654846335697413
+  },
+  {
+    "name": "cmark-gfm (C) valid-multibyte-v1 parse validation-off 64 KiB (bytes: 65560, corpus: valid-multibyte-v1, profile: commonmark, syntax: off, validation: off)",
+    "before_ms": 0.315,
+    "after_ms": 0.32,
+    "delta_percent": 1.5873015873015817
+  },
+  {
+    "name": "cmark-gfm (C) valid-multibyte-v1 parse validation-on 16 KiB (bytes: 16385, corpus: valid-multibyte-v1, profile: commonmark, syntax: off, validation: on)",
+    "before_ms": 0.088,
+    "after_ms": 0.087,
+    "delta_percent": -1.1363636363636354
+  },
+  {
+    "name": "cmark-gfm (C) valid-multibyte-v1 parse validation-on 256 KiB (bytes: 262155, corpus: valid-multibyte-v1, profile: commonmark, syntax: off, validation: on)",
+    "before_ms": 1.401,
+    "after_ms": 1.48,
+    "delta_percent": 5.638829407566015
+  },
+  {
+    "name": "cmark-gfm (C) valid-multibyte-v1 parse validation-on 64 KiB (bytes: 65560, corpus: valid-multibyte-v1, profile: commonmark, syntax: off, validation: on)",
+    "before_ms": 0.351,
+    "after_ms": 0.375,
+    "delta_percent": 6.8376068376068355
+  }
+]

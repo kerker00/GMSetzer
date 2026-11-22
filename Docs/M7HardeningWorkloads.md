@@ -148,3 +148,37 @@ library suites pass on macOS/Linux ARM64, all public spec snapshots match and
 targeted C/M2 gates pass. No full 69-case refresh or peak-RSS claim is made.
 The malformed-byte path and explicit validation-enabled C control are next;
 Linux execution of this harness and the minimum compiler remain pending.
+
+## Separate explicit UTF-8 controls
+
+`UTF8Benchmarks` adds 36 identities without altering the 69 cases above or the
+historical 72-case target. `UTF8Workload` retains `invalid-utf8-v1` byte for byte
+and adds `invalid-compatible-v1` and `valid-multibyte-v1`. Each has 16/64/256 KiB
+nominal sizes, Swift syntax off/on and C UTF-8 validation off/on. Actual byte
+counts and validation selection are tagged. Parser construction, parsing and
+destruction are timed, with five-second sampling; registration only generates
+bytes. This target is independent of the hardening driver's fixed case list.
+
+After building/listing the target with the same pinned Tools package, run the
+existing built executables directly (replace paths with the host's Release
+directory and use a fresh output directory):
+
+```sh
+"$BENCHMARK_TOOL" --command run --targets UTF8Benchmarks \
+  --benchmark-executable-paths "$UTF8_BENCHMARKS" \
+  --baseline-storage-path /tmp/gmsetzer-utf8-result \
+  --format markdown --grouping benchmark --time-units microseconds \
+  --no-progress > /tmp/gmsetzer-utf8.md 2> /tmp/gmsetzer-utf8.stderr
+```
+
+The retained measurement helper adds a 300-second process-group timeout,
+requires exactly 36 unique exported identities with all three metrics, and
+checks source/executable hashes before/after. Owner approval for full runs
+still applies. Never run builds or profilers alongside timed work on that host.
+
+Release reference tests verify matching repaired HTML at 512/4,096/16,384 bytes
+for the compatible and valid controls, using C validation-on and an output
+bridge that rejects invalid UTF-8. Legacy `c0 af` repair intentionally differs
+(Swift two replacements, C one). C validation-off is informational; even
+matching HTML leaves different original-byte coordinate services. See the
+[UTF-8 report](Validation/M7/utf8-2026-11-22.md) for paired results and limits.

@@ -1,0 +1,21 @@
+{
+  "compiler": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\n",
+  "actual_release_flags": {
+    "SetzerHTML": [
+      "-whole-module-optimization",
+      "-O"
+    ],
+    "SetzerParser": [
+      "-whole-module-optimization",
+      "-O"
+    ],
+    "SetzerSyntax": [
+      "-whole-module-optimization",
+      "-O"
+    ],
+    "UTF8Benchmarks": [
+      "-whole-module-optimization",
+      "-O"
+    ]
+  }
+}

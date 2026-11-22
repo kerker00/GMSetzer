@@ -1,0 +1,13 @@
+[0/1] Planning build
+Building for production...
+[0/4] Write sources
+[2/4] Write swift-version--58304C5D6DBC2206.txt
+[4/5] Compiling SetzerParser BlockTransform.swift
+[5/7] Compiling SetzerExtensions Admonitions.swift
+[6/8] Compiling GMSetzer AdmonitionHTML.swift
+[7/9] Compiling SetzerParserTests AdmonitionTests.swift
+[8/10] Compiling GMSetzerPackageTests runner.swift
+[8/10] Write Objects.LinkFileList
+[9/10] Linking GMSetzerPackageTests
+Build complete! (46.19s)
+warning: '--build-system native' has been deprecated and will be removed in a future release; please report an issue at https://github.com/swiftlang/swift-package-manager/issues if you are unable to adopt the default build system.

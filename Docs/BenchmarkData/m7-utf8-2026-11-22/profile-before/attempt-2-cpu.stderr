@@ -1,0 +1,3 @@
+Error: Unknown option '--no-progress'
+Usage: benchmark-runner [--quiet <quiet>] [--input-fd <input-fd>] [--output-fd <output-fd>] [--filter <filter> ...] [--skip <skip> ...] [--time-units <time-units>] [--check-absolute] [--all-metrics] [--suppress-metric-warnings] [--allocation-stacks] [--allocation-stack-depth <allocation-stack-depth>] [--allocation-stack-limit <allocation-stack-limit>]
+  See 'benchmark-runner --help' for more information.

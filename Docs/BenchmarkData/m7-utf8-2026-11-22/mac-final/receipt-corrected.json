@@ -1,0 +1,2639 @@
+{
+  "label": "mac-final",
+  "started_utc": "2026-11-22T11:18:17Z",
+  "load_before": [
+    4.56494140625,
+    4.5927734375,
+    4.39453125
+  ],
+  "source_sha256": {
+    "Package.swift": "346f8bb999e3cf632d2ffda5516708f7285a75d1566ced8fa4ff08d04989faf7",
+    "Sources/GMSetzer/AdmonitionHTML.swift": "50abea941c46e550a041f7e08f6e0a79580bfbb2e5923a1450ed2befb345e31e",
+    "Sources/GMSetzer/FootnotesHTMLRenderer.swift": "51b919cb3d336fa3ded30e2ac762e6aae305255d035f41f812be58860bb575f0",
+    "Sources/GMSetzer/GMSetzer.swift": "9a3debebd1be48c9f9484edc39aea9833e8ce827baf6819b2f0eaab5f531f1a2",
+    "Sources/SetzerAnalysis/NativeAnalysisMessages.swift": "967894ab8e1daa9e1b10ca3f88dc009601ee0cf6c8315a08921df399cbc40a8e",
+    "Sources/SetzerAnalysis/NativeAnalyzer.swift": "cddb100432fc0937c0d6894d5e9de4cbcc78b1ec898863d94849b3b16539b4d4",
+    "Sources/SetzerExtensions/Admonitions.swift": "b2e4531264c154a4d70510f2ffc822019230cd25c776118012eb7431deff2eda",
+    "Sources/SetzerExtensions/Extensions.swift": "69f27fe354caba6e8ba124cf3db7dd77fcdfba7d1c27b1c95b41175b5878b873",
+    "Sources/SetzerExtensions/Footnotes.swift": "caea51d8a68be509adc7957ab1eb0a4427c8da5615794c54ec1af85502f1b57e",
+    "Sources/SetzerExtensions/FrontMatter.swift": "b32bd855b58c112b8c8ecc45f72a94da30b9c8f07ddec94cc9cb005c65fc13f2",
+    "Sources/SetzerExtensions/Math.swift": "096bd8c9cbc10edea841761427d3a34995462a6938944e4a739da3849b4dd6ea",
+    "Sources/SetzerHTML/HTMLComments.swift": "1b14a2d9b16a37b92f78128288fb9dd6d4f509f8b48859411be25028afb6a3ba",
+    "Sources/SetzerHTML/HTMLRenderPlan.swift": "6e059730c328cc97e8555b11d4da92134dc3a2f71c041be3aff11337c75512d4",
+    "Sources/SetzerHTML/HTMLRenderer.swift": "0610a0dc7338ff148ef85f714148e8bfb626f8220f0e0d5f6f27411b1e90cc7f",
+    "Sources/SetzerHTML/HTMLURLScheme.swift": "cff30a677f10c94b8c165dfde0ea55170428219dacf388365a6e1f783f413707",
+    "Sources/SetzerParser/BlockTransform.swift": "b66ebb51d2d36b9d9154effd07106e62e4db91e43328ea5230336e2d6f1f2d0a",
+    "Sources/SetzerParser/ContainerParsing.swift": "6f354d47a75a08ae8bb8e3af4b5066bf8363ae7df46dab052596f08691ab8a2c",
+    "Sources/SetzerParser/GFMBlocks.swift": "28d5335109672068d750cb984e92d9540a5b20aebff19092298b3b5e587ad66e",
+    "Sources/SetzerParser/HTMLBlocks.swift": "135fb0544903f76b7bc6810bd02738bc965eee744ad9e23af7074bc8499da848",
+    "Sources/SetzerParser/InlineAutolinks.swift": "c90637fa3bac3ea23f18f9f1136dcf2b2ed7ad541edd78e9f7c0249b0b7eed69",
+    "Sources/SetzerParser/InlineDecoding.swift": "52d8ec69bea0df006154f00106d0bf5bd35135ea0ad2bfa050b7ef139522cce1",
+    "Sources/SetzerParser/InlineExtensions.swift": "38db90e7160946bebe8da5289febca9fde1aa0713f390402e70b52a4a32ef3bc",
+    "Sources/SetzerParser/InlineLinks.swift": "ad2927d6aac1d9234b28a6a624be397d31081dd05a4d5781367959ebf1292187",
+    "Sources/SetzerParser/InlineParser.swift": "3b42bf565d30c4f885fe07b882b87fd5815f4bffef53e59aba3ae7ec06e47fbd",
+    "Sources/SetzerParser/InlinePhase.swift": "5f09cd5af5efb6575677b1a891898a5aa984dc5931efb76827ac0559455645ff",
+    "Sources/SetzerParser/InlineRule.swift": "15759b5b1d0041983dd084775b957cb3470591d1e508b5f19dd1a91a17f98f74",
+    "Sources/SetzerParser/InlineTables.swift": "4efdccb56eb518e631939153541ec4291eb209e4ea5be5a96bfd44a2edb51062",
+    "Sources/SetzerParser/MarkdownParser.swift": "5e9c6a7c1fdb9db8eb3a58d5e760ba6d514525f81983c02e2c3640cdf268fc66",
+    "Sources/SetzerParser/Profile.swift": "67dc50de9dbe4d44fefc38501f8b8ac2b4978f22d589135f91c29f344b0c9ac4",
+    "Sources/SetzerParser/ReferenceDefinitions.swift": "f44d21348b8235cf36b74ed08f2b5e1fabc678d30ca5fc0ec38a9fcac9bfa188",
+    "Sources/SetzerParser/RuleRegistry.swift": "98ea059a468d61505d758b9e24b78139303d84377bbadd2a98158164384e5666",
+    "Sources/SetzerParser/SourceCursor.swift": "bc7b8342bc9738b4c0ac6e45bd13ce23521b99a82a1fd151ed3881efb27d563a",
+    "Sources/SetzerSyntax/ByteSearch.swift": "4fda31cc4d0c18a2e633343d017ef29c590461bc787df4970534394c49e259ab",
+    "Sources/SetzerSyntax/Document.swift": "995458b565cd30258242f40e26da6fb9fa4d13c4caa1803a33485dab531e8d19",
+    "Sources/SetzerSyntax/DocumentDiagnostic.swift": "8e7041b9f7357993a89f191ce1e5bde1ceb532ffe9958d975a2ad657cc528853",
+    "Sources/SetzerSyntax/DocumentIndex.swift": "e25e75fa6536517b763fdcb211efbe59b49a485b629b98a2bdc643f8e76430e1",
+    "Sources/SetzerSyntax/DocumentTraversal.swift": "e15459f20d5598fc7e4696304fa6f38832779b5a777c15034156c5843b40e2b3",
+    "Sources/SetzerSyntax/ExtensionDescriptor.swift": "d7620b9aa850c4cdd5fd65e845069acdcd42f5c15c9a54d0cd52ccf96f0b305d",
+    "Sources/SetzerSyntax/HTMLBlock.swift": "5e1f0febf1ef80e8ec824d79055a8791c75a398ff201597362a1db7d0169586c",
+    "Sources/SetzerSyntax/LibraryIdentity.swift": "4a20726619344ac89cac5b37d603dd33e3a829a6bed59541b1d55eee46cb5b8d",
+    "Sources/SetzerSyntax/SourceIndex.swift": "75c83ad3cd20c653fd52f51517855c81877d151f97a69b395627994d54219850",
+    "Sources/SetzerSyntax/SourceRange.swift": "8c4ff9c38677252c2642da6ff0824b613fdeb4b311b98859388fe92c74902460",
+    "Sources/SetzerSyntax/SyntaxToken.swift": "d2028656d614538e83fff7241cefd6d358a0c520865b9dcf03686438fae321b6",
+    "Tools/Benchmarks/HardeningBenchmarks/HardeningBenchmarks.swift": "f3891a43cca46f0c8fcd4fa95e45332d32aa332116257b7ebc69a8c0f8c6cddd",
+    "Tools/Package.resolved": "b04f6826b9801a9655860ce82f86725f8fc6204915ca0771b7028f76cfcf6002",
+    "Tools/Package.swift": "696e54400a988c212aa02bcc34cb2798e130c8acd598d188704a00ad2789bc93",
+    "Tools/Sources/BenchmarkCorpus/Corpus.swift": "3c3423dac5442d14257c0ea364bad0faf87dbbc83439ff1cf9fdb77452f4a101",
+    "Tools/Sources/BenchmarkCorpus/HardeningWorkload.swift": "cb3d2a26b1f76475c68b2b92dc5c2583a5ef9f9c274d2337576e3bafa22ecbc5",
+    "Tools/Sources/BenchmarkCorpus/ParserProbes.swift": "3c3e6a8afbb51aef5040f5239e1b7e226e142e8e2c115d8adeb7be91e3c6cc05",
+    "Tools/Sources/BenchmarkCorpus/UTF8Workload.swift": "a3b2ea8f6a5c05e2f61eb47963ddd4ea36584279c0a6e8e7509a3566d9fbdbb2",
+    "Tools/run_hardening_benchmarks.py": "ef0a0aeb8f266cc7508778e6e4deb9d5c3ed0c1ce2d6af7d0672f178226501d4",
+    "Tools/Benchmarks/ParserBenchmarks/ParserBenchmarks.swift": "ba80c7e4fde0ce79501d3d550cd699e1db10ca15764646b82337d1a15f523c81",
+    "Tools/Benchmarks/UTF8Benchmarks/UTF8Benchmarks.swift": "21b07a1c3e714037b31a2246f6288aa2757e5443094b562213cacc43a213b19b"
+  },
+  "binary_sha256": {
+    "BenchmarkTool": "c92d6668c05e13d7392ca2de57f8f8beeebc65ec8e2535c7dbe6649ec835a399",
+    "BenchmarkBoilerplateGenerator-tool": "5566e85363e44965f41122d8c3551f99039dde9709f7340c23d7ea1fac5ebc71",
+    "libMallocInterposerSwift-tool.dylib": "8804dfd1b05fa43d7a9415ab95615ef9a5e773653bc1fe1b342aaf1370917123",
+    "UTF8Benchmarks": "fa073179686398a4da718912d0a6f4e0e26758fec7b1abfd8797437ac6988c82",
+    "HardeningBenchmarks": "c2a391070bb6e9936cdc4784c3d4fc5a3763beb8e054e687ac753c8c8e22cd09",
+    "swift-version--58304C5D6DBC2206.txt": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+    "BenchmarkBoilerplateGenerator-tool-entitlement.plist": "87a3e7fcd67af748b28d049449185056b8b076b8bd65c82720f48c99883022be",
+    "ParserBenchmarks": "9cac28ddc39efc6b951935fb4269f49ead62e9703bbb2adfce6527822dcfef1e",
+    "plugin-tools-description.json": "b04a9d088dc4e44987a9572107a329342ef8d27338c0cb5f5fe6bcce7b50ac9c",
+    "description.json": "e7a435b8e5516f989fc432a083ad45ce683b9b573393c3b56f8fda6113c8c986",
+    "libMallocInterposerSwift.dylib": "ca8d1790d4ee03a8768eda28356e82798501604a7f01ba7b5918d3807c871b7b",
+    "BenchmarkTool-entitlement.plist": "87a3e7fcd67af748b28d049449185056b8b076b8bd65c82720f48c99883022be",
+    "ParserBenchmarks-entitlement.plist": "87a3e7fcd67af748b28d049449185056b8b076b8bd65c82720f48c99883022be"
+  },
+  "scope": "Separate unprofiled direct subsets; unchanged cases/limits; no SwiftPM parent.",
+  "targets": {
+    "HardeningBenchmarks": {
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_sha256": "def0635a48293db8c77a37f051a566deb3e081c72c9fae93f539c02fc6555ae4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cases": [
+        {
+          "name": "GMSetzer footnotes-repeated-v1 parse syntax-off 16 KiB (bytes: 16398, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: off)",
+          "wall_ms_p50": "2.863",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "3255",
+              "samples": 1732
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "12",
+              "samples": 1732
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2863",
+              "samples": 1732
+            }
+          }
+        },
+        {
+          "name": "GMSetzer footnotes-repeated-v1 parse syntax-off 256 KiB (bytes: 262158, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: off)",
+          "wall_ms_p50": "46.498",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "59",
+              "samples": 108
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "184",
+              "samples": 108
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "46498",
+              "samples": 108
+            }
+          }
+        },
+        {
+          "name": "GMSetzer footnotes-repeated-v1 parse syntax-off 64 KiB (bytes: 65538, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: off)",
+          "wall_ms_p50": "11.69",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "15",
+              "samples": 425
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "46",
+              "samples": 425
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "11690",
+              "samples": 425
+            }
+          }
+        },
+        {
+          "name": "GMSetzer footnotes-repeated-v1 parse syntax-on 16 KiB (bytes: 16398, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: on)",
+          "wall_ms_p50": "3.328",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "4041",
+              "samples": 1488
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "12",
+              "samples": 1488
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "3328",
+              "samples": 1488
+            }
+          }
+        },
+        {
+          "name": "GMSetzer footnotes-repeated-v1 parse syntax-on 256 KiB (bytes: 262158, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: on)",
+          "wall_ms_p50": "53.936",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "72",
+              "samples": 93
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "184",
+              "samples": 93
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "53936",
+              "samples": 93
+            }
+          }
+        },
+        {
+          "name": "GMSetzer footnotes-repeated-v1 parse syntax-on 64 KiB (bytes: 65538, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: on)",
+          "wall_ms_p50": "13.05",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "18",
+              "samples": 382
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "46",
+              "samples": 382
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "13050",
+              "samples": 382
+            }
+          }
+        },
+        {
+          "name": "GMSetzer footnotes-repeated-v1 parse-render syntax-off 16 KiB (bytes: 16398, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: off)",
+          "wall_ms_p50": "5.095",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "5451",
+              "samples": 978
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "21",
+              "samples": 978
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "5095",
+              "samples": 978
+            }
+          }
+        },
+        {
+          "name": "GMSetzer footnotes-repeated-v1 parse-render syntax-off 256 KiB (bytes: 262158, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: off)",
+          "wall_ms_p50": "84.214",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "95",
+              "samples": 60
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "332",
+              "samples": 60
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "84214",
+              "samples": 60
+            }
+          }
+        },
+        {
+          "name": "GMSetzer footnotes-repeated-v1 parse-render syntax-off 64 KiB (bytes: 65538, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: off)",
+          "wall_ms_p50": "21.414",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "23",
+              "samples": 231
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "83",
+              "samples": 231
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "21414",
+              "samples": 231
+            }
+          }
+        },
+        {
+          "name": "GMSetzer footnotes-repeated-v1 parse-render syntax-on 16 KiB (bytes: 16398, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: on)",
+          "wall_ms_p50": "5.386",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "6236",
+              "samples": 926
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "21",
+              "samples": 926
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "5386",
+              "samples": 926
+            }
+          }
+        },
+        {
+          "name": "GMSetzer footnotes-repeated-v1 parse-render syntax-on 256 KiB (bytes: 262158, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: on)",
+          "wall_ms_p50": "88.146",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "108",
+              "samples": 56
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "332",
+              "samples": 56
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "88146",
+              "samples": 56
+            }
+          }
+        },
+        {
+          "name": "GMSetzer footnotes-repeated-v1 parse-render syntax-on 64 KiB (bytes: 65538, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: on)",
+          "wall_ms_p50": "21.856",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "27",
+              "samples": 226
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "83",
+              "samples": 226
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "21856",
+              "samples": 226
+            }
+          }
+        },
+        {
+          "name": "GMSetzer invalid-utf8-v1 parse syntax-off 16 KiB (bytes: 16388, corpus: invalid-utf8-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "0.656",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "1252",
+              "samples": 7487
+            },
+            "Malloc (total) *": {
+              "p50_display": "2738",
+              "samples": 7487
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "656",
+              "samples": 7487
+            }
+          }
+        },
+        {
+          "name": "GMSetzer invalid-utf8-v1 parse syntax-off 256 KiB (bytes: 262148, corpus: invalid-utf8-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "10.592",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "21",
+              "samples": 470
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "44",
+              "samples": 470
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "10592",
+              "samples": 470
+            }
+          }
+        },
+        {
+          "name": "GMSetzer invalid-utf8-v1 parse syntax-off 64 KiB (bytes: 65540, corpus: invalid-utf8-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "2.66",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "5200",
+              "samples": 1846
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "11",
+              "samples": 1846
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2660",
+              "samples": 1846
+            }
+          }
+        },
+        {
+          "name": "GMSetzer invalid-utf8-v1 parse syntax-on 16 KiB (bytes: 16388, corpus: invalid-utf8-v1, profile: commonmark, syntax: on)",
+          "wall_ms_p50": "0.66",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "1252",
+              "samples": 7474
+            },
+            "Malloc (total) *": {
+              "p50_display": "2738",
+              "samples": 7474
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "660",
+              "samples": 7474
+            }
+          }
+        },
+        {
+          "name": "GMSetzer invalid-utf8-v1 parse syntax-on 256 KiB (bytes: 262148, corpus: invalid-utf8-v1, profile: commonmark, syntax: on)",
+          "wall_ms_p50": "10.453",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "21",
+              "samples": 475
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "44",
+              "samples": 475
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "10453",
+              "samples": 475
+            }
+          }
+        },
+        {
+          "name": "GMSetzer invalid-utf8-v1 parse syntax-on 64 KiB (bytes: 65540, corpus: invalid-utf8-v1, profile: commonmark, syntax: on)",
+          "wall_ms_p50": "2.607",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "5200",
+              "samples": 1904
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "11",
+              "samples": 1904
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2607",
+              "samples": 1904
+            }
+          }
+        },
+        {
+          "name": "GMSetzer long-emphasis-v1 parse syntax-off 16 KiB (bytes: 16390, corpus: long-emphasis-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "0.249",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "1125",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "29",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "249",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "GMSetzer long-emphasis-v1 parse syntax-off 256 KiB (bytes: 262150, corpus: long-emphasis-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "4.121",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "26",
+              "samples": 1205
+            },
+            "Malloc (total) *": {
+              "p50_display": "33",
+              "samples": 1205
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "4121",
+              "samples": 1205
+            }
+          }
+        },
+        {
+          "name": "GMSetzer long-emphasis-v1 parse syntax-off 64 KiB (bytes: 65542, corpus: long-emphasis-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "1.012",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "6053",
+              "samples": 4832
+            },
+            "Malloc (total) *": {
+              "p50_display": "31",
+              "samples": 4832
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "1012",
+              "samples": 4832
+            }
+          }
+        },
+        {
+          "name": "GMSetzer long-emphasis-v1 parse syntax-on 16 KiB (bytes: 16390, corpus: long-emphasis-v1, profile: commonmark, syntax: on)",
+          "wall_ms_p50": "0.417",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "2696",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "58",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "417",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "GMSetzer long-emphasis-v1 parse syntax-on 256 KiB (bytes: 262150, corpus: long-emphasis-v1, profile: commonmark, syntax: on)",
+          "wall_ms_p50": "6.955",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "51",
+              "samples": 684
+            },
+            "Malloc (total) *": {
+              "p50_display": "70",
+              "samples": 684
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "6955",
+              "samples": 684
+            }
+          }
+        },
+        {
+          "name": "GMSetzer long-emphasis-v1 parse syntax-on 64 KiB (bytes: 65542, corpus: long-emphasis-v1, profile: commonmark, syntax: on)",
+          "wall_ms_p50": "1.65",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "12",
+              "samples": 3002
+            },
+            "Malloc (total) *": {
+              "p50_display": "64",
+              "samples": 3002
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "1650",
+              "samples": 3002
+            }
+          }
+        },
+        {
+          "name": "GMSetzer m5-composed-v1 parse syntax-off 16 KiB (bytes: 16654, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: off)",
+          "wall_ms_p50": "3.453",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "4223",
+              "samples": 1429
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "17",
+              "samples": 1429
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "3453",
+              "samples": 1429
+            }
+          }
+        },
+        {
+          "name": "GMSetzer m5-composed-v1 parse syntax-off 256 KiB (bytes: 262177, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: off)",
+          "wall_ms_p50": "54.657",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "65",
+              "samples": 92
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "260",
+              "samples": 92
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "54657",
+              "samples": 92
+            }
+          }
+        },
+        {
+          "name": "GMSetzer m5-composed-v1 parse syntax-off 64 KiB (bytes: 65665, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: off)",
+          "wall_ms_p50": "13.509",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "16",
+              "samples": 369
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "66",
+              "samples": 369
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "13509",
+              "samples": 369
+            }
+          }
+        },
+        {
+          "name": "GMSetzer m5-composed-v1 parse syntax-on 16 KiB (bytes: 16654, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",
+          "wall_ms_p50": "6.054",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "6395",
+              "samples": 819
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "17",
+              "samples": 819
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "6054",
+              "samples": 819
+            }
+          }
+        },
+        {
+          "name": "GMSetzer m5-composed-v1 parse syntax-on 256 KiB (bytes: 262177, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",
+          "wall_ms_p50": "94.11",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "101",
+              "samples": 53
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "262",
+              "samples": 53
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "94110",
+              "samples": 53
+            }
+          }
+        },
+        {
+          "name": "GMSetzer m5-composed-v1 parse syntax-on 64 KiB (bytes: 65665, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",
+          "wall_ms_p50": "23.216",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "25",
+              "samples": 216
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "66",
+              "samples": 216
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "23216",
+              "samples": 216
+            }
+          }
+        },
+        {
+          "name": "GMSetzer m5-composed-v1 parse-render syntax-off 16 KiB (bytes: 16654, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: off)",
+          "wall_ms_p50": "5.353",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "5169",
+              "samples": 849
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "27",
+              "samples": 849
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "5353",
+              "samples": 849
+            }
+          }
+        },
+        {
+          "name": "GMSetzer m5-composed-v1 parse-render syntax-off 256 KiB (bytes: 262177, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: off)",
+          "wall_ms_p50": "80.806",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "80",
+              "samples": 60
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "422",
+              "samples": 60
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "80806",
+              "samples": 60
+            }
+          }
+        },
+        {
+          "name": "GMSetzer m5-composed-v1 parse-render syntax-off 64 KiB (bytes: 65665, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: off)",
+          "wall_ms_p50": "20.283",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "20",
+              "samples": 246
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "106",
+              "samples": 246
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "20283",
+              "samples": 246
+            }
+          }
+        },
+        {
+          "name": "GMSetzer m5-composed-v1 parse-render syntax-on 16 KiB (bytes: 16654, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",
+          "wall_ms_p50": "7.778",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "7341",
+              "samples": 641
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "28",
+              "samples": 641
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "7778",
+              "samples": 641
+            }
+          }
+        },
+        {
+          "name": "GMSetzer m5-composed-v1 parse-render syntax-on 256 KiB (bytes: 262177, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",
+          "wall_ms_p50": "122.421",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "116",
+              "samples": 41
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "424",
+              "samples": 41
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "122421",
+              "samples": 41
+            }
+          }
+        },
+        {
+          "name": "GMSetzer m5-composed-v1 parse-render syntax-on 64 KiB (bytes: 65665, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",
+          "wall_ms_p50": "30.835",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "29",
+              "samples": 156
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "107",
+              "samples": 156
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "30835",
+              "samples": 156
+            }
+          }
+        },
+        {
+          "name": "GMSetzer open-brackets-v1 parse syntax-off 16 KiB (bytes: 16384, corpus: open-brackets-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "0.969",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "6984",
+              "samples": 5016
+            },
+            "Malloc (total) *": {
+              "p50_display": "43",
+              "samples": 5016
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "969",
+              "samples": 5016
+            }
+          }
+        },
+        {
+          "name": "GMSetzer open-brackets-v1 parse syntax-off 256 KiB (bytes: 262144, corpus: open-brackets-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "18.776",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "120",
+              "samples": 240
+            },
+            "Malloc (total) *": {
+              "p50_display": "51",
+              "samples": 240
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "18776",
+              "samples": 240
+            }
+          }
+        },
+        {
+          "name": "GMSetzer open-brackets-v1 parse syntax-off 64 KiB (bytes: 65536, corpus: open-brackets-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "4.049",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "30",
+              "samples": 1217
+            },
+            "Malloc (total) *": {
+              "p50_display": "47",
+              "samples": 1217
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "4049",
+              "samples": 1217
+            }
+          }
+        },
+        {
+          "name": "GMSetzer open-brackets-v1 parse syntax-on 16 KiB (bytes: 16384, corpus: open-brackets-v1, profile: commonmark, syntax: on)",
+          "wall_ms_p50": "1.134",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "6984",
+              "samples": 4299
+            },
+            "Malloc (total) *": {
+              "p50_display": "43",
+              "samples": 4299
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "1134",
+              "samples": 4299
+            }
+          }
+        },
+        {
+          "name": "GMSetzer open-brackets-v1 parse syntax-on 256 KiB (bytes: 262144, corpus: open-brackets-v1, profile: commonmark, syntax: on)",
+          "wall_ms_p50": "19.055",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "120",
+              "samples": 262
+            },
+            "Malloc (total) *": {
+              "p50_display": "51",
+              "samples": 262
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "19055",
+              "samples": 262
+            }
+          }
+        },
+        {
+          "name": "GMSetzer open-brackets-v1 parse syntax-on 64 KiB (bytes: 65536, corpus: open-brackets-v1, profile: commonmark, syntax: on)",
+          "wall_ms_p50": "4.555",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "30",
+              "samples": 1060
+            },
+            "Malloc (total) *": {
+              "p50_display": "47",
+              "samples": 1060
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "4555",
+              "samples": 1060
+            }
+          }
+        },
+        {
+          "name": "GMSetzer quote-overflow-v1 parse syntax-off 16 KiB (bytes: 16576, corpus: quote-overflow-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "0.462",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "4190",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "84",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "462",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "GMSetzer quote-overflow-v1 parse syntax-off 256 KiB (bytes: 262626, corpus: quote-overflow-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "7.434",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "58",
+              "samples": 661
+            },
+            "Malloc (total) *": {
+              "p50_display": "571",
+              "samples": 661
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "7434",
+              "samples": 661
+            }
+          }
+        },
+        {
+          "name": "GMSetzer quote-overflow-v1 parse syntax-off 64 KiB (bytes: 65786, corpus: quote-overflow-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "1.824",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "15",
+              "samples": 2713
+            },
+            "Malloc (total) *": {
+              "p50_display": "185",
+              "samples": 2713
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "1824",
+              "samples": 2713
+            }
+          }
+        },
+        {
+          "name": "GMSetzer quote-overflow-v1 parse syntax-on 16 KiB (bytes: 16576, corpus: quote-overflow-v1, profile: commonmark, syntax: on)",
+          "wall_ms_p50": "0.539",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "4975",
+              "samples": 9152
+            },
+            "Malloc (total) *": {
+              "p50_display": "110",
+              "samples": 9152
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "539",
+              "samples": 9152
+            }
+          }
+        },
+        {
+          "name": "GMSetzer quote-overflow-v1 parse syntax-on 256 KiB (bytes: 262626, corpus: quote-overflow-v1, profile: commonmark, syntax: on)",
+          "wall_ms_p50": "8.937",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "70",
+              "samples": 555
+            },
+            "Malloc (total) *": {
+              "p50_display": "605",
+              "samples": 555
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "8937",
+              "samples": 555
+            }
+          }
+        },
+        {
+          "name": "GMSetzer quote-overflow-v1 parse syntax-on 64 KiB (bytes: 65786, corpus: quote-overflow-v1, profile: commonmark, syntax: on)",
+          "wall_ms_p50": "2.226",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "18",
+              "samples": 2181
+            },
+            "Malloc (total) *": {
+              "p50_display": "215",
+              "samples": 2181
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2226",
+              "samples": 2181
+            }
+          }
+        },
+        {
+          "name": "GMSetzer unmatched-backticks-v1 parse syntax-off 16 KiB (bytes: 16476, corpus: unmatched-backticks-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "0.105",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "631",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "387",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "105",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "GMSetzer unmatched-backticks-v1 parse syntax-off 256 KiB (bytes: 262455, corpus: unmatched-backticks-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "0.719",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "1624",
+              "samples": 6836
+            },
+            "Malloc (total) *": {
+              "p50_display": "1477",
+              "samples": 6836
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "719",
+              "samples": 6836
+            }
+          }
+        },
+        {
+          "name": "GMSetzer unmatched-backticks-v1 parse syntax-off 64 KiB (bytes: 65708, corpus: unmatched-backticks-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "0.26",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "864",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "751",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "260",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "GMSetzer unmatched-backticks-v1 parse syntax-on 16 KiB (bytes: 16476, corpus: unmatched-backticks-v1, profile: commonmark, syntax: on)",
+          "wall_ms_p50": "0.106",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "631",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "387",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "106",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "GMSetzer unmatched-backticks-v1 parse syntax-on 256 KiB (bytes: 262455, corpus: unmatched-backticks-v1, profile: commonmark, syntax: on)",
+          "wall_ms_p50": "0.745",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "1624",
+              "samples": 6662
+            },
+            "Malloc (total) *": {
+              "p50_display": "1477",
+              "samples": 6662
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "745",
+              "samples": 6662
+            }
+          }
+        },
+        {
+          "name": "GMSetzer unmatched-backticks-v1 parse syntax-on 64 KiB (bytes: 65708, corpus: unmatched-backticks-v1, profile: commonmark, syntax: on)",
+          "wall_ms_p50": "0.266",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "864",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "751",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "266",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) invalid-utf8-v1 parse 16 KiB (bytes: 16388, corpus: invalid-utf8-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "0.24",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "574",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "2757",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "240",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) invalid-utf8-v1 parse 256 KiB (bytes: 262148, corpus: invalid-utf8-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "4.028",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "9249",
+              "samples": 1198
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "44",
+              "samples": 1198
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "4028",
+              "samples": 1198
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) invalid-utf8-v1 parse 64 KiB (bytes: 65540, corpus: invalid-utf8-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "0.998",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "2250",
+              "samples": 4072
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "11",
+              "samples": 4072
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "998",
+              "samples": 4072
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) long-emphasis-v1 parse 16 KiB (bytes: 16390, corpus: long-emphasis-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "0.301",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "806",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "4119",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "301",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) long-emphasis-v1 parse 256 KiB (bytes: 262150, corpus: long-emphasis-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "4.997",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "13",
+              "samples": 973
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "66",
+              "samples": 973
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "4997",
+              "samples": 973
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) long-emphasis-v1 parse 64 KiB (bytes: 65542, corpus: long-emphasis-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "1.256",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "3214",
+              "samples": 2677
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "16",
+              "samples": 2677
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "1256",
+              "samples": 2677
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) open-brackets-v1 parse 16 KiB (bytes: 16384, corpus: open-brackets-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "1.458",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "3672",
+              "samples": 2794
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "33",
+              "samples": 2794
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "1458",
+              "samples": 2794
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) open-brackets-v1 parse 256 KiB (bytes: 262144, corpus: open-brackets-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "23.118",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "59",
+              "samples": 212
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "524",
+              "samples": 212
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "23118",
+              "samples": 212
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) open-brackets-v1 parse 64 KiB (bytes: 65536, corpus: open-brackets-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "7.217",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "15",
+              "samples": 522
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "131",
+              "samples": 522
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "7217",
+              "samples": 522
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) quote-overflow-v1 parse 16 KiB (bytes: 16576, corpus: quote-overflow-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "0.864",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "1982",
+              "samples": 5697
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "16",
+              "samples": 5697
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "864",
+              "samples": 5697
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) quote-overflow-v1 parse 256 KiB (bytes: 262626, corpus: quote-overflow-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "18.055",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "31",
+              "samples": 275
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "261",
+              "samples": 275
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "18055",
+              "samples": 275
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) quote-overflow-v1 parse 64 KiB (bytes: 65786, corpus: quote-overflow-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "3.531",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "7859",
+              "samples": 1350
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "65",
+              "samples": 1350
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "3531",
+              "samples": 1350
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) unmatched-backticks-v1 parse 16 KiB (bytes: 16476, corpus: unmatched-backticks-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "0.047",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "197",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "393",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "47",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) unmatched-backticks-v1 parse 256 KiB (bytes: 262455, corpus: unmatched-backticks-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "0.443",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "2420",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "1486",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "443",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) unmatched-backticks-v1 parse 64 KiB (bytes: 65708, corpus: unmatched-backticks-v1, profile: commonmark, syntax: off)",
+          "wall_ms_p50": "0.13",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "715",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "759",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "130",
+              "samples": 10000
+            }
+          }
+        }
+      ]
+    },
+    "ParserBenchmarks": {
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_sha256": "2e8345a0319b48eeb27b96db105f8f4ed7807cb13218f936ffd45b0672785faf",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cases": [
+        {
+          "name": "GMSetzer 10k caret queries 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "1.37",
+          "metrics": {
+            "Malloc (bytes total) *": {
+              "p50_display": "0",
+              "samples": 3580
+            },
+            "Malloc (total) *": {
+              "p50_display": "0",
+              "samples": 3580
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "1370",
+              "samples": 3580
+            }
+          }
+        },
+        {
+          "name": "GMSetzer 10k caret queries 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "0.94",
+          "metrics": {
+            "Malloc (bytes total) *": {
+              "p50_display": "0",
+              "samples": 5238
+            },
+            "Malloc (total) *": {
+              "p50_display": "0",
+              "samples": 5238
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "940",
+              "samples": 5238
+            }
+          }
+        },
+        {
+          "name": "GMSetzer 10k caret queries 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "3.686",
+          "metrics": {
+            "Malloc (bytes total) *": {
+              "p50_display": "0",
+              "samples": 1308
+            },
+            "Malloc (total) *": {
+              "p50_display": "0",
+              "samples": 1308
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "3686",
+              "samples": 1308
+            }
+          }
+        },
+        {
+          "name": "GMSetzer 10k position round trips 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "2.996",
+          "metrics": {
+            "Malloc (bytes total) *": {
+              "p50_display": "0",
+              "samples": 1662
+            },
+            "Malloc (total) *": {
+              "p50_display": "0",
+              "samples": 1662
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2996",
+              "samples": 1662
+            }
+          }
+        },
+        {
+          "name": "GMSetzer 10k position round trips 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "2.404",
+          "metrics": {
+            "Malloc (bytes total) *": {
+              "p50_display": "0",
+              "samples": 2064
+            },
+            "Malloc (total) *": {
+              "p50_display": "0",
+              "samples": 2064
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2404",
+              "samples": 2064
+            }
+          }
+        },
+        {
+          "name": "GMSetzer 10k position round trips 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "3.213",
+          "metrics": {
+            "Malloc (bytes total) *": {
+              "p50_display": "0",
+              "samples": 1547
+            },
+            "Malloc (total) *": {
+              "p50_display": "0",
+              "samples": 1547
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "3213",
+              "samples": 1547
+            }
+          }
+        },
+        {
+          "name": "GMSetzer CommonMark parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "24.166",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "56",
+              "samples": 204
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "57",
+              "samples": 204
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "24166",
+              "samples": 204
+            }
+          }
+        },
+        {
+          "name": "GMSetzer CommonMark parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "2.296",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "5641",
+              "samples": 2169
+            },
+            "Malloc (total) *": {
+              "p50_display": "5713",
+              "samples": 2169
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2296",
+              "samples": 2169
+            }
+          }
+        },
+        {
+          "name": "GMSetzer CommonMark parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "126.222",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "280",
+              "samples": 40
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "283",
+              "samples": 40
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "126222",
+              "samples": 40
+            }
+          }
+        },
+        {
+          "name": "GMSetzer GFM parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "27.82",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "65",
+              "samples": 180
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "64",
+              "samples": 180
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "27820",
+              "samples": 180
+            }
+          }
+        },
+        {
+          "name": "GMSetzer GFM parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "2.722",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "8582",
+              "samples": 1825
+            },
+            "Malloc (total) *": {
+              "p50_display": "6460",
+              "samples": 1825
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2722",
+              "samples": 1825
+            }
+          }
+        },
+        {
+          "name": "GMSetzer GFM parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "147.194",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "424",
+              "samples": 34
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "319",
+              "samples": 34
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "147194",
+              "samples": 34
+            }
+          }
+        },
+        {
+          "name": "GMSetzer editor snapshot 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "30.278",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "66",
+              "samples": 162
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "75",
+              "samples": 162
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "30278",
+              "samples": 162
+            }
+          }
+        },
+        {
+          "name": "GMSetzer editor snapshot 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "2.851",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "6623",
+              "samples": 1751
+            },
+            "Malloc (total) *": {
+              "p50_display": "7612",
+              "samples": 1751
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2851",
+              "samples": 1751
+            }
+          }
+        },
+        {
+          "name": "GMSetzer editor snapshot 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "156.238",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "332",
+              "samples": 32
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "374",
+              "samples": 32
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "156238",
+              "samples": 32
+            }
+          }
+        },
+        {
+          "name": "GMSetzer inline syntax on 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "26.116",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "64",
+              "samples": 191
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "57",
+              "samples": 191
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "26116",
+              "samples": 191
+            }
+          }
+        },
+        {
+          "name": "GMSetzer inline syntax on 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "2.464",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "6626",
+              "samples": 2023
+            },
+            "Malloc (total) *": {
+              "p50_display": "5749",
+              "samples": 2023
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2464",
+              "samples": 2023
+            }
+          }
+        },
+        {
+          "name": "GMSetzer inline syntax on 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "135.528",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "318",
+              "samples": 37
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "283",
+              "samples": 37
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "135528",
+              "samples": 37
+            }
+          }
+        },
+        {
+          "name": "GMSetzer native analysis 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "3.322",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "5364",
+              "samples": 1503
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "18",
+              "samples": 1503
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "3322",
+              "samples": 1503
+            }
+          }
+        },
+        {
+          "name": "GMSetzer native analysis 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "0.328",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "499",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "1878",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "328",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "GMSetzer native analysis 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "16.769",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "31",
+              "samples": 298
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "91",
+              "samples": 298
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "16769",
+              "samples": 298
+            }
+          }
+        },
+        {
+          "name": "GMSetzer outline 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "0.322",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "769",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "16",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "322",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "GMSetzer outline 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "0.033",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "81",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "13",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "33",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "GMSetzer outline 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "1.996",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "3128",
+              "samples": 2485
+            },
+            "Malloc (total) *": {
+              "p50_display": "18",
+              "samples": 2485
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "1996",
+              "samples": 2485
+            }
+          }
+        },
+        {
+          "name": "GMSetzer parent index 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "0.803",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "1869",
+              "samples": 6125
+            },
+            "Malloc (total) *": {
+              "p50_display": "4",
+              "samples": 6125
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "803",
+              "samples": 6125
+            }
+          }
+        },
+        {
+          "name": "GMSetzer parent index 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "0.081",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "188",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "4",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "81",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "GMSetzer parent index 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "6.611",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "9344",
+              "samples": 755
+            },
+            "Malloc (total) *": {
+              "p50_display": "4",
+              "samples": 755
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "6611",
+              "samples": 755
+            }
+          }
+        },
+        {
+          "name": "GMSetzer position index 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "0.627",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "1823",
+              "samples": 7852
+            },
+            "Malloc (total) *": {
+              "p50_display": "4",
+              "samples": 7852
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "627",
+              "samples": 7852
+            }
+          }
+        },
+        {
+          "name": "GMSetzer position index 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "0.062",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "213",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "4",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "62",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "GMSetzer position index 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "3.17",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "8819",
+              "samples": 1574
+            },
+            "Malloc (total) *": {
+              "p50_display": "4",
+              "samples": 1574
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "3170",
+              "samples": 1574
+            }
+          }
+        },
+        {
+          "name": "GMSetzer position index multibyte 1 MB (bytes: 1000192, corpus: multibyte-v1)",
+          "wall_ms_p50": "1.961",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "774",
+              "samples": 2537
+            },
+            "Malloc (total) *": {
+              "p50_display": "3",
+              "samples": 2537
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "1961",
+              "samples": 2537
+            }
+          }
+        },
+        {
+          "name": "GMSetzer position index multibyte 100 KB (bytes: 100096, corpus: multibyte-v1)",
+          "wall_ms_p50": "0.192",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "82",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "3",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "192",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "GMSetzer position index multibyte 5 MB (bytes: 5000192, corpus: multibyte-v1)",
+          "wall_ms_p50": "9.863",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "3773",
+              "samples": 507
+            },
+            "Malloc (total) *": {
+              "p50_display": "3",
+              "samples": 507
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "9863",
+              "samples": 507
+            }
+          }
+        },
+        {
+          "name": "GMSetzer reference syntax off 1 MB (bytes: 1000098, corpus: references-v1)",
+          "wall_ms_p50": "22.839",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "37",
+              "samples": 219
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "96",
+              "samples": 219
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "22839",
+              "samples": 219
+            }
+          }
+        },
+        {
+          "name": "GMSetzer reference syntax off 100 KB (bytes: 100188, corpus: references-v1)",
+          "wall_ms_p50": "2.263",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "3741",
+              "samples": 2198
+            },
+            "Malloc (total) *": {
+              "p50_display": "9647",
+              "samples": 2198
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2263",
+              "samples": 2198
+            }
+          }
+        },
+        {
+          "name": "GMSetzer reference syntax off 5 MB (bytes: 5000094, corpus: references-v1)",
+          "wall_ms_p50": "118.751",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "187",
+              "samples": 43
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "480",
+              "samples": 43
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "118751",
+              "samples": 43
+            }
+          }
+        },
+        {
+          "name": "GMSetzer reference syntax on 1 MB (bytes: 1000098, corpus: references-v1)",
+          "wall_ms_p50": "26.018",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "63",
+              "samples": 192
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "96",
+              "samples": 192
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "26018",
+              "samples": 192
+            }
+          }
+        },
+        {
+          "name": "GMSetzer reference syntax on 100 KB (bytes: 100188, corpus: references-v1)",
+          "wall_ms_p50": "2.636",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "6886",
+              "samples": 1891
+            },
+            "Malloc (total) *": {
+              "p50_display": "9682",
+              "samples": 1891
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2636",
+              "samples": 1891
+            }
+          }
+        },
+        {
+          "name": "GMSetzer reference syntax on 5 MB (bytes: 5000094, corpus: references-v1)",
+          "wall_ms_p50": "142.082",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "319",
+              "samples": 36
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "480",
+              "samples": 36
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "142082",
+              "samples": 36
+            }
+          }
+        },
+        {
+          "name": "GMSetzer render 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "29.098",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "15",
+              "samples": 172
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "203",
+              "samples": 172
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "29098",
+              "samples": 172
+            }
+          }
+        },
+        {
+          "name": "GMSetzer render 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "3.011",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "1577",
+              "samples": 1656
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "20",
+              "samples": 1656
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "3011",
+              "samples": 1656
+            }
+          }
+        },
+        {
+          "name": "GMSetzer render 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "150.602",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "82",
+              "samples": 34
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "1013",
+              "samples": 34
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "150602",
+              "samples": 34
+            }
+          }
+        },
+        {
+          "name": "GMSetzer segment reconstruction 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "7.467",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "5665",
+              "samples": 666
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "95",
+              "samples": 666
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "7467",
+              "samples": 666
+            }
+          }
+        },
+        {
+          "name": "GMSetzer segment reconstruction 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "0.74",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "568",
+              "samples": 6668
+            },
+            "Malloc (total) *": {
+              "p50_display": "9517",
+              "samples": 6668
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "740",
+              "samples": 6668
+            }
+          }
+        },
+        {
+          "name": "GMSetzer segment reconstruction 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "37.192",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "28",
+              "samples": 133
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "475",
+              "samples": 133
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "37192",
+              "samples": 133
+            }
+          }
+        },
+        {
+          "name": "GMSetzer selected inline parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "25.166",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "56",
+              "samples": 196
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "60",
+              "samples": 196
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "25166",
+              "samples": 196
+            }
+          }
+        },
+        {
+          "name": "GMSetzer selected inline parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "2.519",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "5654",
+              "samples": 1973
+            },
+            "Malloc (total) *": {
+              "p50_display": "6084",
+              "samples": 1973
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2519",
+              "samples": 1973
+            }
+          }
+        },
+        {
+          "name": "GMSetzer selected inline parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "132.383",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "280",
+              "samples": 38
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "301",
+              "samples": 38
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "132383",
+              "samples": 38
+            }
+          }
+        },
+        {
+          "name": "GMSetzer selected registry parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "25.674",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "56",
+              "samples": 191
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "57",
+              "samples": 191
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "25674",
+              "samples": 191
+            }
+          }
+        },
+        {
+          "name": "GMSetzer selected registry parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "2.425",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "5641",
+              "samples": 2051
+            },
+            "Malloc (total) *": {
+              "p50_display": "5713",
+              "samples": 2051
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2425",
+              "samples": 2051
+            }
+          }
+        },
+        {
+          "name": "GMSetzer selected registry parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "134.021",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "280",
+              "samples": 37
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "283",
+              "samples": 37
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "134021",
+              "samples": 37
+            }
+          }
+        },
+        {
+          "name": "GMSetzer text reconstruction 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "1.762",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "2102",
+              "samples": 2778
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "16",
+              "samples": 2778
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "1762",
+              "samples": 2778
+            }
+          }
+        },
+        {
+          "name": "GMSetzer text reconstruction 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "0.17",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "211",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "1648",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "170",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "GMSetzer text reconstruction 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "8.446",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "11",
+              "samples": 573
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "82",
+              "samples": 573
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "8446",
+              "samples": 573
+            }
+          }
+        },
+        {
+          "name": "GMSetzer validate 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "0.981",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "118",
+              "samples": 4936
+            },
+            "Malloc (total) *": {
+              "p50_display": "2",
+              "samples": 4936
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "981",
+              "samples": 4936
+            }
+          }
+        },
+        {
+          "name": "GMSetzer validate 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "0.094",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "13",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "2",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "94",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "GMSetzer validate 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "4.911",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "585",
+              "samples": 1016
+            },
+            "Malloc (total) *": {
+              "p50_display": "2",
+              "samples": 1016
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "4911",
+              "samples": 1016
+            }
+          }
+        },
+        {
+          "name": "Swift String UTF-16 count multibyte 1 MB (bytes: 1000192, corpus: multibyte-v1)",
+          "wall_ms_p50": "2.005",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "1140",
+              "samples": 2437
+            },
+            "Malloc (total) *": {
+              "p50_display": "4",
+              "samples": 2437
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2005",
+              "samples": 2437
+            }
+          }
+        },
+        {
+          "name": "Swift String UTF-16 count multibyte 100 KB (bytes: 100096, corpus: multibyte-v1)",
+          "wall_ms_p50": "0.2",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "115",
+              "samples": 10000
+            },
+            "Malloc (total) *": {
+              "p50_display": "4",
+              "samples": 10000
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "200",
+              "samples": 10000
+            }
+          }
+        },
+        {
+          "name": "Swift String UTF-16 count multibyte 5 MB (bytes: 5000192, corpus: multibyte-v1)",
+          "wall_ms_p50": "10.142",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "5635",
+              "samples": 491
+            },
+            "Malloc (total) *": {
+              "p50_display": "4",
+              "samples": 491
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "10142",
+              "samples": 491
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) CommonMark parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "18.366",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "30",
+              "samples": 271
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "224",
+              "samples": 271
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "18366",
+              "samples": 271
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) CommonMark parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "1.679",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "2971",
+              "samples": 2848
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "23",
+              "samples": 2848
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "1679",
+              "samples": 2848
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) CommonMark parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "94.765",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "148",
+              "samples": 53
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "1122",
+              "samples": 53
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "94765",
+              "samples": 53
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) GFM parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "35.946",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "39",
+              "samples": 139
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "431",
+              "samples": 139
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "35946",
+              "samples": 139
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) GFM parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "2.953",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "3878",
+              "samples": 1649
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "43",
+              "samples": 1649
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "2953",
+              "samples": 1649
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) GFM parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "189.923",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "193",
+              "samples": 27
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "2154",
+              "samples": 27
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "189923",
+              "samples": 27
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) references 1 MB (bytes: 1000098, corpus: references-v1)",
+          "wall_ms_p50": "13.222",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "15",
+              "samples": 377
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "162",
+              "samples": 377
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "13222",
+              "samples": 377
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) references 100 KB (bytes: 100188, corpus: references-v1)",
+          "wall_ms_p50": "1.294",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "1510",
+              "samples": 3836
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "16",
+              "samples": 3836
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "1294",
+              "samples": 3836
+            }
+          }
+        },
+        {
+          "name": "cmark-gfm (C) references 5 MB (bytes: 5000094, corpus: references-v1)",
+          "wall_ms_p50": "74.514",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "75",
+              "samples": 68
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "808",
+              "samples": 68
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "74514",
+              "samples": 68
+            }
+          }
+        },
+        {
+          "name": "swift-markdown parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+          "wall_ms_p50": "223.216",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "67",
+              "samples": 23
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "653",
+              "samples": 23
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "223216",
+              "samples": 23
+            }
+          }
+        },
+        {
+          "name": "swift-markdown parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+          "wall_ms_p50": "22.626",
+          "metrics": {
+            "Malloc (bytes total) (K) *": {
+              "p50_display": "6731",
+              "samples": 218
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "66",
+              "samples": 218
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "22626",
+              "samples": 218
+            }
+          }
+        },
+        {
+          "name": "swift-markdown parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+          "wall_ms_p50": "1261.437",
+          "metrics": {
+            "Malloc (bytes total) (M) *": {
+              "p50_display": "335",
+              "samples": 4
+            },
+            "Malloc (total) (K) *": {
+              "p50_display": "3267",
+              "samples": 4
+            },
+            "Time (wall clock) (\u03bcs) *": {
+              "p50_display": "1261437",
+              "samples": 4
+            }
+          }
+        }
+      ]
+    }
+  },
+  "postprocessing_correction": "Initial helper rejected legitimate zero-allocation read-only queries after both benchmark commands exited zero. Validate retained raw exports without remeasurement; require finite nonnegative allocation metrics, positive time and sample counts.",
+  "status": "complete-after-postprocessing-correction",
+  "validated_utc": "2026-11-22T11:30:25Z"
+}

@@ -1,0 +1,1 @@
+error: unsupported option '-sanitize=fuzzer' for target 'arm64-apple-macosx27.0.0'

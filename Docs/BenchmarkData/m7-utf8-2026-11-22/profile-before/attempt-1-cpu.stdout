@@ -1,0 +1,96 @@
+
+[1A[K  0% [                                                            ] ETA: 00:00:00 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K  1% [                                                            ] ETA: 00:00:06 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K  9% [-----                                                       ] ETA: 00:00:05 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K 19% [-----------                                                 ] ETA: 00:00:05 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K 25% [---------------                                             ] ETA: 00:00:04 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K 30% [------------------                                          ] ETA: 00:00:04 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K 38% [----------------------                                      ] ETA: 00:00:04 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K 45% [---------------------------                                 ] ETA: 00:00:03 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K 49% [-----------------------------                               ] ETA: 00:00:03 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K 54% [--------------------------------                            ] ETA: 00:00:03 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K 60% [------------------------------------                        ] ETA: 00:00:03 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K 66% [---------------------------------------                     ] ETA: 00:00:02 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K 72% [-------------------------------------------                 ] ETA: 00:00:02 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K 78% [----------------------------------------------              ] ETA: 00:00:02 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K 87% [----------------------------------------------------        ] ETA: 00:00:01 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K 95% [---------------------------------------------------------   ] ETA: 00:00:01 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K 99% [----------------------------------------------------------- ] ETA: 00:00:01 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+[1A[K100% [------------------------------------------------------------] ETA: 00:00:00 | :GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair)
+Debug results for GMSetzer invalid-compatible-v1 parse syntax-off 256 KiB (bytes: 262145, corpus: invalid-compatible-v1, profile: commonmark, syntax: off, validation: swift-repair):
+
+Time (wall clock):
+       Value     Percentile TotalCount 1/(1-Percentile)
+
+12435455.000 0.000000000000          1           1.00
+12771327.000 0.100000000000         39           1.11
+12836863.000 0.200000000000         77           1.25
+12902399.000 0.300000000000        123           1.43
+12951551.000 0.400000000000        159           1.67
+12984319.000 0.500000000000        195           2.00
+13000703.000 0.550000000000        214           2.22
+13017087.000 0.600000000000        232           2.50
+13058047.000 0.650000000000        258           2.86
+13074431.000 0.700000000000        271           3.33
+13099007.000 0.750000000000        294           4.00
+13123583.000 0.775000000000        306           4.44
+13131775.000 0.800000000000        309           5.00
+13148159.000 0.825000000000        321           5.71
+13164543.000 0.850000000000        332           6.67
+13180927.000 0.875000000000        339           8.00
+13189119.000 0.887500000000        343           8.89
+13213695.000 0.900000000000        348          10.00
+13230079.000 0.912500000000        352          11.43
+13262847.000 0.925000000000        359          13.33
+13271039.000 0.937500000000        362          16.00
+13287423.000 0.943750000000        365          17.78
+13295615.000 0.950000000000        367          20.00
+13303807.000 0.956250000000        371          22.86
+13303807.000 0.962500000000        371          26.67
+13320191.000 0.968750000000        373          32.00
+13369343.000 0.971875000000        375          35.56
+13418495.000 0.975000000000        376          40.00
+13426687.000 0.978125000000        377          45.71
+13434879.000 0.981250000000        378          53.33
+13443071.000 0.984375000000        379          64.00
+13484031.000 0.985937500000        380          71.11
+13606911.000 0.987500000000        382          80.00
+13606911.000 0.989062500000        382          91.43
+13606911.000 0.990625000000        382         106.67
+13606911.000 0.992187500000        382         128.00
+13664255.000 0.992968750000        383         142.22
+13664255.000 0.993750000000        383         160.00
+13664255.000 0.994531250000        383         182.86
+13778943.000 0.995312500000        384         213.33
+13778943.000 0.996093750000        384         256.00
+13778943.000 0.996484375000        384         284.44
+13778943.000 0.996875000000        384         320.00
+13778943.000 0.997265625000        384         365.71
+14524415.000 0.997656250000        385         426.67
+14524415.000 1.000000000000        385
+#[Mean    = 12989862.899, StdDeviation   =   199748.012]
+#[Max     = 14524415.000, Total count    =          385]
+#[Buckets =           20, SubBuckets     =         2048]
+
+
+Malloc (total):
+       Value     Percentile TotalCount 1/(1-Percentile)
+
+   52479.000 0.000000000000        385           1.00
+   52479.000 1.000000000000        385
+#[Mean    =    52464.000, StdDeviation   =        0.000]
+#[Max     =    52479.000, Total count    =          385]
+#[Buckets =           20, SubBuckets     =         2048]
+
+
+Malloc (bytes total):
+       Value     Percentile TotalCount 1/(1-Percentile)
+
+52494335.000 0.000000000000        385           1.00
+52494335.000 1.000000000000        385
+#[Mean    = 52477952.000, StdDeviation   =        0.000]
+#[Max     = 52494335.000, Total count    =          385]
+#[Buckets =           20, SubBuckets     =         2048]
+
+
+
