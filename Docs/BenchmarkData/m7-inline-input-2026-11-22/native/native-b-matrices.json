@@ -1,0 +1,92 @@
+{
+  "candidate": "B",
+  "code_commit": "f2e0a0e",
+  "source_identity_note": "Transferred runtime/test bytes match f2e0a0e; optional verifier formatting/test correction is recorded separately. No Git metadata exists on this host.",
+  "swift": "Swift version 6.4.2 (swift-6.4.2-RELEASE)\nTarget: x86_64-unknown-linux-gnu\n",
+  "host": "Linux-7.3.4-1-cachyos-x86_64-with-glibc2.44",
+  "load_before": [
+    0.0107421875,
+    1.876953125,
+    9.94970703125
+  ],
+  "phases": {
+    "parser-after": {
+      "command": [
+        "python3",
+        "<NATIVE_TASK>/run-parser.py",
+        "parser-after",
+        "<NATIVE_CACHE>/GMSetzer/build-tools/x86_64-unknown-linux-gnu/release"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 376.37135889800265
+    },
+    "hardening-after": {
+      "command": [
+        "python3",
+        "<NATIVE_TASK>/run-hardening-direct.py",
+        "hardening-after",
+        "<NATIVE_CACHE>/GMSetzer/build-tools/x86_64-unknown-linux-gnu/release"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 333.1592968840014
+    },
+    "utf8-after": {
+      "command": [
+        "python3",
+        "<NATIVE_TASK>/run-utf8.py",
+        "utf8-after",
+        "<NATIVE_CACHE>/GMSetzer/build-tools/x86_64-unknown-linux-gnu/release"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 163.157685735001
+    },
+    "resource-after": {
+      "command": [
+        "python3",
+        "Tools/ProgressiveHTMLProbe/run-linux-matrix.py",
+        "--binary",
+        "<NATIVE_CACHE>/GMSetzer/build-probe/x86_64-unknown-linux-gnu/release/ProgressiveHTMLProbe",
+        "--allocator",
+        "<NATIVE_CACHE>/GMSetzer/libgm-alloc.so",
+        "--output",
+        "<NATIVE_TASK>/resource-after",
+        "--swift",
+        "swift"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 458.2209050630008
+    },
+    "parser-comparison": {
+      "command": [
+        "python3",
+        "Tools/ParserComparison/run.py",
+        "--swift-probe",
+        "<NATIVE_CACHE>/GMSetzer/build-tools/x86_64-unknown-linux-gnu/release/ParserComparisonProbe",
+        "--md4c-probe",
+        "<NATIVE_TASK>/external/md4c-probe",
+        "--pulldown-probe",
+        "<NATIVE_TASK>/external/rust-build/release/gmsetzer-pulldown-probe",
+        "--external-receipt",
+        "<NATIVE_TASK>/external/build.json",
+        "--output",
+        "<NATIVE_TASK>/parser-comparison",
+        "--run-all"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 84.84671457699733
+    }
+  },
+  "preparation_failure_note": "Normal hardening runner requires Git metadata; source transfer intentionally has no .git. Full unchanged target uses the retained direct source-hash driver.",
+  "status": "passed",
+  "load_after": [
+    1.04296875,
+    1.0498046875,
+    3.9111328125
+  ],
+  "source_packet_unchanged": true
+}

@@ -1,0 +1,11 @@
+{
+  "reason": "Candidate A stopped after review identified retained-callback high-water capacity amplification. Only its private BenchmarkTool process group is terminated; all output retained.",
+  "runner_pid": 119923,
+  "benchmark_group": 119925,
+  "runner_args": [
+    "python3",
+    "../run-parser.py",
+    "parser-after",
+    "<NATIVE_CACHE>/GMSetzer/build-tools/x86_64-unknown-linux-gnu/release"
+  ]
+}

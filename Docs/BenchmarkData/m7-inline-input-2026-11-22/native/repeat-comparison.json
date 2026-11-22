@@ -1,0 +1,56 @@
+[
+  {
+    "name": "GMSetzer CommonMark parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 41.517,
+    "after_ms": 40.01,
+    "change_percent": -3.629838379459027
+  },
+  {
+    "name": "GMSetzer GFM parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 50.364,
+    "after_ms": 49.906,
+    "change_percent": -0.9093797156699224
+  },
+  {
+    "name": "GMSetzer reference syntax off 1 MB (bytes: 1000098, corpus: references-v1)",
+    "before_ms": 35.389,
+    "after_ms": 32.244,
+    "change_percent": -8.886942270196963
+  },
+  {
+    "name": "GMSetzer reference syntax on 1 MB (bytes: 1000098, corpus: references-v1)",
+    "before_ms": 42.238,
+    "after_ms": 39.518,
+    "change_percent": -6.43969884937734
+  },
+  {
+    "name": "GMSetzer render 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 22.823,
+    "after_ms": 22.807,
+    "change_percent": -0.07010471892390235
+  },
+  {
+    "name": "cmark-gfm (C) CommonMark parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 27.705,
+    "after_ms": 33.538,
+    "change_percent": 21.05396137881248
+  },
+  {
+    "name": "cmark-gfm (C) GFM parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 55.607,
+    "after_ms": 56.001,
+    "change_percent": 0.7085438883593698
+  },
+  {
+    "name": "cmark-gfm (C) references 1 MB (bytes: 1000098, corpus: references-v1)",
+    "before_ms": 23.314,
+    "after_ms": 23.462,
+    "change_percent": 0.634811701123783
+  },
+  {
+    "name": "swift-markdown parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 139.985,
+    "after_ms": 140.771,
+    "change_percent": 0.5614887309354444
+  }
+]

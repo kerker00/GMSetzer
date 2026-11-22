@@ -39,6 +39,8 @@ recorded. Existing GFM and swift-markdown measurements remain in the separate
   batch. Two complete cyclic rotations balance parser order. Programs run
   sequentially, with no own build/test/profiler competing on that host.
   No allocation or peak-RSS claim follows from these timing rows.
+  These internal batch timers do not link package-benchmark's allocation
+  interposer. Keep their numbers separate from the existing 72-case series.
 
 ## Prepare and run
 

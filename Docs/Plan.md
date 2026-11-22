@@ -104,8 +104,8 @@ ASan tests pass, plus 1,024 bounded ASan mutation inputs / 8,192 parses. Fresh
 source-matched progressive resources pass all 42 cases / 126 checks, verifying
 43 runtime / 5 measurement-tool hashes. Minimum Swift 6.2 candidate CI passes
 253 tests, optimized builds and 36 Python tests on macOS/Linux at `ad8179f`.
-[PR #28](https://github.com/kerker00/GMSetzer/pull/28) is open; the candidate is
-not merged or released.
+The owner merged [PR #28](https://github.com/kerker00/GMSetzer/pull/28) at
+`ce5dedc`; its source remains unreleased.
 
 **Inline-input follow-up, 22 November 2026:** the owner-approved
 [three-runtime-file candidate](Validation/M7/inline-input-2026-11-22.md) over
@@ -113,11 +113,18 @@ PR #28 reuses built-in-only inline projections, decodes slices without copying
 their input, and adds an ASCII reference-label path with unchanged Unicode
 fallback. Review rejects unrestricted projection reuse because retained
 callback snapshots could inherit oversized capacity; custom-inline-rule
-documents keep fresh per-leaf projections. Corrected-candidate validation and
-fresh PowerG5 measurements are pending. Optional source-pinned MD4C/Rust
+documents keep fresh per-leaf projections. In
+[PR #29](https://github.com/kerker00/GMSetzer/pull/29), corrected B passes 256-test
+Mac/x64 Debug/Release and Mac ASan suites, 8,192 bounded ASan stress parses,
+minimum Swift 6.2 CI, complete 72/69/36-case timing targets and 42 source-matched
+resource cases / 126 checks. Measured 1 MB allocation requests fall 19.34%,
+gross bytes 2.22%; mixed parse gains remain small, with stronger reference-label
+rows and explicitly retained control anomalies. Optional source-pinned MD4C/Rust
 comparisons stay development-only and distinguish consumed events from full
-source-positioned AST services. APIs, limits, budgets and release state remain
-unchanged.
+source-positioned AST services. The eight-sample comparison still measures
+1 MB HTML at 60.632 ms (GMSetzer), 25.094 ms (cmark), 7.031 ms (MD4C), 8.989 ms
+(pulldown); no general C parity follows. APIs, limits, budgets and release state
+remain unchanged; PR #29 is not merged.
 
 The M4 follow-ups are merged in PR #15 (`1473d49`). The source-only v0.4.0
 release preparation and macOS/Linux CI are merged in PR #16 (`6a0eb8e`);
@@ -857,8 +864,9 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: review and merge the measured HTML-copy follow-up in
-[PR #28](https://github.com/kerker00/GMSetzer/pull/28), alongside separately
+Current next work: review the inline-input/comparison follow-up in
+[PR #29](https://github.com/kerker00/GMSetzer/pull/29), after the HTML-copy
+follow-up merged in PR #28 (`ce5dedc`), alongside separately
 reviewed source-only 0.7 release preparation after the [M7 candidate](M7Readiness.md)
 merged in PR #26 (`a273810`). The measured
 scratch/token/buffer/UTF-8 optimizations now have current full Mac/x64 benchmark

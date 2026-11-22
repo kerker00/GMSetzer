@@ -1,0 +1,16 @@
+{
+  "profile-before": {
+    "iterations": 6,
+    "requests": 56618.0,
+    "gross_bytes": 56066214.0,
+    "input_requests": 10950.0
+  },
+  "profile-b": {
+    "iterations": 7,
+    "requests": 45670.0,
+    "gross_bytes": 54821926.0,
+    "input_requests": 2.0
+  },
+  "request_reduction_percent": 19.336606732841144,
+  "byte_reduction_percent": 2.2193187505045398
+}

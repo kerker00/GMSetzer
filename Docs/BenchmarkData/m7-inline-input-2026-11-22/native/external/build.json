@@ -1,0 +1,168 @@
+{
+  "sources": {
+    "md4c": {
+      "repository": "https://github.com/mity/md4c",
+      "tag": "v0.6.0",
+      "commit": "7fc1815a5eeba2af7d6120a76202bf59f3b6e6e4",
+      "license": "MIT",
+      "source_sha256": {
+        "md4c.c": "b9102e0ddfdfd494fdda903f79c554ffaab7e87b4eeb85b4c113057dee3e0728",
+        "md4c.h": "d0c14762f1eac3cd9d1c08c3a287b61d93ee2382e5a22ee48f5a6f3ad2c2349d",
+        "md4c-html.c": "bf6f4f856e7352526c08b22916d1a840054b027a28f2b2a89482f50bf23e55b0",
+        "md4c-html.h": "6a045ecec5d8cf17a771654a31af06641df195d7ea8486a140a121b6c6e0191f",
+        "entity.c": "7ea50d695d9210958e01b12b3e4d1db78d783d03d95b040fd7d2d9cfe1f1d39c",
+        "entity.h": "99a8952be6629e4114947cb61a901bf4f73b10d84d1ac5e17ad8299dfbad708e",
+        "LICENSE.md": "e547c9a66c120b19f9838a1f7c2f51137f5c71ba27b70c3611b673f2cdb4e02e"
+      }
+    },
+    "pulldown-cmark": {
+      "repository": "https://github.com/pulldown-cmark/pulldown-cmark",
+      "tag": "v0.13.6",
+      "commit": "014b61d38d235f382935bb676bab872b7680afa2",
+      "license": "MIT",
+      "crate_version": "0.13.6"
+    }
+  },
+  "commands": [
+    {
+      "label": "cc-version",
+      "command": [
+        "cc",
+        "--version"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.004992808000679361
+    },
+    {
+      "label": "rust-version",
+      "command": [
+        "rustc",
+        "--version"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.06526147900149226
+    },
+    {
+      "label": "cargo-version",
+      "command": [
+        "cargo",
+        "--version"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.0651168280019192
+    },
+    {
+      "label": "md4c-build",
+      "command": [
+        "cc",
+        "-O3",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-I<NATIVE_TASK>/external/md4c",
+        "<NATIVE_TASK>/GMSetzer/Tools/ParserComparison/md4c-probe.c",
+        "<NATIVE_TASK>/external/md4c/md4c.c",
+        "<NATIVE_TASK>/external/md4c/md4c-html.c",
+        "<NATIVE_TASK>/external/md4c/entity.c",
+        "-o",
+        "<NATIVE_TASK>/external/md4c-probe"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 4.095857365002303
+    },
+    {
+      "label": "cargo-lock",
+      "command": [
+        "cargo",
+        "generate-lockfile",
+        "--manifest-path",
+        "<NATIVE_TASK>/external/pulldown/Cargo.toml"
+      ],
+      "exit_code": 101,
+      "elapsed_seconds": 0.16625267900235485
+    },
+    {
+      "label": "cargo-lock-corrected",
+      "command": [
+        "cargo",
+        "generate-lockfile",
+        "--manifest-path",
+        "<NATIVE_TASK>/external/pulldown/Cargo.toml"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.21747545800099033
+    },
+    {
+      "label": "pulldown-build",
+      "command": [
+        "cargo",
+        "build",
+        "--release",
+        "--locked",
+        "--manifest-path",
+        "<NATIVE_TASK>/external/pulldown/Cargo.toml",
+        "--target-dir",
+        "<NATIVE_TASK>/external/rust-build"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 8.975097321999783
+    },
+    {
+      "label": "cargo-metadata",
+      "command": [
+        "cargo",
+        "metadata",
+        "--locked",
+        "--format-version",
+        "1",
+        "--manifest-path",
+        "<NATIVE_TASK>/external/pulldown/Cargo.toml"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.03470200499941711
+    }
+  ],
+  "rust_packages": [
+    {
+      "name": "bitflags",
+      "version": "2.13.2",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "gmsetzer-pulldown-probe",
+      "version": "0.1.0",
+      "license": null
+    },
+    {
+      "name": "memchr",
+      "version": "2.8.3",
+      "license": "Unlicense OR MIT"
+    },
+    {
+      "name": "pulldown-cmark",
+      "version": "0.13.6",
+      "license": "MIT"
+    },
+    {
+      "name": "pulldown-cmark-escape",
+      "version": "0.11.0",
+      "license": "MIT"
+    },
+    {
+      "name": "unicase",
+      "version": "2.10.0",
+      "license": "MIT OR Apache-2.0"
+    }
+  ],
+  "crate_vcs": {
+    "git": {
+      "sha1": "014b61d38d235f382935bb676bab872b7680afa2"
+    },
+    "path_in_vcs": "pulldown-cmark"
+  },
+  "status": "passed",
+  "binary_sha256": {
+    "md4c-probe": "0f157b6f7169708a6141cd0d184d0a048cdf11f5e9ea02bfe9373f400dbdcdab",
+    "rust-build/release/gmsetzer-pulldown-probe": "d1b87ef87219852086335655c665dc43c4f452896fd0d4ced76c583f617b394b"
+  }
+}

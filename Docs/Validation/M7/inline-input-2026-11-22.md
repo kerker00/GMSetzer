@@ -2,7 +2,9 @@
 
 22 November 2026, development identity `0.7.0-dev.1`, based on PR #28's
 `e75567c`. The owner requested three bounded parser changes and a fresh native
-x64 comparison. PR #28 is a prerequisite; this is not merged/released work or
+x64 comparison. PR #28 merged at `ce5dedc`; the separate
+[PR #29](https://github.com/kerker00/GMSetzer/pull/29) now targets main. This is
+not merged/released work or
 an accepted 0.7 release. Public API, grammar, Unicode repair/folding, source
 positions, tokens, limits and existing comparison budgets remain unchanged.
 
@@ -92,8 +94,99 @@ does not rewrite parser output or discard differences in inline/pre text.
 
 ## Completion
 
-Corrected-candidate measurements, resource checks, ASan and minimum Swift 6.2 CI
-are pending. Initial candidate A has 256-test Mac/x64 Debug/Release passes,
-12 Release tool tests per host and Mac ASan/mutation evidence, but its new
-capacity regression fails. No completed-performance or accepted-M7 claim is
-made for candidate B until its own checks finish.
+Corrected candidate B matches runtime/test commit `f2e0a0e`; `7bb4560` changes
+the optional output verifier/test/docs only. Mac and native x64 Debug/Release
+each pass **256 tests / 30 suites**, plus **12 Release tool tests / 6 suites**
+per host. Mac ASan passes all 256 tests and the 1,024-input / 8,192-parse bounded
+mutation probe. Source/tree/token invariants, protected 652 CommonMark / 672
+GFM examples, full/grouped HTML and the retained-capacity regression remain
+covered. The mutation probe is not coverage-guided fuzzing.
+
+The [minimum Swift CI](https://github.com/kerker00/GMSetzer/actions/runs/45048152056)
+passes at `f2e0a0e` on macOS Swift 6.2.3 / Linux Swift 6.2 (256 Swift / 42 Python
+tests per host, optimized builds). The
+[verifier follow-up CI](https://github.com/kerker00/GMSetzer/actions/runs/45049335473)
+passes at `7bb4560` with the additional formatting regression (43 Python tests).
+The native normal/optimized Python suites pass all 43 checks separately.
+
+Both hosts complete the unchanged 72-case target; all six C/absolute checks
+pass on each host, and all nine frozen M2 Mac checks pass. Separate allocation
+profiles (six before / seven B iterations) record **56,618 → 45,670 requests
+(−19.34%)**, **56,066,214 → 54,821,926 gross bytes (−2.22%)** per 1 MB CommonMark
+parse. `InlineInput` requests fall **10,950 → 2**. These are allocation traffic,
+not live/peak memory; instrumented timing is excluded.
+
+| Ordinary p50, 1 MB mixed-v1 | Before ms | B ms |
+| --- | ---: | ---: |
+| M2 CommonMark | 23.380 | 23.134 |
+| M2 GFM | 27.312 | 26.903 |
+| x64 CommonMark | 41.583 | 40.010 |
+| x64 GFM | 50.528 | 50.135 |
+
+CPU-time gains on mixed input remain small and control-sensitive. Full x64
+1 MB C CommonMark rises 24.66% while GFM is unchanged; do not treat the improved
+same-run C ratio as an equally large code gain. Mac controls rise 1.60%/7.82%.
+Two initial Mac footnote parse rows rise about 14%; a retained 13-case repeat
+does not reproduce that regression, but its C controls also improve about 5%.
+The repeat's mixed parse reductions are 2.67%/7.55% and footnote parse reductions
+6.56%/8.15%; these do not establish a universal pipeline speedup.
+
+In the full x64 reference corpus, syntax-off times fall 7.54–16.30% across
+sizes, syntax-on 6.74–13.17%; controls/countermeasurements retain their own
+scope. Annotation-off/on costs remain separate.
+
+A reverse-order nine-case x64 repeat confirms reference improvements at 1 MB:
+**35.389 → 32.244 ms (off, −8.89%)** and **42.238 → 39.518 ms (on, −6.44%)**.
+Its C reference control changes +0.63%, GFM C +0.71%, swift-markdown +0.56%,
+and unchanged rendering −0.07%. Mixed CommonMark/GFM change −3.63%/−0.91%.
+The C CommonMark anomaly persists (+21.05%) even with reversed variant order;
+its input and allocation counts are unchanged. Its cause is not diagnosed and
+must not be credited to the Swift optimization or dismissed as general host
+drift. Both full pairs and focused controls remain retained.
+
+All **69 hardening / 36 UTF-8** rows complete at unchanged configurations.
+The ordinary hardening metadata runner initially fails because the transferred
+source has no `.git`; the retained direct driver runs the identical built target
+with source hashes instead. This setup failure is not a parser failure.
+Fresh native progressive resources pass **42 cases / 126 unchanged checks**,
+with all **43 runtime / 5 tool hashes** and **756 raw records** verified on
+PowerG5, locally and again from the retained archive. Runtime/test bytes remain
+identical to `f2e0a0e`; the measured native packet separately records the two
+Python verifier/test changes after initial native compilation.
+
+## Native additional-parser results
+
+All **24 cases / 192 timed batch samples** and **12 output comparisons** pass.
+Swift 6.4.2, GCC 16.2.1 (`-O3`), Rust 1.100.0 (Release, LTO, one codegen unit),
+native x86_64. Crate VCS metadata matches the pinned release commit; both
+foreign executable hashes match the source-pinned build receipt. No system
+installation or new execution environment is used.
+
+P50 milliseconds at **1,000,100 input bytes**, CommonMark:
+
+| Parser | Parse result/service | Parse ms | Parse + HTML ms |
+| --- | --- | ---: | ---: |
+| GMSetzer B | Validated AST, original bytes and source positions | 38.939 | 60.632 |
+| cmark-gfm core | C AST with source positions | 20.954 | 25.094 |
+| MD4C 0.6.0 | Consumed callbacks; no retained AST | 5.249 | 7.031 |
+| pulldown-cmark 0.13.6 | Consumed offset-bearing events; no retained AST | 7.697 | 8.989 |
+
+These purpose-built batch timers do not use package-benchmark's allocation
+interposer; do not combine their rows with its 72-case timing series. Their
+GMSetzer/core-C parse ratios are **1.97 / 1.86 / 1.68×** at 100 KB / 1 MB /
+5 MB. Full HTML remains **2.42× C time at 1 MB**, and **8.62× MD4C / 6.75×
+pulldown time**. The same generated output does not remove the cost of the
+intermediate AST, source services and validation. These results establish a
+remaining throughput gap; event consumption must not be described as equivalent
+tree construction. No general C parity is established.
+
+The existing 1 MB swift-markdown comparison is **140.771 ms** in the focused
+package-benchmark repeat versus **40.010 ms** for GMSetzer CommonMark. It retains
+its fixed GFM/smart-punctuation/Swift-tree differences and a different timing
+framework from the table above. It has no measured HTML row here.
+
+The [evidence directory](../../BenchmarkData/m7-inline-input-2026-11-22/)
+retains the rejected A preparation, all successful B checks, raw generated
+inputs/outputs, both ordinary pairs/repeats, samples, hashes and unsuccessful
+setup attempts. This completes the requested bounded optimization/comparison;
+owner merge, explicit M7 acceptance and release publication remain separate.

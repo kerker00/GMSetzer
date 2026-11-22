@@ -1037,7 +1037,12 @@ The [follow-up report](Validation/M7/inline-input-2026-11-22.md) tracks reusable
 built-in inline projections, direct slice decoding and ASCII reference-label
 normalization. An initial unrestricted variant is rejected after review finds
 retained-callback capacity amplification. Its preparatory profiles/timings
-remain labelled separately; corrected-candidate results are pending.
+remain labelled separately. Corrected B reduces 1 MB requests
+**56,618 → 45,670 (−19.34%)** and gross bytes **56,066,214 → 54,821,926 (−2.22%)**;
+mixed parse changes are small/control-sensitive. A reverse-order x64 repeat
+records reference-label parse reductions of 8.89% off / 6.44% on, with C
+references +0.63%. The anomalous C CommonMark control is explicitly retained
+and not credited to the optimization.
 
 The optional [cross-language harness](../Tools/ParserComparison/README.md)
 adds source-pinned MD4C and pulldown-cmark alongside GMSetzer/cmark on identical
@@ -1045,4 +1050,15 @@ CommonMark input, with output verification and rotated samples. AST versus
 event-stream work and full HTML work are separate rows; these additional
 parsers do not replace the existing configured C reference budgets. Existing
 72/69/36-case targets and source-matched progressive resource checks retain
-their configurations and require fresh evidence for the changed runtime.
+their configurations and now complete with fresh B evidence: 72 cases per
+native host, 69/36 x64 hardening/UTF-8 rows, 42 resource cases / 126 checks and
+all 43 runtime / 5 measurement-tool hashes. Mac/x64 suites pass 256 tests,
+12 tool tests per host; Mac ASan/stress and minimum Swift 6.2 CI also pass.
+
+The separate internal batch timers do not use the allocation interposer. At
+1 MB, parse + HTML takes **60.632 / 25.094 / 7.031 / 8.989 ms** for GMSetzer /
+cmark / MD4C / pulldown. Outputs agree under the documented formatting rules;
+callbacks/events still do not provide GMSetzer's complete AST/source services.
+All 24 cases / 192 batch samples, 12 output comparisons and raw outputs are
+retained. These timings expose a remaining full-HTML throughput gap; they are
+not rows to mix with the package-benchmark series or a general C-parity claim.

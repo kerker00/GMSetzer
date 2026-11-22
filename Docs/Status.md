@@ -7,8 +7,12 @@ explicit milestone acceptance and release preparation remain separate. See
 [candidate readiness](M7Readiness.md) for its current checks and limits.
 The scan/Span experiment merged in [PR #27](https://github.com/kerker00/GMSetzer/pull/27)
 at `6372cfc`, after the README reorganisation. It leaves the production scanner
-unchanged; the measured variants do not justify blanket adoption. The next
-step profiles intermediate copies and HTML output.
+unchanged; the measured variants do not justify blanket adoption. The
+[HTML-copy follow-up](Validation/M7/html-copies-2026-11-22.md) merged in
+[PR #28](https://github.com/kerker00/GMSetzer/pull/28) at `ce5dedc`, with 253-test
+native suites, minimum Swift 6.2 CI and source-matched resources. Next is review
+of the separate inline-input/comparison work in
+[PR #29](https://github.com/kerker00/GMSetzer/pull/29); it is not merged.
 M8 owns the high-level API/configuration review. Input streaming needs a
 separate design for global definitions and document ownership.
 
