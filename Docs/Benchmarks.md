@@ -922,3 +922,30 @@ x64/minimum Swift 6.2, Linux development-tool measurements and fresh progressive
 resource evidence remain pending. Open-bracket gross traffic remains 174 M
 at 256 KiB; large buffers and malformed-byte processing are next. M7 is not
 accepted or merged by this local measurement.
+
+## M7 inline capacity and compact links, 22 November 2026
+
+The [buffer report](Validation/M7/inline-capacity-2026-11-22.md) profiles about
+92.35 M inline-controller and 80.45 M builder growth bytes per 256 KiB open-
+bracket parse. Compact private item links/bracket layout and geometric batch
+reservation reduce total gross traffic **174,190,788 → 119,819,700 bytes
+(31.21%)**, requests **76 → 51**, with public tree layout/values unchanged.
+This is neither a peak-RSS result nor a general retained-memory guarantee.
+
+Paired direct Release **30-case subsets per variant** complete (12 hardening
+and 18 mixed), with unchanged inputs, pins, profiles, sampling and limits.
+Bracket timing is broadly maintained: 256 KiB syntax off is 16.269 → 15.843 ms,
+on is 17.809 → 17.875 ms. Long-emphasis syntax-on improves 6.94–10.66%, with
+7.643 → 6.828 ms at 256 KiB. Matching C controls vary by up to 3.57%; small
+mixed/M5 changes are not generalized as speedups. All six Mac C/absolute and
+nine frozen-M2 checks pass. Mixed 5 MB CommonMark/C is 124.781 / 93.061 ms
+(1.341×); GFM/C is 144.966 / 193.069 ms (0.751×).
+
+Current 249-test library suites pass in Debug/Release on macOS/Linux ARM64,
+10 Mac Release tool tests pass, and independent snapshots preserve all 1,324
+spec trees/tokens. The [data directory](BenchmarkData/m7-inline-capacity-2026-11-22/)
+retains 60 timing rows, profiles, layout/public-tree probes, candidate patch,
+gate output and 45 archived files with hashes. No full 69/72 refresh or new
+Python-suite run is claimed. Malformed-byte processing with a validation-
+enabled C control, current x64/minimum compiler and fresh progressive resource/
+fuzz evidence remain open; M7 is still in progress.

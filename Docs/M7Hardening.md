@@ -283,3 +283,33 @@ tool timings, full benchmark refresh and fresh progressive resource evidence.
 Next profile large item/bracket buffers, then malformed-byte decoding with an
 explicit validation-enabled C control. Broader fuzz/sanitizer work and M7
 acceptance remain open; no push, PR or publication occurs in this step.
+
+## Measured inline buffer and emission capacity optimization
+
+The [next candidate](Validation/M7/inline-capacity-2026-11-22.md) addresses
+growth traffic in the inline controller and output builder. Private optional
+links use compact integer storage behind the existing accessors; bracket
+fields are grouped; known item counts provide a conservative emission hint.
+Growth stays geometric across small leaves. Public API, node granularity,
+index validation, grammar, inputs and performance limits are unchanged.
+
+For open brackets at 256 KiB, gross requested bytes fall **174,190,788 →
+119,819,700 (31.21%)**, and requests **76 → 51**. Internal item/bracket strides
+are **144 → 120 / 32 → 24 bytes** on this Mac; public nodes remain 128.
+Bracket timing is broadly maintained; long-emphasis syntax-on improves a
+further 6.94–10.66% in the paired subsets. Neither gross traffic nor private
+slot size establishes peak RSS or retained heap.
+
+Both direct 30-case variants complete and all six Mac C/absolute plus nine
+M2 checks pass unchanged. Current validation passes **249 library tests /
+29 suites** in Debug/Release on macOS and native Linux ARM64, plus **10 Mac
+Release tool tests**. All 1,324 old/new public snapshots match: 7,994 nodes
+with payload/ranges/segments/links and 4,422 tokens. Unchanged Python scripts
+are not retested in this step. Source/executable identities and all evidence
+remain in the linked report/data directory.
+
+Next investigate malformed-byte processing with an explicit validation-enabled
+C control. Current x64/minimum Swift 6.2, Linux tool timings, full 69/72 refresh,
+fresh progressive stage/RSS/allocation evidence and broader fuzz/sanitizer
+checks remain open. Historical measurements keep their earlier identities;
+this local step does not accept or merge M7.

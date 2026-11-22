@@ -507,6 +507,15 @@ public struct DocumentBuilder: Sendable {
         lastChildren.reserveCapacity(count)
     }
 
+    /// Reserve a known batch while retaining amortized growth across small
+    /// leaves. Reserving exactly each leaf's count can repeatedly copy the tree.
+    package mutating func reserveAdditionalCapacity(_ count: Int) {
+        let required = nodes.count + count
+        let capacity = min(nodes.capacity, lastChildren.capacity)
+        guard required > capacity else { return }
+        reserveCapacity(max(required, capacity * 2))
+    }
+
     /// A fallback literal is plain text for a custom leaf, independent of its
     /// semantic source segments. build() checks the owning node.
     @discardableResult

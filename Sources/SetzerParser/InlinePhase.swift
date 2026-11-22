@@ -58,6 +58,9 @@ extension MarkdownParser {
                 let input = InlineInput(document, children: children)
                 inline.reset(to: input)
                 inline.parse()
+                // Provisional items bound the emitted count, including any
+                // delimiter/link items later unlinked by the controller.
+                builder.reserveAdditionalCapacity(inline.items.count)
                 for diagnostic in inline.diagnostics { builder.report(diagnostic) }
                 if let first = inline.first { events.append((first, index)) }
                 while let (itemIndex, owner) = events.popLast() {

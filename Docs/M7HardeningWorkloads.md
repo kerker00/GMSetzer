@@ -138,3 +138,13 @@ development harness and minimum Swift 6.2 remain pending. No corpus, byte count,
 profile or budget changes. The full 69-case data above retains its earlier
 identity and is not claimed as fresh evidence for the three-file optimization.
 Next focus on large bracket buffers and malformed-byte processing.
+
+The [buffer follow-up](Validation/M7/inline-capacity-2026-11-22.md) then
+compacts internal slots and reserves emission batches, without changing this
+corpus or existing case identities. Another paired 12-hardening/18-mixed
+subset per variant records **31.21% less gross bracket byte traffic** at
+256 KiB (174.19 M → 119.82 M), with timing broadly maintained. Current 249-test
+library suites pass on macOS/Linux ARM64, all public spec snapshots match and
+targeted C/M2 gates pass. No full 69-case refresh or peak-RSS claim is made.
+The malformed-byte path and explicit validation-enabled C control are next;
+Linux execution of this harness and the minimum compiler remain pending.

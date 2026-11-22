@@ -1,0 +1,43 @@
+{
+  "cases": [
+    {
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "block_ms": 2.468,
+      "current_ms": 2.243,
+      "additional_ms": -0.2250000000000001,
+      "allowance_ms": 0.5,
+      "total_ceiling_ms": 3.34,
+      "c_control_drift_percent": -5.005688282138799,
+      "passed": true
+    },
+    {
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "block_ms": 24.592,
+      "current_ms": 23.593,
+      "additional_ms": -0.9989999999999988,
+      "allowance_ms": 8.0,
+      "total_ceiling_ms": 36.34,
+      "c_control_drift_percent": -8.872059782336116,
+      "passed": true
+    },
+    {
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "block_ms": 122.683,
+      "current_ms": 124.781,
+      "additional_ms": 2.097999999999999,
+      "allowance_ms": 40.0,
+      "total_ceiling_ms": 186.122,
+      "c_control_drift_percent": -3.0058887904528597,
+      "passed": true
+    }
+  ],
+  "failures": [],
+  "scope": "CommonMark, annotations off; total parse delta includes all new work, not isolated inline attribution. GFM remains a later acceptance gate.",
+  "variant": "core"
+}

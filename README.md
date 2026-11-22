@@ -80,6 +80,16 @@ tables match exactly. Current targeted C/M2 checks pass unchanged. The full
 minimum compiler and current x64 execution remain pending. Next are the large
 bracket buffers and malformed-byte path; M7 is still in progress.
 
+The [buffer follow-up](Docs/Validation/M7/inline-capacity-2026-11-22.md) reduces
+gross requested bytes for the 256 KiB bracket case by **31%**, from about
+174 M to 120 M. Internal slots are smaller and large inline output reserves
+its capacity in batches; public nodes stay identical. All **249 library tests**
+pass in Debug/Release on macOS/Linux ARM64, with 10 Mac tool tests and all
+C/M2 gates passing. Independent snapshots match all 1,324 spec trees/tokens.
+Bracket timing is broadly maintained; no peak-RSS reduction is established.
+Next is malformed-byte processing with a validation-enabled C control, plus
+the remaining full-resource, minimum-compiler and current-x64 checks.
+
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented
 [message-key/argument catalogue](Docs/NativeAnalysisMessages.md). The v0.4.0

@@ -342,6 +342,12 @@ regression checks also cover nested custom-token rebasing across leaves and
 stripped quote prefixes. This changes temporary parser storage, with no new
 public tree contract or peak-memory guarantee.
 
+The subsequent [inline buffer step](Validation/M7/inline-capacity-2026-11-22.md)
+compacts only internal controller links and changes builder reservation policy.
+All 1,324 public node/token snapshots remain identical; the measured public
+node stride stays 128 bytes on the recorded Mac. This preserves public index
+validation and node granularity without establishing a memory-layout contract.
+
 `DocumentDiagnostic`, `DiagnosticReport`, related locations/messages and
 `SuggestedFix`/`SuggestedEdit` are portable values in `SetzerSyntax`. Findings
 remain separate from parser runtime/configuration issues and do not enlarge

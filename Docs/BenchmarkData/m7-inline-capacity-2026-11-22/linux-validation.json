@@ -1,0 +1,61 @@
+{
+  "started_utc": "2026-11-22T08:37:57Z",
+  "architecture": "aarch64",
+  "os": "Linux-6.18.60+rpt-rpi-2712-aarch64-with-glibc2.41",
+  "logical_cpus": 4,
+  "compiler_stdout": "Swift version 6.4.2 (swift-6.4.2-RELEASE)\nTarget: aarch64-unknown-linux-gnu\n",
+  "compiler_stderr": "swift runtime: unable to protect path to swift-backtrace at [address]; disabling backtracing.\nswift runtime: unable to protect environment for swift-backtrace at [address]; disabling backtracing.\nswift runtime: unable to protect path to swift-backtrace at [address]; disabling backtracing.\nswift runtime: unable to protect environment for swift-backtrace at [address]; disabling backtracing.\n",
+  "source_files": 78,
+  "source_hashes_match_before": true,
+  "phases": {
+    "debug": {
+      "exit_code": 0,
+      "elapsed_seconds": 81.42759665602352,
+      "command": [
+        "swift",
+        "test",
+        "-c",
+        "debug",
+        "--scratch-path",
+        "/tmp/gmsetzer-m7-capacity-y7o6btMB/build-debug",
+        "--build-system",
+        "native",
+        "--disable-sandbox",
+        "--jobs",
+        "2",
+        "--cache-path",
+        "/tmp/gmsetzer-m7-capacity-y7o6btMB/cache",
+        "--config-path",
+        "/tmp/gmsetzer-m7-capacity-y7o6btMB/config",
+        "--security-path",
+        "/tmp/gmsetzer-m7-capacity-y7o6btMB/security"
+      ]
+    },
+    "release": {
+      "exit_code": 0,
+      "elapsed_seconds": 197.35484344989527,
+      "command": [
+        "swift",
+        "test",
+        "-c",
+        "release",
+        "--scratch-path",
+        "/tmp/gmsetzer-m7-capacity-y7o6btMB/build-release",
+        "--build-system",
+        "native",
+        "--disable-sandbox",
+        "--jobs",
+        "2",
+        "--cache-path",
+        "/tmp/gmsetzer-m7-capacity-y7o6btMB/cache",
+        "--config-path",
+        "/tmp/gmsetzer-m7-capacity-y7o6btMB/config",
+        "--security-path",
+        "/tmp/gmsetzer-m7-capacity-y7o6btMB/security"
+      ]
+    }
+  },
+  "status": "complete",
+  "source_hashes_match_after": true,
+  "finished_utc": "2026-11-22T08:42:36Z"
+}

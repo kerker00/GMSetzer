@@ -122,12 +122,34 @@ internal struct InlineParser {
         var data: NodeData
         var start: Int
         var end: Int
-        var previous: Int?
-        var next: Int?
-        var firstChild: Int?
+        // Arena indices are nonnegative, so -1 can store nil without the
+        // extra word of Optional<Int>. Keep optional access for the controller.
+        private var previousIndex: Int
+        private var nextIndex: Int
+        private var firstChildIndex: Int
+        var previous: Int? {
+            get { previousIndex == -1 ? nil : previousIndex }
+            set { previousIndex = newValue ?? -1 }
+        }
+        var next: Int? {
+            get { nextIndex == -1 ? nil : nextIndex }
+            set { nextIndex = newValue ?? -1 }
+        }
+        var firstChild: Int? {
+            get { firstChildIndex == -1 ? nil : firstChildIndex }
+            set { firstChildIndex = newValue ?? -1 }
+        }
         // Tail into this controller's token arena; -1 means no tokens.
         var lastToken = -1
         var fallback: String?
+
+        init(data: NodeData, start: Int, end: Int, previous: Int? = nil,
+             next: Int? = nil, firstChild: Int? = nil) {
+            self.data = data; self.start = start; self.end = end
+            self.previousIndex = previous ?? -1
+            self.nextIndex = next ?? -1
+            self.firstChildIndex = firstChild ?? -1
+        }
     }
     struct Token {
         let role: String
@@ -147,8 +169,8 @@ internal struct InlineParser {
     }
     struct Bracket {
         let item: Int
-        let image: Bool
         let bottom: Int
+        let image: Bool
         var active: Bool
         var bracketAfter = false
     }
@@ -548,12 +570,12 @@ internal struct InlineParser {
                 }
                 if !brackets.isEmpty { brackets[brackets.count - 1].bracketAfter = true }
                 let item = append(.text("["), cursor, cursor + 1)
-                brackets.append(Bracket(item: item, image: false, bottom: delimiters.count, active: true))
+                brackets.append(Bracket(item: item, bottom: delimiters.count, image: false, active: true))
                 cursor += 1
             case 33 where cursor + 1 < bytes.count && bytes[cursor + 1] == 91:
                 if !brackets.isEmpty { brackets[brackets.count - 1].bracketAfter = true }
                 let item = append(.text("!["), cursor, cursor + 2)
-                brackets.append(Bracket(item: item, image: true, bottom: delimiters.count, active: true))
+                brackets.append(Bracket(item: item, bottom: delimiters.count, image: true, active: true))
                 cursor += 2
             case 93: closeBracket()
             case 60:

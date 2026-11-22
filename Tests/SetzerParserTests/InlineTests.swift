@@ -4,6 +4,37 @@ import Testing
 struct InlineTests {
     func render(_ source: String) -> String { HTMLRenderer.conformance.render(MarkdownParser().parse(source)) }
 
+    @Test func longBracketLeavesRetainLiteralNodesAndLeafBoundaries() throws {
+        for count in [1_023, 1_024, 1_025, 4_095, 4_096, 4_097] {
+            let run = "x " + String(repeating: "[", count: count)
+            let source = run + "\n\n[x](u)\n\n" + run + "\n"
+            let annotated = MarkdownParser(collectSyntaxDetails: true).parse(source)
+            let plain = MarkdownParser().parse(source)
+            let brackets = annotated.nodes.filter { $0.data == .text("[") }
+            #expect(brackets.count == count * 2)
+            #expect(annotated.nodes.count == count * 2 + 8)
+            #expect(brackets.allSatisfy {
+                $0.range.count == 1 && annotated.source[$0.range.lowerBound] == 91 && $0.sourceSegments == [$0.range]
+            })
+            #expect(annotated.nodes == plain.nodes && annotated.diagnostics.isEmpty)
+            #expect(HTMLRenderer.conformance.render(annotated)
+                == "<p>" + run + "</p>\n<p><a href=\"u\">x</a></p>\n<p>" + run + "</p>\n")
+            _ = try Document(source: annotated.source, nodes: annotated.nodes, tokens: annotated.tokens)
+        }
+    }
+
+    @Test func manySmallInlineLeavesRetainTreeAndTokens() {
+        let paragraph = Array(repeating: "[a](u) **b**", count: 4).joined(separator: " ")
+        let source = Array(repeating: paragraph, count: 512).joined(separator: "\n\n")
+        let annotated = MarkdownParser(collectSyntaxDetails: true).parse(source)
+        let plain = MarkdownParser().parse(source)
+        #expect(annotated.nodes.count == 12_289)
+        #expect(annotated.tokens?.count == 16_384)
+        #expect(annotated.nodes == plain.nodes && annotated.diagnostics.isEmpty)
+        let html = Array(repeating: "<a href=\"u\">a</a> <strong>b</strong>", count: 4).joined(separator: " ")
+        #expect(HTMLRenderer.conformance.render(annotated) == String(repeating: "<p>" + html + "</p>\n", count: 512))
+    }
+
     @Test func deepEmphasisTokensKeepExactOwnerOrderAcrossLeaves() {
         let run = String(repeating: "*", count: 512)
         let source = run + "x" + run + "\n\n" + run + "y" + run + "\n"
