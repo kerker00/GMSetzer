@@ -85,6 +85,10 @@ digests are retained; no allocation/RSS conclusion follows from this harness.
 An initial Rust preparation uses a `std` feature absent from this release;
 after inspecting its pinned Cargo.toml, the adapter selects its actual `html`
 feature. The failed resolution is retained, with no version/toolchain upgrade.
+An untimed adapter preflight identifies MD4C's omitted formatting newline before
+a nested list in a tight item. The verifier normalizes that block boundary
+explicitly, with a regression preserving spaces between inline children. It
+does not rewrite parser output or discard differences in inline/pre text.
 
 ## Completion
 

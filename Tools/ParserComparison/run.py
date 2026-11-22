@@ -23,6 +23,11 @@ class CanonicalHTML(HTMLParser):
         self.stack = ["root"]
 
     def handle_starttag(self, tag, attrs):
+        # Some renderers put a formatting newline between tight-item text
+        # and a nested block list. Preserve spaces before inline tags.
+        if (self.stack[-1] == "li" and tag in {"ul", "ol"} and self.events
+                and self.events[-1][0] == "text" and self.events[-1][1].isspace()):
+            self.events.pop()
         self.events.append(("start", tag, tuple(sorted(attrs))))
         if tag not in self.VOID:
             self.stack.append(tag)

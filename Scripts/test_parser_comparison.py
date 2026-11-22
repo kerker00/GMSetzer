@@ -18,6 +18,12 @@ class ParserComparisonTests(unittest.TestCase):
                             (b'<a href="a">x</a>', b'<a href="b">x</a>')]:
             self.assertNotEqual(comparison.canonical_html(left), comparison.canonical_html(right))
 
+    def test_nested_list_boundary_formatting_does_not_hide_inline_spacing(self):
+        self.assertEqual(comparison.canonical_html(b"<ul><li><em>x</em>\n<ul><li>y</li></ul></li></ul>"),
+                         comparison.canonical_html(b"<ul><li><em>x</em><ul><li>y</li></ul></li></ul>"))
+        self.assertNotEqual(comparison.canonical_html(b"<ul><li><em>x</em> <em>y</em></li></ul>"),
+                            comparison.canonical_html(b"<ul><li><em>x</em><em>y</em></li></ul>"))
+
     def test_preformatted_whitespace_and_unicode_are_preserved(self):
         self.assertNotEqual(comparison.canonical_html(b"<pre><code>x\n</code></pre>"),
                             comparison.canonical_html(b"<pre><code>x</code></pre>"))

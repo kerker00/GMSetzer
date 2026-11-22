@@ -28,6 +28,8 @@ recorded. Existing GFM and swift-markdown measurements remain in the separate
   tag spelling only; inline/preformatted whitespace and exact Unicode spelling
   remain significant. Raw outputs/digests are retained. This comparison covers
   these inputs, not general conformance or all-input equivalence.
+  Structural formatting includes a newline before a nested block list in a
+  tight list item; spaces between inline children remain significant.
 - Each adapter loads its input and performs three warmups before its internal
   timer. The timed loop includes parser creation/destruction. Startup, input
   file I/O, corpus generation and verification are excluded. MD4C's input
