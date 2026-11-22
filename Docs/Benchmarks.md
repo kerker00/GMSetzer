@@ -989,3 +989,22 @@ There is no general peak-memory reduction claim. A separate
 units using the installed system Clang runtime, with coverage/assertions active
 and no failures; Linux ASan is not claimed. See [candidate readiness](M7Readiness.md)
 for the review boundary and remaining parity/output/longer-campaign work.
+
+## Isolated scan/Span follow-up, 22 November 2026
+
+The [standalone experiment](Validation/M7/scan-evaluation-2026-11-22.md) leaves
+all production sources and manifests unchanged. It compares scalar buffer/Span,
+the actual current word8 implementation, a matched RawSpan word8 algorithm and
+SIMD16/32: **72 rows per native M2/x64 host**, each with 12 rotated samples.
+All 15,520 oracle views pass per run and in a separate Mac ASan verification.
+This measures next-line-boundary traversal with CRLF combined, excluding the
+counting pass, line-table allocation and full parsing/rendering.
+
+At 1 MiB, SIMD16/current time is **0.786 / 1.357 / 0.479 / 0.429×** on M2
+for 80-byte LF / dense CRLF / multibyte / long-line input, and
+**0.732 / 0.558 / 0.621 / 0.450×** on x64. RawSpan word8 is generally slower
+in this prototype; SIMD32 is substantially slower. No blanket adoption or
+whole-parser speedup follows. The [data](BenchmarkData/m7-scan-evaluation-2026-11-22/)
+retains all samples, checksums, preparation results, exact harness and hashes.
+The unchanged production runtime retains its existing M7 evidence; new
+prototype minimum-Swift/minimum-OS and full-parser checks precede adoption.

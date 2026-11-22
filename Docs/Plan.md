@@ -74,6 +74,22 @@ in [PR #26](https://github.com/kerker00/GMSetzer/pull/26) at `a273810` on
 22 November 2026. Explicit milestone acceptance and source-only 0.7 release
 preparation/publication remain separate.
 
+**Owner-approved follow-up, 22 November 2026:** the documentation/scanning
+branch keeps the reviewed M7 runtime intact. The README now leads with a small
+GFM example, published-release links and an explicitly unreleased-candidate
+benchmark table; historical checkpoints move to [Status](Status.md) and the
+reference index to [Documentation](README.md). A separate
+[scan probe](../Tools/ScanProbe/README.md) compares scalar buffer/Span, current
+word8, the same algorithm with RawSpan, and SIMD16/32. The
+[results](Validation/M7/scan-evaluation-2026-11-22.md) identify mixed gains and
+regressions; no experimental strategy is promoted into production.
+Next, measure remaining intermediate copies and HTML byte-buffer output.
+Token interning/struct-of-arrays remains profile-driven. M8's API review now
+explicitly includes a small safe-HTML facade and shared parser/renderer
+configuration for selected extensions. Input streaming requires a separate
+design: later definitions, list finalisation, full-document ownership and
+fallback/restriction semantics must be specified before implementation.
+
 The M4 follow-ups are merged in PR #15 (`1473d49`). The source-only v0.4.0
 release preparation and macOS/Linux CI are merged in PR #16 (`6a0eb8e`);
 their merged branches are cleaned up.
