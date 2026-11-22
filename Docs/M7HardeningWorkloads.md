@@ -1,10 +1,10 @@
-# M7 extension and hostile-input measurement preparation
+# M7 extension and hostile-input measurement workloads
 
 22 November 2026. `HardeningBenchmarks` is a separate development executable;
 the historical `ParserBenchmarks` target and its 72 identities stay unchanged.
 No library source, public API, dependency pin, specification fixture or existing
-performance allowance changes in this step. This is preparation and a five-case
-smoke check, not acceptance of M7 or a complete scaling measurement.
+performance allowance changes in this step. The preparation checkpoint and
+subsequent full scaling baseline are recorded below; neither accepts M7.
 
 ## Inputs and cases
 
@@ -110,9 +110,21 @@ smoke cases** on macOS arm64 / Swift 6.4.2. The old 72-name list matches the
 recorded historical list exactly. The initial failed filter attempt is retained
 alongside the corrected run and contributes no timings.
 
-The full 69-case series, size-to-time/allocation comparisons, new-harness Linux
-and minimum Swift 6.2 validation remain pending. Historical library correctness
-and parser optimizations remain recorded under their original commits; no
-repeat of the 245-test library suite, full 72-case series or fresh M6 resource
-matrix is claimed by this tools-only step. Larger inputs, isolated fuzzing/
-sanitizers, retained/peak-memory work and M7 acceptance remain separate.
+The owner-authorised [full scaling baseline](Validation/M7/hardening-scaling-2026-11-22.md)
+then completes **69/69 cases in 326 seconds** at clean `2f5f1bd`, with all
+50 measurement-source hashes and existing executable/allocator identities
+unchanged. Across 16/64/256 KiB, Swift timing grows about proportionally or
+less, but allocation volume and optional token costs warrant further work.
+At 256 KiB, long-emphasis syntax collection costs 6.41× the off case, and
+open brackets request about 174 M gross bytes. Invalid UTF-8 takes 3.33× the
+C control's time; C does not enable its UTF-8 validation flag, so this is not
+an equivalent-work parity result. Retained tables cover all 23 size series,
+27 annotation pairs and 15 informational C comparisons.
+
+New-harness Linux/minimum Swift 6.2 validation remains pending. Historical
+library correctness and parser optimizations retain their original identities;
+no repeat of the 245-test library suite, full 72-case series or fresh M6
+resource matrix is claimed by this tools-only step. Next profile token
+allocation, large item/bracket buffers and malformed-byte processing. Larger
+inputs, isolated fuzzing/sanitizers, retained/peak-memory work and M7 acceptance
+remain separate.

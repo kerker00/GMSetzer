@@ -54,16 +54,20 @@ reuses inline scratch buffers: CommonMark time improves 15–17% on M2 and 6–7
 on x64; the 1 MB Mac allocation profile records about 48% fewer requests.
 Current macOS/x64 Debug/Release suites and Release C-reference tests pass;
 CommonMark remains 24–54% slower than C on x64. Candidate ARM64/minimum-compiler
-checks, fresh progressive resource measurements, real-M5/hostile-input scaling
+checks, fresh progressive resource measurements, larger-input scaling
 and broader fuzzing remain open. See [M7 hardening](Docs/M7Hardening.md)
 for scope, reproduction and remaining portability/performance gates.
 
-The next [extension/hostile-input matrix](Docs/M7HardeningWorkloads.md) is
-prepared separately: 69 cases at 16/64/256 KiB, with syntax details off/on,
-composed M5 rendering and informational C controls. Ten Release tool tests,
-36 Python tests in both modes and five short Mac smoke cases pass. Full
-scaling, Linux/minimum-compiler validation of this harness and M7 acceptance
-remain pending; the existing 72 reference cases and budgets are unchanged.
+The separate [extension/hostile-input matrix](Docs/M7HardeningWorkloads.md)
+completes **69/69 Mac cases in 5 min 26 s**, at 16/64/256 KiB with syntax
+details off/on, composed M5 rendering and informational C controls. The
+[scaling report](Docs/Validation/M7/hardening-scaling-2026-11-22.md) observes
+approximately proportional timing, while identifying expensive deep-emphasis
+tokens, large bracket buffers and malformed-byte processing for profiling.
+The preparation's ten Release tool tests and 36 Python tests in both modes
+remain valid for the unchanged harness. New-harness Linux/minimum-compiler
+validation, resource/fuzz work and M7 acceptance remain pending; existing
+reference cases and budgets are unchanged.
 
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented

@@ -859,3 +859,33 @@ and records a failure at a per-case timeout, invalid export or nonzero exit;
 it does not drop failed inputs from the matrix. Linux and Swift 6.2 checks
 of this new harness remain pending, along with the fresh progressive resource
 and broader fuzz/sanitizer evidence already identified above.
+
+## M7 full extension/hostile-input scaling baseline, 22 November 2026
+
+After owner confirmation, **69/69 cases complete** at clean `2f5f1bd` on
+macOS arm64 / Swift 6.4.2 in **326 seconds**, with no timeout/invalid export.
+All 50 measurement-source hashes, prepared case names, Release executables
+and malloc interposers match before/after. The direct driver has no SwiftPM/
+build parent; no compiler, test suite or profiler is launched alongside it.
+See the [report](Validation/M7/hardening-scaling-2026-11-22.md) for all conditions,
+timings, sample counts, allocation units and comparison limits.
+
+For approximately 16× input growth across 16/64/256 KiB, the 18 Swift series
+show 6.70–17.21× time growth. The observed bounded series does not prove linear
+complexity. At 256 KiB, full all-M5 output costs 78.512 ms without syntax /
+116.326 ms with syntax; shared-footnote output costs 83.821 / 98.107 ms.
+
+Next profiling priorities are concrete: long-emphasis annotation costs
+**4.801 → 30.769 ms (6.41×)** with **56 → about 262 K** requests; unclosed
+brackets request **174 M gross bytes** for 256 KiB input; invalid UTF-8 takes
+**12.534 ms versus 3.768 ms C**. C's UTF-8 validation flag is disabled and
+quote-depth policies differ, so these controls remain informational. Allocation
+volume is rounded gross traffic, not retained memory or RSS. General C parity,
+new runtime speedups and existing 72-case budget acceptance are not inferred.
+
+The [data directory](BenchmarkData/m7-hardening-full-2026-11-22/) retains all
+69 rows, 23 scaling groups, 27 annotation pairs, 15 C comparisons and 142
+archived streams, with hashes and reproducible derivation. Functional suites
+are unchanged from preparation and not repeated for this measurement-only
+step. New-harness Linux/Swift 6.2, fresh progressive resource measurements,
+larger-input/fuzz/sanitizer work and M7 acceptance remain pending.

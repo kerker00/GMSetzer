@@ -229,3 +229,27 @@ The bounded direct driver stops on timeout or invalid exports and retains
 failed attempts. Full size scaling, new-harness Linux/Swift 6.2 validation and
 the previously pending resource/fuzz evidence still need execution. This
 checkpoint does not accept M7 or establish larger-input complexity.
+
+## Full extension/hostile-input scaling baseline
+
+The owner-authorised [full series](Validation/M7/hardening-scaling-2026-11-22.md)
+then completes **69/69 cases**, exit 0, at clean `2f5f1bd` on macOS arm64 /
+Swift 6.4.2, in **326 seconds**. All 50 measurement-source hashes and existing
+Release executable/allocator identities match before/after. No runtime or
+benchmark configuration changes. The evidence retains every case and derives
+23 scaling groups, 27 annotation pairs and 15 informational C comparisons.
+
+At 16/64/256 KiB, Swift time grows 6.70–17.21× for about 16× input bytes,
+without an observed strongly superlinear pattern in this bounded series.
+This does not prove complexity or robustness at other inputs/sizes. At
+256 KiB, long-emphasis syntax collection costs **6.41×** and raises malloc
+requests from **56 to about 262 K**. Open brackets request about **174 M gross
+bytes**, despite few allocations and a faster time than this C control.
+Invalid UTF-8 takes **3.33× C time**, with C's optional UTF-8 validation disabled;
+that comparison is not equivalent work. Profile these demonstrated costs next.
+
+The existing 72-case gates remain unchanged and are not rerun here. Historical
+correctness/preparation tests remain under their original identities. Linux/
+minimum-compiler checks of the new harness, current-candidate ARM64, fresh
+progressive resource measurements and broader fuzz/sanitizer work remain open.
+No peak-memory reduction, new runtime optimization or completed M7 is claimed.
