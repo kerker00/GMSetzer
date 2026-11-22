@@ -4,6 +4,23 @@ import Testing
 struct InlineTests {
     func render(_ source: String) -> String { HTMLRenderer.conformance.render(MarkdownParser().parse(source)) }
 
+    @Test func deepEmphasisTokensKeepExactOwnerOrderAcrossLeaves() {
+        let run = String(repeating: "*", count: 512)
+        let source = run + "x" + run + "\n\n" + run + "y" + run + "\n"
+        let annotated = MarkdownParser(collectSyntaxDetails: true).parse(source)
+        let plain = MarkdownParser().parse(source)
+        let expected = annotated.nodes.enumerated().flatMap { index, node -> [SyntaxToken] in
+            guard node.kind == .strong else { return [] }
+            return [SyntaxToken("core.emphasis.open", range: SourceRange(node.range.lowerBound, node.range.lowerBound + 2), owner: index),
+                    SyntaxToken("core.emphasis.close", range: SourceRange(node.range.upperBound - 2, node.range.upperBound), owner: index)]
+        }
+        #expect(expected.count == 1_024)
+        #expect(annotated.tokens?.filter { $0.role.hasPrefix("core.emphasis.") } == expected)
+        #expect(annotated.nodes == plain.nodes && annotated.diagnostics == plain.diagnostics)
+        #expect(plain.tokens == nil)
+        #expect(HTMLRenderer.conformance.render(annotated) == HTMLRenderer.conformance.render(plain))
+    }
+
     @Test func escapesEntitiesAndCodeAreDecodedOnlyInTheirOwnContexts() {
         #expect(render(#"\* &amp; &#x1F600; &NotEqualTilde; `\* &amp;`"#) == "<p>* &amp; 😀 ≂̸ <code>\\* &amp;amp;</code></p>\n")
         #expect(render(#"\&amp; &amp;amp; &#0; &#xD800; &#1114112; &#12345678; &#x1234567;"#)

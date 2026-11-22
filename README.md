@@ -52,8 +52,8 @@ is 33–62% slower and remains the parser profiling priority toward parity.
 The [first measured optimization](Docs/Validation/M7/inline-scratch-2026-11-21.md)
 reuses inline scratch buffers: CommonMark time improves 15–17% on M2 and 6–7%
 on x64; the 1 MB Mac allocation profile records about 48% fewer requests.
-Current macOS/x64 Debug/Release suites and Release C-reference tests pass;
-CommonMark remains 24–54% slower than C on x64. Candidate ARM64/minimum-compiler
+That step's macOS/x64 Debug/Release suites and Release C-reference tests pass;
+CommonMark is 24–54% slower than C in its x64 series. Minimum-compiler
 checks, fresh progressive resource measurements, larger-input scaling
 and broader fuzzing remain open. See [M7 hardening](Docs/M7Hardening.md)
 for scope, reproduction and remaining portability/performance gates.
@@ -68,6 +68,17 @@ The preparation's ten Release tool tests and 36 Python tests in both modes
 remain valid for the unchanged harness. New-harness Linux/minimum-compiler
 validation, resource/fuzz work and M7 acceptance remain pending; existing
 reference cases and budgets are unchanged.
+
+The subsequent [token arena optimization](Docs/Validation/M7/token-arena-2026-11-22.md)
+reduces deep-emphasis annotation time by **75–77%** on the Mac: the large
+case takes 29.721 → 7.279 ms, with **262,219 → 94 malloc requests** per parse.
+Gross requested bytes fall about 5.7%; peak memory is not established. All
+247 library tests pass in Debug/Release on macOS and native Linux ARM64,
+10 Mac tool/reference tests pass, and all 1,324 old/new specification token
+tables match exactly. Current targeted C/M2 checks pass unchanged. The full
+69-case baseline predates this three-file runtime change; wider measurements,
+minimum compiler and current x64 execution remain pending. Next are the large
+bracket buffers and malformed-byte path; M7 is still in progress.
 
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented

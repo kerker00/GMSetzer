@@ -889,3 +889,36 @@ archived streams, with hashes and reproducible derivation. Functional suites
 are unchanged from preparation and not repeated for this measurement-only
 step. New-harness Linux/Swift 6.2, fresh progressive resource measurements,
 larger-input/fuzz/sanitizer work and M7 acceptance remain pending.
+
+## M7 inline token arena optimization, 22 November 2026
+
+Allocation recording attributes about 131 K requests each to per-item token
+arrays and temporary projection arrays in the 256 KiB long-emphasis syntax-on
+case. A controller-local token arena and single-segment mapping remove those
+paths while retaining token order/ownership, disjoint ranges and empty CRLF
+positions. Three runtime files change; no API, corpus, profile, pin, fixture or
+existing budget changes. See the [report](Validation/M7/token-arena-2026-11-22.md).
+
+Separate direct Release **30-case subsets per variant** (12 hardening + 18
+mixed) record **75–77% less long-emphasis annotation time**: 256 KiB takes
+**29.721 → 7.279 ms**, with its on/off multiplier 6.23× → 1.67×. Separate
+instrumented profiles record **262,219 → 94 requests per parse (99.964% fewer)**,
+but only **5.72% less gross requested bytes**, not a measured peak-memory gain.
+The initial +1.45% large-M5 timing change is not reproduced by a four-case
+before/after/after/before check. Small mixed-input changes are not generalized;
+matching C controls vary by up to 4.61%.
+
+All six current Mac C/absolute gates and nine frozen M2 checks pass unchanged.
+At 5 MB, CommonMark/C is 123.994 / 94.437 ms (1.313×); GFM/C is
+145.752 / 193.987 ms (0.751×). This does not establish general C parity.
+Current 247-test Debug/Release suites pass on macOS and native Linux ARM64;
+10 Mac Release tool/reference tests and 36 Python tests per mode pass. All
+1,324 old/new spec token tables are identical, including 4,422 token entries.
+
+The [data directory](BenchmarkData/m7-token-arena-2026-11-22/) retains profiles,
+all 60 timing rows, M5 repeats, gate output, candidate identities/patch and
+53 archived streams/probe files with hashes. The full 69/72 refresh, current
+x64/minimum Swift 6.2, Linux development-tool measurements and fresh progressive
+resource evidence remain pending. Open-bracket gross traffic remains 174 M
+at 256 KiB; large buffers and malformed-byte processing are next. M7 is not
+accepted or merged by this local measurement.

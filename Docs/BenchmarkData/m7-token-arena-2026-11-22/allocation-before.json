@@ -1,0 +1,889 @@
+{
+  "iterations" : 2,
+  "stacks" : [
+    {
+      "bytes" : 57342144,
+      "count" : 262152,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "InlineParser.emphasis(bottom:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "InlineParser.parse()"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 12583136,
+      "count" : 262148,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 56576960,
+      "count" : 52,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "DocumentBuilder.append(_:range:segments:fallbackLiteral:to:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 31978992,
+      "count" : 36,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "DocumentBuilder.record(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 524490,
+      "count" : 4,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized InlineInput.init(_:children:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 2720,
+      "count" : 4,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "DocumentBuilder.reserveCapacity(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 1280,
+      "count" : 4,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "DocumentBuilder.append(_:range:segments:fallbackLiteral:to:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.appendText(_:to:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.finishLeaf(headingLevel:closingLine:tablePreamble:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.parse()"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 704,
+      "count" : 4,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "DocumentBuilder.reserveCapacity(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 512,
+      "count" : 4,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "InlineParser.delimiterRun()"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "InlineParser.parse()"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 1179712,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "InlineParser.reset(to:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 524384,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in BlockParser.decode(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.appendText(_:to:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.finishLeaf(headingLevel:closingLine:tablePreamble:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.parse()"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 131148,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 2112,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.parse()"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 2112,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 384,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized static BlockParser.scanLines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 352,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized Array.reserveCapacity(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 320,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "DocumentBuilder.init(source:collectSyntaxDetails:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 320,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "DocumentBuilder.init(source:collectSyntaxDetails:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 304,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "InlineParser.emphasis(bottom:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "InlineParser.parse()"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 112,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized Array.init(repeating:count:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 96,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ContiguousArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized ContiguousArray._createNewBuffer(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 80,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "Document.children(of:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 80,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "Document.children(of:into:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 70,
+      "count" : 2,
+      "frames" : [
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.parse()"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "HardeningBenchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    }
+  ]
+}

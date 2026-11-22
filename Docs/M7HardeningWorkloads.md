@@ -128,3 +128,13 @@ resource matrix is claimed by this tools-only step. Next profile token
 allocation, large item/bracket buffers and malformed-byte processing. Larger
 inputs, isolated fuzzing/sanitizers, retained/peak-memory work and M7 acceptance
 remain separate.
+
+The later [token arena candidate](Validation/M7/token-arena-2026-11-22.md)
+measures a separate 12-case subset here plus 18 historical mixed controls per
+variant. It reduces long-emphasis syntax-on time by 75–77%, with 262,219 → 94
+profiled requests per parse; public tokens remain identical. All current
+247 library tests pass on macOS/Linux ARM64, while Linux execution of this
+development harness and minimum Swift 6.2 remain pending. No corpus, byte count,
+profile or budget changes. The full 69-case data above retains its earlier
+identity and is not claimed as fresh evidence for the three-file optimization.
+Next focus on large bracket buffers and malformed-byte processing.

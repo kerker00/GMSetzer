@@ -34,6 +34,7 @@ extension MarkdownParser {
         // into the resulting tree or the inline controller's projected input.
         var children: [Int] = []
         var events: [(Int, Int)] = []
+        var tokenOrder: [Int] = []
         while let (old, parent) = pending.popLast() {
             let node = document.nodes[old]
             let data: NodeData
@@ -69,8 +70,23 @@ extension MarkdownParser {
                     let inlineIndex = try! builder.append(data, range: mapped.range,
                                                           segments: mapped.segments, fallbackLiteral: item.fallback, to: owner)
                     if collectSyntaxDetails {
-                        for (role, start, end) in item.tokens {
-                            for range in input.ranges(start, end) { builder.record(SyntaxToken(role, range: range, owner: inlineIndex)) }
+                        // Arena links run backwards. Reuse one small buffer to
+                        // preserve per-item insertion order and tree order.
+                        tokenOrder.removeAll(keepingCapacity: true)
+                        var tokenIndex = item.lastToken
+                        while tokenIndex >= 0 {
+                            tokenOrder.append(tokenIndex)
+                            tokenIndex = inline.tokens[tokenIndex].previous
+                        }
+                        for tokenIndex in tokenOrder.reversed() {
+                            let token = inline.tokens[tokenIndex]
+                            switch input.mapped(token.start, token.end).segments {
+                            case .none: break
+                            case .one(let range):
+                                builder.record(SyntaxToken(token.role, range: range, owner: inlineIndex))
+                            case .many(let ranges):
+                                for range in ranges { builder.record(SyntaxToken(token.role, range: range, owner: inlineIndex)) }
+                            }
                         }
                     }
                     if let next = item.next { events.append((next, owner)) }

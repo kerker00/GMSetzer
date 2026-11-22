@@ -335,6 +335,13 @@ pieces are coalesced; disjoint components emit separate tokens. Empty link
 components/fence info remain zero-length tokens. Off mode keeps `tokens == nil`.
 Inline paragraphs without syntax reuse the block phase's text nodes.
 
+M7's internal [token arena optimization](Validation/M7/token-arena-2026-11-22.md)
+preserves token array order, roles, owners, split ranges and zero-length CRLF
+positions. All 1,324 old/new specification token tables match exactly; new
+regression checks also cover nested custom-token rebasing across leaves and
+stripped quote prefixes. This changes temporary parser storage, with no new
+public tree contract or peak-memory guarantee.
+
 `DocumentDiagnostic`, `DiagnosticReport`, related locations/messages and
 `SuggestedFix`/`SuggestedEdit` are portable values in `SetzerSyntax`. Findings
 remain separate from parser runtime/configuration issues and do not enlarge

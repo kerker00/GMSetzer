@@ -47,6 +47,11 @@ internal struct InlineInput: Sendable {
     /// The common one-piece case creates no temporary segment array.
     func mapped(_ start: Int, _ end: Int) -> (range: SourceRange, segments: SourceSegments) {
         let p = pieces[piece(at: start)]
+        if start == end {
+            let offset = start == p.end ? p.source.upperBound : p.source.lowerBound + start - p.start
+            let range = SourceRange(offset, offset)
+            return (range, .one(range))
+        }
         if end <= p.end {
             let range = SourceRange(p.source.lowerBound + start - p.start,
                                     p.source.upperBound - max(0, p.end - end))
@@ -120,8 +125,15 @@ internal struct InlineParser {
         var previous: Int?
         var next: Int?
         var firstChild: Int?
-        var tokens: [(String, Int, Int)] = []
+        // Tail into this controller's token arena; -1 means no tokens.
+        var lastToken = -1
         var fallback: String?
+    }
+    struct Token {
+        let role: String
+        var start: Int
+        var end: Int
+        var previous: Int
     }
     struct Delimiter {
         let item: Int
@@ -166,6 +178,7 @@ internal struct InlineParser {
     var diagnostics: [ParseDiagnostic] = []
     var customOpeners: [CustomOpener] = []
     var items: [Item] = []
+    var tokens: [Token] = []
     var first: Int?
     var last: Int?
     var delimiters: [Delimiter] = []
@@ -214,6 +227,7 @@ internal struct InlineParser {
         self.input = input
         self.bytes = input.bytes
         items.removeAll(keepingCapacity: true)
+        tokens.removeAll(keepingCapacity: true)
         delimiters.removeAll(keepingCapacity: true)
         brackets.removeAll(keepingCapacity: true)
         customOpeners.removeAll(keepingCapacity: true)
@@ -263,7 +277,9 @@ internal struct InlineParser {
     }
 
     mutating func token(_ item: Int, _ role: String, _ start: Int, _ end: Int) {
-        if collectSyntax { items[item].tokens.append((role, start, end)) }
+        guard collectSyntax else { return }
+        tokens.append(Token(role: role, start: start, end: end, previous: items[item].lastToken))
+        items[item].lastToken = tokens.count - 1
     }
 
     mutating func unlink(_ index: Int) {

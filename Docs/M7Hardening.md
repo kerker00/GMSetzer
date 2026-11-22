@@ -253,3 +253,33 @@ correctness/preparation tests remain under their original identities. Linux/
 minimum-compiler checks of the new harness, current-candidate ARM64, fresh
 progressive resource measurements and broader fuzz/sanitizer work remain open.
 No peak-memory reduction, new runtime optimization or completed M7 is claimed.
+
+## Measured token allocation optimization
+
+The subsequent [token arena report](Validation/M7/token-arena-2026-11-22.md)
+profiles the demonstrated annotation cost, then changes three internal parser
+files. A controller-local token arena and reused emission buffer replace
+per-item token arrays; the existing single-segment mapper avoids temporary
+token range arrays, preserving empty CRLF positions and nested rebasing.
+Public API, source grammar, validation, fixtures and budgets are unchanged.
+
+At 16/64/256 KiB, deep-emphasis annotation time improves **75–77%**; the large
+case takes **29.721 → 7.279 ms**, lowering its paired annotation multiplier
+from 6.23× to 1.67×. Separate allocation profiles record **262,219 → 94
+requests per parse (99.964% fewer)** and about **5.7% less gross requested
+volume**, without establishing live/peak memory. A small initial M5 slowdown
+does not recur in the recorded order-reversal check; no broad M5 speedup is
+claimed. The 174 M bracket-buffer traffic remains a separate cost.
+
+Current validation passes **247 library tests / 29 suites** in Debug/Release
+on macOS and native Linux ARM64, **10 Mac Release tool/reference tests** and
+**36 Python tests in each mode**. All 1,324 old/new spec token tables match
+exactly, including 4,422 roles/ranges/owners in array order. Targeted 30-case
+subsets per variant pass all six Mac C/absolute and nine frozen M2 checks.
+
+The complete 69-case baseline above remains historical to its recorded source.
+This candidate still needs minimum Swift 6.2/current x64, Linux development-
+tool timings, full benchmark refresh and fresh progressive resource evidence.
+Next profile large item/bracket buffers, then malformed-byte decoding with an
+explicit validation-enabled C control. Broader fuzz/sanitizer work and M7
+acceptance remain open; no push, PR or publication occurs in this step.

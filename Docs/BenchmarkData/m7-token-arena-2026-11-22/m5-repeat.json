@@ -1,0 +1,102 @@
+{
+  "name": "GMSetzer m5-composed-v1 parse syntax-on 256 KiB (bytes: 262177, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",
+  "order": "before / after / after / before",
+  "results": [
+    {
+      "ordinal": 1,
+      "label": "before",
+      "load": [
+        3.85302734375,
+        4.25537109375,
+        5.35791015625
+      ],
+      "wall_ms_p50": "95.814",
+      "metrics": {
+        "Malloc (bytes total) (M) *": {
+          "p50_display": "103",
+          "samples": 53
+        },
+        "Malloc (total) (K) *": {
+          "p50_display": "296",
+          "samples": 53
+        },
+        "Time (wall clock) (\u03bcs) *": {
+          "p50_display": "95814",
+          "samples": 53
+        }
+      }
+    },
+    {
+      "ordinal": 2,
+      "label": "after",
+      "load": [
+        3.62451171875,
+        4.201171875,
+        5.33203125
+      ],
+      "wall_ms_p50": "94.962",
+      "metrics": {
+        "Malloc (bytes total) (M) *": {
+          "p50_display": "101",
+          "samples": 52
+        },
+        "Malloc (total) (K) *": {
+          "p50_display": "262",
+          "samples": 52
+        },
+        "Time (wall clock) (\u03bcs) *": {
+          "p50_display": "94962",
+          "samples": 52
+        }
+      }
+    },
+    {
+      "ordinal": 3,
+      "label": "after",
+      "load": [
+        3.57421875,
+        4.18115234375,
+        5.318359375
+      ],
+      "wall_ms_p50": "94.306",
+      "metrics": {
+        "Malloc (bytes total) (M) *": {
+          "p50_display": "101",
+          "samples": 53
+        },
+        "Malloc (total) (K) *": {
+          "p50_display": "262",
+          "samples": 53
+        },
+        "Time (wall clock) (\u03bcs) *": {
+          "p50_display": "94306",
+          "samples": 53
+        }
+      }
+    },
+    {
+      "ordinal": 4,
+      "label": "before",
+      "load": [
+        3.78662109375,
+        4.20703125,
+        5.314453125
+      ],
+      "wall_ms_p50": "96.797",
+      "metrics": {
+        "Malloc (bytes total) (M) *": {
+          "p50_display": "103",
+          "samples": 52
+        },
+        "Malloc (total) (K) *": {
+          "p50_display": "296",
+          "samples": 52
+        },
+        "Time (wall clock) (\u03bcs) *": {
+          "p50_display": "96797",
+          "samples": 52
+        }
+      }
+    }
+  ]
+}
