@@ -1,7 +1,8 @@
 # M7 candidate readiness
 
-22 November 2026. The `feature/m7-hardening` candidate is ready for owner
-review. It is not merged or accepted as M7, and no 0.7 tag/release exists.
+22 November 2026. The M7 candidate merged in [PR #26](https://github.com/kerker00/GMSetzer/pull/26)
+at `a273810`. Explicit milestone acceptance remains separate, and no 0.7
+tag/release exists.
 Development identity remains `0.7.0-dev.1`; the latest published version stays
 0.6.0. API/DocC/1.0 completion stays M8.
 
@@ -31,7 +32,8 @@ remaining intermediate copies and measured HTML emission improvements remain
 useful follow-ups. Library evidence does not establish consumer device/UI
 acceptance.
 
-Owner review/merge comes next. Any source-only 0.7 release preparation must
+The owner merge is confirmed. The agreed performance follow-up and separately
+reviewed source-only 0.7 release preparation come next. Release preparation must
 choose its final version identity and exact merged commit, rerun required CI
 and consumer/archive checks, and obtain separate confirmation before tagging
 or publishing. The current candidate's matching receipts remain historical
