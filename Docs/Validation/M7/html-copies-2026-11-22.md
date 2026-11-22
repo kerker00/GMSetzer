@@ -130,7 +130,8 @@ the existing resource budgets, not general peak-memory reduction.
 passes at `ad8179f`: macOS Swift 6.2.3 / Linux Swift 6.2 each execute all 253
 tests, build the optimized library and pass 36 offline Python tests. This
 checks the minimum compiler independently of the native 6.4.2 measurements.
-The branch is not merged or released. The
+The owner merged PR #28 at `ce5dedc`; this report retains its measured source
+snapshots, and no 0.7 release is published. The
 [evidence directory](../../BenchmarkData/m7-html-copies-2026-11-22/) retains
 raw paired/repeat exports, exact allocation stacks, tests, source/binary hashes
 and the candidate patch. Logs replace task/home paths; archived digests record

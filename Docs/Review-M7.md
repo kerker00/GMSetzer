@@ -75,4 +75,4 @@ hash verification. Mac ASan also passes 1,024 bounded mutation inputs / 8,192
 parses with full/progressive HTML comparisons. Minimum Swift 6.2 CI passes all
 253 tests, optimized builds and 36 Python tests on both macOS and Linux at
 `ad8179f`; the linked report retains the run and logs. No additional runtime
-correction was needed during this review. The owner merges PR #28.
+correction was needed during this review. The owner merged PR #28 at `ce5dedc`.

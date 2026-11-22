@@ -104,8 +104,8 @@ ASan tests pass, plus 1,024 bounded ASan mutation inputs / 8,192 parses. Fresh
 source-matched progressive resources pass all 42 cases / 126 checks, verifying
 43 runtime / 5 measurement-tool hashes. Minimum Swift 6.2 candidate CI passes
 253 tests, optimized builds and 36 Python tests on macOS/Linux at `ad8179f`.
-[PR #28](https://github.com/kerker00/GMSetzer/pull/28) is open; the candidate is
-not merged or released.
+The owner merged [PR #28](https://github.com/kerker00/GMSetzer/pull/28) at
+`ce5dedc`; its source remains unreleased.
 
 The M4 follow-ups are merged in PR #15 (`1473d49`). The source-only v0.4.0
 release preparation and macOS/Linux CI are merged in PR #16 (`6a0eb8e`);
@@ -845,8 +845,9 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: review and merge the measured HTML-copy follow-up in
-[PR #28](https://github.com/kerker00/GMSetzer/pull/28), alongside separately
+Current next work: review the inline-input/comparison follow-up in
+[PR #29](https://github.com/kerker00/GMSetzer/pull/29), after the HTML-copy
+follow-up merged in PR #28 (`ce5dedc`), alongside separately
 reviewed source-only 0.7 release preparation after the [M7 candidate](M7Readiness.md)
 merged in PR #26 (`a273810`). The measured
 scratch/token/buffer/UTF-8 optimizations now have current full Mac/x64 benchmark
