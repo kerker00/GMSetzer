@@ -13,29 +13,95 @@ wherever Swift runs, including Linux.
 > published source-only preview is [v0.6.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0), including M6.
 
 [PR #24](https://github.com/kerker00/GMSetzer/pull/24) (`a8a0351`) adds
-**progressive HTML**. [PR #25](https://github.com/kerker00/GMSetzer/pull/25)
-merged the source-only 0.6.0 preparation at `8ff2061`; that exact commit is
-published as **v0.6.0**, with parser/native-provider identity `0.6.0`. See the
-[release notes](Docs/Releases/0.6.0.md) and
-[preparation checks](Docs/Validation/Release/0.6.0.md).
+**progressive HTML**; its accepted M6 snapshot used identity `0.6.0-dev.1`.
+That implementation is published separately as source-only **v0.6.0** at
+`8ff2061`, after [PR #25](https://github.com/kerker00/GMSetzer/pull/25) merged.
+See its [release notes](Docs/Releases/0.6.0.md) and
+[validation](Docs/Validation/Release/0.6.0.md).
+This M7 branch now reports **`0.7.0-dev.1`** and retains the new hardening/
+optimization work for the next preview.
 `HTMLRenderer.prepare` and `FootnotesHTMLRenderer.prepare` retain complete
 Markdown context and emit structural HTML groups on demand, with explicit
 whole-document fallbacks for raw HTML and document-order hooks. The
 [API and limits](Docs/ProgressiveHTML.md), [self-review](Docs/Review-M6.md)
 and [M6 acceptance](Docs/M6Acceptance.md) describe the supported contract.
 
-The accepted M6 snapshot's 42-case Linux ARM64 stage/RSS/allocation matrix meets the reviewed
-post-baseline budgets. Mixed 1 MB/5 MB inputs reach first HTML in about half
-the parse-plus-full-output time on that host. Full parsing still precedes
+For the accepted M6 snapshot, the 42-case Linux ARM64 stage/RSS/allocation
+matrix meets the reviewed post-baseline budgets. Mixed 1 MB/5 MB inputs reach
+first HTML in about half the parse-plus-full-output time on that host. Full parsing still precedes
 output; giant blocks remain indivisible and no general peak-memory reduction
 is established. The [0.6.0 installation](#installation) includes progressive output.
 
-The accepted M6 snapshot is published in **0.6.0**; the M7 changes remain
-on their separate development branch for **0.7.0**. Next is **M7: general
-speed and hardening**, beginning with reproducible
+Current work is **M7: general speed and hardening**, with reproducible
 adversarial/mutation coverage and a measured investigation of remaining costs.
 API/DocC/1.0 completion stays **M8**. Full benchmark and long fuzzing execution
 follow the existing approval requirement.
+
+The initial `feature/m7-hardening` step adds bounded deterministic mutation
+coverage: 1,024 profile/input combinations and 24 depth cases across strict,
+GFM and selected M5 configurations. At that preparation checkpoint, all 245
+tests pass in Debug and Release on macOS and native Linux ARM64/x64 with
+Swift 6.4.2. The owner-approved [72-case Apple M2 baseline](Docs/Validation/M7/baseline-2026-11-21.md)
+passes all six parser/C budgets and nine frozen M2 checks. The separate
+[72-case Raspberry Pi baseline](Docs/Validation/M7/linux-arm64-2026-11-21.md)
+satisfies all six same-host C ratios, with high-load/sample-count limitations.
+The [direct x64 baseline](Docs/Validation/M7/linux-x64-2026-11-21.md) also
+passes all six C ratios: GFM is within about 7% of C on this corpus; CommonMark
+is 33–62% slower and remains the parser profiling priority toward parity.
+
+The [first measured optimization](Docs/Validation/M7/inline-scratch-2026-11-21.md)
+reuses inline scratch buffers: CommonMark time improves 15–17% on M2 and 6–7%
+on x64; the 1 MB Mac allocation profile records about 48% fewer requests.
+That step's macOS/x64 Debug/Release suites and Release C-reference tests pass;
+CommonMark is 24–54% slower than C in its x64 series. Minimum-compiler
+checks, fresh progressive resource measurements, larger-input scaling
+and broader fuzzing remain open. See [M7 hardening](Docs/M7Hardening.md)
+for scope, reproduction and remaining portability/performance gates.
+
+The separate [extension/hostile-input matrix](Docs/M7HardeningWorkloads.md)
+completes **69/69 Mac cases in 5 min 26 s**, at 16/64/256 KiB with syntax
+details off/on, composed M5 rendering and informational C controls. The
+[scaling report](Docs/Validation/M7/hardening-scaling-2026-11-22.md) observes
+approximately proportional timing, while identifying expensive deep-emphasis
+tokens, large bracket buffers and malformed-byte processing for profiling.
+The preparation's ten Release tool tests and 36 Python tests in both modes
+remain valid for the unchanged harness. New-harness Linux/minimum-compiler
+validation, resource/fuzz work and M7 acceptance remain pending; existing
+reference cases and budgets are unchanged.
+
+The subsequent [token arena optimization](Docs/Validation/M7/token-arena-2026-11-22.md)
+reduces deep-emphasis annotation time by **75–77%** on the Mac: the large
+case takes 29.721 → 7.279 ms, with **262,219 → 94 malloc requests** per parse.
+Gross requested bytes fall about 5.7%; peak memory is not established. All
+247 library tests pass in Debug/Release on macOS and native Linux ARM64,
+10 Mac tool/reference tests pass, and all 1,324 old/new specification token
+tables match exactly. Current targeted C/M2 checks pass unchanged. The full
+69-case baseline predates this three-file runtime change; wider measurements,
+minimum compiler and current x64 execution remain pending. Next are the large
+bracket buffers and malformed-byte path; M7 is still in progress.
+
+The [buffer follow-up](Docs/Validation/M7/inline-capacity-2026-11-22.md) reduces
+gross requested bytes for the 256 KiB bracket case by **31%**, from about
+174 M to 120 M. Internal slots are smaller and large inline output reserves
+its capacity in batches; public nodes stay identical. All **249 library tests**
+pass in Debug/Release on macOS/Linux ARM64, with 10 Mac tool tests and all
+C/M2 gates passing. Independent snapshots match all 1,324 spec trees/tokens.
+Bracket timing is broadly maintained; no peak-RSS reduction is established.
+The [UTF-8 follow-up](Docs/Validation/M7/utf8-2026-11-22.md) adds explicit
+validation-on/off C controls without changing the legacy corpus or Swift's
+replacement policy. Reusing an already validated plain-paragraph tree reduces
+the compatible malformed 256 KiB case from **12.812 to 10.297 ms** and gross
+requested bytes by **53%** on M2. Validating C takes 5.251 ms; this is still
+1.96× C time, with different source-coordinate services. All **252 Mac library
+tests**, 12 Release tool tests, the full AddressSanitizer suite and a bounded
+8,192-parse ASan mutation run pass. This is not coverage-guided fuzzing.
+The [current x64/resource report](Docs/Validation/M7/final-x64-2026-11-22.md)
+records passing native suites/tools, all 36/69/72 benchmark cases and a fresh
+42-case progressive matrix with matching runtime/tool hashes. Swift 6.2 CI
+passes on macOS/Linux. A separate [coverage-guided campaign](Docs/Validation/M7/fuzz-2026-11-22.md)
+completes 3,510 units without failure using the existing Linux Clang runtime.
+See [candidate readiness](Docs/M7Readiness.md): owner review/acceptance and
+general C parity remain open; there is no 0.7 release yet.
 
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented
@@ -238,7 +304,8 @@ Service contracts, the native rule catalogue and validation limits are in
 - `GMSETZER_SPEC_DIAGNOSTICS=1 swift test --filter SpecTests` also prints each
   mismatching example with source, expected HTML and actual HTML as JSON.
 - `Tools/` is a separate package for benchmarks against cmark-gfm in C and
-  swift-markdown: `cd Tools && swift package benchmark`.
+  swift-markdown: see the build/measurement instructions in
+  [Docs/Benchmarks.md](Docs/Benchmarks.md), including the direct Linux driver.
 - [M1 measurements](Docs/M1Measurements.md) describe the recorded block-only
   baseline, optional syntax costs and local performance gate. Run
   `python3 -I Scripts/check_benchmark_budget.py <results.log>` against a full

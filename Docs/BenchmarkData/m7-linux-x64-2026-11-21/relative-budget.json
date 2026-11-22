@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "cases": [
+    {
+      "profile": "CommonMark",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 3.946,
+      "c_ms": 2.435,
+      "gm_samples": 1258,
+      "c_samples": 2026,
+      "ratio": 1.6205338809034908,
+      "max_ratio": 2.0,
+      "passed": true
+    },
+    {
+      "profile": "CommonMark",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 44.99,
+      "c_ms": 33.718,
+      "gm_samples": 111,
+      "c_samples": 148,
+      "ratio": 1.3343021531526187,
+      "max_ratio": 2.0,
+      "passed": true
+    },
+    {
+      "profile": "CommonMark",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 231.342,
+      "c_ms": 144.835,
+      "gm_samples": 22,
+      "c_samples": 35,
+      "ratio": 1.597279663064867,
+      "max_ratio": 2.0,
+      "passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 4.854,
+      "c_ms": 4.538,
+      "gm_samples": 1019,
+      "c_samples": 1089,
+      "ratio": 1.0696342000881445,
+      "max_ratio": 2.0,
+      "passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 55.378,
+      "c_ms": 56.033,
+      "gm_samples": 90,
+      "c_samples": 89,
+      "ratio": 0.9883104599075545,
+      "max_ratio": 2.0,
+      "passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 282.329,
+      "c_ms": 271.843,
+      "gm_samples": 18,
+      "c_samples": 19,
+      "ratio": 1.0385737355753137,
+      "max_ratio": 2.0,
+      "passed": true
+    }
+  ],
+  "failures": [],
+  "scope": "Native x86_64 same-host relative parser/C ceiling only. Apple-M2 absolute deadlines and frozen M2 allowances/drift are not evaluated or changed. Parity remains the optimization aim; satisfying the 2x ceiling does not establish parity."
+}

@@ -1,0 +1,212 @@
+[
+  {
+    "target": "HardeningBenchmarks",
+    "name": "GMSetzer long-emphasis-v1 parse syntax-off 16 KiB (bytes: 16390, corpus: long-emphasis-v1, profile: commonmark, syntax: off)",
+    "before_ms": 0.29,
+    "after_ms": 0.266,
+    "delta_percent": -8.2758620689655
+  },
+  {
+    "target": "HardeningBenchmarks",
+    "name": "GMSetzer long-emphasis-v1 parse syntax-off 256 KiB (bytes: 262150, corpus: long-emphasis-v1, profile: commonmark, syntax: off)",
+    "before_ms": 4.772,
+    "after_ms": 4.366,
+    "delta_percent": -8.507963118189455
+  },
+  {
+    "target": "HardeningBenchmarks",
+    "name": "GMSetzer long-emphasis-v1 parse syntax-off 64 KiB (bytes: 65542, corpus: long-emphasis-v1, profile: commonmark, syntax: off)",
+    "before_ms": 1.172,
+    "after_ms": 1.077,
+    "delta_percent": -8.105802047781562
+  },
+  {
+    "target": "HardeningBenchmarks",
+    "name": "GMSetzer long-emphasis-v1 parse syntax-on 16 KiB (bytes: 16390, corpus: long-emphasis-v1, profile: commonmark, syntax: on)",
+    "before_ms": 1.878,
+    "after_ms": 0.432,
+    "delta_percent": -76.99680511182109
+  },
+  {
+    "target": "HardeningBenchmarks",
+    "name": "GMSetzer long-emphasis-v1 parse syntax-on 256 KiB (bytes: 262150, corpus: long-emphasis-v1, profile: commonmark, syntax: on)",
+    "before_ms": 29.721,
+    "after_ms": 7.279,
+    "delta_percent": -75.50889943137848
+  },
+  {
+    "target": "HardeningBenchmarks",
+    "name": "GMSetzer long-emphasis-v1 parse syntax-on 64 KiB (bytes: 65542, corpus: long-emphasis-v1, profile: commonmark, syntax: on)",
+    "before_ms": 7.361,
+    "after_ms": 1.746,
+    "delta_percent": -76.28039668523299
+  },
+  {
+    "target": "HardeningBenchmarks",
+    "name": "GMSetzer m5-composed-v1 parse syntax-on 16 KiB (bytes: 16654, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",
+    "before_ms": 6.115,
+    "after_ms": 6.087,
+    "delta_percent": -0.4578904333605971
+  },
+  {
+    "target": "HardeningBenchmarks",
+    "name": "GMSetzer m5-composed-v1 parse syntax-on 256 KiB (bytes: 262177, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",
+    "before_ms": 94.831,
+    "after_ms": 96.207,
+    "delta_percent": 1.4510023093714075
+  },
+  {
+    "target": "HardeningBenchmarks",
+    "name": "GMSetzer m5-composed-v1 parse syntax-on 64 KiB (bytes: 65665, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",
+    "before_ms": 23.642,
+    "after_ms": 23.151,
+    "delta_percent": -2.0768124524151887
+  },
+  {
+    "target": "HardeningBenchmarks",
+    "name": "GMSetzer open-brackets-v1 parse syntax-off 16 KiB (bytes: 16384, corpus: open-brackets-v1, profile: commonmark, syntax: off)",
+    "before_ms": 1.068,
+    "after_ms": 0.937,
+    "delta_percent": -12.265917602996257
+  },
+  {
+    "target": "HardeningBenchmarks",
+    "name": "GMSetzer open-brackets-v1 parse syntax-off 256 KiB (bytes: 262144, corpus: open-brackets-v1, profile: commonmark, syntax: off)",
+    "before_ms": 17.809,
+    "after_ms": 17.318,
+    "delta_percent": -2.757032960862482
+  },
+  {
+    "target": "HardeningBenchmarks",
+    "name": "GMSetzer open-brackets-v1 parse syntax-off 64 KiB (bytes: 65536, corpus: open-brackets-v1, profile: commonmark, syntax: off)",
+    "before_ms": 4.395,
+    "after_ms": 3.846,
+    "delta_percent": -12.491467576791804
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "GMSetzer CommonMark parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 25.362,
+    "after_ms": 23.527,
+    "delta_percent": -7.235233814367947
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "GMSetzer CommonMark parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 2.281,
+    "after_ms": 2.238,
+    "delta_percent": -1.8851380973257448
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "GMSetzer CommonMark parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 125.633,
+    "after_ms": 123.994,
+    "delta_percent": -1.3045935383219298
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "GMSetzer GFM parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 27.869,
+    "after_ms": 27.476,
+    "delta_percent": -1.410169004987627
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "GMSetzer GFM parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 2.826,
+    "after_ms": 2.656,
+    "delta_percent": -6.015569709837221
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "GMSetzer GFM parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 155.058,
+    "after_ms": 145.752,
+    "delta_percent": -6.001625198312876
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "GMSetzer selected inline parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 25.494,
+    "after_ms": 25.199,
+    "delta_percent": -1.1571350121597157
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "GMSetzer selected inline parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 2.433,
+    "after_ms": 2.337,
+    "delta_percent": -3.9457459926017124
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "GMSetzer selected inline parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 131.924,
+    "after_ms": 129.565,
+    "delta_percent": -1.7881507534641239
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "GMSetzer selected registry parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 25.608,
+    "after_ms": 25.297,
+    "delta_percent": -1.2144642299281472
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "GMSetzer selected registry parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 2.464,
+    "after_ms": 2.419,
+    "delta_percent": -1.8262987012987009
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "GMSetzer selected registry parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 134.349,
+    "after_ms": 132.71,
+    "delta_percent": -1.219956977722192
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "cmark-gfm (C) CommonMark parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 19.3,
+    "after_ms": 19.235,
+    "delta_percent": -0.33678756476684946
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "cmark-gfm (C) CommonMark parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 1.756,
+    "after_ms": 1.675,
+    "delta_percent": -4.612756264236895
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "cmark-gfm (C) CommonMark parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 95.158,
+    "after_ms": 94.437,
+    "delta_percent": -0.7576872149477776
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "cmark-gfm (C) GFM parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 37.847,
+    "after_ms": 37.061,
+    "delta_percent": -2.0767828361561103
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "cmark-gfm (C) GFM parse 100 KB (bytes: 100284, corpus: mixed-v1)",
+    "before_ms": 3.015,
+    "after_ms": 3.004,
+    "delta_percent": -0.3648424543946982
+  },
+  {
+    "target": "ParserBenchmarks",
+    "name": "cmark-gfm (C) GFM parse 5 MB (bytes: 5000500, corpus: mixed-v1)",
+    "before_ms": 193.2,
+    "after_ms": 193.987,
+    "delta_percent": 0.4073498964803246
+  }
+]

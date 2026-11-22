@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-22",
+  "macos_debug": {
+    "tests": 249,
+    "suites": 29,
+    "exit_code": 0
+  },
+  "macos_release": {
+    "tests": 249,
+    "suites": 29,
+    "exit_code": 0
+  },
+  "macos_tools_release": {
+    "tests": 10,
+    "suites": 5,
+    "exit_code": 0
+  },
+  "linux_arm64_debug": {
+    "tests": 249,
+    "suites": 29,
+    "exit_code": 0
+  },
+  "linux_arm64_release": {
+    "tests": 249,
+    "suites": 29,
+    "exit_code": 0
+  },
+  "baseline_regression_oracles": {
+    "tests": 2,
+    "exit_code": 0
+  },
+  "identical_public_tables_examples": 1324,
+  "public_node_entries": 7994,
+  "public_token_entries": 4422,
+  "linux_transferred_files": 78,
+  "unchanged_current_source_hashes_verified": true,
+  "measured_subset_cases_per_variant": 30,
+  "c_absolute_checks": 6,
+  "frozen_m2_checks": 9,
+  "fresh_python_suite_run": false,
+  "unchanged_python_reference": "../m7-token-arena-2026-11-22/validation.json",
+  "full_69_or_72_case_refresh": false,
+  "current_candidate_linux_x64": false,
+  "current_candidate_minimum_swift_6_2": false
+}

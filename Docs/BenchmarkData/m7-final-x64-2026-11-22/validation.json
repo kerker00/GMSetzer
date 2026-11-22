@@ -1,0 +1,45 @@
+{
+  "status": "complete",
+  "started_utc": "2026-11-22T11:06:02Z",
+  "os": "Linux-7.3.4-1-cachyos-x86_64-with-glibc2.44",
+  "architecture": "x86_64",
+  "cpus": 4,
+  "compiler": "Swift version 6.4.2 (swift-6.4.2-RELEASE)\nTarget: x86_64-unknown-linux-gnu\n",
+  "source_files": 132,
+  "phases": {
+    "debug": {
+      "exit_code": 0,
+      "elapsed_seconds": 49.18772186899969
+    },
+    "release": {
+      "exit_code": 0,
+      "elapsed_seconds": 105.34875491399998
+    },
+    "tools": {
+      "exit_code": 0,
+      "elapsed_seconds": 149.9979727990003
+    },
+    "probe": {
+      "exit_code": 0,
+      "elapsed_seconds": 56.56880356400052
+    },
+    "python": {
+      "exit_code": 0,
+      "elapsed_seconds": 2.752173263000259
+    },
+    "python-optimized": {
+      "exit_code": 0,
+      "elapsed_seconds": 2.7114896460007003
+    },
+    "allocator-build": {
+      "exit_code": 0,
+      "elapsed_seconds": 0.07880146499974217
+    },
+    "allocator-check-build": {
+      "exit_code": 0,
+      "elapsed_seconds": 0.043742470999859506
+    }
+  },
+  "source_hashes_unchanged": true,
+  "finished_utc": "2026-11-22T11:12:09Z"
+}

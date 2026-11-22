@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "cases": [
+    {
+      "host": "mac",
+      "profile": "CommonMark",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 2.265,
+      "c_ms": 1.65,
+      "ratio": 1.3727272727272728,
+      "relative_passed": true,
+      "c_change_percent": -1.0791366906474642
+    },
+    {
+      "host": "mac",
+      "profile": "CommonMark",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 23.593,
+      "c_ms": 18.596,
+      "ratio": 1.2687137018713701,
+      "relative_passed": true,
+      "c_change_percent": 2.069268346231956
+    },
+    {
+      "host": "mac",
+      "profile": "CommonMark",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 124.649,
+      "c_ms": 92.668,
+      "ratio": 1.3451137393706565,
+      "relative_passed": true,
+      "c_change_percent": -0.7018634205929963
+    },
+    {
+      "host": "mac",
+      "profile": "GFM",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 2.703,
+      "c_ms": 2.939,
+      "ratio": 0.9197005784280367,
+      "relative_passed": true,
+      "c_change_percent": -0.7429922323539229
+    },
+    {
+      "host": "mac",
+      "profile": "GFM",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 27.525,
+      "c_ms": 36.766,
+      "ratio": 0.7486536473916119,
+      "relative_passed": true,
+      "c_change_percent": 1.7237086019422865
+    },
+    {
+      "host": "mac",
+      "profile": "GFM",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 145.752,
+      "c_ms": 191.627,
+      "ratio": 0.7606026290658414,
+      "relative_passed": true,
+      "c_change_percent": 0.0
+    },
+    {
+      "host": "x64",
+      "profile": "CommonMark",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 3.688,
+      "c_ms": 2.454,
+      "ratio": 1.5028524857375714,
+      "relative_passed": true,
+      "c_change_percent": 1.3630731102850069
+    },
+    {
+      "host": "x64",
+      "profile": "CommonMark",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 42.172,
+      "c_ms": 33.948,
+      "ratio": 1.242252857311182,
+      "relative_passed": true,
+      "c_change_percent": -0.09417304296646112
+    },
+    {
+      "host": "x64",
+      "profile": "CommonMark",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 215.745,
+      "c_ms": 140.247,
+      "ratio": 1.5383216753299536,
+      "relative_passed": true,
+      "c_change_percent": 1.3257521024188756
+    },
+    {
+      "host": "x64",
+      "profile": "GFM",
+      "size": "100 KB",
+      "bytes": 100284,
+      "corpus": "mixed-v1",
+      "gm_ms": 4.461,
+      "c_ms": 4.534,
+      "ratio": 0.9838994265549185,
+      "relative_passed": true,
+      "c_change_percent": -0.1761338617349173
+    },
+    {
+      "host": "x64",
+      "profile": "GFM",
+      "size": "1 MB",
+      "bytes": 1000100,
+      "corpus": "mixed-v1",
+      "gm_ms": 50.758,
+      "c_ms": 56.001,
+      "ratio": 0.9063766718451457,
+      "relative_passed": true,
+      "c_change_percent": 1.0647705329266621
+    },
+    {
+      "host": "x64",
+      "profile": "GFM",
+      "size": "5 MB",
+      "bytes": 5000500,
+      "corpus": "mixed-v1",
+      "gm_ms": 263.848,
+      "c_ms": 271.843,
+      "ratio": 0.9705896418153125,
+      "relative_passed": true,
+      "c_change_percent": 0.2899759091261167
+    }
+  ],
+  "scope": "Matching same-host parser/C profiles and inputs. Apple-M2 absolute and frozen M2 gates apply only to the Mac and are retained separately."
+}

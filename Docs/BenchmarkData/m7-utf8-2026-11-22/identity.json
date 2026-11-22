@@ -1,0 +1,11 @@
+{
+  "runtime_base": "e3b4b0c",
+  "binary_sha256": {
+    "BenchmarkTool": "c92d6668c05e13d7392ca2de57f8f8beeebc65ec8e2535c7dbe6649ec835a399",
+    "libMallocInterposerSwift-tool.dylib": "8804dfd1b05fa43d7a9415ab95615ef9a5e773653bc1fe1b342aaf1370917123",
+    "UTF8Benchmarks": "eb3d1c436af0b7a70dabb3555e52e1add34a6f7d49205605406760197864ae48",
+    "HardeningBenchmarks": "301ead8592ef00fe926310745918512f6023bbe183c2cfa3c9dd4b2169016e7f",
+    "ParserBenchmarks": "ec9662af3543e244f6406764ee90280064540034969ace320a06eeea15cc250b",
+    "libMallocInterposerSwift.dylib": "ca8d1790d4ee03a8768eda28356e82798501604a7f01ba7b5918d3807c871b7b"
+  }
+}

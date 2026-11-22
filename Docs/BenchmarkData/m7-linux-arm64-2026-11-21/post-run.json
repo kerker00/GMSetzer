@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "checked_utc": "2026-11-21T19:26:31.236941+00:00",
+  "source_commit": "c299783e7cac4783105f882db111905e6227e8d0",
+  "source_files_verified_after": 121,
+  "driver_exit_code": 0,
+  "thermal_millidegrees_c": "48500",
+  "governor": "ondemand",
+  "frequency_khz": "1600000",
+  "load": [
+    0.419921875,
+    5.125,
+    6.49951171875
+  ],
+  "c_compiler": "clang version 21.0.0 (https://github.com/swiftlang/llvm-project.git fb5f84d903a3b4e7aea15cd5666598a46f56c833)\nTarget: aarch64-unknown-linux-gnu\nThread model: posix",
+  "note": "Host state sampled after completion, not continuous thermal/load monitoring."
+}

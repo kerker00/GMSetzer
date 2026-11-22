@@ -1,0 +1,117 @@
+[
+  {
+    "path": "build.stderr.gz",
+    "original_sha256": "8d13865527b64b7506e0c65bc7df4ac68841c6d2c6329546be9de001355584bb",
+    "retained_sha256": "f304784764b103b61eade6bb7e518a11d2784bb312c17fe45d700b2735ac3801"
+  },
+  {
+    "path": "build.stdout.gz",
+    "original_sha256": "69aed004a1519161e51a4665565e5f3c0afcfb7d2c77edf27d09ac0d4827ba84",
+    "retained_sha256": "9c318d940360dfc3f8ce072a336849a8f33a1a3b382883e07b34a2d9ceda34ae"
+  },
+  {
+    "path": "campaign.stderr.gz",
+    "original_sha256": "755a6d1977f15ba00b2f6de8fae52a610687c9dd0fd42f1961f040a8b6a4d1c0",
+    "retained_sha256": "4be72da24ca4ee2c5e8474b3b36e1f93d24a9a27e66993df903f34bb514a551f"
+  },
+  {
+    "path": "campaign.stdout.gz",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retained_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+  },
+  {
+    "path": "clang-target.stderr.gz",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retained_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+  },
+  {
+    "path": "clang-target.stdout.gz",
+    "original_sha256": "1c7da408e283702561a445e700b61c0f55a082230a3cfe323208841221274a6a",
+    "retained_sha256": "92d475c24f0cec63b4d87f8aef7e60d91cb94fa217cdb4c6a963647a3a5d992c"
+  },
+  {
+    "path": "clang-version.stderr.gz",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retained_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+  },
+  {
+    "path": "clang-version.stdout.gz",
+    "original_sha256": "443315ff8f756f0e82092cde683b296d9c3270decb7cdc477a5fcc1cc1a5e770",
+    "retained_sha256": "107285371761ee122f2325aa6cb1404040e806e46d8a0ff6f72bd5a154028b40"
+  },
+  {
+    "path": "coverage-symbols.stderr.gz",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retained_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+  },
+  {
+    "path": "coverage-symbols.stdout.gz",
+    "original_sha256": "5653750fd5c5b0facc07143e649f7a8290ddf0ca9593ab955a49180bed6e4eda",
+    "retained_sha256": "c11117bb854d664b9b65be2c74e88fee6d5745f74e0de6309e0f091f7ef108a9"
+  },
+  {
+    "path": "harness/ParserFuzz.swift",
+    "original_sha256": "f40d3f32a741faa0e64826cfbf5e220d20b0b36003c9c9a696994c7927143241",
+    "retained_sha256": "f40d3f32a741faa0e64826cfbf5e220d20b0b36003c9c9a696994c7927143241"
+  },
+  {
+    "path": "harness/run-linux.py",
+    "original_sha256": "2679401a8ee0802ed763a3e3bac62dccac89e28ad020ea95b80b2517e4b84569",
+    "retained_sha256": "2679401a8ee0802ed763a3e3bac62dccac89e28ad020ea95b80b2517e4b84569"
+  },
+  {
+    "path": "harness.stderr.gz",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retained_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+  },
+  {
+    "path": "harness.stdout.gz",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retained_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+  },
+  {
+    "path": "link.stderr.gz",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retained_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+  },
+  {
+    "path": "link.stdout.gz",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retained_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+  },
+  {
+    "path": "receipt.json",
+    "original_sha256": "6966dddc1eee9cafa76a49a97b4c8157242c7dbed5cd538f46662692043d4db9",
+    "retained_sha256": "1b107fe5806f38617813f27c8095cb28a155bd349f00cf259be215ed63ff2e51"
+  },
+  {
+    "path": "runtime-fuzzer.stderr.gz",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retained_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+  },
+  {
+    "path": "runtime-fuzzer.stdout.gz",
+    "original_sha256": "c6bce3836c6372fee273202f7ab006c8c116828b1a47bd27149c02207dc5e816",
+    "retained_sha256": "e4972f4dc3fe02695378f43db83e5a4219da154df21e499c1cf639e59b211619"
+  },
+  {
+    "path": "runtime-ubsan_standalone.stderr.gz",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retained_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+  },
+  {
+    "path": "runtime-ubsan_standalone.stdout.gz",
+    "original_sha256": "81c5779fa58dce64ea95a086901c86ef5d61079fd0c70e76f202846fde74e0a3",
+    "retained_sha256": "962769fd295a89283a52cf28aaaaf28a59c7d6d4a4b5fccf7960ad0dcdf7759e"
+  },
+  {
+    "path": "swift-version.stderr.gz",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retained_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+  },
+  {
+    "path": "swift-version.stdout.gz",
+    "original_sha256": "7c811e5cb6a9cc03cb630c6ee61c720c37c7b659f4664a7244bd4e7e4b753871",
+    "retained_sha256": "fc6786c473d94ad86a207521c596e568d559df270973a6850337e35f7c19418a"
+  }
+]

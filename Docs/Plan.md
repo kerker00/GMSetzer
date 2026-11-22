@@ -1,6 +1,6 @@
 # GMSetzer – Plan and Requirements
 
-**Status: 21 November 2026, M1–M6 merged and accepted under their declared
+**Status: 22 November 2026, M1–M6 merged and accepted under their declared
 library gates. PR #24 (`a8a0351`) adds progressive HTML on `main`; the latest
 published source-only preview is v0.6.0. M7 now addresses general speed
 and hardening; API/DocC/1.0 completion stays M8.** This document is the
@@ -8,17 +8,68 @@ reference for everyone working on GMSetzer. It records what the library must
 do, why it exists, how it is built and in which order. It is self-contained:
 no knowledge of earlier discussions is needed.
 
-**0.6.0 published:** [PR #25](https://github.com/kerker00/GMSetzer/pull/25)
-merged at `8ff206178bb07664e89fdc6a119da039fadcd581`; that exact commit is
-published as [v0.6.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0)
-on 21 November 2026. Tagged CI passes 242 Swift tests, both complete protected
-corpora, optimized builds and 31 Python tests on macOS/Swift 6.2.3 and Linux/
-Swift 6.2. A fresh public-HTTPS consumer resolves exact version 0.6.0 to the
-tagged commit and exercises M5/GFM and progressive HTML. There are no uploaded
-binary assets. See [notes](Releases/0.6.0.md) and
-[release validation](Validation/Release/0.6.0.md). M7 changes are excluded;
-speed/hardening development continues separately as `0.7.0-dev.1`, with M8
-retaining API/DocC/1.0 completion.
+**Version boundary, 21 November 2026:** [PR #25](https://github.com/kerker00/GMSetzer/pull/25)
+merged at `8ff206178bb07664e89fdc6a119da039fadcd581`, published as the
+source-only [v0.6.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0)
+preview. Tagged macOS/Linux Swift 6.2 CI, both source archives and an independent
+public-HTTPS exact-version consumer pass; see [release validation](Validation/Release/0.6.0.md).
+The release excludes all M7 commits. This `feature/m7-hardening` branch uses
+`0.7.0-dev.1` and retains its mutation tests, benchmark evidence and parser
+optimization. Main is integrated without rewriting that recorded commit
+history. Existing measurements keep their original identities/hashes; this
+integration changes no M7 parser/rendering code, tests, scripts or workflow.
+M8 remains the API/DocC/1.0 stage.
+
+**M7 local scaling baseline, 22 November 2026:** the separate
+[69-case real-M5/hostile-input matrix](M7HardeningWorkloads.md) completes on
+macOS/Swift 6.4.2 at clean `2f5f1bd`, in 326 seconds. The
+[full report](Validation/M7/hardening-scaling-2026-11-22.md) records approximately
+proportional timing over 16/64/256 KiB and concrete token/buffer/malformed-byte
+profiling priorities. All source/executable/allocator hashes are unchanged;
+the preparation's 10 Release tool tests / 5 suites and 36 Python tests per
+mode remain the unchanged harness's functional evidence. Existing library
+sources, fixtures, pins and 72-case budgets are unchanged. New-harness Linux/
+minimum-compiler, fresh resource and broader fuzz validation remain pending;
+this local checkpoint is not merged or accepted M7.
+
+**M7 token allocation optimization, 22 November 2026:** the subsequent
+[three-file candidate](Validation/M7/token-arena-2026-11-22.md) reduces the
+focused deep-emphasis syntax-on time by 75–77% and requests per parse from
+262,219 to 94. All 247 library tests pass in Debug/Release on macOS and native
+Linux ARM64; 10 Mac Release tool tests, 36 Python tests per mode and exact
+old/new token-table equality across all 1,324 specification examples pass.
+Thirty-case before/after subsets retain six C/absolute and nine frozen-M2
+passes unchanged. Gross traffic falls about 5.7% in the profiled case, with
+no peak-memory claim. Full refresh, minimum Swift 6.2/current x64 and fresh
+progressive resource evidence remain open. Large bracket buffers and the
+malformed-byte path are next; the earlier full 69-case baseline keeps its
+pre-optimization identity.
+
+**M7 inline buffers, 22 November 2026:** the subsequent
+[three-file candidate](Validation/M7/inline-capacity-2026-11-22.md) compacts
+internal links/brackets and reserves known inline-emission batches with
+geometric growth. The 256 KiB bracket case requests **174.19 M → 119.82 M
+bytes (31.21% less)**, with timing broadly maintained and no peak-RSS claim.
+Current **249 library tests** pass in Debug/Release on macOS/Linux ARM64,
+10 Mac tool tests and all six C/absolute plus nine M2 checks pass. Independent
+snapshots match all 1,324 examples, including 7,994 public nodes and 4,422
+tokens. Next is malformed-byte processing with an explicit validation-enabled
+C control. Minimum compiler/current x64, fresh full-resource/benchmark and
+broader fuzz evidence remain pending; M7 is not accepted or merged.
+
+**M7 UTF-8 follow-up, 22 November 2026:** the
+[one-runtime-file candidate](Validation/M7/utf8-2026-11-22.md) reuses an already
+validated canonical plain paragraph. Separate 36-case UTF-8 controls select
+C validation explicitly and retain the legacy replacement-policy difference.
+At compatible malformed 256 KiB, Mac time is **12.812 → 10.297 ms (−19.63%)**,
+gross requested bytes fall **53.05%**, and validating C takes 5.251 ms (1.96×).
+All 252 Mac Debug/Release/AddressSanitizer tests, 12 Release tool tests and
+8,192 bounded ASan stress parses pass; all 1,324 public spec snapshots match.
+This ASan mutation run is not coverage-guided fuzzing. The later
+[current x64/resource/minimum-compiler checks](Validation/M7/final-x64-2026-11-22.md)
+pass, and a separate [coverage-guided campaign](Validation/M7/fuzz-2026-11-22.md)
+completes 3,510 units without failure. The [candidate](M7Readiness.md) is ready
+for owner review; M7 remains unmerged and unaccepted.
 
 The M4 follow-ups are merged in PR #15 (`1473d49`). The source-only v0.4.0
 release preparation and macOS/Linux CI are merged in PR #16 (`6a0eb8e`);
@@ -486,7 +537,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | **merged in PR #14 (`e163e6f`)**: tables, task lists, strikethrough, extended autolinks and tag filter as built-in payloads (owner decision 1A); 672/672 GFM and 652/652 CommonMark; generated documents agree with cmark-gfm. Library and reference tests pass on macOS; GFM parses at 0.88× cmark-gfm and both budget checks pass. Swift 6.2/Linux not re-run. See [M4GFM](M4GFM.md) |
 | M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Declared extension fixtures and profile/combination tests pass | 5–8 | **first step merged in PR #19 (`4b0f105`)**: raw YAML/TOML front matter; 153 tests pass on both hosts and macOS/Swift 6.2. PR/main CI pass on both hosts. Named footnotes merged in PR #20 (`a6a2da6`), with 178 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on macOS/Linux. Opaque inline/display/fenced TeX is merged in PR #21 (`6f166b7`), with 202 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on both hosts. Alerts and callouts merged in PR #22 (`c9543fe`); all 227 local tests pass on both hosts and macOS/Swift 6.2, and PR/main CI pass on both hosts. **Functional M5 accepted** against the declared extension/profile/combination criterion; see [M5Acceptance](M5Acceptance.md). See [FrontMatter](FrontMatter.md), [Footnotes](Footnotes.md), [Math](Math.md) and [Admonitions](Admonitions.md) |
 | M6 / 0.6 development | Progressive HTML: prepared complete-document context, structural groups and bounded/on-demand emission | Plan 10.1 gates pass | Accepted; no remaining implementation estimate | **merged in PR #24 (`a8a0351`) and accepted**: exact grouped/full output, explicit fallbacks, source/cancellation/M5 contracts, 42-case measurements with matching runtime hashes and reviewed budgets; merged-main macOS/Swift 6.2.3 and Linux/Swift 6.2 CI pass 242 Swift tests, optimized builds and 31 Python tests. See [M6Acceptance](M6Acceptance.md) |
-| M7 | General speed and hardening: selected-extension measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met; robustness and allocation evidence recorded | previous 5–8; re-estimate after M6 | **planned; former M6 moved back one milestone** |
+| M7 | General speed and hardening: selected-extension measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met; robustness and allocation evidence recorded | previous 5–8; re-estimate after M6 | **candidate ready for owner review on `feature/m7-hardening`**, not merged or accepted. [Readiness](M7Readiness.md) records 252-test Mac/x64 Debug/Release and minimum Swift 6.2 CI passes, 12 tool tests per native host, full 69/72-case refreshes with unchanged C/M2 gates, 36 explicit UTF-8 controls, 42 source-matched resource cases, Mac ASan and bounded mutation plus 3,510 coverage-guided x64 units. General C parity and further copying/output work remain aims. See [self-review](Review-M7.md) and [M7Hardening](M7Hardening.md) |
 | M8 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | previous 3–5; re-estimate after M7 | **planned; former M7 moved back one milestone** |
 | | **Original total before explicit editor-analysis scope** | | **38–59; re-estimate required** | |
 
@@ -580,8 +631,8 @@ hardening remain required in M7 before the stable API review in M8.
 consumption and throwing checkpoints. Built-in footnote/admonition composition
 shares complete-document context; raw HTML, document hooks and uncertified
 order-dependent hooks have explicit whole-document fallbacks. Existing
-full-string output stays supported. The accepted M6 snapshot used development
-identity `0.6.0-dev.1`; the published release uses `0.6.0`.
+full-string output stays supported. At M6 acceptance the development identity
+was `0.6.0-dev.1`; the separate M7 branch now uses `0.7.0-dev.1`.
 
 The complete local macOS/Swift 6.4.2 Debug and Release suites and the
 Linux ARM64/Swift 6.4.2 suite each pass 239 tests, including safe and
@@ -758,12 +809,20 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: M7 general speed/hardening, beginning with bounded,
-reproducible adversarial/mutation coverage across strict/GFM/M5 configurations.
+Current next work: owner review of the [M7 candidate](M7Readiness.md), followed
+by the separately reviewed source-only 0.7 release preparation. The measured
+scratch/token/buffer/UTF-8 optimizations now have current full Mac/x64 benchmark
+controls, minimum Swift 6.2 CI, a source-matched 42-case progressive resource
+matrix and bounded ASan/coverage-guided evidence. Historical baseline reports
+retain their original identities; current reports link the actual hashes and
+coverage limits. General C parity remains the aim: current x64 CommonMark takes
+1.24–1.55× C time and GFM 0.92–0.99× on mixed-v1. Further intermediate-copy and
+HTML-emission profiling, longer/larger campaigns and peak-memory investigation
+remain useful follow-ups rather than claims established by these measurements.
 The M6 progressive-output API and reviewed post-baseline budgets are accepted;
 merged-main CI passes on macOS/Linux at the minimum Swift 6.2 toolchain.
-Fresh general performance acceptance, broader hostile-input/fuzzing campaigns
-and allocation work remain M7; API/DocC/1.0 completion stays M8. Full benchmark
+Owner acceptance of the recorded M7 performance/robustness candidate remains
+open; API/DocC/1.0 completion stays M8. Full benchmark
 and long-test execution still requires the existing owner confirmation.
 Consumer scheduling, dependency pinning and device acceptance remain in their
 own repositories. The source-only v0.6.0 preview is published; 0.7 work remains separate.

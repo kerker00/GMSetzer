@@ -76,6 +76,14 @@ all indices have been checked. It remains iterative and active in release;
 there is no unchecked parser-only construction path. The M1-B benchmark and
 local budget gate cover the cost of this validated construction.
 
+The M7 inline phase may reuse an already validated immutable block snapshot
+for a single canonical paragraph containing only text/soft breaks and no
+inline triggers, custom inline rules or rendering-policy work. It does not
+bypass initial validation or change physical node order, source segments,
+replacement decoding or rule-factory execution. Other trees follow the normal
+builder path. The [UTF-8 report](Validation/M7/utf8-2026-11-22.md) records
+regressions and exact public-tree/token comparisons for all 1,324 spec examples.
+
 The parser treats a failure of its own builder validation as an implementation
 invariant violation. Extension match results are checked before insertion, so
 malformed returned ranges or consumption counts do not reach that boundary.
@@ -334,6 +342,19 @@ and `core.fence.open/info/close`, plus extension-owned roles. Adjacent source
 pieces are coalesced; disjoint components emit separate tokens. Empty link
 components/fence info remain zero-length tokens. Off mode keeps `tokens == nil`.
 Inline paragraphs without syntax reuse the block phase's text nodes.
+
+M7's internal [token arena optimization](Validation/M7/token-arena-2026-11-22.md)
+preserves token array order, roles, owners, split ranges and zero-length CRLF
+positions. All 1,324 old/new specification token tables match exactly; new
+regression checks also cover nested custom-token rebasing across leaves and
+stripped quote prefixes. This changes temporary parser storage, with no new
+public tree contract or peak-memory guarantee.
+
+The subsequent [inline buffer step](Validation/M7/inline-capacity-2026-11-22.md)
+compacts only internal controller links and changes builder reservation policy.
+All 1,324 public node/token snapshots remain identical; the measured public
+node stride stays 128 bytes on the recorded Mac. This preserves public index
+validation and node granularity without establishing a memory-layout contract.
 
 `DocumentDiagnostic`, `DiagnosticReport`, related locations/messages and
 `SuggestedFix`/`SuggestedEdit` are portable values in `SetzerSyntax`. Findings

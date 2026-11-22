@@ -1,0 +1,13 @@
+{
+  "before": {
+    "item": 144,
+    "bracket": 32,
+    "node": 128
+  },
+  "after": {
+    "item": 120,
+    "bracket": 24,
+    "node": 128
+  },
+  "scope": "MemoryLayout.stride from compiled macOS arm64 Debug modules; internal layout measurement, not an ABI guarantee."
+}

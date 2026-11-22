@@ -1,0 +1,658 @@
+{
+  "iterations" : 6,
+  "stacks" : [
+    {
+      "bytes" : 10066176,
+      "count" : 157284,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in BlockParser.decode(_:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.finishLeaf(headingLevel:closingLine:tablePreamble:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.parse()"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 7549662,
+      "count" : 157284,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in BlockParser.decode(_:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.finishLeaf(headingLevel:closingLine:tablePreamble:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.parse()"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 18869904,
+      "count" : 102,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 9432432,
+      "count" : 96,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "Document.children(of:into:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 135896352,
+      "count" : 12,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "DocumentBuilder.reserveCapacity(_:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 68221248,
+      "count" : 12,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "DocumentBuilder.append(_:range:segments:fallbackLiteral:to:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.finishLeaf(headingLevel:closingLine:tablePreamble:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.parse()"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 33974592,
+      "count" : 12,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "DocumentBuilder.reserveCapacity(_:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 25166112,
+      "count" : 6,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized static BlockParser.scanLines(_:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 2516784,
+      "count" : 6,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized Array.init(repeating:count:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 2516736,
+      "count" : 6,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.finishLeaf(headingLevel:closingLine:tablePreamble:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.parse()"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 314766,
+      "count" : 6,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.parse()"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 314766,
+      "count" : 6,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 6336,
+      "count" : 6,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "BlockParser.parse()"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 6336,
+      "count" : 6,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "Document.init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 960,
+      "count" : 6,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "DocumentBuilder.init(source:collectSyntaxDetails:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 960,
+      "count" : 6,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "DocumentBuilder.init(source:collectSyntaxDetails:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 288,
+      "count" : 6,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ContiguousArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized ContiguousArray._createNewBuffer(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    },
+    {
+      "bytes" : 240,
+      "count" : 6,
+      "frames" : [
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "specialized _ArrayBuffer._consumeAndCreateNew(bufferIsUnique:minimumCapacity:growForAppend:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "Document.children(of:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parseInlines(_:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "MarkdownParser.parse(bytes:)"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "closure #1 in closure #1 in variable initialization expression of benchmarks"
+        },
+        {
+          "image" : "UTF8Benchmarks",
+          "isAsync" : false,
+          "symbol" : "partial apply for closure #1 in closure #1 in variable initialization expression of benchmarks"
+        }
+      ]
+    }
+  ]
+}

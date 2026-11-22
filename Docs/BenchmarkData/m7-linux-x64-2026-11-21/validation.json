@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "client_date": "2026-11-21",
+  "source_commit": "4443e72446b6980e85dea9906da4c01b4906f6f0",
+  "hardware": "Intel(R) Core(TM) i5-6600K CPU @ 3.50GHz",
+  "architecture": "x86_64",
+  "compiler": "Swift version 6.4.2 (swift-6.4.2-RELEASE)\nTarget: x86_64-unknown-linux-gnu",
+  "results": {
+    "library-debug": {
+      "tests": 245,
+      "suites": 29,
+      "test_seconds": 4.544,
+      "passed": true,
+      "command_elapsed_seconds": 63.457
+    },
+    "library-release": {
+      "tests": 245,
+      "suites": 29,
+      "test_seconds": 1.051,
+      "passed": true,
+      "command_elapsed_seconds": 114.531
+    },
+    "python": {
+      "tests": 31,
+      "test_seconds": 2.009,
+      "passed": true,
+      "command_elapsed_seconds": 2.153
+    },
+    "python-optimized": {
+      "tests": 31,
+      "test_seconds": 2.077,
+      "passed": true,
+      "command_elapsed_seconds": 2.223
+    },
+    "tools-debug": {
+      "tests": 6,
+      "suites": 4,
+      "test_seconds": 34.077,
+      "passed": true,
+      "command_elapsed_seconds": 84.228
+    },
+    "tools-release": {
+      "tests": 6,
+      "suites": 4,
+      "test_seconds": 2.129,
+      "passed": true,
+      "command_elapsed_seconds": 124.746
+    }
+  },
+  "original_log_sha256": {
+    "debug.log": "bf080955b0ecabe66d36eac2172da019d263f5e153eee341002152a391db4bd5",
+    "release.log": "2a9558174dd99551c551e5918fb85f5c4a83a1cdce6897f08294cd819dfdbffd",
+    "python.log": "64ea3d38e95bc46e16333bfc292d301e2d04f3b4d006dd72b2a68eec8bca95b8",
+    "python-optimized.log": "dba91bbbda83278c18a6076a2a87dad40d3d95ab86f89bd49f7f1989ce077411",
+    "tools-debug.log": "c25601b44fd8777e64c18e264380e46c86103abb10421682ada9b71a156d09f5",
+    "tools-release.log": "f62f6a38af954f82a3b4ffa0fd8433741fbf0ca70e9fb87e2da95c6d4e61203a"
+  },
+  "retained_log_sha256": {
+    "debug.log": "7a45df7c81b6c2f75efcf5a46ba782fd76ea32e68746e4558dc3e0db247352c4",
+    "release.log": "34d4bf7100ff60c7e1a8659f0d88c6989e68bc71fd8baa7b36fbbe3c6c0c9afa",
+    "python.log": "64ea3d38e95bc46e16333bfc292d301e2d04f3b4d006dd72b2a68eec8bca95b8",
+    "python-optimized.log": "dba91bbbda83278c18a6076a2a87dad40d3d95ab86f89bd49f7f1989ce077411",
+    "tools-debug.log": "6c2e4a2684ceac5e9ffae0535e0fe45963812b9c46176bdc7300331e2822a5a8",
+    "tools-release.log": "6cd6f76100b81712a55c3b2845cc8559801ac3cda47aac8f5f285f9e4ce17859"
+  },
+  "redaction": "Task/user-home paths and host labels are redacted, process addresses normalized and line endings use LF. Original stdout/stderr hashes remain separate. Readable export removes warning preamble and trailing blank lines. All case identities and metric rows are unchanged.",
+  "scope": "Existing native x86_64 host, isolated source-only transfer; no installation, VM/container or host-setting change. Detached driver exits 0; all six test phases and 72 benchmark cases complete."
+}

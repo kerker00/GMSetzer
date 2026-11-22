@@ -47,6 +47,11 @@ internal struct InlineInput: Sendable {
     /// The common one-piece case creates no temporary segment array.
     func mapped(_ start: Int, _ end: Int) -> (range: SourceRange, segments: SourceSegments) {
         let p = pieces[piece(at: start)]
+        if start == end {
+            let offset = start == p.end ? p.source.upperBound : p.source.lowerBound + start - p.start
+            let range = SourceRange(offset, offset)
+            return (range, .one(range))
+        }
         if end <= p.end {
             let range = SourceRange(p.source.lowerBound + start - p.start,
                                     p.source.upperBound - max(0, p.end - end))
@@ -117,11 +122,40 @@ internal struct InlineParser {
         var data: NodeData
         var start: Int
         var end: Int
-        var previous: Int?
-        var next: Int?
-        var firstChild: Int?
-        var tokens: [(String, Int, Int)] = []
+        // Arena indices are nonnegative, so -1 can store nil without the
+        // extra word of Optional<Int>. Keep optional access for the controller.
+        private var previousIndex: Int
+        private var nextIndex: Int
+        private var firstChildIndex: Int
+        var previous: Int? {
+            get { previousIndex == -1 ? nil : previousIndex }
+            set { previousIndex = newValue ?? -1 }
+        }
+        var next: Int? {
+            get { nextIndex == -1 ? nil : nextIndex }
+            set { nextIndex = newValue ?? -1 }
+        }
+        var firstChild: Int? {
+            get { firstChildIndex == -1 ? nil : firstChildIndex }
+            set { firstChildIndex = newValue ?? -1 }
+        }
+        // Tail into this controller's token arena; -1 means no tokens.
+        var lastToken = -1
         var fallback: String?
+
+        init(data: NodeData, start: Int, end: Int, previous: Int? = nil,
+             next: Int? = nil, firstChild: Int? = nil) {
+            self.data = data; self.start = start; self.end = end
+            self.previousIndex = previous ?? -1
+            self.nextIndex = next ?? -1
+            self.firstChildIndex = firstChild ?? -1
+        }
+    }
+    struct Token {
+        let role: String
+        var start: Int
+        var end: Int
+        var previous: Int
     }
     struct Delimiter {
         let item: Int
@@ -135,8 +169,8 @@ internal struct InlineParser {
     }
     struct Bracket {
         let item: Int
-        let image: Bool
         let bottom: Int
+        let image: Bool
         var active: Bool
         var bracketAfter = false
     }
@@ -166,6 +200,7 @@ internal struct InlineParser {
     var diagnostics: [ParseDiagnostic] = []
     var customOpeners: [CustomOpener] = []
     var items: [Item] = []
+    var tokens: [Token] = []
     var first: Int?
     var last: Int?
     var delimiters: [Delimiter] = []
@@ -214,6 +249,7 @@ internal struct InlineParser {
         self.input = input
         self.bytes = input.bytes
         items.removeAll(keepingCapacity: true)
+        tokens.removeAll(keepingCapacity: true)
         delimiters.removeAll(keepingCapacity: true)
         brackets.removeAll(keepingCapacity: true)
         customOpeners.removeAll(keepingCapacity: true)
@@ -263,7 +299,9 @@ internal struct InlineParser {
     }
 
     mutating func token(_ item: Int, _ role: String, _ start: Int, _ end: Int) {
-        if collectSyntax { items[item].tokens.append((role, start, end)) }
+        guard collectSyntax else { return }
+        tokens.append(Token(role: role, start: start, end: end, previous: items[item].lastToken))
+        items[item].lastToken = tokens.count - 1
     }
 
     mutating func unlink(_ index: Int) {
@@ -532,12 +570,12 @@ internal struct InlineParser {
                 }
                 if !brackets.isEmpty { brackets[brackets.count - 1].bracketAfter = true }
                 let item = append(.text("["), cursor, cursor + 1)
-                brackets.append(Bracket(item: item, image: false, bottom: delimiters.count, active: true))
+                brackets.append(Bracket(item: item, bottom: delimiters.count, image: false, active: true))
                 cursor += 1
             case 33 where cursor + 1 < bytes.count && bytes[cursor + 1] == 91:
                 if !brackets.isEmpty { brackets[brackets.count - 1].bracketAfter = true }
                 let item = append(.text("!["), cursor, cursor + 2)
-                brackets.append(Bracket(item: item, image: true, bottom: delimiters.count, active: true))
+                brackets.append(Bracket(item: item, bottom: delimiters.count, image: true, active: true))
                 cursor += 2
             case 93: closeBracket()
             case 60:

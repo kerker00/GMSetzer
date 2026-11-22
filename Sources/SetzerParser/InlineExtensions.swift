@@ -95,13 +95,19 @@ extension InlineParser {
         nested.enableGFM(strikethrough: strikethrough, autolink: autolink)
         nested.parse()
         let base = items.count
+        let tokenBase = tokens.count
         for var child in nested.items {
             child.start += children.lowerBound; child.end += children.lowerBound
             child.previous = child.previous.map { $0 + base }
             child.next = child.next.map { $0 + base }
             child.firstChild = child.firstChild.map { $0 + base }
-            child.tokens = child.tokens.map { ($0.0, $0.1 + children.lowerBound, $0.2 + children.lowerBound) }
+            if child.lastToken >= 0 { child.lastToken += tokenBase }
             items.append(child)
+        }
+        for var token in nested.tokens {
+            token.start += children.lowerBound; token.end += children.lowerBound
+            if token.previous >= 0 { token.previous += tokenBase }
+            tokens.append(token)
         }
         items[owner].firstChild = nested.first.map { $0 + base }
         diagnostics.append(contentsOf: nested.diagnostics)

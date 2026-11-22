@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "source_commit": "9e7bc71e9f069f4b1ed282bead75fdcb85a8b2f8",
+  "started_utc": "2026-11-21T20:05:12.620285+00:00",
+  "binary_sha256": "13503a2e1d5cc551448570eaec99c61ecbab78d6a292455c22b405e3f7690050",
+  "profiles": {
+    "1mb": {
+      "sample_exit": 0,
+      "sample_stdout": "",
+      "sample_stderr": "Sampling process 19614 for 3 seconds with 1 millisecond of run time between samples\nSampling completed, processing symbols...\nSample analysis of process 19614 written to file <mac-task>/1mb.sample.txt\n",
+      "benchmark_exit": 0
+    },
+    "5mb": {
+      "sample_exit": 0,
+      "sample_stdout": "",
+      "sample_stderr": "Sampling process 19616 for 3 seconds with 1 millisecond of run time between samples\nSampling completed, processing symbols...\nSample analysis of process 19616 written to file <mac-task>/5mb.sample.txt\n",
+      "benchmark_exit": 0
+    }
+  }
+}

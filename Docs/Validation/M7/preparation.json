@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "status": "prepared-not-executed",
+  "base_commit": "0cf6690bd5d0bd8c7ae77802c310dcccaab58be3",
+  "runtime_commit": "a8a0351b0ab6aa09b8167e371148ae2895e78f0a",
+  "runtime_changed": false,
+  "compiler": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0",
+  "configuration": "release",
+  "benchmark_cases": 72,
+  "maximum_sampling_seconds_per_case": 5,
+  "source_sha256": {
+    "Tests/SetzerParserTests/HardeningTests.swift": "ab3b95cadfa554bb8b95fe95813e281ad2f9811d5de524fb08f2068c61570493",
+    "Tools/Package.swift": "853fa1537996a7ee801620937fd5d3c0b5f107021934ef2a0068d2342f1b80b4",
+    "Tools/Package.resolved": "b04f6826b9801a9655860ce82f86725f8fc6204915ca0771b7028f76cfcf6002",
+    "Tools/Benchmarks/ParserBenchmarks/ParserBenchmarks.swift": "ba80c7e4fde0ce79501d3d550cd699e1db10ca15764646b82337d1a15f523c81",
+    "Tools/Sources/BenchmarkCorpus/Corpus.swift": "3c3423dac5442d14257c0ea364bad0faf87dbbc83439ff1cf9fdb77452f4a101",
+    "Tools/Sources/BenchmarkCorpus/ParserProbes.swift": "3c3e6a8afbb51aef5040f5239e1b7e226e142e8e2c115d8adeb7be91e3c6cc05",
+    "Docs/Validation/M7/benchmark-cases.txt": "0565445c6e5ead15890676381ee4a92190873be4df7c6498cdde55290751f0b3"
+  },
+  "scope": "Successful build/list only. No benchmark sampling, performance improvement or allocation reduction claim. Runtime identity is additionally checked against the historical M6 receipt."
+}

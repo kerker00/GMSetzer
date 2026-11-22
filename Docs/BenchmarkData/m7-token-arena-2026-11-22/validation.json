@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-22",
+  "macos_debug": {
+    "tests": 247,
+    "suites": 29,
+    "exit_code": 0
+  },
+  "macos_release": {
+    "tests": 247,
+    "suites": 29,
+    "exit_code": 0
+  },
+  "macos_tools_release": {
+    "tests": 10,
+    "suites": 5,
+    "exit_code": 0
+  },
+  "python_isolated": {
+    "tests": 36,
+    "exit_code": 0
+  },
+  "python_optimized_isolated": {
+    "tests": 36,
+    "exit_code": 0
+  },
+  "linux_arm64_debug": {
+    "tests": 247,
+    "suites": 29,
+    "exit_code": 0
+  },
+  "linux_arm64_release": {
+    "tests": 247,
+    "suites": 29,
+    "exit_code": 0
+  },
+  "baseline_regression_oracles": {
+    "tests": 2,
+    "exit_code": 0
+  },
+  "token_tables_identical_examples": 1324,
+  "token_table_entries": 4422,
+  "unchanged_current_source_hashes_verified": true,
+  "linux_transferred_files": 78,
+  "measured_subset_cases_per_variant": 30,
+  "repeated_m5_cases": 4,
+  "c_absolute_checks": 6,
+  "frozen_m2_checks": 9,
+  "full_69_or_72_case_refresh": false,
+  "current_candidate_linux_x64": false,
+  "current_candidate_minimum_swift_6_2": false,
+  "scope": "Original Mac test logs collided with fetched Linux filenames; separate final Mac --skip-build suite reruns restore complete evidence after successful initial builds. All timing/profile sessions are separate from builds and local tests."
+}

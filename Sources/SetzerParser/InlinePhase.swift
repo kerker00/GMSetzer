@@ -2,6 +2,15 @@ import SetzerSyntax
 
 extension MarkdownParser {
     internal func parseInlines(_ document: Document) -> Document {
+        let gfm = GFMInlineTriggers(strikethrough: registry.contains(.strikethrough), autolink: registry.contains(.autolink))
+        // Reuse the validated snapshot when a canonical plain paragraph needs
+        // no inline work. Custom rule preparation must still run when selected.
+        if resolvedInlineRules.isEmpty, document.renderingPolicy.isEmpty,
+           isCanonicalPlainParagraph(document),
+           !needsInlineParsing(2..<document.nodes.count, document: document,
+                               triggers: ByteSet(), hasRules: false, gfm: gfm) {
+            return document
+        }
         var references: [ReferenceLabel: InlineParser.Reference] = [:]
         for node in document.nodes {
             if case .referenceDefinition(let definition) = node.data {
@@ -28,8 +37,12 @@ extension MarkdownParser {
         var inline = InlineParser(input: InlineInput(), references: references, collectSyntax: collectSyntaxDetails,
                                   source: document.source, rules: inlineRules, triggers: triggers, maximumDepth: limits.maximumInlineExtensionDepth)
         inline.enableGFM(strikethrough: registry.contains(.strikethrough), autolink: registry.contains(.autolink))
-        let gfm = GFMInlineTriggers(strikethrough: inline.strikethrough, autolink: inline.autolink)
         var pending = document.children(of: 0).reversed().map { ($0, 0) }
+        // These buffers are local to one parse. Their contents never escape
+        // into the resulting tree or the inline controller's projected input.
+        var children: [Int] = []
+        var events: [(Int, Int)] = []
+        var tokenOrder: [Int] = []
         while let (old, parent) = pending.popLast() {
             let node = document.nodes[old]
             let data: NodeData
@@ -39,7 +52,7 @@ extension MarkdownParser {
             let index = try! builder.append(data, range: node.range, segments: node.segments,
                                             fallbackLiteral: document.customLeafFallbacks[old], to: parent)
             mapped[old] = index
-            let children = document.children(of: old)
+            document.children(of: old, into: &children)
             let inlineBlock: Bool
             switch node.data { case .paragraph, .heading, .tableCell: inlineBlock = true; default: inlineBlock = false }
             if inlineBlock, !children.isEmpty,
@@ -53,8 +66,10 @@ extension MarkdownParser {
                 let input = InlineInput(document, children: children)
                 inline.reset(to: input)
                 inline.parse()
+                // Provisional items bound the emitted count, including any
+                // delimiter/link items later unlinked by the controller.
+                builder.reserveAdditionalCapacity(inline.items.count)
                 for diagnostic in inline.diagnostics { builder.report(diagnostic) }
-                var events: [(Int, Int)] = []
                 if let first = inline.first { events.append((first, index)) }
                 while let (itemIndex, owner) = events.popLast() {
                     let item = inline.items[itemIndex]
@@ -66,8 +81,23 @@ extension MarkdownParser {
                     let inlineIndex = try! builder.append(data, range: mapped.range,
                                                           segments: mapped.segments, fallbackLiteral: item.fallback, to: owner)
                     if collectSyntaxDetails {
-                        for (role, start, end) in item.tokens {
-                            for range in input.ranges(start, end) { builder.record(SyntaxToken(role, range: range, owner: inlineIndex)) }
+                        // Arena links run backwards. Reuse one small buffer to
+                        // preserve per-item insertion order and tree order.
+                        tokenOrder.removeAll(keepingCapacity: true)
+                        var tokenIndex = item.lastToken
+                        while tokenIndex >= 0 {
+                            tokenOrder.append(tokenIndex)
+                            tokenIndex = inline.tokens[tokenIndex].previous
+                        }
+                        for tokenIndex in tokenOrder.reversed() {
+                            let token = inline.tokens[tokenIndex]
+                            switch input.mapped(token.start, token.end).segments {
+                            case .none: break
+                            case .one(let range):
+                                builder.record(SyntaxToken(token.role, range: range, owner: inlineIndex))
+                            case .many(let ranges):
+                                for range in ranges { builder.record(SyntaxToken(token.role, range: range, owner: inlineIndex)) }
+                            }
                         }
                     }
                     if let next = item.next { events.append((next, owner)) }
@@ -84,7 +114,20 @@ extension MarkdownParser {
         return try! builder.build()
     }
 
-    private func needsInlineParsing(_ children: [Int], document: Document,
+    private func isCanonicalPlainParagraph(_ document: Document) -> Bool {
+        guard document.nodes.count >= 3, document.nodes[0].firstChild == 1,
+              document.nodes[1].kind == .paragraph, document.nodes[1].nextSibling == nil,
+              document.nodes[1].firstChild == 2 else { return false }
+        for index in 2..<document.nodes.count {
+            let node = document.nodes[index]
+            let next = index + 1 < document.nodes.count ? index + 1 : nil
+            guard node.firstChild == nil, node.nextSibling == next else { return false }
+            switch node.data { case .text, .softBreak: break; default: return false }
+        }
+        return true
+    }
+
+    private func needsInlineParsing(_ children: some Sequence<Int>, document: Document,
                                     triggers: ByteSet, hasRules: Bool, gfm: GFMInlineTriggers) -> Bool {
         for child in children {
             guard case .text(let text) = document.nodes[child].data else { continue }

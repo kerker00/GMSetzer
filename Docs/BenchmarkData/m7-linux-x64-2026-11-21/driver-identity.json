@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "executables": {
+    "build-bench/x86_64-unknown-linux-gnu/release/BenchmarkTool": {
+      "sha256": "869e7452b894310827f61f234280fa97b7886df10be662ae4d3afbf93ffb62ee",
+      "mtime_utc": "2026-11-21T19:41:16.519523+00:00"
+    },
+    "build-bench/x86_64-unknown-linux-gnu/release/ParserBenchmarks": {
+      "sha256": "e42543693cbe746305b1c8ccd2f14ce55e75e8c6e7ab13f49af6cc096d836959",
+      "mtime_utc": "2026-11-21T19:42:36.016615+00:00"
+    }
+  },
+  "note": "Both existing executables predate the interrupted SwiftPM measurement; no rebuild occurs before the complete direct series. Executable mtimes are UTC."
+}

@@ -1,0 +1,61 @@
+variant,target,name,wall_ms_p50,samples,malloc_count_metric,malloc_count_display,malloc_volume_metric,malloc_volume_display
+before,HardeningBenchmarks,"GMSetzer long-emphasis-v1 parse syntax-on 16 KiB (bytes: 16390, corpus: long-emphasis-v1, profile: commonmark, syntax: on)",0.439,10000,Malloc (total) *,74,Malloc (bytes total) (K) *,3951
+before,HardeningBenchmarks,"GMSetzer long-emphasis-v1 parse syntax-on 256 KiB (bytes: 262150, corpus: long-emphasis-v1, profile: commonmark, syntax: on)",7.643,628,Malloc (total) *,94,Malloc (bytes total) (M) *,76
+before,HardeningBenchmarks,"GMSetzer long-emphasis-v1 parse syntax-on 64 KiB (bytes: 65542, corpus: long-emphasis-v1, profile: commonmark, syntax: on)",1.758,2828,Malloc (total) *,84,Malloc (bytes total) (M) *,18
+before,HardeningBenchmarks,"GMSetzer m5-composed-v1 parse syntax-on 16 KiB (bytes: 16654, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",6.087,820,Malloc (total) (K) *,17,Malloc (bytes total) (K) *,6396
+before,HardeningBenchmarks,"GMSetzer m5-composed-v1 parse syntax-on 256 KiB (bytes: 262177, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",95.224,53,Malloc (total) (K) *,262,Malloc (bytes total) (M) *,101
+before,HardeningBenchmarks,"GMSetzer m5-composed-v1 parse syntax-on 64 KiB (bytes: 65665, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",23.527,213,Malloc (total) (K) *,66,Malloc (bytes total) (M) *,25
+before,HardeningBenchmarks,"GMSetzer open-brackets-v1 parse syntax-off 16 KiB (bytes: 16384, corpus: open-brackets-v1, profile: commonmark, syntax: off)",0.949,5187,Malloc (total) *,63,Malloc (bytes total) (M) *,13
+before,HardeningBenchmarks,"GMSetzer open-brackets-v1 parse syntax-off 256 KiB (bytes: 262144, corpus: open-brackets-v1, profile: commonmark, syntax: off)",16.269,304,Malloc (total) *,76,Malloc (bytes total) (M) *,174
+before,HardeningBenchmarks,"GMSetzer open-brackets-v1 parse syntax-off 64 KiB (bytes: 65536, corpus: open-brackets-v1, profile: commonmark, syntax: off)",4.207,1035,Malloc (total) *,70,Malloc (bytes total) (M) *,44
+before,HardeningBenchmarks,"GMSetzer open-brackets-v1 parse syntax-on 16 KiB (bytes: 16384, corpus: open-brackets-v1, profile: commonmark, syntax: on)",1.117,4420,Malloc (total) *,63,Malloc (bytes total) (M) *,13
+before,HardeningBenchmarks,"GMSetzer open-brackets-v1 parse syntax-on 256 KiB (bytes: 262144, corpus: open-brackets-v1, profile: commonmark, syntax: on)",17.809,281,Malloc (total) *,76,Malloc (bytes total) (M) *,174
+before,HardeningBenchmarks,"GMSetzer open-brackets-v1 parse syntax-on 64 KiB (bytes: 65536, corpus: open-brackets-v1, profile: commonmark, syntax: on)",4.481,1050,Malloc (total) *,70,Malloc (bytes total) (M) *,44
+before,ParserBenchmarks,"GMSetzer CommonMark parse 1 MB (bytes: 1000100, corpus: mixed-v1)",27.165,142,Malloc (total) (K) *,57,Malloc (bytes total) (M) *,56
+before,ParserBenchmarks,"GMSetzer CommonMark parse 100 KB (bytes: 100284, corpus: mixed-v1)",2.417,2006,Malloc (total) *,5713,Malloc (bytes total) (K) *,5643
+before,ParserBenchmarks,"GMSetzer CommonMark parse 5 MB (bytes: 5000500, corpus: mixed-v1)",125.043,40,Malloc (total) (K) *,283,Malloc (bytes total) (M) *,280
+before,ParserBenchmarks,"GMSetzer GFM parse 1 MB (bytes: 1000100, corpus: mixed-v1)",27.82,180,Malloc (total) (K) *,64,Malloc (bytes total) (M) *,65
+before,ParserBenchmarks,"GMSetzer GFM parse 100 KB (bytes: 100284, corpus: mixed-v1)",2.691,1847,Malloc (total) *,6460,Malloc (bytes total) (K) *,8583
+before,ParserBenchmarks,"GMSetzer GFM parse 5 MB (bytes: 5000500, corpus: mixed-v1)",148.898,34,Malloc (total) (K) *,319,Malloc (bytes total) (M) *,424
+before,ParserBenchmarks,"GMSetzer selected inline parse 1 MB (bytes: 1000100, corpus: mixed-v1)",25.084,199,Malloc (total) (K) *,60,Malloc (bytes total) (M) *,56
+before,ParserBenchmarks,"GMSetzer selected inline parse 100 KB (bytes: 100284, corpus: mixed-v1)",2.419,2061,Malloc (total) *,6084,Malloc (bytes total) (K) *,5655
+before,ParserBenchmarks,"GMSetzer selected inline parse 5 MB (bytes: 5000500, corpus: mixed-v1)",131.858,38,Malloc (total) (K) *,301,Malloc (bytes total) (M) *,280
+before,ParserBenchmarks,"GMSetzer selected registry parse 1 MB (bytes: 1000100, corpus: mixed-v1)",25.559,196,Malloc (total) (K) *,57,Malloc (bytes total) (M) *,56
+before,ParserBenchmarks,"GMSetzer selected registry parse 100 KB (bytes: 100284, corpus: mixed-v1)",2.441,2040,Malloc (total) *,5713,Malloc (bytes total) (K) *,5643
+before,ParserBenchmarks,"GMSetzer selected registry parse 5 MB (bytes: 5000500, corpus: mixed-v1)",132.776,38,Malloc (total) (K) *,283,Malloc (bytes total) (M) *,280
+before,ParserBenchmarks,"cmark-gfm (C) CommonMark parse 1 MB (bytes: 1000100, corpus: mixed-v1)",18.842,264,Malloc (total) (K) *,224,Malloc (bytes total) (M) *,30
+before,ParserBenchmarks,"cmark-gfm (C) CommonMark parse 100 KB (bytes: 100284, corpus: mixed-v1)",1.722,2871,Malloc (total) (K) *,23,Malloc (bytes total) (K) *,2971
+before,ParserBenchmarks,"cmark-gfm (C) CommonMark parse 5 MB (bytes: 5000500, corpus: mixed-v1)",95.945,52,Malloc (total) (K) *,1122,Malloc (bytes total) (M) *,148
+before,ParserBenchmarks,"cmark-gfm (C) GFM parse 1 MB (bytes: 1000100, corpus: mixed-v1)",37.159,134,Malloc (total) (K) *,431,Malloc (bytes total) (M) *,39
+before,ParserBenchmarks,"cmark-gfm (C) GFM parse 100 KB (bytes: 100284, corpus: mixed-v1)",3.041,1623,Malloc (total) (K) *,43,Malloc (bytes total) (K) *,3878
+before,ParserBenchmarks,"cmark-gfm (C) GFM parse 5 MB (bytes: 5000500, corpus: mixed-v1)",197.394,26,Malloc (total) (K) *,2154,Malloc (bytes total) (M) *,193
+after,HardeningBenchmarks,"GMSetzer long-emphasis-v1 parse syntax-on 16 KiB (bytes: 16390, corpus: long-emphasis-v1, profile: commonmark, syntax: on)",0.407,10000,Malloc (total) *,58,Malloc (bytes total) (K) *,2696
+after,HardeningBenchmarks,"GMSetzer long-emphasis-v1 parse syntax-on 256 KiB (bytes: 262150, corpus: long-emphasis-v1, profile: commonmark, syntax: on)",6.828,729,Malloc (total) *,70,Malloc (bytes total) (M) *,51
+after,HardeningBenchmarks,"GMSetzer long-emphasis-v1 parse syntax-on 64 KiB (bytes: 65542, corpus: long-emphasis-v1, profile: commonmark, syntax: on)",1.636,3042,Malloc (total) *,64,Malloc (bytes total) (M) *,12
+after,HardeningBenchmarks,"GMSetzer m5-composed-v1 parse syntax-on 16 KiB (bytes: 16654, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",5.935,842,Malloc (total) (K) *,17,Malloc (bytes total) (K) *,6395
+after,HardeningBenchmarks,"GMSetzer m5-composed-v1 parse syntax-on 256 KiB (bytes: 262177, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",91.03,55,Malloc (total) (K) *,262,Malloc (bytes total) (M) *,101
+after,HardeningBenchmarks,"GMSetzer m5-composed-v1 parse syntax-on 64 KiB (bytes: 65665, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",23.183,216,Malloc (total) (K) *,66,Malloc (bytes total) (M) *,25
+after,HardeningBenchmarks,"GMSetzer open-brackets-v1 parse syntax-off 16 KiB (bytes: 16384, corpus: open-brackets-v1, profile: commonmark, syntax: off)",0.951,5216,Malloc (total) *,43,Malloc (bytes total) (K) *,6984
+after,HardeningBenchmarks,"GMSetzer open-brackets-v1 parse syntax-off 256 KiB (bytes: 262144, corpus: open-brackets-v1, profile: commonmark, syntax: off)",15.843,316,Malloc (total) *,51,Malloc (bytes total) (M) *,120
+after,HardeningBenchmarks,"GMSetzer open-brackets-v1 parse syntax-off 64 KiB (bytes: 65536, corpus: open-brackets-v1, profile: commonmark, syntax: off)",3.893,1272,Malloc (total) *,47,Malloc (bytes total) (M) *,30
+after,HardeningBenchmarks,"GMSetzer open-brackets-v1 parse syntax-on 16 KiB (bytes: 16384, corpus: open-brackets-v1, profile: commonmark, syntax: on)",1.074,4616,Malloc (total) *,43,Malloc (bytes total) (K) *,6984
+after,HardeningBenchmarks,"GMSetzer open-brackets-v1 parse syntax-on 256 KiB (bytes: 262144, corpus: open-brackets-v1, profile: commonmark, syntax: on)",17.875,280,Malloc (total) *,51,Malloc (bytes total) (M) *,120
+after,HardeningBenchmarks,"GMSetzer open-brackets-v1 parse syntax-on 64 KiB (bytes: 65536, corpus: open-brackets-v1, profile: commonmark, syntax: on)",4.407,1132,Malloc (total) *,47,Malloc (bytes total) (M) *,30
+after,ParserBenchmarks,"GMSetzer CommonMark parse 1 MB (bytes: 1000100, corpus: mixed-v1)",23.593,210,Malloc (total) (K) *,57,Malloc (bytes total) (M) *,56
+after,ParserBenchmarks,"GMSetzer CommonMark parse 100 KB (bytes: 100284, corpus: mixed-v1)",2.243,2219,Malloc (total) *,5713,Malloc (bytes total) (K) *,5641
+after,ParserBenchmarks,"GMSetzer CommonMark parse 5 MB (bytes: 5000500, corpus: mixed-v1)",124.781,41,Malloc (total) (K) *,283,Malloc (bytes total) (M) *,280
+after,ParserBenchmarks,"GMSetzer GFM parse 1 MB (bytes: 1000100, corpus: mixed-v1)",27.378,183,Malloc (total) (K) *,64,Malloc (bytes total) (M) *,65
+after,ParserBenchmarks,"GMSetzer GFM parse 100 KB (bytes: 100284, corpus: mixed-v1)",2.652,1879,Malloc (total) *,6460,Malloc (bytes total) (K) *,8582
+after,ParserBenchmarks,"GMSetzer GFM parse 5 MB (bytes: 5000500, corpus: mixed-v1)",144.966,35,Malloc (total) (K) *,319,Malloc (bytes total) (M) *,424
+after,ParserBenchmarks,"GMSetzer selected inline parse 1 MB (bytes: 1000100, corpus: mixed-v1)",24.658,203,Malloc (total) (K) *,60,Malloc (bytes total) (M) *,56
+after,ParserBenchmarks,"GMSetzer selected inline parse 100 KB (bytes: 100284, corpus: mixed-v1)",2.365,2104,Malloc (total) *,6084,Malloc (bytes total) (K) *,5654
+after,ParserBenchmarks,"GMSetzer selected inline parse 5 MB (bytes: 5000500, corpus: mixed-v1)",129.696,39,Malloc (total) (K) *,301,Malloc (bytes total) (M) *,280
+after,ParserBenchmarks,"GMSetzer selected registry parse 1 MB (bytes: 1000100, corpus: mixed-v1)",25.068,200,Malloc (total) (K) *,57,Malloc (bytes total) (M) *,56
+after,ParserBenchmarks,"GMSetzer selected registry parse 100 KB (bytes: 100284, corpus: mixed-v1)",2.41,2048,Malloc (total) *,5713,Malloc (bytes total) (K) *,5641
+after,ParserBenchmarks,"GMSetzer selected registry parse 5 MB (bytes: 5000500, corpus: mixed-v1)",131.662,38,Malloc (total) (K) *,283,Malloc (bytes total) (M) *,280
+after,ParserBenchmarks,"cmark-gfm (C) CommonMark parse 1 MB (bytes: 1000100, corpus: mixed-v1)",18.17,274,Malloc (total) (K) *,224,Malloc (bytes total) (M) *,30
+after,ParserBenchmarks,"cmark-gfm (C) CommonMark parse 100 KB (bytes: 100284, corpus: mixed-v1)",1.67,2974,Malloc (total) (K) *,23,Malloc (bytes total) (K) *,2971
+after,ParserBenchmarks,"cmark-gfm (C) CommonMark parse 5 MB (bytes: 5000500, corpus: mixed-v1)",93.061,54,Malloc (total) (K) *,1122,Malloc (bytes total) (M) *,148
+after,ParserBenchmarks,"cmark-gfm (C) GFM parse 1 MB (bytes: 1000100, corpus: mixed-v1)",37.159,135,Malloc (total) (K) *,431,Malloc (bytes total) (M) *,39
+after,ParserBenchmarks,"cmark-gfm (C) GFM parse 100 KB (bytes: 100284, corpus: mixed-v1)",2.988,1658,Malloc (total) (K) *,43,Malloc (bytes total) (K) *,3878
+after,ParserBenchmarks,"cmark-gfm (C) GFM parse 5 MB (bytes: 5000500, corpus: mixed-v1)",193.069,26,Malloc (total) (K) *,2154,Malloc (bytes total) (M) *,193

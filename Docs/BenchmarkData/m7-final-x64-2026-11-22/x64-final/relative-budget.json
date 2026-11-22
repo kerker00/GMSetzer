@@ -1,0 +1,54 @@
+{
+  "scope": "Native x64 same-host C ratio <=2; no Apple M2 absolute/frozen-baseline gates applied.",
+  "cases": [
+    {
+      "profile": "CommonMark",
+      "size": "100 KB",
+      "gm_ms": 3.568,
+      "c_ms": 2.408,
+      "ratio": 1.4817275747508307,
+      "passed": true
+    },
+    {
+      "profile": "CommonMark",
+      "size": "1 MB",
+      "gm_ms": 41.484,
+      "c_ms": 33.423,
+      "ratio": 1.2411812225114442,
+      "passed": true
+    },
+    {
+      "profile": "CommonMark",
+      "size": "5 MB",
+      "gm_ms": 214.041,
+      "c_ms": 137.757,
+      "ratio": 1.553757703782748,
+      "passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "100 KB",
+      "gm_ms": 4.424,
+      "c_ms": 4.465,
+      "ratio": 0.9908174692049273,
+      "passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "1 MB",
+      "gm_ms": 50.692,
+      "c_ms": 55.050000000000004,
+      "ratio": 0.9208356039963669,
+      "passed": true
+    },
+    {
+      "profile": "GFM",
+      "size": "5 MB",
+      "gm_ms": 259.654,
+      "c_ms": 269.484,
+      "ratio": 0.9635228807647208,
+      "passed": true
+    }
+  ],
+  "passed": true
+}

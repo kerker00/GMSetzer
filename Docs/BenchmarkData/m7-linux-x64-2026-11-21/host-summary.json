@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "samples": 77,
+  "sampling_interval_seconds": 5,
+  "load_1m_min": 1.00048828125,
+  "load_1m_max": 6.01318359375,
+  "aggregate_cpu_busy_percent": 26.187945147230785,
+  "aggregate_cpu_iowait_percent": 0.024582757520995004,
+  "cpu0_frequency_khz_min": 800000,
+  "cpu0_frequency_khz_max": 3883131,
+  "thermal_millidegrees_c": {
+    "thermal_zone0": {
+      "min": 31000,
+      "max": 48000
+    }
+  },
+  "minimum_available_memory_kib": 28063900,
+  "minimum_swap_free_kib": 32788336,
+  "maximum_swap_free_kib": 32788336,
+  "scope": "Read-only aggregate host samples during the direct BenchmarkTool command; no SwiftPM parent or build phase. CPU busy uses /proc/stat user/nice/system/irq/softirq/steal, excludes idle/iowait and duplicate guest counters; average is across all logical CPUs and all processes. CPU0 frequency and thermal-zone snapshots do not prove absence of throttling or isolate benchmark process costs."
+}

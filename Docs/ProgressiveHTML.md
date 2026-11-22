@@ -2,9 +2,9 @@
 
 M6 is merged in PR #24 (`a8a0351`) and [accepted](M6Acceptance.md),
 21 November 2026.
-Published in [v0.6.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0)
-with result identity `0.6.0`; see the [release validation](Validation/Release/0.6.0.md).
-The accepted M6 snapshot used `0.6.0-dev.1`. This API consumes
+The accepted M6 snapshot used `0.6.0-dev.1` and is published separately as
+[v0.6.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0). This M7
+branch uses `0.7.0-dev.1`, which is not a published version. This API consumes
 an already parsed, complete `Document` and returns structural HTML on demand.
 It does not stream or incrementally parse Markdown.
 
@@ -141,3 +141,12 @@ now passes all 242 Swift tests, optimized builds and 31 Python tests on macOS
 and Linux with Swift 6.2. The owner merged PR #24 at `a8a0351`; [M6 acceptance](M6Acceptance.md)
 maps all declared gates to evidence, including merged-main CI. General
 hardening continues in M7; consumer UI integration stays separate.
+
+
+The subsequent [M7 inline-buffer optimization](Validation/M7/inline-scratch-2026-11-21.md)
+passes the current progressive correctness tests as part of the 245-test
+macOS/x64 Debug/Release suites. It changes runtime source hashes, so the
+historical 42-case M6 stage/RSS/allocation receipt above is not current-source
+resource evidence for that candidate; the strict source-identity check rejects
+reuse as expected. Fresh resource measurements remain pending. The merged M6
+acceptance record continues to describe its measured source snapshot.

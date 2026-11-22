@@ -148,6 +148,48 @@ extension InlineExtensionTests {
 }
 
 extension InlineExtensionTests {
+    @Test func nestedTokensKeepOrderAndEmptyCRLFPositionsAcrossLeaves() throws {
+        let outer = InlineRule("outer", trigger: 36) { context in
+            InlineMatch(consumed: context.input.count, data: Self.data,
+                children: SourceRange(1, context.input.count - 1),
+                tokens: [BlockToken("test.outer", range: SourceRange(0, 1))])
+        }
+        let point = InlineRule("point", trigger: 97) { context in
+            let ranges = [SourceRange(1, 1), SourceRange(2, 2), SourceRange(0, 3)]
+            return InlineMatch(consumed: context.input.count, data: Self.data,
+                tokens: (0..<13).map { BlockToken("test.point.\($0)", range: ranges[$0 % 3]) })
+        }
+        for source in ["$a\r\nb$\r\n\r\n$a\r\nb$\r\n", "> $a\r\n> b$\r\n>\r\n> $a\r\n> b$\r\n"] {
+            let document = try Self.parser(rules: [outer, point]).validated().parse(source)
+            let plain = Self.parser(rules: [outer, point], collect: false).parse(source)
+            let owners = document.nodes.indices.filter {
+                document.nodes[$0].kind == Self.kind && document.nodes[$0].firstChild == nil
+            }
+            #expect(owners.count == 2 && document.diagnostics.isEmpty)
+            var expected: [SyntaxToken] = []
+            for owner in owners {
+                let range = document.nodes[owner].range
+                let beforeEnding = SourceRange(range.lowerBound + 1, range.lowerBound + 1)
+                let afterEnding = SourceRange(range.upperBound - 1, range.upperBound - 1)
+                let pieces = range.lowerBound + 3 == range.upperBound - 1 ? [range]
+                    : [SourceRange(range.lowerBound, range.lowerBound + 3), SourceRange(range.upperBound - 1, range.upperBound)]
+                for ordinal in 0..<13 {
+                    let projected = ordinal % 3 == 0 ? [beforeEnding] : ordinal % 3 == 1 ? [afterEnding] : pieces
+                    for piece in projected {
+                        expected.append(SyntaxToken("test.point.\(ordinal)", range: piece, owner: owner))
+                    }
+                }
+            }
+            #expect(document.tokens?.filter { $0.role.hasPrefix("test.point.") } == expected)
+            #expect(document.tokens?.filter { $0.role == "test.outer" }.count == 2)
+            #expect(document.nodes == plain.nodes && document.diagnostics == plain.diagnostics)
+            #expect(Self.renderer.render(document) == Self.renderer.render(plain))
+            _ = try Document(source: document.source, nodes: document.nodes, diagnostics: document.diagnostics,
+                customLeafFallbacks: document.customLeafFallbacks, tokens: document.tokens,
+                renderingPolicy: document.renderingPolicy)
+        }
+    }
+
     @Test func emptyProjectedPositionsAfterCRLFStayAfterTheWholeEnding() {
         let outer = InlineRule("outer", trigger: 36) { context in
             InlineMatch(consumed: context.input.count, data: Self.data, children: SourceRange(1, 3))

@@ -1,0 +1,23 @@
+{
+  "status": "failed",
+  "started_utc": "2026-11-22T11:00:09Z",
+  "os": "Linux-7.3.4-1-cachyos-x86_64-with-glibc2.44",
+  "architecture": "x86_64",
+  "cpus": 4,
+  "compiler": "Swift version 6.4.2 (swift-6.4.2-RELEASE)\nTarget: x86_64-unknown-linux-gnu\n",
+  "source_files": 132,
+  "phases": {
+    "debug": {
+      "exit_code": 0,
+      "elapsed_seconds": 48.658795623000515
+    },
+    "release": {
+      "exit_code": 0,
+      "elapsed_seconds": 105.35392345100081
+    },
+    "tools": {
+      "exit_code": 1,
+      "elapsed_seconds": 0.42045615400002134
+    }
+  }
+}

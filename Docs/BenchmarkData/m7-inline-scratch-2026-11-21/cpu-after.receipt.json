@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "started_utc": "2026-11-21T20:16:04.190999+00:00",
+  "binary_sha256": "aa8fa034651369b99ecc2e8df3e594adf0ab4ace07241f76a2504bcd22e82341",
+  "profiles": {
+    "1mb": {
+      "sample_exit": 0,
+      "sample_stdout": "",
+      "sample_stderr": "Sampling process 20386 for 3 seconds with 1 millisecond of run time between samples\nSampling completed, processing symbols...\nSample analysis of process 20386 written to file <mac-after-profile>/1mb.sample.txt\n",
+      "benchmark_exit": 0
+    },
+    "5mb": {
+      "sample_exit": 0,
+      "sample_stdout": "",
+      "sample_stderr": "Sampling process 20388 for 3 seconds with 1 millisecond of run time between samples\nSampling completed, processing symbols...\nSample analysis of process 20388 written to file <mac-after-profile>/5mb.sample.txt\n",
+      "benchmark_exit": 0
+    }
+  },
+  "source_base_commit": "9e7bc71e9f069f4b1ed282bead75fdcb85a8b2f8",
+  "source_state": "Working-tree candidate with two runtime files changed; exact hashes in candidate source manifest and after.receipt.json"
+}

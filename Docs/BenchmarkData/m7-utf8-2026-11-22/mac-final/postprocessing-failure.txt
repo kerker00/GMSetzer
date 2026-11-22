@@ -1,0 +1,1 @@
+Both benchmark commands exited zero without timeout. Initial helper exited 1 while parsing the ParserBenchmarks export: ValueError: timing/allocation metrics must be positive and supported. Read-only queries legitimately allocate zero. Corrected validation reuses the retained exports, not a rerun.

@@ -100,3 +100,14 @@ hashes and are not relabelled as fresh release measurements. M7 mutation,
 benchmark and parser optimization changes are excluded; that work continues
 separately as `0.7.0-dev.1`. No tag is moved or rewritten by documentation
 follow-up or development-branch synchronization.
+
+
+## Current M7 development
+
+`feature/m7-hardening` continues as `0.7.0-dev.1`, with mutation coverage,
+benchmark data and parser optimization kept outside the published 0.6.0 tag.
+The published main is merged into this local development branch while retaining
+its tested parser/rendering source and original measurement commit history.
+Version-only or documentation integration does not retarget historical timing
+receipts or imply M7 acceptance; the remaining validation is in
+[M7Hardening](M7Hardening.md).

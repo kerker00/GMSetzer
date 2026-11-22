@@ -3,6 +3,18 @@ import Synchronization
 import Testing
 
 struct PreparedInlineTests {
+    @Test func plainParagraphsStillPrepareRegisteredInlineRules() throws {
+        let preparations = Mutex(0)
+        let rule = InlineRule("noop", trigger: 91, prepare: { _ in
+            preparations.withLock { $0 += 1 }
+            return { _ in nil }
+        })
+        let parser = try Self.parser(rule)
+        #expect(parser.parse("plain ä😀").diagnostics.isEmpty)
+        #expect(parser.parse("another plain paragraph").diagnostics.isEmpty)
+        #expect(preparations.withLock { $0 } == 2)
+    }
+
     static let kind = NodeKind("prepared.reference")
     static let data = NodeData.custom(kind: kind, role: .inline, attributes: [:])
 

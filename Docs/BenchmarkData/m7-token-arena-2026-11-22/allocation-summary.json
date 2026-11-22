@@ -1,0 +1,15 @@
+{
+  "before": {
+    "iterations": 2,
+    "requests": 262219.0,
+    "gross_bytes": 80426262.0
+  },
+  "after": {
+    "iterations": 563,
+    "requests": 94.0,
+    "gross_bytes": 75828593.73712255
+  },
+  "request_reduction_percent": 99.96415210186905,
+  "gross_byte_reduction_percent": 5.716625575458734,
+  "scope": "Per measured iteration; all stack entries exported. Gross requests/volume, not retained heap or peak RSS; instrumented times are excluded."
+}

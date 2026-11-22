@@ -1,7 +1,16 @@
 # Benchmarks
 
-Measured with `cd Tools && swift package benchmark` (package-benchmark, release
-build). Every entry names the commit, machine and OS. Times are medians (p50).
+Measured with package-benchmark in Release configuration; historical entries
+use `cd Tools && swift package benchmark` unless stated otherwise. Every entry
+names the commit, machine and OS. Times are medians (p50).
+
+For native Linux measurements, build/list through SwiftPM, then invoke the
+built `BenchmarkTool` directly as documented in the
+[M7 x64 report](Validation/M7/linux-x64-2026-11-21.md). The x64 follow-up
+observed substantial CPU competition from the native SwiftPM parent while
+its benchmark child was running. Keep caller/setup work outside measurement
+and record host conditions. Historical commands/results below remain as run;
+they are not silently relabelled as direct-driver measurements.
 
 ## How to read the numbers
 
@@ -642,3 +651,341 @@ set. The full historical harness additionally matches all 48 files read from
 `fe6a505`; its updated runner intentionally differs. New receipts use schema 2
 with actual Git/dirty state and the selected compiler. No new timing, RSS or
 allocation series was run for these tool/test corrections.
+
+
+## M7 initial baseline preparation
+
+The initial [M7 step](M7Hardening.md) changes regression tests/documentation
+only. Runtime sources and protected fixtures remain unchanged. A bounded
+1,024-combination mutation campaign and 24 depth cases pass; the complete
+245-test local Debug/Release suites are green. These are correctness checks,
+not performance/scaling measurements.
+
+The pinned `ParserBenchmarks` target builds and lists 72 unique cases for
+100 KB/1 MB/5 MB; [case identity](Validation/M7/benchmark-cases.txt) and
+[preparation hashes](Validation/M7/preparation.json) record this first checkpoint.
+The subsequently approved full series is below; existing C/absolute/frozen M2
+limits remain unchanged.
+
+
+## M7 first complete baseline, 21 November 2026
+
+Owner-approved Release series at clean commit `1edf1a4`: Apple M2, 16 GiB RAM,
+macOS 27.0.1, Swift 6.4.2, pinned development dependencies and source-positioned
+C controls. All 72 cases complete; the export is written after 378.91 seconds
+including build/setup. Runtime/benchmark sources and the clean checkout are
+verified unchanged before/after. This is a baseline at unchanged runtime code,
+not a new optimization result.
+
+P50 milliseconds, matched `mixed-v1` inputs (100,284 / 1,000,100 / 5,000,500 bytes):
+
+| Profile | Size | GMSetzer | C | GM/C | Budget |
+| --- | --- | ---: | ---: | ---: | --- |
+| CommonMark | 100 KB | 2.671 | 1.673 | 1.597× | Pass |
+| CommonMark | 1 MB | 27.279 | 18.252 | 1.495× | Pass |
+| CommonMark | 5 MB | 143.524 | 91.947 | 1.561× | Pass |
+| GFM | 100 KB | 3.195 | 2.974 | 1.074× | Pass |
+| GFM | 1 MB | 32.801 | 35.815 | 0.916× | Pass |
+| GFM | 5 MB | 172.360 | 192.545 | 0.895× | Pass |
+
+All six paired C/absolute budgets pass, as do the nine frozen M2 core/selected-
+registry/selected-inline checks. C drift is −4.84% / −8.46% / −4.17%, within
+the unchanged ±10% limit; no countermeasurement is required. At 5 MB, safe full
+HTML over a pre-parsed tree takes 143.786 ms and reports about 1,013 K allocation
+requests / 82 M gross requested volume. These rounded metrics identify a useful
+profiling target; they are not retained heap/RSS or exact phase attribution.
+
+The [full report](Validation/M7/baseline-2026-11-21.md) records boundaries,
+allocation observations and limits. [Raw export](BenchmarkData/m7-baseline-2026-11-21/benchmark.md),
+[exact raw streams](BenchmarkData/m7-baseline-2026-11-21/raw-output.tar.gz),
+[CSV](BenchmarkData/m7-baseline-2026-11-21/summary.csv),
+[receipt/source hashes](BenchmarkData/m7-baseline-2026-11-21/receipt.json)
+and [artifact hashes](BenchmarkData/m7-baseline-2026-11-21/sha256.json) retain
+the evidence. Real-M5 and hostile-input scaling/resource measurements and
+broader isolated fuzzing remain required before M7 acceptance.
+
+
+## M7 native Linux ARM64 baseline, 21 November 2026
+
+Owner-authorised source-only snapshot `c299783` on an existing Raspberry Pi 5,
+four logical CPUs, 8,251,584 KiB RAM, Debian 13.7/glibc 2.41, Swift 6.4.2 and
+toolchain Clang 21.0.0. Native Release, no debug information, pinned development
+dependencies and unchanged runtime/benchmark hashes matching the Mac series.
+All **72 cases** complete; the final export is written **490.73 seconds** after
+the recorded post-cold-build start, including incremental run-command setup.
+The complete Linux Debug/Release suites pass 245 tests / 29 suites each;
+31 Python tests pass in both normal and optimized isolated modes.
+
+P50 milliseconds on identical `mixed-v1` inputs and source-positioned C controls:
+
+| Profile | Size | GMSetzer | C | GM/C | ≤2× C |
+| --- | --- | ---: | ---: | ---: | --- |
+| CommonMark | 100 KB | 9.249 | 8.405 | 1.100× | Pass |
+| CommonMark | 1 MB | 130.286 | 93.913 | 1.387× | Pass |
+| CommonMark | 5 MB | 619.708 | 508.297 | 1.219× | Pass |
+| GFM | 100 KB | 12.960 | 20.070 | 0.646× | Pass |
+| GFM | 1 MB | 145.883 | 201.064 | 0.726× | Pass |
+| GFM | 5 MB | 759.693 | 1,032.847 | 0.736× | Pass |
+
+These are same-host relative comparisons only; Apple-M2 absolute limits and
+frozen M2 allowances/control drift are not applied or changed. High reported
+load (1-minute averages 21.18 before / 13.78 after) and only 5–10 samples for
+the large core parser/C cases limit generalization. This is the first Linux
+baseline at unchanged runtime code, not a new optimization or controlled
+cross-host comparison. A repeat under observed steady conditions is needed
+before tuning from timing differences or declaring a stable Linux envelope.
+
+The [full report](Validation/M7/linux-arm64-2026-11-21.md) records configuration,
+commands, transport/toolchain warnings and limits. The
+[data directory](BenchmarkData/m7-linux-arm64-2026-11-21/) retains all 72 cases,
+CSV, relative comparison, source/host receipts, sanitized complete logs and
+artifact hashes. Retained allocation metrics are gross request counts/volume,
+not peak or retained memory; OS/backend differences are not code attribution.
+M7's real-M5/hostile scaling, isolated fuzzing/sanitizers and new-test minimum
+compiler validation remain open.
+
+
+## M7 native Linux x64 direct baseline, 21 November 2026
+
+Owner-authorised repetition at clean snapshot `4443e72`: Intel i5-6600K, four
+logical CPUs, 32,789,280 KiB RAM, CachyOS Linux 7.3.4-1-cachyos / glibc 2.44,
+Swift 6.4.2, Clang 23.1.5. The library passes all 245 tests / 29 suites and
+the tools pass all 6 tests / 4 suites in both Debug and Release; all 31 Python
+tests pass in both isolated modes. Runtime/benchmark hashes match both earlier
+M7 hosts.
+
+A preliminary wrapped measurement is cancelled after observing the native
+SwiftPM parent consuming **251.78% CPU** while its benchmark child runs.
+The same existing Release BenchmarkTool and ParserBenchmarks then run directly,
+with the same options and workloads; all **72/72 cases** complete in one fresh
+series, final export at **378.64 s**, exit 0. No interrupted-run values are
+spliced in. A separate initial list-output interleaving issue is corrected by
+separating stdout/stderr; both preparation issues are retained in the evidence.
+
+P50 milliseconds, matching `mixed-v1` inputs with source positions enabled:
+
+| Profile | Size | GMSetzer | C | GM/C | ≤2× C |
+| --- | --- | ---: | ---: | ---: | --- |
+| CommonMark | 100 KB | 3.946 | 2.435 | 1.621× | Pass |
+| CommonMark | 1 MB | 44.990 | 33.718 | 1.334× | Pass |
+| CommonMark | 5 MB | 231.342 | 144.835 | 1.597× | Pass |
+| GFM | 100 KB | 4.854 | 4.538 | 1.070× | Pass |
+| GFM | 1 MB | 55.378 | 56.033 | 0.988× | Pass |
+| GFM | 5 MB | 282.329 | 271.843 | 1.039× | Pass |
+
+GFM is within about 7% of C on this corpus/series. CommonMark is 33–62% slower;
+its GMSetzer elapsed time needs roughly 25–38% reduction to meet the matching
+C medians. **Parity remains the optimization aim**, not merely the 2× ceiling.
+Next profile CommonMark; these timings alone do not identify a hot function.
+Apple-M2 absolute/frozen M2 gates are not applied or changed on this host.
+
+Across 77 five-second host snapshots, aggregate CPU busy time is **26.19%**
+(four CPUs/all processes), the sampled thermal zone ranges 31–48 °C and free
+swap stays unchanged. CPU0 frequency ranges 0.8–3.88 GHz under the existing
+`powersave` governor; snapshots do not prove absence of throttling. Prior
+Mac/Pi wrapped measurements remain historical; the caller observation is
+measured on x64, not isolated retroactively on the other hosts. Do not attribute
+cross-host differences to architecture or optimization alone.
+
+The [full report and direct command](Validation/M7/linux-x64-2026-11-21.md)
+link all 72 rows, hashes, executable identities, host samples, test logs and
+interrupted/preparation receipts in the
+[data directory](BenchmarkData/m7-linux-x64-2026-11-21/). No runtime optimization
+or M7 completion is claimed. Real-M5/hostile scaling, isolated fuzzing/sanitizers
+and minimum-compiler execution of the new tests remain.
+
+
+## M7 first measured parser optimization, 21 November 2026
+
+CPU/allocation profiling at base `9e7bc71` identifies per-node child arrays and
+per-leaf emission stacks in the inline phase. The two-file candidate reuses
+those buffers within one parse, retaining full validation and syntax work.
+See the [report](Validation/M7/inline-scratch-2026-11-21.md) for source/patch
+hashes, profiles, commands and exact scope.
+
+Four separate direct **18-case subsets** compare old/new Release binaries on
+M2/macOS and Intel i5-6600K/Linux x64, Swift 6.4.2. Inputs, dependency pins,
+source-positioned C configurations and five-second sampling remain unchanged.
+No profiler or SwiftPM parent competes during these timing runs. This does not
+repeat the whole 72-case target. P50 milliseconds for the 5 MB core cases:
+
+| Host | Profile | Before | After | After C | After GM/C |
+| --- | --- | ---: | ---: | ---: | ---: |
+| M2 | CommonMark | 147.325 | 124.649 | 92.668 | 1.345× |
+| M2 | GFM | 174.457 | 145.752 | 191.627 | 0.761× |
+| x64 | CommonMark | 231.604 | 215.745 | 140.247 | 1.538× |
+| x64 | GFM | 283.116 | 263.848 | 271.843 | 0.971× |
+
+Across 100 KB/1 MB/5 MB, CommonMark improves **15–17% on M2 / 6–7% on x64**;
+GFM improves **16–19% / 7–8%**. Selected no-op block/inline registries improve
+14.22–16.62% / 5.26–8.65%. Matching C controls vary by at most 2.07% / 1.36%.
+All six Mac C/absolute gates and nine frozen M2 checks pass unchanged, as do
+all six x64 same-host C ratios. These are same-host corpus observations, not
+cross-architecture attribution or proof of C parity. CommonMark remains
+24–54% slower than C on x64 in this series.
+
+Separate instrumented 1 MB Mac allocation stacks record **109,538 → 56,618
+requests per parse (48.31% fewer)**, normalized over 3 / 6 iterations. Gross
+requested bytes are 58,549,158 → 56,067,470; ordinary timing rows corroborate
+the rounded counts, 110 K → 57 K. Profiling timings are not performance data,
+and request counts/volume do not establish retained heap or peak-RSS changes.
+
+The [data directory](BenchmarkData/m7-inline-scratch-2026-11-21/) retains all
+72 subset rows, paired comparisons, source/binary identities, full sanitized
+profiles/logs and hashes. Current macOS/x64 library Debug/Release and Release
+C-reference tests pass. Candidate ARM64/minimum Swift 6.2, full-suite and fresh
+progressive stage/RSS/allocation checks remain pending; historical M6 resource
+hashes do not match the changed runtime. General M7 acceptance remains open.
+
+## M7 extension and hostile-input preparation, 22 November 2026
+
+A separate `HardeningBenchmarks` executable prepares **69 cases** across seven
+authored input families and three sizes (16/64/256 KiB). It measures real M5
+parsing/composed rendering, annotation off/on and five hostile CommonMark
+shapes with informational C controls. Source bytes go unchanged to both
+parsers. The old 72-case target, dependency pins and budgets stay unchanged.
+
+The [workload contract and direct-driver commands](M7HardeningWorkloads.md)
+specify inputs, timed work, C-policy differences and process-group timeouts.
+The [preparation report](Validation/M7/hardening-preparation-2026-11-22.md)
+retains all identities, 10 Release tool tests, 36 Python tests in each mode
+and the **five-case 16 KiB smoke run**, complete in about 26 seconds. Its
+times/allocations validate the measurement path only: no full scaling result,
+new speedup, C parity, peak-RSS reduction or completed M7 gate is claimed.
+The first filter attempt fails closed without samples and is retained.
+
+Full execution requires the existing owner confirmation. The driver stops
+and records a failure at a per-case timeout, invalid export or nonzero exit;
+it does not drop failed inputs from the matrix. Linux and Swift 6.2 checks
+of this new harness remain pending, along with the fresh progressive resource
+and broader fuzz/sanitizer evidence already identified above.
+
+## M7 full extension/hostile-input scaling baseline, 22 November 2026
+
+After owner confirmation, **69/69 cases complete** at clean `2f5f1bd` on
+macOS arm64 / Swift 6.4.2 in **326 seconds**, with no timeout/invalid export.
+All 50 measurement-source hashes, prepared case names, Release executables
+and malloc interposers match before/after. The direct driver has no SwiftPM/
+build parent; no compiler, test suite or profiler is launched alongside it.
+See the [report](Validation/M7/hardening-scaling-2026-11-22.md) for all conditions,
+timings, sample counts, allocation units and comparison limits.
+
+For approximately 16× input growth across 16/64/256 KiB, the 18 Swift series
+show 6.70–17.21× time growth. The observed bounded series does not prove linear
+complexity. At 256 KiB, full all-M5 output costs 78.512 ms without syntax /
+116.326 ms with syntax; shared-footnote output costs 83.821 / 98.107 ms.
+
+Next profiling priorities are concrete: long-emphasis annotation costs
+**4.801 → 30.769 ms (6.41×)** with **56 → about 262 K** requests; unclosed
+brackets request **174 M gross bytes** for 256 KiB input; invalid UTF-8 takes
+**12.534 ms versus 3.768 ms C**. C's UTF-8 validation flag is disabled and
+quote-depth policies differ, so these controls remain informational. Allocation
+volume is rounded gross traffic, not retained memory or RSS. General C parity,
+new runtime speedups and existing 72-case budget acceptance are not inferred.
+
+The [data directory](BenchmarkData/m7-hardening-full-2026-11-22/) retains all
+69 rows, 23 scaling groups, 27 annotation pairs, 15 C comparisons and 142
+archived streams, with hashes and reproducible derivation. Functional suites
+are unchanged from preparation and not repeated for this measurement-only
+step. New-harness Linux/Swift 6.2, fresh progressive resource measurements,
+larger-input/fuzz/sanitizer work and M7 acceptance remain pending.
+
+## M7 inline token arena optimization, 22 November 2026
+
+Allocation recording attributes about 131 K requests each to per-item token
+arrays and temporary projection arrays in the 256 KiB long-emphasis syntax-on
+case. A controller-local token arena and single-segment mapping remove those
+paths while retaining token order/ownership, disjoint ranges and empty CRLF
+positions. Three runtime files change; no API, corpus, profile, pin, fixture or
+existing budget changes. See the [report](Validation/M7/token-arena-2026-11-22.md).
+
+Separate direct Release **30-case subsets per variant** (12 hardening + 18
+mixed) record **75–77% less long-emphasis annotation time**: 256 KiB takes
+**29.721 → 7.279 ms**, with its on/off multiplier 6.23× → 1.67×. Separate
+instrumented profiles record **262,219 → 94 requests per parse (99.964% fewer)**,
+but only **5.72% less gross requested bytes**, not a measured peak-memory gain.
+The initial +1.45% large-M5 timing change is not reproduced by a four-case
+before/after/after/before check. Small mixed-input changes are not generalized;
+matching C controls vary by up to 4.61%.
+
+All six current Mac C/absolute gates and nine frozen M2 checks pass unchanged.
+At 5 MB, CommonMark/C is 123.994 / 94.437 ms (1.313×); GFM/C is
+145.752 / 193.987 ms (0.751×). This does not establish general C parity.
+Current 247-test Debug/Release suites pass on macOS and native Linux ARM64;
+10 Mac Release tool/reference tests and 36 Python tests per mode pass. All
+1,324 old/new spec token tables are identical, including 4,422 token entries.
+
+The [data directory](BenchmarkData/m7-token-arena-2026-11-22/) retains profiles,
+all 60 timing rows, M5 repeats, gate output, candidate identities/patch and
+53 archived streams/probe files with hashes. The full 69/72 refresh, current
+x64/minimum Swift 6.2, Linux development-tool measurements and fresh progressive
+resource evidence remain pending. Open-bracket gross traffic remains 174 M
+at 256 KiB; large buffers and malformed-byte processing are next. M7 is not
+accepted or merged by this local measurement.
+
+## M7 inline capacity and compact links, 22 November 2026
+
+The [buffer report](Validation/M7/inline-capacity-2026-11-22.md) profiles about
+92.35 M inline-controller and 80.45 M builder growth bytes per 256 KiB open-
+bracket parse. Compact private item links/bracket layout and geometric batch
+reservation reduce total gross traffic **174,190,788 → 119,819,700 bytes
+(31.21%)**, requests **76 → 51**, with public tree layout/values unchanged.
+This is neither a peak-RSS result nor a general retained-memory guarantee.
+
+Paired direct Release **30-case subsets per variant** complete (12 hardening
+and 18 mixed), with unchanged inputs, pins, profiles, sampling and limits.
+Bracket timing is broadly maintained: 256 KiB syntax off is 16.269 → 15.843 ms,
+on is 17.809 → 17.875 ms. Long-emphasis syntax-on improves 6.94–10.66%, with
+7.643 → 6.828 ms at 256 KiB. Matching C controls vary by up to 3.57%; small
+mixed/M5 changes are not generalized as speedups. All six Mac C/absolute and
+nine frozen-M2 checks pass. Mixed 5 MB CommonMark/C is 124.781 / 93.061 ms
+(1.341×); GFM/C is 144.966 / 193.069 ms (0.751×).
+
+Current 249-test library suites pass in Debug/Release on macOS/Linux ARM64,
+10 Mac Release tool tests pass, and independent snapshots preserve all 1,324
+spec trees/tokens. The [data directory](BenchmarkData/m7-inline-capacity-2026-11-22/)
+retains 60 timing rows, profiles, layout/public-tree probes, candidate patch,
+gate output and 45 archived files with hashes. No full 69/72 refresh or new
+Python-suite run is claimed. Malformed-byte processing with a validation-
+enabled C control, current x64/minimum compiler and fresh progressive resource/
+fuzz evidence remain open; M7 is still in progress.
+
+## M7 explicit UTF-8 controls, 22 November 2026
+
+The [UTF-8 report](Validation/M7/utf8-2026-11-22.md) adds a separate 36-case
+target, leaving the historical 69/72 identities untouched. Three original-byte
+corpora distinguish legacy malformed repair, compatible malformed repair and
+valid multibyte text; C validation is explicitly off/on. Compatible repaired
+HTML is checked against C, while Swift retains original-byte coordinates.
+Legacy `c0 af` replacement remains deliberately different. These distinctions
+prevent a raw C validation-off number from being treated as equivalent work.
+
+One runtime file reuses the already validated canonical plain-paragraph tree.
+On M2 at compatible malformed 256 KiB, syntax off, p50 improves **12.812 →
+10.297 ms (19.63%)**, with C validation-on **5.259 → 5.251 ms**. Swift/C time
+is **2.44× → 1.96×**, not parity. Separate stack exports record **52,475,775 →
+24,636,098 gross requested bytes (53.05% less)** and 52,478 → 52,437 requests.
+No peak-RSS claim follows. All 36 paired rows and control drift are retained.
+
+Current Mac correctness is 252 Debug/Release tests, 12 Release tool tests,
+252 AddressSanitizer tests and 8,192 bounded ASan mutation parses. Public
+snapshots for all 1,324 examples remain byte-identical. Bounded mutation is
+not coverage-guided fuzzing; minimum compiler and subsequent full cross-host/
+resource results are tracked separately in the report. Existing budgets and
+dependency pins remain unchanged. M7 is not accepted by this focused result.
+
+The subsequent [current x64/resource/minimum-compiler report](Validation/M7/final-x64-2026-11-22.md)
+completes native 36/69/72-case exports, 252-test Debug/Release suites and 12
+Release tool tests. All six x64 C-relative gates pass: CommonMark takes
+1.24–1.55× C time, GFM 0.92–0.99×. The full Mac refresh passes all six
+C/absolute and nine frozen M2 checks. These are current controls, not an
+additional paired optimization result. Minimum Swift 6.2 CI passes both hosts.
+
+Fresh progressive-v2 data completes all 42 x64 cases / 126 unchanged checks,
+with all 43 runtime and five measurement-tool hashes matching. The retained
+archive is independently checked locally with `--include-measurement-tools`.
+There is no general peak-memory reduction claim. A separate
+[coverage-guided campaign](Validation/M7/fuzz-2026-11-22.md) completes 3,510
+units using the installed system Clang runtime, with coverage/assertions active
+and no failures; Linux ASan is not claimed. See [candidate readiness](M7Readiness.md)
+for the review boundary and remaining parity/output/longer-campaign work.

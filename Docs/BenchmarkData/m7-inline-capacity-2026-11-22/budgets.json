@@ -1,0 +1,14 @@
+{
+  "c-absolute": {
+    "exit_code": 0
+  },
+  "m2-core": {
+    "exit_code": 0
+  },
+  "m2-selected-registry": {
+    "exit_code": 0
+  },
+  "m2-selected-inline": {
+    "exit_code": 0
+  }
+}

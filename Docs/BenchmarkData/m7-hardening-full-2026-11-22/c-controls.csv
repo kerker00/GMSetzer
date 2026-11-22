@@ -1,0 +1,16 @@
+corpus,nominal_kib,actual_bytes,swift_ms,c_ms,swift_over_c,scope
+open-brackets-v1,16,16384,1.066,1.312,0.8125,Informational; quote/invalid-byte policies can differ; no new budget gate.
+open-brackets-v1,64,65536,4.334,5.452,0.7949376375641966,Informational; quote/invalid-byte policies can differ; no new budget gate.
+open-brackets-v1,256,262144,17.727,21.217,0.8355092614412971,Informational; quote/invalid-byte policies can differ; no new budget gate.
+long-emphasis-v1,16,16390,0.29,0.291,0.9965635738831615,Informational; quote/invalid-byte policies can differ; no new budget gate.
+long-emphasis-v1,64,65542,1.195,1.179,1.0135708227311282,Informational; quote/invalid-byte policies can differ; no new budget gate.
+long-emphasis-v1,256,262150,4.801,4.825,0.9950259067357513,Informational; quote/invalid-byte policies can differ; no new budget gate.
+unmatched-backticks-v1,16,16476,0.107,0.044,2.431818181818182,Informational; quote/invalid-byte policies can differ; no new budget gate.
+unmatched-backticks-v1,64,65708,0.262,0.129,2.0310077519379846,Informational; quote/invalid-byte policies can differ; no new budget gate.
+unmatched-backticks-v1,256,262455,0.719,0.425,1.6917647058823528,Informational; quote/invalid-byte policies can differ; no new budget gate.
+quote-overflow-v1,16,16576,0.451,0.857,0.5262543757292882,Informational; quote/invalid-byte policies can differ; no new budget gate.
+quote-overflow-v1,64,65786,1.777,3.422,0.5192869666861484,Informational; quote/invalid-byte policies can differ; no new budget gate.
+quote-overflow-v1,256,262626,7.176,17.564,0.40856296971077205,Informational; quote/invalid-byte policies can differ; no new budget gate.
+invalid-utf8-v1,16,16388,0.786,0.232,3.3879310344827585,Informational; quote/invalid-byte policies can differ; no new budget gate.
+invalid-utf8-v1,64,65540,3.113,0.921,3.3800217155266012,Informational; quote/invalid-byte policies can differ; no new budget gate.
+invalid-utf8-v1,256,262148,12.534,3.768,3.3264331210191087,Informational; quote/invalid-byte policies can differ; no new budget gate.
