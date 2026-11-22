@@ -1,7 +1,25 @@
 import GMSetzer
+import Foundation
 import Testing
 
 struct HTMLSecurityTests {
+    @Test func escapingPreservesExactUTF8AcrossPlainAndSpecialRuns() {
+        var samples = [String(decoding: (0...127).map { UInt8($0) }, as: UTF8.self)]
+        for count in [0, 1, 14, 15, 16, 31, 32, 4_096] {
+            for plain in [String(repeating: "a", count: count),
+                          String(repeating: "e\u{301}😀日本語\0'", count: count)] {
+                samples += [plain, plain + "<&>\"", "<&>\"" + plain, plain + "<&>\"" + plain]
+            }
+        }
+        for text in samples {
+            let expected = text.replacingOccurrences(of: "&", with: "&amp;")
+                .replacingOccurrences(of: "<", with: "&lt;")
+                .replacingOccurrences(of: ">", with: "&gt;")
+                .replacingOccurrences(of: "\"", with: "&quot;")
+            #expect(HTMLRenderer.escape(text).utf8.elementsEqual(expected.utf8))
+        }
+    }
+
     @Test func safeURLAllowlistAndEscapedDocumentContent() {
         let parser = MarkdownParser()
         for scheme in ["javascript", "vbscript", "data", "file", "shell", "custom-app"] {

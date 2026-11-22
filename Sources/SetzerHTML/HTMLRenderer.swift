@@ -115,7 +115,8 @@ public struct HTMLRenderer: Sendable {
 
     package func renderChildren(_ document: Document, of index: Int, tree: DocumentIndex) -> String {
         var pending: [Event] = []
-        scheduleChildren(index, document: document, pending: &pending)
+        var children: [Int] = []
+        scheduleChildren(index, document: document, pending: &pending, children: &children)
         return render(document, events: pending, tree: tree, checkpoint: {})
     }
 
@@ -127,7 +128,8 @@ public struct HTMLRenderer: Sendable {
     package func renderChildren(_ document: Document, of index: Int, tree: DocumentIndex,
                                 checkpoint: () throws -> Void) rethrows -> String {
         var pending: [Event] = []
-        scheduleChildren(index, document: document, pending: &pending)
+        var children: [Int] = []
+        scheduleChildren(index, document: document, pending: &pending, children: &children)
         return try render(document, events: pending, tree: tree, checkpoint: checkpoint)
     }
 
@@ -135,6 +137,9 @@ public struct HTMLRenderer: Sendable {
                         checkpoint: () throws -> Void) rethrows -> String {
         var output = ""
         var pending = events
+        // Child indices are copied into events; no event or hook retains this
+        // caller-owned scratch array between nodes or separate render calls.
+        var children: [Int] = []
         while let event = pending.popLast() {
             try checkpoint()
             switch event {
@@ -151,23 +156,23 @@ public struct HTMLRenderer: Sendable {
                     case .wrapChildren(let open, let close):
                         output += open
                         pending.append(.output(close))
-                        scheduleChildren(index, document: document, tightItem: tightItem, pending: &pending)
+                        scheduleChildren(index, document: document, tightItem: tightItem, pending: &pending, children: &children)
                     }
                     continue
                 }
                 switch node.data {
                 case .document:
-                    scheduleChildren(index, document: document, pending: &pending)
+                    scheduleChildren(index, document: document, pending: &pending, children: &children)
                 case .paragraph:
                     if !tightItem {
                         output += "<p\(anchors(node, index: index))>"
                         pending.append(.output("</p>\n"))
                     }
-                    scheduleChildren(index, document: document, pending: &pending)
+                    scheduleChildren(index, document: document, pending: &pending, children: &children)
                 case .blockQuote:
                     output += "<blockquote\(anchors(node, index: index))>\n"
                     pending.append(.output("</blockquote>\n"))
-                    scheduleChildren(index, document: document, pending: &pending)
+                    scheduleChildren(index, document: document, pending: &pending, children: &children)
                 case .list(let attributes):
                     let tag: String
                     switch attributes.style {
@@ -178,9 +183,10 @@ public struct HTMLRenderer: Sendable {
                         output += "<ol\(startAttribute)\(anchors(node, index: index))>\n"
                     }
                     pending.append(.output("</\(tag)>\n"))
-                    scheduleChildren(index, document: document, pending: &pending)
+                    scheduleChildren(index, document: document, pending: &pending, children: &children)
                 case .listItem, .taskListItem:
-                    let children = document.children(of: index).filter { document.nodes[$0].kind != .referenceDefinition }
+                    document.children(of: index, into: &children)
+                    children.removeAll { document.nodes[$0].kind == .referenceDefinition }
                     output += "<li\(anchors(node, index: index))>"
                     if case .taskListItem(let checked) = node.data {
                         output += checked ? "<input checked=\"\" disabled=\"\" type=\"checkbox\"> "
@@ -192,7 +198,7 @@ public struct HTMLRenderer: Sendable {
                 case .heading(let level):
                     output += "<h\(level)\(anchors(node, index: index))>"
                     pending.append(.output("</h\(level)>\n"))
-                    scheduleChildren(index, document: document, pending: &pending)
+                    scheduleChildren(index, document: document, pending: &pending, children: &children)
                 case .text(let text): output += Self.escape(text)
                 case .softBreak: output += "\n"
                 case .hardBreak: output += "<br />\n"
@@ -200,7 +206,7 @@ public struct HTMLRenderer: Sendable {
                 case .emphasis:
                     output += "<em>"
                     pending.append(.output("</em>"))
-                    scheduleChildren(index, document: document, pending: &pending)
+                    scheduleChildren(index, document: document, pending: &pending, children: &children)
                 case .strong:
                     let collapses = document.renderingPolicy.contains(.collapsesNestedStrong)
                     // GitHub's renderer omits the tags of a strong whose parent is strong.
@@ -209,26 +215,29 @@ public struct HTMLRenderer: Sendable {
                         pending.append(.output("</strong>"))
                     }
                     if collapses {
-                        for child in document.children(of: index).reversed() {
+                        document.children(of: index, into: &children)
+                        for child in children.reversed() {
                             pending.append(.enter(child, flag: document.nodes[child].kind == .strong))
                         }
-                    } else { scheduleChildren(index, document: document, pending: &pending) }
+                    } else { scheduleChildren(index, document: document, pending: &pending, children: &children) }
                 case .strikethrough:
                     output += "<del>"
                     pending.append(.output("</del>"))
-                    scheduleChildren(index, document: document, pending: &pending)
+                    scheduleChildren(index, document: document, pending: &pending, children: &children)
                 case .table:
                     output += "<table\(anchors(node, index: index))>\n"
-                    let rows = document.children(of: index)
-                    pending.append(.output(rows.count > 1 ? "</tbody>\n</table>\n" : "</table>\n"))
-                    for (position, row) in rows.enumerated().reversed() {
+                    document.children(of: index, into: &children)
+                    pending.append(.output(children.count > 1 ? "</tbody>\n</table>\n" : "</table>\n"))
+                    for position in children.indices.reversed() {
+                        let row = children[position]
                         pending.append(.enter(row))
                         if position == 1 { pending.append(.output("<tbody>\n")) }
                     }
                 case .tableRow(let isHeader):
                     output += isHeader ? "<thead>\n<tr\(anchors(node, index: index))>\n" : "<tr\(anchors(node, index: index))>\n"
                     pending.append(.output(isHeader ? "</tr>\n</thead>\n" : "</tr>\n"))
-                    for cell in document.children(of: index).reversed() { pending.append(.enter(cell, flag: isHeader)) }
+                    document.children(of: index, into: &children)
+                    for cell in children.reversed() { pending.append(.enter(cell, flag: isHeader)) }
                 case .tableCell(let alignment):
                     let tag = tightItem ? "th" : "td"
                     let align: String
@@ -240,13 +249,13 @@ public struct HTMLRenderer: Sendable {
                     }
                     output += "<\(tag)\(align)\(anchors(node, index: index))>"
                     pending.append(.output("</\(tag)>\n"))
-                    scheduleChildren(index, document: document, pending: &pending)
+                    scheduleChildren(index, document: document, pending: &pending, children: &children)
                 case .link(let destination, let title):
                     output += "<a href=\"\(url(destination))\""
                     if let title, !title.isEmpty { output += " title=\"\(Self.escape(title))\"" }
                     output += ">"
                     pending.append(.output("</a>"))
-                    scheduleChildren(index, document: document, pending: &pending)
+                    scheduleChildren(index, document: document, pending: &pending, children: &children)
                 case .image(let destination, let title):
                     output += "<img src=\"\(url(destination))\" alt=\"\(Self.escape(imageText(index, document: document)))\""
                     if let title, !title.isEmpty { output += " title=\"\(Self.escape(title))\"" }
@@ -267,7 +276,7 @@ public struct HTMLRenderer: Sendable {
                     output += allowRawHTML ? rawHTML(html, document: document) : Self.escape(html)
                 case .custom:
                     if node.firstChild != nil {
-                        scheduleChildren(index, document: document, pending: &pending)
+                        scheduleChildren(index, document: document, pending: &pending, children: &children)
                     } else {
                         if let literal = document.customLeafFallbacks[index] {
                             output += Self.escape(literal)
@@ -284,22 +293,25 @@ public struct HTMLRenderer: Sendable {
         return output
     }
 
-    private func scheduleChildren(_ index: Int, document: Document, tightItem: Bool = false, pending: inout [Event]) {
+    private func scheduleChildren(_ index: Int, document: Document, tightItem: Bool = false,
+                                  pending: inout [Event], children: inout [Int]) {
+        document.children(of: index, into: &children)
         switch document.nodes[index].data {
         case .list(let attributes):
-            for child in document.children(of: index).reversed() {
+            for child in children.reversed() {
                 pending.append(.enter(child, flag: attributes.isTight))
             }
         case .listItem, .taskListItem:
-            let children = document.children(of: index).filter { document.nodes[$0].kind != .referenceDefinition }
+            children.removeAll { document.nodes[$0].kind == .referenceDefinition }
             scheduleItemChildren(children, document: document, tightItem: tightItem, pending: &pending)
         default:
-            for child in document.children(of: index).reversed() { pending.append(.enter(child)) }
+            for child in children.reversed() { pending.append(.enter(child)) }
         }
     }
 
     private func scheduleItemChildren(_ children: [Int], document: Document, tightItem: Bool, pending: inout [Event]) {
-        for (position, child) in children.enumerated().reversed() {
+        for position in children.indices.reversed() {
+            let child = children[position]
             let unwrapped = tightItem && document.nodes[child].kind == .paragraph
             if unwrapped && position + 1 < children.count { pending.append(.output("\n")) }
             pending.append(.enter(child, flag: unwrapped))
@@ -408,6 +420,9 @@ public struct HTMLRenderer: Sendable {
     }
 
     public static func escape(_ text: String) -> String {
+        // Most text needs no escaping. Preserve its existing storage instead
+        // of building a byte array and decoding an identical second string.
+        guard text.utf8.contains(where: { $0 == 38 || $0 == 60 || $0 == 62 || $0 == 34 }) else { return text }
         var bytes: [UInt8] = []
         bytes.reserveCapacity(text.utf8.count)
         for byte in text.utf8 {

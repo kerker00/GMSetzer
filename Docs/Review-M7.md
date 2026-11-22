@@ -55,3 +55,22 @@ General C parity, larger-input/peak-memory conclusions and a future HTML
 byte-buffer rewrite are not established.
 The owner merged PR #26 at `a273810` after this review. Explicit M7 acceptance
 and release publication remain separate steps.
+
+## Subsequent HTML-copy candidate
+
+The [candidate over `0d660f9`](Validation/M7/html-copies-2026-11-22.md) changes
+one runtime file. Self-review verifies that only integer child indices enter
+events, scratch arrays stay local to each render invocation, and no hook or
+progressive plan retains them. Stable filtering/index iteration preserves
+reference omission, table/body boundaries, list tightness and GFM strong flags.
+The no-escape path preserves String value/UTF-8 semantics; escaping-required
+input uses the existing writer. Public options, trust boundaries and checkpoint
+locations do not change. No unsafe access or unchecked mode is added.
+
+253-test native suites and protected HTML examples pass; allocation profiles
+and stable-control countermeasurements corroborate the targeted improvement.
+Retained scratch capacity is not a peak-memory guarantee. The fresh resource
+matrix passes all 42 cases / 126 unchanged checks with complete runtime/tool
+hash verification. Mac ASan also passes 1,024 bounded mutation inputs / 8,192
+parses with full/progressive HTML comparisons. Minimum-compiler completion is
+tracked in the candidate report before final acceptance.

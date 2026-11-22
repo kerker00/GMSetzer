@@ -1,0 +1,14 @@
+{
+  "before": {
+    "iterations": 2,
+    "requests": 202620.0,
+    "gross_bytes": 14759504.0
+  },
+  "after": {
+    "iterations": 8,
+    "requests": 42020.0,
+    "gross_bytes": 6767829.0
+  },
+  "request_reduction_percent": 79.26167209554832,
+  "gross_byte_reduction_percent": 54.145959105400834
+}

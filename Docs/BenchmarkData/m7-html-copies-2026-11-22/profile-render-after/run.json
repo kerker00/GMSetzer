@@ -1,0 +1,31 @@
+{
+  "command": [
+    "/private/tmp/gmsetzer-m7-benchmark-build/arm64-apple-macosx/release/BenchmarkTool",
+    "--command",
+    "run",
+    "--format",
+    "markdown",
+    "--grouping",
+    "benchmark",
+    "--baseline-storage-path",
+    "<TASK>/profile-render-after",
+    "--no-progress",
+    "--time-units",
+    "microseconds",
+    "--targets",
+    "ParserBenchmarks",
+    "--benchmark-executable-paths",
+    "/private/tmp/gmsetzer-m7-benchmark-build/arm64-apple-macosx/release/ParserBenchmarks",
+    "--filter",
+    "^GMSetzer render 1 MB$",
+    "--export-allocation-stacks",
+    "--allocation-stacks-export-format",
+    "json",
+    "--allocation-stacks-export-path",
+    "<TASK>/profile-render-after",
+    "--allocation-stack-limit",
+    "0"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 7.625429083
+}

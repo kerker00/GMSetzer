@@ -91,6 +91,19 @@ configuration for selected extensions. Input streaming requires a separate
 design: later definitions, list finalisation, full-document ownership and
 fallback/restriction semantics must be specified before implementation.
 
+**HTML-copy candidate, 22 November 2026:** allocation profiling leads to one
+runtime-file change, reusing local child-index storage and preserving existing
+plain Strings when escaping is unnecessary. The
+[report](Validation/M7/html-copies-2026-11-22.md) records **79.26% fewer requests /
+54.15% less gross byte traffic** for 1 MB rendering, with isolated pre-parsed
+render time about halved on M2 and 34–37% lower on x64. Composed M5 pipeline
+results remain mixed/small; no parser or general peak-memory improvement is
+claimed. All 253 Mac/x64 Debug/Release tests, 12 tool tests per host and 253 Mac
+ASan tests pass, plus 1,024 bounded ASan mutation inputs / 8,192 parses. Fresh
+source-matched progressive resources pass all 42 cases / 126 checks, verifying
+43 runtime / 5 measurement-tool hashes. Minimum Swift 6.2 candidate CI remains
+pending; the candidate is not merged or released.
+
 The M4 follow-ups are merged in PR #15 (`1473d49`). The source-only v0.4.0
 release preparation and macOS/Linux CI are merged in PR #16 (`6a0eb8e`);
 their merged branches are cleaned up.

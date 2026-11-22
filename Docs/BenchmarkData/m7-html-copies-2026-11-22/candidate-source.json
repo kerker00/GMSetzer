@@ -1,0 +1,11 @@
+{
+  "base_commit": "0d660f9",
+  "dirty": true,
+  "files": {
+    "Sources/SetzerHTML/HTMLRenderer.swift": "312cae6b705ca3bcd4c007a4efff1df191c79339b786f1e3f48ab7e076534feb",
+    "Tests/SetzerParserTests/HTMLSecurityTests.swift": "e24561b65cbd18246a19e3845838016f3b87c885a80bdd42d68c17ba9016ff2d"
+  },
+  "runtime_files_changed": [
+    "Sources/SetzerHTML/HTMLRenderer.swift"
+  ]
+}

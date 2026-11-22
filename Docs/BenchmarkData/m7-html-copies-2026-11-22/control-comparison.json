@@ -1,0 +1,80 @@
+[
+  {
+    "name": "GMSetzer CommonMark parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 23.986,
+    "after_ms": 24.15,
+    "delta_percent": 0.6837321771032911
+  },
+  {
+    "name": "GMSetzer GFM parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 27.623,
+    "after_ms": 27.967,
+    "delta_percent": 1.2453390290699584
+  },
+  {
+    "name": "GMSetzer render 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 28.115,
+    "after_ms": 13.558,
+    "delta_percent": -51.77663169126801
+  },
+  {
+    "name": "cmark-gfm (C) CommonMark parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 18.711,
+    "after_ms": 18.301,
+    "delta_percent": -2.191224413446635
+  },
+  {
+    "name": "cmark-gfm (C) GFM parse 1 MB (bytes: 1000100, corpus: mixed-v1)",
+    "before_ms": 37.454,
+    "after_ms": 36.93,
+    "delta_percent": -1.3990495007208836
+  },
+  {
+    "name": "GMSetzer footnotes-repeated-v1 parse syntax-off 256 KiB (bytes: 262158, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: off)",
+    "before_ms": 48.857,
+    "after_ms": 48.234,
+    "delta_percent": -1.2751499273389588
+  },
+  {
+    "name": "GMSetzer footnotes-repeated-v1 parse syntax-on 256 KiB (bytes: 262158, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: on)",
+    "before_ms": 53.772,
+    "after_ms": 54.067,
+    "delta_percent": 0.5486126608643893
+  },
+  {
+    "name": "GMSetzer footnotes-repeated-v1 parse-render syntax-off 256 KiB (bytes: 262158, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: off)",
+    "before_ms": 84.279,
+    "after_ms": 80.937,
+    "delta_percent": -3.9654006336097947
+  },
+  {
+    "name": "GMSetzer footnotes-repeated-v1 parse-render syntax-on 256 KiB (bytes: 262158, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: on)",
+    "before_ms": 91.423,
+    "after_ms": 87.556,
+    "delta_percent": -4.229789002767359
+  },
+  {
+    "name": "GMSetzer m5-composed-v1 parse syntax-off 256 KiB (bytes: 262177, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: off)",
+    "before_ms": 53.543,
+    "after_ms": 54.657,
+    "delta_percent": 2.080570756214617
+  },
+  {
+    "name": "GMSetzer m5-composed-v1 parse syntax-on 256 KiB (bytes: 262177, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",
+    "before_ms": 93.323,
+    "after_ms": 93.127,
+    "delta_percent": -0.21002325257438725
+  },
+  {
+    "name": "GMSetzer m5-composed-v1 parse-render syntax-off 256 KiB (bytes: 262177, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: off)",
+    "before_ms": 78.25,
+    "after_ms": 79.495,
+    "delta_percent": 1.5910543130990495
+  },
+  {
+    "name": "GMSetzer m5-composed-v1 parse-render syntax-on 256 KiB (bytes: 262177, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",
+    "before_ms": 118.489,
+    "after_ms": 114.164,
+    "delta_percent": -3.6501278599701314
+  }
+]
