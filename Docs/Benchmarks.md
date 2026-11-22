@@ -1027,5 +1027,6 @@ results are mixed/small; do not generalize isolated render gains to full
 pipelines. Mac/x64 Debug/Release each pass 253 library tests and 12 Release tool
 tests; Mac ASan passes 253 and the bounded 1,024-input / 8,192-parse probe. Fresh
 source-matched resources pass all 42 cases / 126 checks with 43 runtime / 5
-tool hashes verified. Minimum-compiler CI completion is tracked in the report.
+tool hashes verified. Minimum Swift 6.2 CI passes on macOS/Linux at `ad8179f`;
+the report retains the run and logs.
 Existing limits, pins and historical receipts remain unchanged.

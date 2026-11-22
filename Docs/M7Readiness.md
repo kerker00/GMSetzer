@@ -6,6 +6,12 @@ tag/release exists.
 Development identity remains `0.7.0-dev.1`; the latest published version stays
 0.6.0. API/DocC/1.0 completion stays M8.
 
+The table below records the merged PR #26 snapshot. The subsequent
+[HTML-copy follow-up](Validation/M7/html-copies-2026-11-22.md), open in PR #28,
+adds a byte-fidelity regression test (253 total), profiled renderer gains,
+fresh native resource/ASan checks and passing minimum Swift 6.2 CI. Its own
+source hashes identify that changed renderer; earlier receipts remain history.
+
 | Library gate | Candidate evidence |
 | --- | --- |
 | Protected grammar / public contracts | All 652 CommonMark / 672 GFM protected examples pass; 1,324 exact old/new snapshots retain 7,994 nodes / 4,422 tokens |

@@ -418,5 +418,20 @@
     "path": "checks/stress-build.stderr.gz",
     "original_sha256": "8d13865527b64b7506e0c65bc7df4ac68841c6d2c6329546be9de001355584bb",
     "retained_sha256": "f304784764b103b61eade6bb7e518a11d2784bb312c17fe45d700b2735ac3801"
+  },
+  {
+    "path": "ci/ci-run.json",
+    "original_sha256": "ba7e23ee5c040ad39d8a5e5c82057449df665f0018157c88e498b95f2d0d2e19",
+    "retained_sha256": "ba7e23ee5c040ad39d8a5e5c82057449df665f0018157c88e498b95f2d0d2e19"
+  },
+  {
+    "path": "ci/ci-macos.log.gz",
+    "original_sha256": "9b340d2117fd5d7f631c217fb7cfbb5e23d0e456ad7f9907e55d42998b74b4b9",
+    "retained_sha256": "1582236f0905ef073a992b7ba5504814402b0bb38a0f2136bfd51943e1898b8b"
+  },
+  {
+    "path": "ci/ci-linux.log.gz",
+    "original_sha256": "1acc58578cc8487c6940ab6711852b80d75edc85dbc0bee1ba4b3bb756d407df",
+    "retained_sha256": "70c7d1def9e4ad40beea5400385aa9266b32fe957f1aa540696ebe6c49a92cb0"
   }
 ]

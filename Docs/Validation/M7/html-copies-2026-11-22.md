@@ -6,6 +6,8 @@ regression test. Public APIs, parser grammar/tree/token/source contracts,
 limits, dependency pins and performance budgets remain unchanged. Source
 hashes and the candidate patch identify the uncommitted implementation measured
 here; this is not a clean-candidate-commit or published-release measurement.
+The identical runtime/test patch is subsequently committed at `ad8179f` in
+[PR #28](https://github.com/kerker00/GMSetzer/pull/28).
 
 ## Profile and implementation
 
@@ -94,6 +96,7 @@ claim or a full historical 72-case refresh.
 | Mac Debug AddressSanitizer | 253 tests / 29 suites pass |
 | Mac AddressSanitizer bounded mutation probe | 1,024 inputs / 8,192 parses pass, 56.05 s |
 | Native progressive resources, source-matched | 42 cases / 126 checks pass |
+| Minimum Swift CI on macOS / Linux | 253 tests, optimized build and 36 Python tests pass per host |
 
 The oracle compares exact UTF-8 with an independent replacement-based reference
 for plain/special runs around small-string/long-buffer sizes, decomposed
@@ -123,8 +126,11 @@ tool hashes**, archive digests and 756 raw records on both hosts. No old
 runtime hash is presented as a match for the changed renderer. This establishes
 the existing resource budgets, not general peak-memory reduction.
 
-Candidate minimum Swift 6.2 CI is pending; the branch is not merged or released.
-The
+[Candidate CI](https://github.com/kerker00/GMSetzer/actions/runs/45043408098)
+passes at `ad8179f`: macOS Swift 6.2.3 / Linux Swift 6.2 each execute all 253
+tests, build the optimized library and pass 36 offline Python tests. This
+checks the minimum compiler independently of the native 6.4.2 measurements.
+The branch is not merged or released. The
 [evidence directory](../../BenchmarkData/m7-html-copies-2026-11-22/) retains
 raw paired/repeat exports, exact allocation stacks, tests, source/binary hashes
 and the candidate patch. Logs replace task/home paths; archived digests record

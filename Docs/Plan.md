@@ -84,7 +84,8 @@ reference index to [Documentation](README.md). A separate
 word8, the same algorithm with RawSpan, and SIMD16/32. The
 [results](Validation/M7/scan-evaluation-2026-11-22.md) identify mixed gains and
 regressions; no experimental strategy is promoted into production.
-Next, measure remaining intermediate copies and HTML byte-buffer output.
+The subsequent candidate below measures remaining intermediate HTML copies;
+further output-buffer changes depend on new profiles.
 Token interning/struct-of-arrays remains profile-driven. M8's API review now
 explicitly includes a small safe-HTML facade and shared parser/renderer
 configuration for selected extensions. Input streaming requires a separate
@@ -101,8 +102,10 @@ results remain mixed/small; no parser or general peak-memory improvement is
 claimed. All 253 Mac/x64 Debug/Release tests, 12 tool tests per host and 253 Mac
 ASan tests pass, plus 1,024 bounded ASan mutation inputs / 8,192 parses. Fresh
 source-matched progressive resources pass all 42 cases / 126 checks, verifying
-43 runtime / 5 measurement-tool hashes. Minimum Swift 6.2 candidate CI remains
-pending; the candidate is not merged or released.
+43 runtime / 5 measurement-tool hashes. Minimum Swift 6.2 candidate CI passes
+253 tests, optimized builds and 36 Python tests on macOS/Linux at `ad8179f`.
+[PR #28](https://github.com/kerker00/GMSetzer/pull/28) is open; the candidate is
+not merged or released.
 
 The M4 follow-ups are merged in PR #15 (`1473d49`). The source-only v0.4.0
 release preparation and macOS/Linux CI are merged in PR #16 (`6a0eb8e`);
@@ -842,8 +845,8 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: profile intermediate copies and HTML output after the merged
-scan experiment, alongside separately
+Current next work: review and merge the measured HTML-copy follow-up in
+[PR #28](https://github.com/kerker00/GMSetzer/pull/28), alongside separately
 reviewed source-only 0.7 release preparation after the [M7 candidate](M7Readiness.md)
 merged in PR #26 (`a273810`). The measured
 scratch/token/buffer/UTF-8 optimizations now have current full Mac/x64 benchmark
