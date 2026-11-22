@@ -836,3 +836,26 @@ profiles/logs and hashes. Current macOS/x64 library Debug/Release and Release
 C-reference tests pass. Candidate ARM64/minimum Swift 6.2, full-suite and fresh
 progressive stage/RSS/allocation checks remain pending; historical M6 resource
 hashes do not match the changed runtime. General M7 acceptance remains open.
+
+## M7 extension and hostile-input preparation, 22 November 2026
+
+A separate `HardeningBenchmarks` executable prepares **69 cases** across seven
+authored input families and three sizes (16/64/256 KiB). It measures real M5
+parsing/composed rendering, annotation off/on and five hostile CommonMark
+shapes with informational C controls. Source bytes go unchanged to both
+parsers. The old 72-case target, dependency pins and budgets stay unchanged.
+
+The [workload contract and direct-driver commands](M7HardeningWorkloads.md)
+specify inputs, timed work, C-policy differences and process-group timeouts.
+The [preparation report](Validation/M7/hardening-preparation-2026-11-22.md)
+retains all identities, 10 Release tool tests, 36 Python tests in each mode
+and the **five-case 16 KiB smoke run**, complete in about 26 seconds. Its
+times/allocations validate the measurement path only: no full scaling result,
+new speedup, C parity, peak-RSS reduction or completed M7 gate is claimed.
+The first filter attempt fails closed without samples and is retained.
+
+Full execution requires the existing owner confirmation. The driver stops
+and records a failure at a per-case timeout, invalid export or nonzero exit;
+it does not drop failed inputs from the matrix. Linux and Swift 6.2 checks
+of this new harness remain pending, along with the fresh progressive resource
+and broader fuzz/sanitizer evidence already identified above.

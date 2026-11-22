@@ -34,6 +34,17 @@ let package = Package(
             ]
         ),
         .executableTarget(
+            name: "HardeningBenchmarks",
+            dependencies: [
+                "BenchmarkCorpus",
+                .product(name: "GMSetzer", package: "GMSetzer"),
+                .product(name: "cmark-gfm", package: "swift-cmark"),
+                .product(name: "Benchmark", package: "package-benchmark"),
+            ],
+            path: "Benchmarks/HardeningBenchmarks",
+            plugins: [.plugin(name: "BenchmarkPlugin", package: "package-benchmark")]
+        ),
+        .executableTarget(
             name: "ParserBenchmarks",
             dependencies: [
                 "BenchmarkCorpus",

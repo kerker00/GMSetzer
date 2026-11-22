@@ -210,3 +210,22 @@ in `CLAUDE.md`. M7 completion requires both the existing speed budgets and
 documented robustness/allocation evidence; a passing small campaign alone does
 not complete it. The measurement result is recorded locally; push, PR and release remain
 separate steps.
+
+## Extension and hostile-input measurement preparation
+
+22 November 2026: the separate
+[69-case workload matrix](M7HardeningWorkloads.md) is implemented and listed.
+Seven deterministic input families cover composed M5, repeated shared
+footnotes, unclosed brackets, long emphasis, unmatched backticks, quote-budget
+overflow and invalid UTF-8 at 16/64/256 KiB. Syntax collection off/on and
+composed parse-plus-render cases are explicit; C controls use identical raw
+bytes but remain informational where policies differ. No library code or
+existing 72-case workload/budget changes in this preparation step.
+
+The [checkpoint report](Validation/M7/hardening-preparation-2026-11-22.md)
+records 10 Release tool tests / 5 suites, 36 Python tests in both isolated
+modes and five successful short Mac measurements with source hashes unchanged.
+The bounded direct driver stops on timeout or invalid exports and retains
+failed attempts. Full size scaling, new-harness Linux/Swift 6.2 validation and
+the previously pending resource/fuzz evidence still need execution. This
+checkpoint does not accept M7 or establish larger-input complexity.

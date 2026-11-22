@@ -58,6 +58,13 @@ checks, fresh progressive resource measurements, real-M5/hostile-input scaling
 and broader fuzzing remain open. See [M7 hardening](Docs/M7Hardening.md)
 for scope, reproduction and remaining portability/performance gates.
 
+The next [extension/hostile-input matrix](Docs/M7HardeningWorkloads.md) is
+prepared separately: 69 cases at 16/64/256 KiB, with syntax details off/on,
+composed M5 rendering and informational C controls. Ten Release tool tests,
+36 Python tests in both modes and five short Mac smoke cases pass. Full
+scaling, Linux/minimum-compiler validation of this harness and M7 acceptance
+remain pending; the existing 72 reference cases and budgets are unchanged.
+
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented
 [message-key/argument catalogue](Docs/NativeAnalysisMessages.md). The v0.4.0

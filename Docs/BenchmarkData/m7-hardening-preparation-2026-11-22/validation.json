@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-22",
+  "scope": "Local tools-only preparation; no full 69/72-case or library test rerun.",
+  "library_revision": "a56a26ea680f9b777e4cdafe96f0f88a31ab086a",
+  "library_and_historical_target_unchanged_from_revision": true,
+  "historical_case_list_identical": true,
+  "historical_case_count": 72,
+  "new_case_count": 69,
+  "full_matrix_executed": false,
+  "tools_release": {
+    "tests": 10,
+    "suites": 5,
+    "exit_code": 0
+  },
+  "python_isolated": {
+    "tests": 36,
+    "exit_code": 0
+  },
+  "python_optimized_isolated": {
+    "tests": 36,
+    "exit_code": 0
+  },
+  "final_smoke": {
+    "complete": 5,
+    "failed": 0,
+    "exit_code": 0
+  },
+  "new_harness_linux_verified": false,
+  "new_harness_swift_6_2_verified": false,
+  "harness_sha256": {
+    "Tools/Package.swift": "155a63eaf4b9fce7086fabcffedbf006f8ed98352d3cb7b0148ed73e5b31c6ae",
+    "Tools/Sources/BenchmarkCorpus/HardeningWorkload.swift": "cb3d2a26b1f76475c68b2b92dc5c2583a5ef9f9c274d2337576e3bafa22ecbc5",
+    "Tools/Benchmarks/HardeningBenchmarks/HardeningBenchmarks.swift": "f3891a43cca46f0c8fcd4fa95e45332d32aa332116257b7ebc69a8c0f8c6cddd",
+    "Tools/run_hardening_benchmarks.py": "ef0a0aeb8f266cc7508778e6e4deb9d5c3ed0c1ce2d6af7d0672f178226501d4",
+    "Tools/Tests/BenchmarkCorpusTests/HardeningWorkloadTests.swift": "68c4b68b69c03caf852277ace1e7c1b20e67723660a654a30e238f3e87f0a91b",
+    "Scripts/test_hardening_benchmark_runner.py": "4050129f8b953f56b2b932f9084bbc11d69e0387e374b86691a85f38c9e7bc17"
+  }
+}

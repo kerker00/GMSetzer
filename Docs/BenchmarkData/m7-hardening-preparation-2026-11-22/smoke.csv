@@ -1,0 +1,6 @@
+name,wall_ms_p50,samples,malloc_count_metric,malloc_count_p50_display,malloc_volume_metric,malloc_volume_p50_display
+"GMSetzer m5-composed-v1 parse syntax-off 16 KiB (bytes: 16654, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: off)",3.4,1464,Malloc (total) (K) *,17,Malloc (bytes total) (K) *,4223
+"GMSetzer m5-composed-v1 parse-render syntax-on 16 KiB (bytes: 16654, corpus: m5-composed-v1, profile: gfm-all-m5, syntax: on)",7.487,667,Malloc (total) (K) *,30,Malloc (bytes total) (K) *,7512
+"GMSetzer footnotes-repeated-v1 parse-render syntax-off 16 KiB (bytes: 16398, corpus: footnotes-repeated-v1, profile: gfm-footnotes, syntax: off)",5.063,986,Malloc (total) (K) *,21,Malloc (bytes total) (K) *,5549
+"GMSetzer open-brackets-v1 parse syntax-off 16 KiB (bytes: 16384, corpus: open-brackets-v1, profile: commonmark, syntax: off)",1.06,4709,Malloc (total) *,63,Malloc (bytes total) (M) *,13
+"cmark-gfm (C) open-brackets-v1 parse 16 KiB (bytes: 16384, corpus: open-brackets-v1, profile: commonmark, syntax: off)",1.316,3785,Malloc (total) (K) *,33,Malloc (bytes total) (K) *,3672
