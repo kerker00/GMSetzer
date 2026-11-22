@@ -107,6 +107,18 @@ source-matched progressive resources pass all 42 cases / 126 checks, verifying
 [PR #28](https://github.com/kerker00/GMSetzer/pull/28) is open; the candidate is
 not merged or released.
 
+**Inline-input follow-up, 22 November 2026:** the owner-approved
+[three-runtime-file candidate](Validation/M7/inline-input-2026-11-22.md) over
+PR #28 reuses built-in-only inline projections, decodes slices without copying
+their input, and adds an ASCII reference-label path with unchanged Unicode
+fallback. Review rejects unrestricted projection reuse because retained
+callback snapshots could inherit oversized capacity; custom-inline-rule
+documents keep fresh per-leaf projections. Corrected-candidate validation and
+fresh PowerG5 measurements are pending. Optional source-pinned MD4C/Rust
+comparisons stay development-only and distinguish consumed events from full
+source-positioned AST services. APIs, limits, budgets and release state remain
+unchanged.
+
 The M4 follow-ups are merged in PR #15 (`1473d49`). The source-only v0.4.0
 release preparation and macOS/Linux CI are merged in PR #16 (`6a0eb8e`);
 their merged branches are cleaned up.

@@ -1030,3 +1030,19 @@ source-matched resources pass all 42 cases / 126 checks with 43 runtime / 5
 tool hashes verified. Minimum Swift 6.2 CI passes on macOS/Linux at `ad8179f`;
 the report retains the run and logs.
 Existing limits, pins and historical receipts remain unchanged.
+
+## Inline-input and reference-label follow-up, 22 November 2026
+
+The [follow-up report](Validation/M7/inline-input-2026-11-22.md) tracks reusable
+built-in inline projections, direct slice decoding and ASCII reference-label
+normalization. An initial unrestricted variant is rejected after review finds
+retained-callback capacity amplification. Its preparatory profiles/timings
+remain labelled separately; corrected-candidate results are pending.
+
+The optional [cross-language harness](../Tools/ParserComparison/README.md)
+adds source-pinned MD4C and pulldown-cmark alongside GMSetzer/cmark on identical
+CommonMark input, with output verification and rotated samples. AST versus
+event-stream work and full HTML work are separate rows; these additional
+parsers do not replace the existing configured C reference budgets. Existing
+72/69/36-case targets and source-matched progressive resource checks retain
+their configurations and require fresh evidence for the changed runtime.

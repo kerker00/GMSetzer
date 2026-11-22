@@ -8,6 +8,14 @@ internal struct InlineInput: Sendable {
     var pieces: [Piece] = []
 
     init(_ document: Document, children: [Int]) {
+        reset(to: document, children: children)
+    }
+
+    /// Reuse this leaf's projection storage. Retained callback snapshots still
+    /// own their value through COW and must never observe the next leaf.
+    mutating func reset(to document: Document, children: [Int]) {
+        bytes.removeAll(keepingCapacity: true)
+        pieces.removeAll(keepingCapacity: true)
         var byteCount = 0
         var pieceCount = 0
         for child in children {
@@ -245,9 +253,19 @@ internal struct InlineParser {
 
     /// Reuse per-leaf controller storage inside this parse. Result nodes retain
     /// their own value storage; no scratch handles survive into the next leaf.
-    mutating func reset(to input: InlineInput) {
-        self.input = input
-        self.bytes = input.bytes
+    mutating func reset(to document: Document, children: [Int]) {
+        // Release our second byte-buffer owner before refilling the projection.
+        // The emission phase borrows `input` directly rather than keeping a
+        // separate local snapshot alive across leaves.
+        bytes = []
+        if hasCustomRules {
+            // A callback may retain its context. Fresh projections keep later
+            // small snapshots from inheriting an earlier large leaf's capacity.
+            input = InlineInput(document, children: children)
+        } else {
+            input.reset(to: document, children: children)
+        }
+        bytes = input.bytes
         items.removeAll(keepingCapacity: true)
         tokens.removeAll(keepingCapacity: true)
         delimiters.removeAll(keepingCapacity: true)
@@ -293,7 +311,7 @@ internal struct InlineParser {
         let text: String
         if let literal { text = literal }
         else if bytes[start..<end].contains(0) {
-            text = InlineDecoding.decode(Array(bytes[start..<end]), escapes: false, entities: false)
+            text = InlineDecoding.decode(bytes[start..<end], escapes: false, entities: false)
         } else { text = String(decoding: bytes[start..<end], as: UTF8.self) }
         append(.text(text), start, end)
     }

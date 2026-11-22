@@ -76,3 +76,21 @@ parses with full/progressive HTML comparisons. Minimum Swift 6.2 CI passes all
 253 tests, optimized builds and 36 Python tests on both macOS and Linux at
 `ad8179f`; the linked report retains the run and logs. No additional runtime
 correction was needed during this review. The owner merges PR #28.
+
+## Subsequent inline-input/decoding candidate
+
+The [follow-up over PR #28](Validation/M7/inline-input-2026-11-22.md) adds
+three bounded runtime changes. Review catches retained-callback capacity
+amplification in the initial projection-reuse variant; a new regression fails
+there and passes on the original runtime. The corrected variant uses fresh
+projections whenever custom inline rules are selected. Built-in-only parsing
+releases its second byte-buffer owner before reuse, with no shared mutable
+cache. Slice decoding keeps absolute slice indices and single-pass replacement;
+ASCII label handling keeps the existing Unicode fallback and byte identity.
+
+Foreign-parser adapters are development-only, version/source pinned and MIT
+compatible. Output verification preserves inline/preformatted whitespace and
+Unicode spelling; tree versus event-stream timing scope remains explicit.
+The source-positioned C reference budgets and library dependencies are
+unchanged. Corrected-candidate native/resource/minimum-compiler completion is
+tracked in the report before final review readiness.

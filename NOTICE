@@ -5,6 +5,19 @@ Released under the MIT licence (see LICENSE).
 Third-party material
 ====================
 
+Optional native comparison tools (not part of the library)
+---------------------------------------------------------
+
+Tools/ParserComparison contains original adapters for MD4C (MIT),
+https://github.com/mity/md4c, and pulldown-cmark (MIT),
+https://github.com/pulldown-cmark/pulldown-cmark. Foreign parser sources are
+not copied into this repository or linked into GMSetzer. The comparison's
+sources.json pins MD4C source hashes/revision and the pulldown release;
+Cargo.lock pins registry checksums. Downloaded sources keep their upstream
+licenses in the temporary build directory. The validation evidence records
+the licenses of all compiled Rust dependencies. Existing cmark-gfm reference
+dependencies stay in the separate Tools package.
+
 Test data (not part of the library)
 -----------------------------------
 
