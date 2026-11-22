@@ -973,3 +973,19 @@ snapshots for all 1,324 examples remain byte-identical. Bounded mutation is
 not coverage-guided fuzzing; minimum compiler and subsequent full cross-host/
 resource results are tracked separately in the report. Existing budgets and
 dependency pins remain unchanged. M7 is not accepted by this focused result.
+
+The subsequent [current x64/resource/minimum-compiler report](Validation/M7/final-x64-2026-11-22.md)
+completes native 36/69/72-case exports, 252-test Debug/Release suites and 12
+Release tool tests. All six x64 C-relative gates pass: CommonMark takes
+1.24–1.55× C time, GFM 0.92–0.99×. The full Mac refresh passes all six
+C/absolute and nine frozen M2 checks. These are current controls, not an
+additional paired optimization result. Minimum Swift 6.2 CI passes both hosts.
+
+Fresh progressive-v2 data completes all 42 x64 cases / 126 unchanged checks,
+with all 43 runtime and five measurement-tool hashes matching. The retained
+archive is independently checked locally with `--include-measurement-tools`.
+There is no general peak-memory reduction claim. A separate
+[coverage-guided campaign](Validation/M7/fuzz-2026-11-22.md) completes 3,510
+units using the installed system Clang runtime, with coverage/assertions active
+and no failures; Linux ASan is not claimed. See [candidate readiness](M7Readiness.md)
+for the review boundary and remaining parity/output/longer-campaign work.

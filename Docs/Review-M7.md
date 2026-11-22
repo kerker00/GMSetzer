@@ -1,8 +1,9 @@
 # M7 implementation self-review
 
 22 November 2026. Review scope is `origin/main` through the local
-`feature/m7-hardening` candidate, including the uncommitted UTF-8 step based
-on `e3b4b0c`. This is a self-review, not independent external review or M7
+`feature/m7-hardening` candidate, including the UTF-8 step measured over
+`e3b4b0c` and committed in `8ab9786`, plus the subsequent development fuzz
+harness. This is a self-review, not independent external review or M7
 acceptance. Runtime changes are limited to five existing files; public grammar,
 API contracts, limits, dependency pins and protected specification IDs remain
 unchanged except the separate `0.7.0-dev.1` development identity.
@@ -43,8 +44,13 @@ and failed tooling attempts are retained rather than silently discarded.
 Each earlier optimization retains its own paired measurements and limits.
 
 No additional runtime correctness issue was found in this review. This is not
-a proof against all inputs. Current x64/resource and minimum Swift 6.2 checks
-are tracked as they complete; coverage-guided fuzzing remains open because of
-the installed sanitizer/runtime limits. General C parity, larger-input/peak
-memory conclusions and a future HTML byte-buffer rewrite are not established.
+a proof against all inputs. The [subsequent x64/resource/minimum Swift 6.2 checks](Validation/M7/final-x64-2026-11-22.md)
+pass, and a [bounded coverage-guided campaign](Validation/M7/fuzz-2026-11-22.md)
+completes 3,510 units without failure. The development callback is isolated from
+the root package, retains assertions, checks source/semantic/HTML invariants and
+has process/input/RSS bounds. Its runner verifies coverage symbols/execution,
+uses existing Clang archives and preserves failed commands; no installation is
+introduced. This Linux executable has no ASan; Mac ASan retains its own scope.
+General C parity, larger-input/peak-memory conclusions and a future HTML
+byte-buffer rewrite are not established.
 M7 acceptance, owner merge and release publication remain separate steps.

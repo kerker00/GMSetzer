@@ -331,7 +331,11 @@ allocation count and no peak-memory claim.
 
 All 252 Mac tests pass in Debug, Release and AddressSanitizer; 12 Release tool
 tests pass, all 1,324 public snapshots match, and the standalone bounded ASan
-stress probe completes 8,192 parses. Coverage-guided fuzzing remains open due
-to the recorded installed-toolchain limits. Full current cross-host, resource
-and minimum-compiler evidence is tracked in the report. This candidate does
-not accept M7 or publish 0.7.0.
+stress probe completes 8,192 parses. The later
+[current x64/resource/minimum-compiler report](Validation/M7/final-x64-2026-11-22.md)
+passes full 36/69/72 target refreshes, native suites, 42 source-matched resource
+cases and Swift 6.2 CI. A [coverage-guided campaign](Validation/M7/fuzz-2026-11-22.md)
+uses the already installed system Clang runtime, completing 3,510 units without
+failure; the Linux executable does not enable ASan. See
+[candidate readiness](M7Readiness.md) for the complete gate/limit table. This
+candidate does not accept M7 or publish 0.7.0.

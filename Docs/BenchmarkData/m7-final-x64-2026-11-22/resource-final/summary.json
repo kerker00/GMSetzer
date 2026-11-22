@@ -1,0 +1,6974 @@
+[
+  {
+    "case": "mixed-100000-syntax-off",
+    "source_bytes": 100172,
+    "syntax_details": false,
+    "nodes": 15851,
+    "groups": 4,
+    "html_bytes": 607280,
+    "first_group_bytes": 196367,
+    "largest_group_source_bytes": 32762,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 5.0973405,
+    "full_ms_p50": 7.577958499999999,
+    "prepare_ms_p50": 0.0767145,
+    "first_render_ms_p50": 2.4550595,
+    "first_ready_ms_p50": 2.5310105,
+    "all_groups_ms_p50": 7.644584999999999,
+    "parse_plus_first_ms_p50": 7.631895,
+    "parse_plus_full_ms_p50": 12.682993,
+    "timing_samples_ms": {
+      "parse": [
+        6.417952,
+        5.116103,
+        5.11481,
+        5.09774,
+        5.096941,
+        5.074751,
+        4.926201,
+        4.960465
+      ],
+      "full": [
+        7.605813,
+        7.761095,
+        7.581064,
+        7.596452,
+        7.574853,
+        7.474949,
+        7.450682,
+        7.398785
+      ],
+      "first_ready": [
+        2.536051,
+        2.5321429999999996,
+        2.529359,
+        2.702156,
+        2.52268,
+        2.529878,
+        2.493198,
+        2.532558
+      ],
+      "all_groups": [
+        7.651527,
+        7.645949,
+        7.643221,
+        7.85202,
+        7.627547,
+        7.6505090000000004,
+        7.475341,
+        7.571244
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        23848,
+        25716,
+        24104
+      ],
+      "full": [
+        25836,
+        25916,
+        25936
+      ],
+      "first": [
+        24216,
+        25784,
+        23928
+      ],
+      "groups": [
+        26104,
+        24128,
+        25632
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 24104,
+      "full": 25916,
+      "first": 24216,
+      "groups": 25632
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 15851,
+        "parse": {
+          "allocation_calls": 8652,
+          "ms": 7.851808,
+          "requested_allocation_bytes": 11023002
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 64497,
+          "ms": 8.221446,
+          "requested_allocation_bytes": 6258682
+        },
+        "html_bytes": 607280,
+        "nodes": 15851,
+        "parse": {
+          "allocation_calls": 8652,
+          "ms": 7.900948,
+          "requested_allocation_bytes": 11023002
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20683,
+          "ms": 2.691232,
+          "requested_allocation_bytes": 2198594
+        },
+        "first_group_bytes": 196367,
+        "groups": 4,
+        "largest_group_source_bytes": 32762,
+        "nodes": 15851,
+        "parse": {
+          "allocation_calls": 8652,
+          "ms": 7.804078,
+          "requested_allocation_bytes": 11023002
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 54,
+          "ms": 0.096731,
+          "requested_allocation_bytes": 117328
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20683,
+          "ms": 2.604909,
+          "requested_allocation_bytes": 2198594
+        },
+        "first_group_bytes": 196367,
+        "grouped_html_bytes": 607280,
+        "groups": 4,
+        "largest_group_source_bytes": 32762,
+        "nodes": 15851,
+        "parse": {
+          "allocation_calls": 8652,
+          "ms": 7.793241,
+          "requested_allocation_bytes": 11023002
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 54,
+          "ms": 0.088395,
+          "requested_allocation_bytes": 117328
+        },
+        "remaining_groups": {
+          "allocation_calls": 43829,
+          "ms": 5.368793,
+          "requested_allocation_bytes": 4516169
+        }
+      }
+    }
+  },
+  {
+    "case": "mixed-100000-syntax-on",
+    "source_bytes": 100172,
+    "syntax_details": true,
+    "nodes": 15851,
+    "groups": 4,
+    "html_bytes": 607280,
+    "first_group_bytes": 196367,
+    "largest_group_source_bytes": 32762,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 6.293925,
+    "full_ms_p50": 7.5609715,
+    "prepare_ms_p50": 0.07910049999999999,
+    "first_render_ms_p50": 2.4727870000000003,
+    "first_ready_ms_p50": 2.5550075,
+    "all_groups_ms_p50": 7.709574,
+    "parse_plus_first_ms_p50": 8.943831,
+    "parse_plus_full_ms_p50": 13.852709,
+    "timing_samples_ms": {
+      "parse": [
+        7.232996,
+        7.52375,
+        6.326204,
+        5.756546,
+        5.753221,
+        6.252316,
+        7.624545,
+        6.261646
+      ],
+      "full": [
+        7.57376,
+        7.54947,
+        7.553962,
+        7.536331,
+        7.564771,
+        7.572936,
+        7.610455,
+        7.557172
+      ],
+      "first_ready": [
+        2.53797,
+        2.5644310000000003,
+        2.537824,
+        2.551684,
+        3.006599,
+        2.771318,
+        2.545576,
+        2.558331
+      ],
+      "all_groups": [
+        7.672601,
+        7.712828,
+        7.706320000000001,
+        7.675244999999999,
+        8.258155,
+        7.961729,
+        7.684322,
+        7.730397
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        27204,
+        27128,
+        27140
+      ],
+      "full": [
+        27328,
+        25348,
+        25352
+      ],
+      "first": [
+        27072,
+        25336,
+        25308
+      ],
+      "groups": [
+        25320,
+        25428,
+        27132
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 27140,
+      "full": 25352,
+      "first": 25336,
+      "groups": 25428
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 15851,
+        "parse": {
+          "allocation_calls": 9326,
+          "ms": 9.286041,
+          "requested_allocation_bytes": 13028018
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 64495,
+          "ms": 8.202217,
+          "requested_allocation_bytes": 6258250
+        },
+        "html_bytes": 607280,
+        "nodes": 15851,
+        "parse": {
+          "allocation_calls": 9326,
+          "ms": 9.141353,
+          "requested_allocation_bytes": 13028018
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20683,
+          "ms": 2.666564,
+          "requested_allocation_bytes": 2198594
+        },
+        "first_group_bytes": 196367,
+        "groups": 4,
+        "largest_group_source_bytes": 32762,
+        "nodes": 15851,
+        "parse": {
+          "allocation_calls": 9326,
+          "ms": 9.19718,
+          "requested_allocation_bytes": 13028018
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 52,
+          "ms": 0.106353,
+          "requested_allocation_bytes": 116896
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20683,
+          "ms": 2.58442,
+          "requested_allocation_bytes": 2198594
+        },
+        "first_group_bytes": 196367,
+        "grouped_html_bytes": 607280,
+        "groups": 4,
+        "largest_group_source_bytes": 32762,
+        "nodes": 15851,
+        "parse": {
+          "allocation_calls": 9326,
+          "ms": 9.226162,
+          "requested_allocation_bytes": 13028018
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 52,
+          "ms": 0.153137,
+          "requested_allocation_bytes": 116896
+        },
+        "remaining_groups": {
+          "allocation_calls": 43829,
+          "ms": 5.272096,
+          "requested_allocation_bytes": 4516169
+        }
+      }
+    }
+  },
+  {
+    "case": "mixed-1000000-syntax-off",
+    "source_bytes": 1000140,
+    "syntax_details": false,
+    "nodes": 158251,
+    "groups": 31,
+    "html_bytes": 6252556,
+    "first_group_bytes": 196367,
+    "largest_group_source_bytes": 32762,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 57.8724525,
+    "full_ms_p50": 77.7882285,
+    "prepare_ms_p50": 2.151948,
+    "first_render_ms_p50": 2.4920359999999997,
+    "first_ready_ms_p50": 4.6294055,
+    "all_groups_ms_p50": 78.86482849999999,
+    "parse_plus_first_ms_p50": 62.670173500000004,
+    "parse_plus_full_ms_p50": 135.80969149999999,
+    "timing_samples_ms": {
+      "parse": [
+        58.984765,
+        57.940651,
+        57.683325,
+        57.784786,
+        57.862619,
+        58.487489,
+        57.882286,
+        57.83321
+      ],
+      "full": [
+        79.031866,
+        77.347881,
+        77.666942,
+        80.30751,
+        77.788195,
+        77.48108,
+        78.213479,
+        77.788262
+      ],
+      "first_ready": [
+        4.640843,
+        4.513310000000001,
+        4.629571,
+        4.489161,
+        4.629239999999999,
+        4.490336,
+        4.966201999999999,
+        5.0715889999999995
+      ],
+      "all_groups": [
+        78.679298,
+        78.758623,
+        80.123328,
+        78.385914,
+        78.97103399999999,
+        78.373969,
+        79.425917,
+        80.007413
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        70444,
+        69856,
+        69508
+      ],
+      "full": [
+        72052,
+        70252,
+        72700
+      ],
+      "first": [
+        72120,
+        72484,
+        71516
+      ],
+      "groups": [
+        71272,
+        70820,
+        72776
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 69856,
+      "full": 72052,
+      "first": 72120,
+      "groups": 71272
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 158251,
+        "parse": {
+          "allocation_calls": 85551,
+          "ms": 65.397742,
+          "requested_allocation_bytes": 109072842
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 643169,
+          "ms": 89.047464,
+          "requested_allocation_bytes": 69956618
+        },
+        "html_bytes": 6252556,
+        "nodes": 158251,
+        "parse": {
+          "allocation_calls": 85551,
+          "ms": 73.327065,
+          "requested_allocation_bytes": 109072842
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20683,
+          "ms": 2.569556,
+          "requested_allocation_bytes": 2198594
+        },
+        "first_group_bytes": 196367,
+        "groups": 31,
+        "largest_group_source_bytes": 32762,
+        "nodes": 158251,
+        "parse": {
+          "allocation_calls": 85551,
+          "ms": 68.651221,
+          "requested_allocation_bytes": 109072842
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 333,
+          "ms": 2.079234,
+          "requested_allocation_bytes": 1032152
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20683,
+          "ms": 2.704872,
+          "requested_allocation_bytes": 2198594
+        },
+        "first_group_bytes": 196367,
+        "grouped_html_bytes": 6252556,
+        "groups": 31,
+        "largest_group_source_bytes": 32762,
+        "nodes": 158251,
+        "parse": {
+          "allocation_calls": 85551,
+          "ms": 66.628395,
+          "requested_allocation_bytes": 109072842
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 333,
+          "ms": 2.384989,
+          "requested_allocation_bytes": 1032152
+        },
+        "remaining_groups": {
+          "allocation_calls": 622872,
+          "ms": 75.706209,
+          "requested_allocation_bytes": 60537689
+        }
+      }
+    }
+  },
+  {
+    "case": "mixed-1000000-syntax-on",
+    "source_bytes": 1000140,
+    "syntax_details": true,
+    "nodes": 158251,
+    "groups": 31,
+    "html_bytes": 6252556,
+    "first_group_bytes": 196367,
+    "largest_group_source_bytes": 32762,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 66.69024999999999,
+    "full_ms_p50": 78.829857,
+    "prepare_ms_p50": 2.141311,
+    "first_render_ms_p50": 2.492986,
+    "first_ready_ms_p50": 4.631092000000001,
+    "all_groups_ms_p50": 81.22624250000001,
+    "parse_plus_first_ms_p50": 71.295458,
+    "parse_plus_full_ms_p50": 147.1061225,
+    "timing_samples_ms": {
+      "parse": [
+        68.692,
+        66.772358,
+        66.432792,
+        67.945424,
+        66.550372,
+        66.608142,
+        68.064914,
+        66.524028
+      ],
+      "full": [
+        78.285876,
+        82.930028,
+        78.370769,
+        79.288945,
+        77.951186,
+        81.504412,
+        77.95764,
+        82.225102
+      ],
+      "first_ready": [
+        4.673084,
+        4.6034120000000005,
+        4.658772,
+        4.594756,
+        4.6647739999999995,
+        4.5882830000000006,
+        4.659406000000001,
+        4.579766
+      ],
+      "all_groups": [
+        82.734331,
+        78.67936200000001,
+        82.386285,
+        78.92803,
+        82.364401,
+        80.08808400000001,
+        82.534942,
+        78.652403
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        85292,
+        84364,
+        83132
+      ],
+      "full": [
+        87056,
+        84172,
+        84456
+      ],
+      "first": [
+        83868,
+        85220,
+        85160
+      ],
+      "groups": [
+        85264,
+        83040,
+        82924
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 84364,
+      "full": 84456,
+      "first": 85160,
+      "groups": 83040
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 158251,
+        "parse": {
+          "allocation_calls": 91928,
+          "ms": 80.458709,
+          "requested_allocation_bytes": 130579346
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 643167,
+          "ms": 82.156808,
+          "requested_allocation_bytes": 69956186
+        },
+        "html_bytes": 6252556,
+        "nodes": 158251,
+        "parse": {
+          "allocation_calls": 91928,
+          "ms": 82.075863,
+          "requested_allocation_bytes": 130579346
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20683,
+          "ms": 2.730494,
+          "requested_allocation_bytes": 2198594
+        },
+        "first_group_bytes": 196367,
+        "groups": 31,
+        "largest_group_source_bytes": 32762,
+        "nodes": 158251,
+        "parse": {
+          "allocation_calls": 91928,
+          "ms": 88.430021,
+          "requested_allocation_bytes": 130579346
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 331,
+          "ms": 2.269343,
+          "requested_allocation_bytes": 1031720
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20683,
+          "ms": 2.585593,
+          "requested_allocation_bytes": 2198594
+        },
+        "first_group_bytes": 196367,
+        "grouped_html_bytes": 6252556,
+        "groups": 31,
+        "largest_group_source_bytes": 32762,
+        "nodes": 158251,
+        "parse": {
+          "allocation_calls": 91928,
+          "ms": 80.459432,
+          "requested_allocation_bytes": 130579346
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 331,
+          "ms": 2.186111,
+          "requested_allocation_bytes": 1031720
+        },
+        "remaining_groups": {
+          "allocation_calls": 622873,
+          "ms": 75.201598,
+          "requested_allocation_bytes": 60537737
+        }
+      }
+    }
+  },
+  {
+    "case": "mixed-5000000-syntax-off",
+    "source_bytes": 5000068,
+    "syntax_details": false,
+    "nodes": 791151,
+    "groups": 153,
+    "html_bytes": 31998928,
+    "first_group_bytes": 196367,
+    "largest_group_source_bytes": 32762,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 294.812548,
+    "full_ms_p50": 395.8025795,
+    "prepare_ms_p50": 11.239284999999999,
+    "first_render_ms_p50": 3.1997825,
+    "first_ready_ms_p50": 14.39439,
+    "all_groups_ms_p50": 400.0469875,
+    "parse_plus_first_ms_p50": 309.2136225,
+    "parse_plus_full_ms_p50": 690.4635145,
+    "timing_samples_ms": {
+      "parse": [
+        295.958789,
+        293.29567,
+        292.476088,
+        292.166805,
+        297.554116,
+        295.855444,
+        295.479308,
+        294.145788
+      ],
+      "full": [
+        399.635312,
+        395.251794,
+        397.951788,
+        394.397776,
+        394.323505,
+        392.780413,
+        396.576484,
+        396.353365
+      ],
+      "first_ready": [
+        14.051705,
+        14.751659,
+        13.948557000000001,
+        14.985493,
+        14.07047,
+        14.718309999999999,
+        14.044696,
+        14.757453
+      ],
+      "all_groups": [
+        398.57150800000005,
+        404.82775300000003,
+        399.671357,
+        402.925108,
+        395.24562,
+        401.648175,
+        398.018148,
+        400.422618
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        267060,
+        266772,
+        266840
+      ],
+      "full": [
+        266984,
+        266972,
+        267060
+      ],
+      "first": [
+        266744,
+        267096,
+        267220
+      ],
+      "groups": [
+        266988,
+        266932,
+        266832
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 266840,
+      "full": 266984,
+      "first": 267096,
+      "groups": 266932
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 791151,
+        "parse": {
+          "allocation_calls": 427319,
+          "ms": 315.180023,
+          "requested_allocation_bytes": 544357338
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 3200091,
+          "ms": 411.937732,
+          "requested_allocation_bytes": 328754286
+        },
+        "html_bytes": 31998928,
+        "nodes": 791151,
+        "parse": {
+          "allocation_calls": 427319,
+          "ms": 318.928908,
+          "requested_allocation_bytes": 544357338
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20683,
+          "ms": 3.47029,
+          "requested_allocation_bytes": 2198594
+        },
+        "first_group_bytes": 196367,
+        "groups": 153,
+        "largest_group_source_bytes": 32762,
+        "nodes": 791151,
+        "parse": {
+          "allocation_calls": 427319,
+          "ms": 310.054732,
+          "requested_allocation_bytes": 544357338
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1558,
+          "ms": 11.377403,
+          "requested_allocation_bytes": 4640456
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20683,
+          "ms": 3.471937,
+          "requested_allocation_bytes": 2198594
+        },
+        "first_group_bytes": 196367,
+        "grouped_html_bytes": 31998928,
+        "groups": 153,
+        "largest_group_source_bytes": 32762,
+        "nodes": 791151,
+        "parse": {
+          "allocation_calls": 427319,
+          "ms": 311.261629,
+          "requested_allocation_bytes": 544357338
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1558,
+          "ms": 11.541611,
+          "requested_allocation_bytes": 4640456
+        },
+        "remaining_groups": {
+          "allocation_calls": 3181497,
+          "ms": 395.816659,
+          "requested_allocation_bytes": 309398125
+        }
+      }
+    }
+  },
+  {
+    "case": "mixed-5000000-syntax-on",
+    "source_bytes": 5000068,
+    "syntax_details": true,
+    "nodes": 791151,
+    "groups": 153,
+    "html_bytes": 31998928,
+    "first_group_bytes": 196367,
+    "largest_group_source_bytes": 32762,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 345.41621299999997,
+    "full_ms_p50": 397.96162849999996,
+    "prepare_ms_p50": 11.5936565,
+    "first_render_ms_p50": 3.2270035000000004,
+    "first_ready_ms_p50": 14.774875999999999,
+    "all_groups_ms_p50": 400.347252,
+    "parse_plus_first_ms_p50": 360.52963350000005,
+    "parse_plus_full_ms_p50": 744.8416735000001,
+    "timing_samples_ms": {
+      "parse": [
+        348.01273,
+        345.821494,
+        345.010932,
+        342.618198,
+        348.374319,
+        344.355315,
+        344.99898,
+        349.020307
+      ],
+      "full": [
+        397.416231,
+        396.228149,
+        399.243454,
+        398.507026,
+        402.23391,
+        395.229864,
+        402.489746,
+        396.984814
+      ],
+      "first_ready": [
+        13.985021,
+        15.465656000000001,
+        14.13295,
+        15.577446,
+        13.982451000000001,
+        15.416802,
+        13.919875000000001,
+        15.464234000000001
+      ],
+      "all_groups": [
+        415.60054,
+        400.73189,
+        400.246813,
+        400.289644,
+        397.824945,
+        401.477646,
+        397.67696,
+        400.40486
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        340660,
+        340464,
+        340692
+      ],
+      "full": [
+        340700,
+        340752,
+        339408
+      ],
+      "first": [
+        340716,
+        340748,
+        340872
+      ],
+      "groups": [
+        340584,
+        339600,
+        340648
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 340660,
+      "full": 340700,
+      "first": 340748,
+      "groups": 340584
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 791151,
+        "parse": {
+          "allocation_calls": 459017,
+          "ms": 367.68015,
+          "requested_allocation_bytes": 672629746
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 3200089,
+          "ms": 410.999418,
+          "requested_allocation_bytes": 328753854
+        },
+        "html_bytes": 31998928,
+        "nodes": 791151,
+        "parse": {
+          "allocation_calls": 459017,
+          "ms": 368.28979,
+          "requested_allocation_bytes": 672629746
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20683,
+          "ms": 3.613557,
+          "requested_allocation_bytes": 2198594
+        },
+        "first_group_bytes": 196367,
+        "groups": 153,
+        "largest_group_source_bytes": 32762,
+        "nodes": 791151,
+        "parse": {
+          "allocation_calls": 459017,
+          "ms": 364.923277,
+          "requested_allocation_bytes": 672629746
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1556,
+          "ms": 12.20016,
+          "requested_allocation_bytes": 4640024
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20683,
+          "ms": 3.675939,
+          "requested_allocation_bytes": 2198594
+        },
+        "first_group_bytes": 196367,
+        "grouped_html_bytes": 31998928,
+        "groups": 153,
+        "largest_group_source_bytes": 32762,
+        "nodes": 791151,
+        "parse": {
+          "allocation_calls": 459017,
+          "ms": 364.835069,
+          "requested_allocation_bytes": 672629746
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1556,
+          "ms": 12.143923,
+          "requested_allocation_bytes": 4640024
+        },
+        "remaining_groups": {
+          "allocation_calls": 3181497,
+          "ms": 403.121491,
+          "requested_allocation_bytes": 309398125
+        }
+      }
+    }
+  },
+  {
+    "case": "prose-100000-syntax-off",
+    "source_bytes": 100142,
+    "syntax_details": false,
+    "nodes": 6843,
+    "groups": 4,
+    "html_bytes": 163968,
+    "first_group_bytes": 53351,
+    "largest_group_source_bytes": 32682,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 2.2825265000000003,
+    "full_ms_p50": 2.4361645000000003,
+    "prepare_ms_p50": 0.0255365,
+    "first_render_ms_p50": 0.7973945,
+    "first_ready_ms_p50": 0.823043,
+    "all_groups_ms_p50": 2.4765414999999997,
+    "parse_plus_first_ms_p50": 3.1087800000000003,
+    "parse_plus_full_ms_p50": 4.717562,
+    "timing_samples_ms": {
+      "parse": [
+        2.85176,
+        2.313597,
+        2.286874,
+        2.274461,
+        2.341804,
+        2.278179,
+        2.269853,
+        2.275299
+      ],
+      "full": [
+        2.438973,
+        2.452072,
+        2.433008,
+        2.435266,
+        2.510893,
+        2.437063,
+        2.433049,
+        2.395465
+      ],
+      "first_ready": [
+        0.8232,
+        0.830414,
+        0.830833,
+        0.825039,
+        0.822886,
+        0.8216739999999999,
+        0.820875,
+        0.822531
+      ],
+      "all_groups": [
+        2.476299,
+        2.483772,
+        2.48375,
+        2.474401,
+        2.47168,
+        2.639281,
+        2.476784,
+        2.472316
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        20784,
+        20572,
+        20648
+      ],
+      "full": [
+        20900,
+        21052,
+        20904
+      ],
+      "first": [
+        21028,
+        20864,
+        21068
+      ],
+      "groups": [
+        21048,
+        20968,
+        21048
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 20648,
+      "full": 20904,
+      "first": 21028,
+      "groups": 21048
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 6843,
+        "parse": {
+          "allocation_calls": 5044,
+          "ms": 3.570897,
+          "requested_allocation_bytes": 2764376
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 18605,
+          "ms": 2.775141,
+          "requested_allocation_bytes": 1801450
+        },
+        "html_bytes": 163968,
+        "nodes": 6843,
+        "parse": {
+          "allocation_calls": 5044,
+          "ms": 3.459978,
+          "requested_allocation_bytes": 2764376
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 6016,
+          "ms": 0.882128,
+          "requested_allocation_bytes": 531426
+        },
+        "first_group_bytes": 53351,
+        "groups": 4,
+        "largest_group_source_bytes": 32682,
+        "nodes": 6843,
+        "parse": {
+          "allocation_calls": 5044,
+          "ms": 3.471122,
+          "requested_allocation_bytes": 2764376
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 42,
+          "ms": 0.050117,
+          "requested_allocation_bytes": 29952
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 6016,
+          "ms": 0.888323,
+          "requested_allocation_bytes": 531426
+        },
+        "first_group_bytes": 53351,
+        "grouped_html_bytes": 163968,
+        "groups": 4,
+        "largest_group_source_bytes": 32682,
+        "nodes": 6843,
+        "parse": {
+          "allocation_calls": 5044,
+          "ms": 3.445856,
+          "requested_allocation_bytes": 2764376
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 42,
+          "ms": 0.029984,
+          "requested_allocation_bytes": 29952
+        },
+        "remaining_groups": {
+          "allocation_calls": 12605,
+          "ms": 1.761572,
+          "requested_allocation_bytes": 1144105
+        }
+      }
+    }
+  },
+  {
+    "case": "prose-100000-syntax-on",
+    "source_bytes": 100142,
+    "syntax_details": true,
+    "nodes": 6843,
+    "groups": 4,
+    "html_bytes": 163968,
+    "first_group_bytes": 53351,
+    "largest_group_source_bytes": 32682,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 3.142853,
+    "full_ms_p50": 2.5184945,
+    "prepare_ms_p50": 0.025770500000000002,
+    "first_render_ms_p50": 0.799346,
+    "first_ready_ms_p50": 0.8253115,
+    "all_groups_ms_p50": 2.4861495,
+    "parse_plus_first_ms_p50": 3.9676315,
+    "parse_plus_full_ms_p50": 5.6751305,
+    "timing_samples_ms": {
+      "parse": [
+        3.136848,
+        3.188636,
+        3.148858,
+        3.213638,
+        3.151413,
+        3.062752,
+        2.769305,
+        2.811546
+      ],
+      "full": [
+        2.572605,
+        2.50151,
+        2.511257,
+        2.507892,
+        2.637878,
+        2.575266,
+        2.525732,
+        2.463914
+      ],
+      "first_ready": [
+        0.8184130000000001,
+        0.822613,
+        0.817964,
+        0.82801,
+        0.817028,
+        0.907393,
+        0.966312,
+        0.8660880000000001
+      ],
+      "all_groups": [
+        2.460136,
+        2.503114,
+        2.457931,
+        2.469185,
+        2.4632,
+        3.132898,
+        2.720222,
+        2.59835
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        20940,
+        20996,
+        21056
+      ],
+      "full": [
+        21220,
+        21136,
+        21060
+      ],
+      "first": [
+        21500,
+        21376,
+        21328
+      ],
+      "groups": [
+        21292,
+        21432,
+        21336
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 20996,
+      "full": 21136,
+      "first": 21376,
+      "groups": 21336
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 6843,
+        "parse": {
+          "allocation_calls": 5068,
+          "ms": 4.067476,
+          "requested_allocation_bytes": 3429952
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 18605,
+          "ms": 2.74564,
+          "requested_allocation_bytes": 1801450
+        },
+        "html_bytes": 163968,
+        "nodes": 6843,
+        "parse": {
+          "allocation_calls": 5068,
+          "ms": 4.184243,
+          "requested_allocation_bytes": 3429952
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 6016,
+          "ms": 0.838406,
+          "requested_allocation_bytes": 531426
+        },
+        "first_group_bytes": 53351,
+        "groups": 4,
+        "largest_group_source_bytes": 32682,
+        "nodes": 6843,
+        "parse": {
+          "allocation_calls": 5068,
+          "ms": 4.062442,
+          "requested_allocation_bytes": 3429952
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 42,
+          "ms": 0.029683,
+          "requested_allocation_bytes": 29952
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 6016,
+          "ms": 0.897754,
+          "requested_allocation_bytes": 531426
+        },
+        "first_group_bytes": 53351,
+        "grouped_html_bytes": 163968,
+        "groups": 4,
+        "largest_group_source_bytes": 32682,
+        "nodes": 6843,
+        "parse": {
+          "allocation_calls": 5068,
+          "ms": 4.063761,
+          "requested_allocation_bytes": 3429952
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 42,
+          "ms": 0.02985,
+          "requested_allocation_bytes": 29952
+        },
+        "remaining_groups": {
+          "allocation_calls": 12605,
+          "ms": 1.737035,
+          "requested_allocation_bytes": 1144105
+        }
+      }
+    }
+  },
+  {
+    "case": "prose-1000000-syntax-off",
+    "source_bytes": 1000132,
+    "syntax_details": false,
+    "nodes": 68333,
+    "groups": 31,
+    "html_bytes": 1656212,
+    "first_group_bytes": 53351,
+    "largest_group_source_bytes": 32682,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 24.8206395,
+    "full_ms_p50": 25.2313225,
+    "prepare_ms_p50": 0.514259,
+    "first_render_ms_p50": 0.8145720000000001,
+    "first_ready_ms_p50": 1.335326,
+    "all_groups_ms_p50": 25.5958135,
+    "parse_plus_first_ms_p50": 26.215280999999997,
+    "parse_plus_full_ms_p50": 50.0384485,
+    "timing_samples_ms": {
+      "parse": [
+        25.869155,
+        24.917658,
+        26.509085,
+        24.479486,
+        24.506606,
+        24.479313,
+        24.723621,
+        25.140845
+      ],
+      "full": [
+        25.238565,
+        25.243059,
+        25.416463,
+        25.22408,
+        25.202475,
+        25.0216,
+        25.192559,
+        25.353992
+      ],
+      "first_ready": [
+        1.314357,
+        1.353474,
+        1.337748,
+        1.319897,
+        1.292243,
+        1.332904,
+        1.435809,
+        1.370097
+      ],
+      "all_groups": [
+        25.73621,
+        25.614099,
+        25.761253,
+        25.804435,
+        25.513208,
+        25.462346999999998,
+        25.508771,
+        25.577528
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        37876,
+        37624,
+        36944
+      ],
+      "full": [
+        37720,
+        37924,
+        37920
+      ],
+      "first": [
+        38016,
+        37896,
+        37912
+      ],
+      "groups": [
+        36808,
+        37732,
+        36928
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 37624,
+      "full": 37920,
+      "first": 37912,
+      "groups": 36928
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 68333,
+        "parse": {
+          "allocation_calls": 49767,
+          "ms": 31.346916,
+          "requested_allocation_bytes": 27459494
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 191616,
+          "ms": 26.519921,
+          "requested_allocation_bytes": 17631644
+        },
+        "html_bytes": 1656212,
+        "nodes": 68333,
+        "parse": {
+          "allocation_calls": 49767,
+          "ms": 30.7492,
+          "requested_allocation_bytes": 27459494
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 6016,
+          "ms": 0.856177,
+          "requested_allocation_bytes": 531426
+        },
+        "first_group_bytes": 53351,
+        "groups": 31,
+        "largest_group_source_bytes": 32682,
+        "nodes": 68333,
+        "parse": {
+          "allocation_calls": 49767,
+          "ms": 30.893803,
+          "requested_allocation_bytes": 27459494
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 267,
+          "ms": 0.585157,
+          "requested_allocation_bytes": 262920
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 6016,
+          "ms": 0.855214,
+          "requested_allocation_bytes": 531426
+        },
+        "first_group_bytes": 53351,
+        "grouped_html_bytes": 1656212,
+        "groups": 31,
+        "largest_group_source_bytes": 32682,
+        "nodes": 68333,
+        "parse": {
+          "allocation_calls": 49767,
+          "ms": 30.284343,
+          "requested_allocation_bytes": 27459494
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 267,
+          "ms": 0.521636,
+          "requested_allocation_bytes": 262920
+        },
+        "remaining_groups": {
+          "allocation_calls": 185935,
+          "ms": 24.693644,
+          "requested_allocation_bytes": 17406587
+        }
+      }
+    }
+  },
+  {
+    "case": "prose-1000000-syntax-on",
+    "source_bytes": 1000132,
+    "syntax_details": true,
+    "nodes": 68333,
+    "groups": 31,
+    "html_bytes": 1656212,
+    "first_group_bytes": 53351,
+    "largest_group_source_bytes": 32682,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 32.214012,
+    "full_ms_p50": 25.2991455,
+    "prepare_ms_p50": 0.556747,
+    "first_render_ms_p50": 0.816942,
+    "first_ready_ms_p50": 1.3707115,
+    "all_groups_ms_p50": 25.656322,
+    "parse_plus_first_ms_p50": 33.532872999999995,
+    "parse_plus_full_ms_p50": 57.77551749999999,
+    "timing_samples_ms": {
+      "parse": [
+        32.461338,
+        32.061594,
+        32.36643,
+        33.236931,
+        32.679725,
+        31.809687,
+        28.434362,
+        28.253082
+      ],
+      "full": [
+        25.28185,
+        25.102705,
+        25.616137,
+        25.087942,
+        25.316441,
+        25.99816,
+        25.342114,
+        25.108936
+      ],
+      "first_ready": [
+        1.3160699999999999,
+        1.3016100000000002,
+        1.336112,
+        1.293138,
+        1.412918,
+        1.405311,
+        1.4351189999999998,
+        1.537005
+      ],
+      "all_groups": [
+        25.558821,
+        25.596346,
+        25.615436,
+        25.658403999999997,
+        25.65729,
+        26.322789,
+        25.655354,
+        25.759791
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        39652,
+        39728,
+        38880
+      ],
+      "full": [
+        39632,
+        39576,
+        39548
+      ],
+      "first": [
+        39020,
+        39728,
+        39736
+      ],
+      "groups": [
+        39540,
+        39544,
+        39628
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 39652,
+      "full": 39576,
+      "first": 39728,
+      "groups": 39544
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 68333,
+        "parse": {
+          "allocation_calls": 49794,
+          "ms": 36.432198,
+          "requested_allocation_bytes": 32826926
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 191616,
+          "ms": 26.907071,
+          "requested_allocation_bytes": 17631644
+        },
+        "html_bytes": 1656212,
+        "nodes": 68333,
+        "parse": {
+          "allocation_calls": 49794,
+          "ms": 35.461331,
+          "requested_allocation_bytes": 32826926
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 6016,
+          "ms": 0.876897,
+          "requested_allocation_bytes": 531426
+        },
+        "first_group_bytes": 53351,
+        "groups": 31,
+        "largest_group_source_bytes": 32682,
+        "nodes": 68333,
+        "parse": {
+          "allocation_calls": 49794,
+          "ms": 36.066617,
+          "requested_allocation_bytes": 32826926
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 267,
+          "ms": 0.579851,
+          "requested_allocation_bytes": 262696
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 6016,
+          "ms": 0.86799,
+          "requested_allocation_bytes": 531426
+        },
+        "first_group_bytes": 53351,
+        "grouped_html_bytes": 1656212,
+        "groups": 31,
+        "largest_group_source_bytes": 32682,
+        "nodes": 68333,
+        "parse": {
+          "allocation_calls": 49794,
+          "ms": 36.337685,
+          "requested_allocation_bytes": 32826926
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 267,
+          "ms": 0.595613,
+          "requested_allocation_bytes": 262696
+        },
+        "remaining_groups": {
+          "allocation_calls": 185935,
+          "ms": 24.950848,
+          "requested_allocation_bytes": 17406587
+        }
+      }
+    }
+  },
+  {
+    "case": "prose-5000000-syntax-off",
+    "source_bytes": 5000016,
+    "syntax_details": false,
+    "nodes": 341617,
+    "groups": 153,
+    "html_bytes": 8361213,
+    "first_group_bytes": 53351,
+    "largest_group_source_bytes": 32682,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 124.162608,
+    "full_ms_p50": 125.2944675,
+    "prepare_ms_p50": 3.0153725,
+    "first_render_ms_p50": 0.8262525000000001,
+    "first_ready_ms_p50": 3.841176,
+    "all_groups_ms_p50": 128.376317,
+    "parse_plus_first_ms_p50": 127.954186,
+    "parse_plus_full_ms_p50": 249.83050749999998,
+    "timing_samples_ms": {
+      "parse": [
+        128.398236,
+        126.237154,
+        123.48516,
+        124.262155,
+        123.232743,
+        125.136451,
+        124.063061,
+        123.382187
+      ],
+      "full": [
+        124.981802,
+        124.8155,
+        126.289071,
+        126.060935,
+        124.859693,
+        124.750333,
+        125.607133,
+        126.021197
+      ],
+      "first_ready": [
+        3.8432510000000004,
+        4.011782,
+        3.804459,
+        3.744055,
+        3.854694,
+        5.198944,
+        3.839101,
+        3.76361
+      ],
+      "all_groups": [
+        127.50567699999999,
+        128.257216,
+        129.237503,
+        128.748041,
+        128.495418,
+        129.001132,
+        128.11947800000002,
+        127.369919
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        108052,
+        108552,
+        108100
+      ],
+      "full": [
+        108488,
+        108108,
+        108320
+      ],
+      "first": [
+        107964,
+        108052,
+        107932
+      ],
+      "groups": [
+        107744,
+        108608,
+        108144
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 108100,
+      "full": 108320,
+      "first": 107964,
+      "groups": 108144
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 341617,
+        "parse": {
+          "allocation_calls": 248521,
+          "ms": 139.939678,
+          "requested_allocation_bytes": 137105954
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 936942,
+          "ms": 130.338659,
+          "requested_allocation_bytes": 79084688
+        },
+        "html_bytes": 8361213,
+        "nodes": 341617,
+        "parse": {
+          "allocation_calls": 248521,
+          "ms": 143.826727,
+          "requested_allocation_bytes": 137105954
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 6016,
+          "ms": 0.871039,
+          "requested_allocation_bytes": 533442
+        },
+        "first_group_bytes": 53351,
+        "groups": 153,
+        "largest_group_source_bytes": 32682,
+        "nodes": 341617,
+        "parse": {
+          "allocation_calls": 248521,
+          "ms": 142.105816,
+          "requested_allocation_bytes": 137105954
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1249,
+          "ms": 2.990475,
+          "requested_allocation_bytes": 1190600
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 6016,
+          "ms": 0.901351,
+          "requested_allocation_bytes": 533442
+        },
+        "first_group_bytes": 53351,
+        "grouped_html_bytes": 8361213,
+        "groups": 153,
+        "largest_group_source_bytes": 32682,
+        "nodes": 341617,
+        "parse": {
+          "allocation_calls": 248521,
+          "ms": 141.78556,
+          "requested_allocation_bytes": 137105954
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1249,
+          "ms": 3.104972,
+          "requested_allocation_bytes": 1190600
+        },
+        "remaining_groups": {
+          "allocation_calls": 932842,
+          "ms": 128.513468,
+          "requested_allocation_bytes": 90024031
+        }
+      }
+    }
+  },
+  {
+    "case": "prose-5000000-syntax-on",
+    "source_bytes": 5000016,
+    "syntax_details": true,
+    "nodes": 341617,
+    "groups": 153,
+    "html_bytes": 8361213,
+    "first_group_bytes": 53351,
+    "largest_group_source_bytes": 32682,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 143.39691249999998,
+    "full_ms_p50": 125.971694,
+    "prepare_ms_p50": 3.0008645,
+    "first_render_ms_p50": 0.8290475,
+    "first_ready_ms_p50": 3.8365609999999997,
+    "all_groups_ms_p50": 128.5846055,
+    "parse_plus_first_ms_p50": 147.235369,
+    "parse_plus_full_ms_p50": 269.318406,
+    "timing_samples_ms": {
+      "parse": [
+        146.123679,
+        143.596636,
+        142.924003,
+        143.257584,
+        143.684058,
+        142.409756,
+        143.536241,
+        142.495492
+      ],
+      "full": [
+        125.989765,
+        126.080459,
+        126.94094,
+        125.702133,
+        128.712302,
+        125.714949,
+        125.329848,
+        125.953623
+      ],
+      "first_ready": [
+        3.819884,
+        3.838545,
+        3.807432,
+        3.845664,
+        3.8826780000000003,
+        3.834577,
+        3.831249,
+        4.353244
+      ],
+      "all_groups": [
+        127.322038,
+        129.349865,
+        127.46585400000001,
+        128.844528,
+        128.37717700000002,
+        127.587644,
+        129.430506,
+        128.792034
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        119832,
+        121212,
+        122248
+      ],
+      "full": [
+        121352,
+        121756,
+        121952
+      ],
+      "first": [
+        120460,
+        121712,
+        121688
+      ],
+      "groups": [
+        122208,
+        122468,
+        121096
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 121212,
+      "full": 121756,
+      "first": 121688,
+      "groups": 122208
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 341617,
+        "parse": {
+          "allocation_calls": 248551,
+          "ms": 164.996671,
+          "requested_allocation_bytes": 179566602
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 936942,
+          "ms": 129.354412,
+          "requested_allocation_bytes": 79084688
+        },
+        "html_bytes": 8361213,
+        "nodes": 341617,
+        "parse": {
+          "allocation_calls": 248551,
+          "ms": 165.053695,
+          "requested_allocation_bytes": 179566602
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 6016,
+          "ms": 0.912678,
+          "requested_allocation_bytes": 533442
+        },
+        "first_group_bytes": 53351,
+        "groups": 153,
+        "largest_group_source_bytes": 32682,
+        "nodes": 341617,
+        "parse": {
+          "allocation_calls": 248551,
+          "ms": 165.19051,
+          "requested_allocation_bytes": 179566602
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1249,
+          "ms": 3.001142,
+          "requested_allocation_bytes": 1190376
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 6016,
+          "ms": 0.962897,
+          "requested_allocation_bytes": 533442
+        },
+        "first_group_bytes": 53351,
+        "grouped_html_bytes": 8361213,
+        "groups": 153,
+        "largest_group_source_bytes": 32682,
+        "nodes": 341617,
+        "parse": {
+          "allocation_calls": 248551,
+          "ms": 163.791611,
+          "requested_allocation_bytes": 179566602
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1249,
+          "ms": 3.035678,
+          "requested_allocation_bytes": 1190376
+        },
+        "remaining_groups": {
+          "allocation_calls": 932842,
+          "ms": 127.769771,
+          "requested_allocation_bytes": 90024031
+        }
+      }
+    }
+  },
+  {
+    "case": "small-blocks-100000-syntax-off",
+    "source_bytes": 100023,
+    "syntax_details": false,
+    "nodes": 45466,
+    "groups": 4,
+    "html_bytes": 1922485,
+    "first_group_bytes": 621992,
+    "largest_group_source_bytes": 32768,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 11.2563985,
+    "full_ms_p50": 22.4100535,
+    "prepare_ms_p50": 1.189712,
+    "first_render_ms_p50": 7.1533455,
+    "first_ready_ms_p50": 8.342972,
+    "all_groups_ms_p50": 23.189373,
+    "parse_plus_first_ms_p50": 19.602116,
+    "parse_plus_full_ms_p50": 33.702849,
+    "timing_samples_ms": {
+      "parse": [
+        13.344088,
+        11.246616,
+        11.199224,
+        11.389868,
+        11.267058,
+        11.266181,
+        11.218067,
+        11.206334
+      ],
+      "full": [
+        22.487367,
+        22.379149,
+        23.655738,
+        22.307814,
+        22.440958,
+        22.312085,
+        22.491468,
+        22.316648
+      ],
+      "first_ready": [
+        8.346469,
+        8.314525999999999,
+        8.589997,
+        8.35206,
+        8.32394,
+        8.347052999999999,
+        8.339475,
+        8.297296
+      ],
+      "all_groups": [
+        23.188119,
+        23.190247,
+        23.470578,
+        23.188537,
+        23.164178,
+        23.190209,
+        23.191764000000003,
+        23.134366
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        37080,
+        36968,
+        37036
+      ],
+      "full": [
+        37236,
+        37036,
+        37148
+      ],
+      "first": [
+        37176,
+        37056,
+        37108
+      ],
+      "groups": [
+        37172,
+        37020,
+        37100
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 37036,
+      "full": 37148,
+      "first": 37108,
+      "groups": 37100
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 45466,
+        "parse": {
+          "allocation_calls": 59,
+          "ms": 16.090982,
+          "requested_allocation_bytes": 30575155
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 201693,
+          "ms": 24.88924,
+          "requested_allocation_bytes": 22087589
+        },
+        "html_bytes": 1922485,
+        "nodes": 45466,
+        "parse": {
+          "allocation_calls": 59,
+          "ms": 15.061879,
+          "requested_allocation_bytes": 30575155
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 65090,
+          "ms": 7.963958,
+          "requested_allocation_bytes": 6813562
+        },
+        "first_group_bytes": 621992,
+        "groups": 4,
+        "largest_group_source_bytes": 32768,
+        "nodes": 45466,
+        "parse": {
+          "allocation_calls": 59,
+          "ms": 15.0377,
+          "requested_allocation_bytes": 30575155
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 66,
+          "ms": 1.041424,
+          "requested_allocation_bytes": 664960
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 65090,
+          "ms": 7.9764,
+          "requested_allocation_bytes": 6813562
+        },
+        "first_group_bytes": 621992,
+        "grouped_html_bytes": 1922485,
+        "groups": 4,
+        "largest_group_source_bytes": 32768,
+        "nodes": 45466,
+        "parse": {
+          "allocation_calls": 59,
+          "ms": 14.916513,
+          "requested_allocation_bytes": 30575155
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 66,
+          "ms": 1.014623,
+          "requested_allocation_bytes": 664960
+        },
+        "remaining_groups": {
+          "allocation_calls": 136617,
+          "ms": 15.66959,
+          "requested_allocation_bytes": 14720956
+        }
+      }
+    }
+  },
+  {
+    "case": "small-blocks-100000-syntax-on",
+    "source_bytes": 100023,
+    "syntax_details": true,
+    "nodes": 45466,
+    "groups": 4,
+    "html_bytes": 1922485,
+    "first_group_bytes": 621992,
+    "largest_group_source_bytes": 32768,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 11.952551,
+    "full_ms_p50": 22.511884,
+    "prepare_ms_p50": 1.193978,
+    "first_render_ms_p50": 7.1392074999999995,
+    "first_ready_ms_p50": 8.3356915,
+    "all_groups_ms_p50": 23.262129,
+    "parse_plus_first_ms_p50": 20.2909025,
+    "parse_plus_full_ms_p50": 34.476936,
+    "timing_samples_ms": {
+      "parse": [
+        14.837828,
+        11.927845,
+        12.050284,
+        11.920226,
+        11.977257,
+        11.900803,
+        11.925622,
+        12.332344
+      ],
+      "full": [
+        22.93821,
+        22.451193,
+        22.558613,
+        22.521962,
+        22.534427,
+        22.501806,
+        22.488654,
+        22.444062
+      ],
+      "first_ready": [
+        8.343801000000001,
+        8.306225,
+        8.327582,
+        8.296301,
+        8.323696,
+        8.380049,
+        8.351685999999999,
+        8.397608
+      ],
+      "all_groups": [
+        23.351255,
+        23.182656,
+        23.196841,
+        23.172582000000002,
+        24.640078000000003,
+        23.278129,
+        23.886251,
+        23.246129
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        38380,
+        38212,
+        38272
+      ],
+      "full": [
+        38284,
+        38256,
+        38208
+      ],
+      "first": [
+        38176,
+        38172,
+        38340
+      ],
+      "groups": [
+        38332,
+        38380,
+        38236
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 38272,
+      "full": 38256,
+      "first": 38176,
+      "groups": 38332
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 45466,
+        "parse": {
+          "allocation_calls": 90,
+          "ms": 16.260053,
+          "requested_allocation_bytes": 33221875
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 201693,
+          "ms": 24.793836,
+          "requested_allocation_bytes": 22087589
+        },
+        "html_bytes": 1922485,
+        "nodes": 45466,
+        "parse": {
+          "allocation_calls": 90,
+          "ms": 16.320358,
+          "requested_allocation_bytes": 33221875
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 65090,
+          "ms": 8.704243,
+          "requested_allocation_bytes": 6813562
+        },
+        "first_group_bytes": 621992,
+        "groups": 4,
+        "largest_group_source_bytes": 32768,
+        "nodes": 45466,
+        "parse": {
+          "allocation_calls": 90,
+          "ms": 16.373907,
+          "requested_allocation_bytes": 33221875
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 66,
+          "ms": 1.116315,
+          "requested_allocation_bytes": 664960
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 65090,
+          "ms": 8.006169,
+          "requested_allocation_bytes": 6813562
+        },
+        "first_group_bytes": 621992,
+        "grouped_html_bytes": 1922485,
+        "groups": 4,
+        "largest_group_source_bytes": 32768,
+        "nodes": 45466,
+        "parse": {
+          "allocation_calls": 90,
+          "ms": 16.440889,
+          "requested_allocation_bytes": 33221875
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 66,
+          "ms": 1.099996,
+          "requested_allocation_bytes": 664960
+        },
+        "remaining_groups": {
+          "allocation_calls": 136617,
+          "ms": 16.003806,
+          "requested_allocation_bytes": 14720956
+        }
+      }
+    }
+  },
+  {
+    "case": "small-blocks-1000000-syntax-off",
+    "source_bytes": 1000032,
+    "syntax_details": false,
+    "nodes": 454561,
+    "groups": 31,
+    "html_bytes": 19948140,
+    "first_group_bytes": 621992,
+    "largest_group_source_bytes": 32768,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 130.2974055,
+    "full_ms_p50": 233.4664345,
+    "prepare_ms_p50": 14.885093,
+    "first_render_ms_p50": 8.41515,
+    "first_ready_ms_p50": 23.316414,
+    "all_groups_ms_p50": 240.251385,
+    "parse_plus_first_ms_p50": 153.776787,
+    "parse_plus_full_ms_p50": 364.4913135,
+    "timing_samples_ms": {
+      "parse": [
+        131.608357,
+        129.439621,
+        129.857418,
+        130.277905,
+        131.772532,
+        132.164977,
+        130.316906,
+        130.187826
+      ],
+      "full": [
+        234.013609,
+        232.91926,
+        234.925633,
+        231.199483,
+        234.263357,
+        232.034599,
+        234.583069,
+        230.223621
+      ],
+      "first_ready": [
+        22.075929000000002,
+        24.429667000000002,
+        21.828281,
+        24.460295,
+        21.892204,
+        24.784698,
+        22.203161,
+        24.468885999999998
+      ],
+      "all_groups": [
+        237.980307,
+        241.322359,
+        236.59482,
+        242.542111,
+        238.669342,
+        241.132276,
+        239.571021,
+        240.931749
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        184848,
+        183616,
+        183780
+      ],
+      "full": [
+        183748,
+        183704,
+        185064
+      ],
+      "first": [
+        183572,
+        184944,
+        183488
+      ],
+      "groups": [
+        184940,
+        184804,
+        184892
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 183780,
+      "full": 183748,
+      "first": 183572,
+      "groups": 184892
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 454561,
+        "parse": {
+          "allocation_calls": 63,
+          "ms": 134.418798,
+          "requested_allocation_bytes": 307234562
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 1981721,
+          "ms": 240.170287,
+          "requested_allocation_bytes": 212461616
+        },
+        "html_bytes": 19948140,
+        "nodes": 454561,
+        "parse": {
+          "allocation_calls": 63,
+          "ms": 132.010647,
+          "requested_allocation_bytes": 307234562
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 65090,
+          "ms": 9.07689,
+          "requested_allocation_bytes": 6813562
+        },
+        "first_group_bytes": 621992,
+        "groups": 31,
+        "largest_group_source_bytes": 32768,
+        "nodes": 454561,
+        "parse": {
+          "allocation_calls": 63,
+          "ms": 133.993771,
+          "requested_allocation_bytes": 307234562
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 427,
+          "ms": 15.937772,
+          "requested_allocation_bytes": 8201256
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 65090,
+          "ms": 8.919381,
+          "requested_allocation_bytes": 6813562
+        },
+        "first_group_bytes": 621992,
+        "grouped_html_bytes": 19948140,
+        "groups": 31,
+        "largest_group_source_bytes": 32768,
+        "nodes": 454561,
+        "parse": {
+          "allocation_calls": 63,
+          "ms": 135.465091,
+          "requested_allocation_bytes": 307234562
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 427,
+          "ms": 15.571743,
+          "requested_allocation_bytes": 8201256
+        },
+        "remaining_groups": {
+          "allocation_calls": 1917069,
+          "ms": 223.733796,
+          "requested_allocation_bytes": 212265607
+        }
+      }
+    }
+  },
+  {
+    "case": "small-blocks-1000000-syntax-on",
+    "source_bytes": 1000032,
+    "syntax_details": true,
+    "nodes": 454561,
+    "groups": 31,
+    "html_bytes": 19948140,
+    "first_group_bytes": 621992,
+    "largest_group_source_bytes": 32768,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 141.06228750000002,
+    "full_ms_p50": 228.595572,
+    "prepare_ms_p50": 14.352918500000001,
+    "first_render_ms_p50": 8.574186999999998,
+    "first_ready_ms_p50": 22.950541,
+    "all_groups_ms_p50": 240.935381,
+    "parse_plus_first_ms_p50": 164.386772,
+    "parse_plus_full_ms_p50": 370.5573565,
+    "timing_samples_ms": {
+      "parse": [
+        137.27104,
+        142.323889,
+        140.605201,
+        140.477612,
+        141.178906,
+        140.945669,
+        142.355141,
+        141.888135
+      ],
+      "full": [
+        228.690459,
+        228.454431,
+        230.664345,
+        228.500685,
+        231.021534,
+        227.813159,
+        230.050378,
+        228.448258
+      ],
+      "first_ready": [
+        21.833640000000003,
+        24.128704,
+        21.891482,
+        23.782839,
+        21.920035,
+        23.857302,
+        22.157952,
+        23.74313
+      ],
+      "all_groups": [
+        240.767009,
+        241.103753,
+        239.3928,
+        242.088946,
+        239.030753,
+        241.405803,
+        238.646209,
+        242.60549400000002
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        199044,
+        198712,
+        198844
+      ],
+      "full": [
+        199000,
+        198764,
+        199836
+      ],
+      "first": [
+        197796,
+        198852,
+        197424
+      ],
+      "groups": [
+        198880,
+        198748,
+        199712
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 198844,
+      "full": 199000,
+      "first": 197796,
+      "groups": 198880
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 454561,
+        "parse": {
+          "allocation_calls": 100,
+          "ms": 145.846507,
+          "requested_allocation_bytes": 328436130
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 1981721,
+          "ms": 240.746839,
+          "requested_allocation_bytes": 212461616
+        },
+        "html_bytes": 19948140,
+        "nodes": 454561,
+        "parse": {
+          "allocation_calls": 100,
+          "ms": 150.3863,
+          "requested_allocation_bytes": 328436130
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 65090,
+          "ms": 9.15552,
+          "requested_allocation_bytes": 6813562
+        },
+        "first_group_bytes": 621992,
+        "groups": 31,
+        "largest_group_source_bytes": 32768,
+        "nodes": 454561,
+        "parse": {
+          "allocation_calls": 100,
+          "ms": 144.151888,
+          "requested_allocation_bytes": 328436130
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 427,
+          "ms": 16.155222,
+          "requested_allocation_bytes": 8201256
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 65090,
+          "ms": 9.149795,
+          "requested_allocation_bytes": 6813562
+        },
+        "first_group_bytes": 621992,
+        "grouped_html_bytes": 19948140,
+        "groups": 31,
+        "largest_group_source_bytes": 32768,
+        "nodes": 454561,
+        "parse": {
+          "allocation_calls": 100,
+          "ms": 145.997593,
+          "requested_allocation_bytes": 328436130
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 427,
+          "ms": 16.331891,
+          "requested_allocation_bytes": 8201256
+        },
+        "remaining_groups": {
+          "allocation_calls": 1917069,
+          "ms": 221.459289,
+          "requested_allocation_bytes": 212265607
+        }
+      }
+    }
+  },
+  {
+    "case": "small-blocks-5000000-syntax-off",
+    "source_bytes": 5000028,
+    "syntax_details": false,
+    "nodes": 2272741,
+    "groups": 153,
+    "html_bytes": 102808670,
+    "first_group_bytes": 621992,
+    "largest_group_source_bytes": 32768,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 658.52165,
+    "full_ms_p50": 1174.912476,
+    "prepare_ms_p50": 83.7850335,
+    "first_render_ms_p50": 9.5089565,
+    "first_ready_ms_p50": 93.445337,
+    "all_groups_ms_p50": 1213.320295,
+    "parse_plus_first_ms_p50": 752.1676084999999,
+    "parse_plus_full_ms_p50": 1832.338374,
+    "timing_samples_ms": {
+      "parse": [
+        652.553253,
+        656.496433,
+        660.215773,
+        657.128001,
+        660.592626,
+        659.831435,
+        659.862011,
+        657.211865
+      ],
+      "full": [
+        1176.569385,
+        1174.152705,
+        1175.628777,
+        1172.615454,
+        1176.775299,
+        1174.196175,
+        1175.798535,
+        1172.447017
+      ],
+      "first_ready": [
+        92.418182,
+        93.008748,
+        93.88192599999999,
+        92.412355,
+        92.593929,
+        94.302409,
+        94.076029,
+        93.936797
+      ],
+      "all_groups": [
+        1213.7594230000002,
+        1213.964288,
+        1213.9813490000001,
+        1209.877843,
+        1209.5817399999999,
+        1213.9727449999998,
+        1212.881167,
+        1212.516198
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        836084,
+        836224,
+        836136
+      ],
+      "full": [
+        836268,
+        836196,
+        836292
+      ],
+      "first": [
+        836140,
+        836120,
+        836468
+      ],
+      "groups": [
+        836352,
+        836216,
+        836260
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 836136,
+      "full": 836268,
+      "first": 836140,
+      "groups": 836260
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 2272741,
+        "parse": {
+          "allocation_calls": 65,
+          "ms": 666.972962,
+          "requested_allocation_bytes": 1531800006
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 9860508,
+          "ms": 1198.633676,
+          "requested_allocation_bytes": 1179360212
+        },
+        "html_bytes": 102808670,
+        "nodes": 2272741,
+        "parse": {
+          "allocation_calls": 65,
+          "ms": 664.844967,
+          "requested_allocation_bytes": 1531800006
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 65090,
+          "ms": 9.626655,
+          "requested_allocation_bytes": 6813562
+        },
+        "first_group_bytes": 621992,
+        "groups": 153,
+        "largest_group_source_bytes": 32768,
+        "nodes": 2272741,
+        "parse": {
+          "allocation_calls": 65,
+          "ms": 659.918341,
+          "requested_allocation_bytes": 1531800006
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 2018,
+          "ms": 84.983258,
+          "requested_allocation_bytes": 36817400
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 65090,
+          "ms": 9.916822,
+          "requested_allocation_bytes": 6813562
+        },
+        "first_group_bytes": 621992,
+        "grouped_html_bytes": 102808670,
+        "groups": 153,
+        "largest_group_source_bytes": 32768,
+        "nodes": 2272741,
+        "parse": {
+          "allocation_calls": 65,
+          "ms": 661.775683,
+          "requested_allocation_bytes": 1531800006
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 2018,
+          "ms": 88.357538,
+          "requested_allocation_bytes": 36817400
+        },
+        "remaining_groups": {
+          "allocation_calls": 9797801,
+          "ms": 1136.413612,
+          "requested_allocation_bytes": 1101247739
+        }
+      }
+    }
+  },
+  {
+    "case": "small-blocks-5000000-syntax-on",
+    "source_bytes": 5000028,
+    "syntax_details": true,
+    "nodes": 2272741,
+    "groups": 153,
+    "html_bytes": 102808670,
+    "first_group_bytes": 621992,
+    "largest_group_source_bytes": 32768,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 703.9567405,
+    "full_ms_p50": 1215.3941854999998,
+    "prepare_ms_p50": 83.8566015,
+    "first_render_ms_p50": 9.8602325,
+    "first_ready_ms_p50": 93.63405549999999,
+    "all_groups_ms_p50": 1242.118745,
+    "parse_plus_first_ms_p50": 797.6092985,
+    "parse_plus_full_ms_p50": 1919.041987,
+    "timing_samples_ms": {
+      "parse": [
+        699.222657,
+        705.104469,
+        724.517765,
+        704.418741,
+        705.507002,
+        700.369858,
+        703.49474,
+        702.412371
+      ],
+      "full": [
+        1218.410816,
+        1219.988427,
+        1215.75193,
+        1211.118466,
+        1214.943499,
+        1215.036441,
+        1220.612463,
+        1214.350921
+      ],
+      "first_ready": [
+        91.343265,
+        94.609732,
+        92.37933100000001,
+        95.175988,
+        91.563845,
+        95.122474,
+        92.658379,
+        95.735379
+      ],
+      "all_groups": [
+        1241.628874,
+        1242.8486329999998,
+        1240.1821570000002,
+        1242.608616,
+        1240.2262589999998,
+        1243.638109,
+        1240.4828149999998,
+        1243.5584959999999
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        889348,
+        889172,
+        890264
+      ],
+      "full": [
+        890252,
+        889288,
+        890396
+      ],
+      "first": [
+        889220,
+        889420,
+        889040
+      ],
+      "groups": [
+        889440,
+        889328,
+        890824
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 889348,
+      "full": 890252,
+      "first": 889220,
+      "groups": 889440
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 2272741,
+        "parse": {
+          "allocation_calls": 106,
+          "ms": 707.417127,
+          "requested_allocation_bytes": 1616718710
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 9860508,
+          "ms": 1196.216752,
+          "requested_allocation_bytes": 1179327540
+        },
+        "html_bytes": 102808670,
+        "nodes": 2272741,
+        "parse": {
+          "allocation_calls": 106,
+          "ms": 704.799315,
+          "requested_allocation_bytes": 1616718710
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 65090,
+          "ms": 9.798013,
+          "requested_allocation_bytes": 6813562
+        },
+        "first_group_bytes": 621992,
+        "groups": 153,
+        "largest_group_source_bytes": 32768,
+        "nodes": 2272741,
+        "parse": {
+          "allocation_calls": 106,
+          "ms": 700.956224,
+          "requested_allocation_bytes": 1616718710
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 2018,
+          "ms": 84.06433,
+          "requested_allocation_bytes": 36817400
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 65090,
+          "ms": 9.828711,
+          "requested_allocation_bytes": 6813562
+        },
+        "first_group_bytes": 621992,
+        "grouped_html_bytes": 102808670,
+        "groups": 153,
+        "largest_group_source_bytes": 32768,
+        "nodes": 2272741,
+        "parse": {
+          "allocation_calls": 106,
+          "ms": 703.306901,
+          "requested_allocation_bytes": 1616718710
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 2018,
+          "ms": 85.870918,
+          "requested_allocation_bytes": 36817400
+        },
+        "remaining_groups": {
+          "allocation_calls": 9797801,
+          "ms": 1126.392302,
+          "requested_allocation_bytes": 1101247739
+        }
+      }
+    }
+  },
+  {
+    "case": "tables-100000-syntax-off",
+    "source_bytes": 100044,
+    "syntax_details": false,
+    "nodes": 20645,
+    "groups": 4,
+    "html_bytes": 969576,
+    "first_group_bytes": 313831,
+    "largest_group_source_bytes": 32759,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 6.2853055,
+    "full_ms_p50": 11.5541555,
+    "prepare_ms_p50": 0.048037,
+    "first_render_ms_p50": 3.715757,
+    "first_ready_ms_p50": 3.7628795,
+    "all_groups_ms_p50": 11.5614235,
+    "parse_plus_first_ms_p50": 10.044774499999999,
+    "parse_plus_full_ms_p50": 17.842366,
+    "timing_samples_ms": {
+      "parse": [
+        9.050787,
+        6.335042,
+        6.286119,
+        6.276368,
+        6.295341,
+        6.281811,
+        6.272694,
+        6.284492
+      ],
+      "full": [
+        12.049669,
+        11.457876,
+        11.707995,
+        11.450823,
+        12.011774,
+        11.610003,
+        11.498308,
+        11.43152
+      ],
+      "first_ready": [
+        3.871288,
+        3.781461,
+        3.739815,
+        3.768493,
+        3.756236,
+        3.7628769999999996,
+        3.7628820000000003,
+        3.758803
+      ],
+      "all_groups": [
+        11.683826,
+        11.572429999999999,
+        11.499916,
+        11.563201,
+        11.5307,
+        11.564365,
+        11.540953,
+        11.559646
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        25708,
+        25820,
+        25676
+      ],
+      "full": [
+        26796,
+        26920,
+        25644
+      ],
+      "first": [
+        26680,
+        26748,
+        26816
+      ],
+      "groups": [
+        26812,
+        25692,
+        25672
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 25708,
+      "full": 26796,
+      "first": 26748,
+      "groups": 25692
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 20645,
+        "parse": {
+          "allocation_calls": 16745,
+          "ms": 9.026254,
+          "requested_allocation_bytes": 15453432
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 99667,
+          "ms": 12.702995,
+          "requested_allocation_bytes": 10019412
+        },
+        "html_bytes": 969576,
+        "nodes": 20645,
+        "parse": {
+          "allocation_calls": 16745,
+          "ms": 9.00692,
+          "requested_allocation_bytes": 15453432
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 32082,
+          "ms": 4.029978,
+          "requested_allocation_bytes": 3010121
+        },
+        "first_group_bytes": 313831,
+        "groups": 4,
+        "largest_group_source_bytes": 32759,
+        "nodes": 20645,
+        "parse": {
+          "allocation_calls": 16745,
+          "ms": 9.66376,
+          "requested_allocation_bytes": 15453432
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 45,
+          "ms": 0.070907,
+          "requested_allocation_bytes": 42288
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 32082,
+          "ms": 3.895574,
+          "requested_allocation_bytes": 3010121
+        },
+        "first_group_bytes": 313831,
+        "grouped_html_bytes": 969576,
+        "groups": 4,
+        "largest_group_source_bytes": 32759,
+        "nodes": 20645,
+        "parse": {
+          "allocation_calls": 16745,
+          "ms": 9.056933,
+          "requested_allocation_bytes": 15453432
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 45,
+          "ms": 0.05565,
+          "requested_allocation_bytes": 42288
+        },
+        "remaining_groups": {
+          "allocation_calls": 67609,
+          "ms": 8.203927,
+          "requested_allocation_bytes": 6811228
+        }
+      }
+    }
+  },
+  {
+    "case": "tables-100000-syntax-on",
+    "source_bytes": 100044,
+    "syntax_details": true,
+    "nodes": 20645,
+    "groups": 4,
+    "html_bytes": 969576,
+    "first_group_bytes": 313831,
+    "largest_group_source_bytes": 32759,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 7.4353865,
+    "full_ms_p50": 11.4640865,
+    "prepare_ms_p50": 0.0461045,
+    "first_render_ms_p50": 3.7197305,
+    "first_ready_ms_p50": 3.7660945,
+    "all_groups_ms_p50": 11.523071,
+    "parse_plus_first_ms_p50": 11.204987,
+    "parse_plus_full_ms_p50": 18.939199000000002,
+    "timing_samples_ms": {
+      "parse": [
+        9.288041,
+        8.158052,
+        7.429451,
+        7.421873,
+        7.43093,
+        7.492178,
+        7.410411,
+        7.439843
+      ],
+      "full": [
+        11.562441,
+        11.424749,
+        11.543896,
+        11.357815,
+        11.640187,
+        11.373636,
+        11.49464,
+        11.433533
+      ],
+      "first_ready": [
+        3.732139,
+        3.882084,
+        3.716813,
+        3.782682,
+        3.766613,
+        3.905587,
+        3.7292080000000003,
+        3.765576
+      ],
+      "all_groups": [
+        11.454613,
+        11.930728,
+        11.438311,
+        11.532539,
+        11.522853,
+        11.685029,
+        11.464293,
+        11.523289
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        29116,
+        28364,
+        28288
+      ],
+      "full": [
+        28044,
+        28260,
+        28260
+      ],
+      "first": [
+        28064,
+        28212,
+        28060
+      ],
+      "groups": [
+        28172,
+        28232,
+        28180
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 28364,
+      "full": 28260,
+      "first": 28064,
+      "groups": 28180
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 20645,
+        "parse": {
+          "allocation_calls": 19167,
+          "ms": 11.443672,
+          "requested_allocation_bytes": 19545192
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 99667,
+          "ms": 12.044395,
+          "requested_allocation_bytes": 10019412
+        },
+        "html_bytes": 969576,
+        "nodes": 20645,
+        "parse": {
+          "allocation_calls": 19167,
+          "ms": 11.466185,
+          "requested_allocation_bytes": 19545192
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 32080,
+          "ms": 3.822018,
+          "requested_allocation_bytes": 3009689
+        },
+        "first_group_bytes": 313831,
+        "groups": 4,
+        "largest_group_source_bytes": 32759,
+        "nodes": 20645,
+        "parse": {
+          "allocation_calls": 19167,
+          "ms": 11.551425,
+          "requested_allocation_bytes": 19545192
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 45,
+          "ms": 0.051662,
+          "requested_allocation_bytes": 42288
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 32080,
+          "ms": 3.827763,
+          "requested_allocation_bytes": 3009689
+        },
+        "first_group_bytes": 313831,
+        "grouped_html_bytes": 969576,
+        "groups": 4,
+        "largest_group_source_bytes": 32759,
+        "nodes": 20645,
+        "parse": {
+          "allocation_calls": 19167,
+          "ms": 11.305932,
+          "requested_allocation_bytes": 19545192
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 45,
+          "ms": 0.054018,
+          "requested_allocation_bytes": 42288
+        },
+        "remaining_groups": {
+          "allocation_calls": 67609,
+          "ms": 7.954592,
+          "requested_allocation_bytes": 6811228
+        }
+      }
+    }
+  },
+  {
+    "case": "tables-1000000-syntax-off",
+    "source_bytes": 1000062,
+    "syntax_details": false,
+    "nodes": 206363,
+    "groups": 31,
+    "html_bytes": 10001520,
+    "first_group_bytes": 313831,
+    "largest_group_source_bytes": 32759,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 72.4068475,
+    "full_ms_p50": 118.7360875,
+    "prepare_ms_p50": 1.0199310000000001,
+    "first_render_ms_p50": 3.7730300000000003,
+    "first_ready_ms_p50": 4.795418,
+    "all_groups_ms_p50": 118.440362,
+    "parse_plus_first_ms_p50": 77.190033,
+    "parse_plus_full_ms_p50": 192.30679500000002,
+    "timing_samples_ms": {
+      "parse": [
+        74.556816,
+        74.825638,
+        72.285673,
+        72.431339,
+        72.363479,
+        72.2338,
+        73.674698,
+        72.382356
+      ],
+      "full": [
+        118.688994,
+        118.739863,
+        118.834714,
+        118.698121,
+        124.234941,
+        118.090673,
+        118.732312,
+        119.824224
+      ],
+      "first_ready": [
+        4.819377,
+        4.776447,
+        4.818461,
+        4.770859,
+        4.814389,
+        4.775229,
+        4.830127,
+        4.759184
+      ],
+      "all_groups": [
+        118.23814,
+        119.093596,
+        119.357963,
+        118.211414,
+        118.502526,
+        118.378198,
+        118.363055,
+        121.06151700000001
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        83628,
+        84904,
+        83440
+      ],
+      "full": [
+        86096,
+        88944,
+        86188
+      ],
+      "first": [
+        84412,
+        86876,
+        87072
+      ],
+      "groups": [
+        87060,
+        84288,
+        87104
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 83628,
+      "full": 86188,
+      "first": 86876,
+      "groups": 87060
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 206363,
+        "parse": {
+          "allocation_calls": 166751,
+          "ms": 82.895224,
+          "requested_allocation_bytes": 154139073
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 992551,
+          "ms": 123.510806,
+          "requested_allocation_bytes": 94215586
+        },
+        "html_bytes": 10001520,
+        "nodes": 206363,
+        "parse": {
+          "allocation_calls": 166751,
+          "ms": 80.760045,
+          "requested_allocation_bytes": 154139073
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 32082,
+          "ms": 3.87077,
+          "requested_allocation_bytes": 3010121
+        },
+        "first_group_bytes": 313831,
+        "groups": 31,
+        "largest_group_source_bytes": 32759,
+        "nodes": 206363,
+        "parse": {
+          "allocation_calls": 166751,
+          "ms": 82.593819,
+          "requested_allocation_bytes": 154139073
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 298,
+          "ms": 1.01421,
+          "requested_allocation_bytes": 388120
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 32082,
+          "ms": 3.902151,
+          "requested_allocation_bytes": 3010121
+        },
+        "first_group_bytes": 313831,
+        "grouped_html_bytes": 10001520,
+        "groups": 31,
+        "largest_group_source_bytes": 32759,
+        "nodes": 206363,
+        "parse": {
+          "allocation_calls": 166751,
+          "ms": 82.414903,
+          "requested_allocation_bytes": 154139073
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 298,
+          "ms": 1.03513,
+          "requested_allocation_bytes": 388120
+        },
+        "remaining_groups": {
+          "allocation_calls": 960892,
+          "ms": 117.032872,
+          "requested_allocation_bytes": 96262186
+        }
+      }
+    }
+  },
+  {
+    "case": "tables-1000000-syntax-on",
+    "source_bytes": 1000062,
+    "syntax_details": true,
+    "nodes": 206363,
+    "groups": 31,
+    "html_bytes": 10001520,
+    "first_group_bytes": 313831,
+    "largest_group_source_bytes": 32759,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 88.6853585,
+    "full_ms_p50": 118.42519150000001,
+    "prepare_ms_p50": 1.0459800000000001,
+    "first_render_ms_p50": 3.7778574999999996,
+    "first_ready_ms_p50": 4.8218565,
+    "all_groups_ms_p50": 118.14063949999999,
+    "parse_plus_first_ms_p50": 93.51844,
+    "parse_plus_full_ms_p50": 207.4830475,
+    "timing_samples_ms": {
+      "parse": [
+        86.345657,
+        88.860761,
+        91.031492,
+        89.807289,
+        88.509956,
+        91.89506,
+        88.45186,
+        88.23221
+      ],
+      "full": [
+        119.850056,
+        118.256472,
+        119.819196,
+        118.200043,
+        117.841552,
+        118.593911,
+        119.397002,
+        118.156511
+      ],
+      "first_ready": [
+        4.819802,
+        4.739305,
+        4.806592,
+        4.805267,
+        4.823911,
+        4.884553,
+        4.984954,
+        4.880462
+      ],
+      "all_groups": [
+        118.137473,
+        116.952973,
+        117.828948,
+        118.59846,
+        117.836756,
+        120.65718199999999,
+        118.568121,
+        118.143806
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        108340,
+        108968,
+        107908
+      ],
+      "full": [
+        108432,
+        105784,
+        110028
+      ],
+      "first": [
+        109532,
+        106904,
+        110652
+      ],
+      "groups": [
+        108852,
+        105320,
+        109512
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 108340,
+      "full": 108432,
+      "first": 109532,
+      "groups": 108852
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 206363,
+        "parse": {
+          "allocation_calls": 190608,
+          "ms": 99.611614,
+          "requested_allocation_bytes": 187185209
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 992551,
+          "ms": 124.051495,
+          "requested_allocation_bytes": 94215586
+        },
+        "html_bytes": 10001520,
+        "nodes": 206363,
+        "parse": {
+          "allocation_calls": 190608,
+          "ms": 102.42601,
+          "requested_allocation_bytes": 187185209
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 32080,
+          "ms": 4.00512,
+          "requested_allocation_bytes": 3009689
+        },
+        "first_group_bytes": 313831,
+        "groups": 31,
+        "largest_group_source_bytes": 32759,
+        "nodes": 206363,
+        "parse": {
+          "allocation_calls": 190608,
+          "ms": 100.02774,
+          "requested_allocation_bytes": 187185209
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 298,
+          "ms": 1.070799,
+          "requested_allocation_bytes": 388120
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 32080,
+          "ms": 3.92785,
+          "requested_allocation_bytes": 3009689
+        },
+        "first_group_bytes": 313831,
+        "grouped_html_bytes": 10001520,
+        "groups": 31,
+        "largest_group_source_bytes": 32759,
+        "nodes": 206363,
+        "parse": {
+          "allocation_calls": 190608,
+          "ms": 99.455363,
+          "requested_allocation_bytes": 187185209
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 298,
+          "ms": 1.040135,
+          "requested_allocation_bytes": 388120
+        },
+        "remaining_groups": {
+          "allocation_calls": 960892,
+          "ms": 116.713098,
+          "requested_allocation_bytes": 96262186
+        }
+      }
+    }
+  },
+  {
+    "case": "tables-5000000-syntax-off",
+    "source_bytes": 5000058,
+    "syntax_details": false,
+    "nodes": 1031759,
+    "groups": 153,
+    "html_bytes": 51160214,
+    "first_group_bytes": 313831,
+    "largest_group_source_bytes": 32759,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 375.59070099999997,
+    "full_ms_p50": 606.6857904999999,
+    "prepare_ms_p50": 5.281833000000001,
+    "first_render_ms_p50": 4.3689564999999995,
+    "first_ready_ms_p50": 9.659776,
+    "all_groups_ms_p50": 600.0713089999999,
+    "parse_plus_first_ms_p50": 385.30244500000003,
+    "parse_plus_full_ms_p50": 982.913984,
+    "timing_samples_ms": {
+      "parse": [
+        381.157181,
+        373.544972,
+        377.74305,
+        373.078999,
+        375.8095,
+        375.371902,
+        374.358479,
+        376.800863
+      ],
+      "full": [
+        607.406714,
+        605.169204,
+        606.34404,
+        606.011058,
+        607.027541,
+        607.619025,
+        605.683064,
+        607.261876
+      ],
+      "first_ready": [
+        9.070197,
+        10.249355000000001,
+        9.059740999999999,
+        10.288961,
+        9.049642,
+        10.373846,
+        9.065661,
+        10.252009000000001
+      ],
+      "all_groups": [
+        599.562194,
+        603.783627,
+        598.904588,
+        603.8550399999999,
+        600.580424,
+        604.400891,
+        597.285892,
+        595.2810790000001
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        334732,
+        334704,
+        334936
+      ],
+      "full": [
+        334880,
+        334732,
+        334668
+      ],
+      "first": [
+        334756,
+        334820,
+        334696
+      ],
+      "groups": [
+        335832,
+        334900,
+        334636
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 334732,
+      "full": 334732,
+      "first": 334756,
+      "groups": 334900
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 1031759,
+        "parse": {
+          "allocation_calls": 833420,
+          "ms": 399.035072,
+          "requested_allocation_bytes": 770884447
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 4960810,
+          "ms": 628.786827,
+          "requested_allocation_bytes": 544964486
+        },
+        "html_bytes": 51160214,
+        "nodes": 1031759,
+        "parse": {
+          "allocation_calls": 833420,
+          "ms": 400.859837,
+          "requested_allocation_bytes": 770884447
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 32082,
+          "ms": 5.064993,
+          "requested_allocation_bytes": 3014185
+        },
+        "first_group_bytes": 313831,
+        "groups": 153,
+        "largest_group_source_bytes": 32759,
+        "nodes": 1031759,
+        "parse": {
+          "allocation_calls": 833420,
+          "ms": 397.493104,
+          "requested_allocation_bytes": 770884447
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1402,
+          "ms": 5.55593,
+          "requested_allocation_bytes": 2339704
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 32082,
+          "ms": 4.997316,
+          "requested_allocation_bytes": 3014185
+        },
+        "first_group_bytes": 313831,
+        "grouped_html_bytes": 51160214,
+        "groups": 153,
+        "largest_group_source_bytes": 32759,
+        "nodes": 1031759,
+        "parse": {
+          "allocation_calls": 833420,
+          "ms": 400.984428,
+          "requested_allocation_bytes": 770884447
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1402,
+          "ms": 5.476925,
+          "requested_allocation_bytes": 2339704
+        },
+        "remaining_groups": {
+          "allocation_calls": 4930973,
+          "ms": 606.455131,
+          "requested_allocation_bytes": 503939326
+        }
+      }
+    }
+  },
+  {
+    "case": "tables-5000000-syntax-on",
+    "source_bytes": 5000058,
+    "syntax_details": true,
+    "nodes": 1031759,
+    "groups": 153,
+    "html_bytes": 51160214,
+    "first_group_bytes": 313831,
+    "largest_group_source_bytes": 32759,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 456.45641,
+    "full_ms_p50": 613.4685935,
+    "prepare_ms_p50": 5.3819855,
+    "first_render_ms_p50": 4.526477,
+    "first_ready_ms_p50": 9.922111000000001,
+    "all_groups_ms_p50": 599.5933904999999,
+    "parse_plus_first_ms_p50": 466.95960449999995,
+    "parse_plus_full_ms_p50": 1069.902998,
+    "timing_samples_ms": {
+      "parse": [
+        450.36706,
+        458.605168,
+        454.140105,
+        454.07474,
+        458.171476,
+        455.895614,
+        460.679193,
+        457.017206
+      ],
+      "full": [
+        626.13861,
+        613.885664,
+        613.608028,
+        608.499083,
+        613.329159,
+        609.576089,
+        618.618544,
+        611.288155
+      ],
+      "first_ready": [
+        9.116838000000001,
+        10.729678,
+        9.121632,
+        10.72259,
+        9.108097,
+        10.744022000000001,
+        9.07508,
+        10.875085
+      ],
+      "all_groups": [
+        603.285805,
+        598.580583,
+        599.721713,
+        603.7402179999999,
+        596.821129,
+        605.293892,
+        595.8967749999999,
+        599.465068
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        412980,
+        413132,
+        413156
+      ],
+      "full": [
+        413140,
+        413264,
+        413120
+      ],
+      "first": [
+        413200,
+        415380,
+        413028
+      ],
+      "groups": [
+        413196,
+        413196,
+        413308
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 413132,
+      "full": 413140,
+      "first": 413200,
+      "groups": 413196
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 1031759,
+        "parse": {
+          "allocation_calls": 952519,
+          "ms": 485.322982,
+          "requested_allocation_bytes": 904430119
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 4960810,
+          "ms": 653.987926,
+          "requested_allocation_bytes": 544948198
+        },
+        "html_bytes": 51160214,
+        "nodes": 1031759,
+        "parse": {
+          "allocation_calls": 952519,
+          "ms": 475.595163,
+          "requested_allocation_bytes": 904430119
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 32080,
+          "ms": 5.341781,
+          "requested_allocation_bytes": 3009689
+        },
+        "first_group_bytes": 313831,
+        "groups": 153,
+        "largest_group_source_bytes": 32759,
+        "nodes": 1031759,
+        "parse": {
+          "allocation_calls": 952519,
+          "ms": 473.120477,
+          "requested_allocation_bytes": 904430119
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1402,
+          "ms": 5.852865,
+          "requested_allocation_bytes": 2339704
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 32080,
+          "ms": 5.323252,
+          "requested_allocation_bytes": 3009689
+        },
+        "first_group_bytes": 313831,
+        "grouped_html_bytes": 51160214,
+        "groups": 153,
+        "largest_group_source_bytes": 32759,
+        "nodes": 1031759,
+        "parse": {
+          "allocation_calls": 952519,
+          "ms": 474.34007,
+          "requested_allocation_bytes": 904430119
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1402,
+          "ms": 5.845537,
+          "requested_allocation_bytes": 2339704
+        },
+        "remaining_groups": {
+          "allocation_calls": 4930972,
+          "ms": 609.535093,
+          "requested_allocation_bytes": 503939278
+        }
+      }
+    }
+  },
+  {
+    "case": "long-code-100000-syntax-off",
+    "source_bytes": 100019,
+    "syntax_details": false,
+    "nodes": 2,
+    "groups": 1,
+    "html_bytes": 132374,
+    "first_group_bytes": 132374,
+    "largest_group_source_bytes": 100019,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 0.375083,
+    "full_ms_p50": 0.8520845,
+    "prepare_ms_p50": 0.0013449999999999998,
+    "first_render_ms_p50": 0.8567685,
+    "first_ready_ms_p50": 0.8580055,
+    "all_groups_ms_p50": 0.858043,
+    "parse_plus_first_ms_p50": 1.2365175,
+    "parse_plus_full_ms_p50": 1.2285815,
+    "timing_samples_ms": {
+      "parse": [
+        0.38636,
+        0.375465,
+        0.374604,
+        0.374701,
+        0.373155,
+        0.371328,
+        0.377002,
+        0.380065
+      ],
+      "full": [
+        0.920576,
+        0.796401,
+        0.913952,
+        0.796861,
+        0.910519,
+        0.79425,
+        0.907308,
+        0.793424
+      ],
+      "first_ready": [
+        0.798277,
+        0.922691,
+        0.7996249999999999,
+        0.923463,
+        0.801661,
+        0.91707,
+        0.801034,
+        0.91435
+      ],
+      "all_groups": [
+        0.798319,
+        0.922736,
+        0.799659,
+        0.923498,
+        0.801697,
+        0.9171050000000001,
+        0.801072,
+        0.914389
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        20220,
+        20148,
+        20272
+      ],
+      "full": [
+        20080,
+        20048,
+        20040
+      ],
+      "first": [
+        20572,
+        20332,
+        20316
+      ],
+      "groups": [
+        20316,
+        20332,
+        20400
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 20220,
+      "full": 20048,
+      "first": 20332,
+      "groups": 20332
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 47,
+          "ms": 0.487836,
+          "requested_allocation_bytes": 810293
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 19,
+          "ms": 0.809228,
+          "requested_allocation_bytes": 698283
+        },
+        "html_bytes": 132374,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 47,
+          "ms": 0.550502,
+          "requested_allocation_bytes": 810293
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20,
+          "ms": 0.850003,
+          "requested_allocation_bytes": 698252
+        },
+        "first_group_bytes": 132374,
+        "groups": 1,
+        "largest_group_source_bytes": 100019,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 47,
+          "ms": 0.531863,
+          "requested_allocation_bytes": 810293
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 4,
+          "ms": 0.003831,
+          "requested_allocation_bytes": 232
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20,
+          "ms": 0.818919,
+          "requested_allocation_bytes": 698252
+        },
+        "first_group_bytes": 132374,
+        "grouped_html_bytes": 132374,
+        "groups": 1,
+        "largest_group_source_bytes": 100019,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 47,
+          "ms": 0.530541,
+          "requested_allocation_bytes": 810293
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 4,
+          "ms": 0.004264,
+          "requested_allocation_bytes": 232
+        },
+        "remaining_groups": {
+          "allocation_calls": 0,
+          "ms": 5.7e-05,
+          "requested_allocation_bytes": 0
+        }
+      }
+    }
+  },
+  {
+    "case": "long-code-100000-syntax-on",
+    "source_bytes": 100019,
+    "syntax_details": true,
+    "nodes": 2,
+    "groups": 1,
+    "html_bytes": 132374,
+    "first_group_bytes": 132374,
+    "largest_group_source_bytes": 100019,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 0.37697400000000003,
+    "full_ms_p50": 0.8064865,
+    "prepare_ms_p50": 0.001059,
+    "first_render_ms_p50": 0.8015680000000001,
+    "first_ready_ms_p50": 0.8027070000000001,
+    "all_groups_ms_p50": 0.8027380000000001,
+    "parse_plus_first_ms_p50": 1.1699959999999998,
+    "parse_plus_full_ms_p50": 1.1921975,
+    "timing_samples_ms": {
+      "parse": [
+        0.347482,
+        0.344003,
+        0.386093,
+        0.405846,
+        0.374084,
+        0.380783,
+        0.379864,
+        0.346178
+      ],
+      "full": [
+        0.882986,
+        0.766574,
+        0.854405,
+        0.764061,
+        0.840404,
+        0.735921,
+        0.840694,
+        0.772569
+      ],
+      "first_ready": [
+        0.767603,
+        0.882629,
+        0.7662869999999999,
+        0.8394119999999999,
+        0.766507,
+        0.8378110000000001,
+        0.7673129999999999,
+        0.841434
+      ],
+      "all_groups": [
+        0.7676430000000001,
+        0.882669,
+        0.766327,
+        0.839452,
+        0.7665390000000001,
+        0.837833,
+        0.7673439999999999,
+        0.841457
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        20316,
+        20224,
+        20148
+      ],
+      "full": [
+        20012,
+        20080,
+        20028
+      ],
+      "first": [
+        20572,
+        20364,
+        20324
+      ],
+      "groups": [
+        20448,
+        20332,
+        20364
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 20224,
+      "full": 20028,
+      "first": 20364,
+      "groups": 20364
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 54,
+          "ms": 0.549364,
+          "requested_allocation_bytes": 811125
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 19,
+          "ms": 0.845648,
+          "requested_allocation_bytes": 698283
+        },
+        "html_bytes": 132374,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 54,
+          "ms": 0.497398,
+          "requested_allocation_bytes": 811125
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20,
+          "ms": 0.880383,
+          "requested_allocation_bytes": 698252
+        },
+        "first_group_bytes": 132374,
+        "groups": 1,
+        "largest_group_source_bytes": 100019,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 54,
+          "ms": 0.51045,
+          "requested_allocation_bytes": 811125
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 4,
+          "ms": 0.004108,
+          "requested_allocation_bytes": 232
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20,
+          "ms": 0.837537,
+          "requested_allocation_bytes": 698252
+        },
+        "first_group_bytes": 132374,
+        "grouped_html_bytes": 132374,
+        "groups": 1,
+        "largest_group_source_bytes": 100019,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 54,
+          "ms": 0.515984,
+          "requested_allocation_bytes": 811125
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 4,
+          "ms": 0.003989,
+          "requested_allocation_bytes": 232
+        },
+        "remaining_groups": {
+          "allocation_calls": 0,
+          "ms": 6.9e-05,
+          "requested_allocation_bytes": 0
+        }
+      }
+    }
+  },
+  {
+    "case": "long-code-1000000-syntax-off",
+    "source_bytes": 1000011,
+    "syntax_details": false,
+    "nodes": 2,
+    "groups": 1,
+    "html_bytes": 1322687,
+    "first_group_bytes": 1322687,
+    "largest_group_source_bytes": 1000011,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 3.9392284999999996,
+    "full_ms_p50": 8.292378,
+    "prepare_ms_p50": 0.002954,
+    "first_render_ms_p50": 8.191183,
+    "first_ready_ms_p50": 8.194838,
+    "all_groups_ms_p50": 8.194877,
+    "parse_plus_first_ms_p50": 12.0915035,
+    "parse_plus_full_ms_p50": 12.3131065,
+    "timing_samples_ms": {
+      "parse": [
+        3.588948,
+        4.112956,
+        4.075218,
+        3.949956,
+        3.928501,
+        4.01746,
+        3.924475,
+        3.910872
+      ],
+      "full": [
+        9.94362,
+        7.890778,
+        8.913546,
+        7.401228,
+        8.693978,
+        7.426437,
+        8.724238,
+        7.47697
+      ],
+      "first_ready": [
+        7.680475,
+        10.419774,
+        7.448632,
+        8.709201,
+        7.412633,
+        8.729947000000001,
+        7.414086999999999,
+        9.130797
+      ],
+      "all_groups": [
+        7.680514,
+        10.41981,
+        7.4486740000000005,
+        8.70924,
+        7.41268,
+        8.729996000000002,
+        7.414128,
+        9.130837
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        24300,
+        24404,
+        24488
+      ],
+      "full": [
+        28132,
+        28176,
+        28060
+      ],
+      "first": [
+        28516,
+        28564,
+        28592
+      ],
+      "groups": [
+        28456,
+        28424,
+        28452
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 24404,
+      "full": 28132,
+      "first": 28564,
+      "groups": 28452
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 47,
+          "ms": 4.793796,
+          "requested_allocation_bytes": 8039269
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 20,
+          "ms": 9.566736,
+          "requested_allocation_bytes": 9614435
+        },
+        "html_bytes": 1322687,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 47,
+          "ms": 4.824801,
+          "requested_allocation_bytes": 8039269
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 21,
+          "ms": 9.455977,
+          "requested_allocation_bytes": 9614404
+        },
+        "first_group_bytes": 1322687,
+        "groups": 1,
+        "largest_group_source_bytes": 1000011,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 47,
+          "ms": 4.900978,
+          "requested_allocation_bytes": 8039269
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 4,
+          "ms": 0.004575,
+          "requested_allocation_bytes": 232
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 21,
+          "ms": 9.579248,
+          "requested_allocation_bytes": 9614404
+        },
+        "first_group_bytes": 1322687,
+        "grouped_html_bytes": 1322687,
+        "groups": 1,
+        "largest_group_source_bytes": 1000011,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 47,
+          "ms": 4.777685,
+          "requested_allocation_bytes": 8039269
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 4,
+          "ms": 0.004854,
+          "requested_allocation_bytes": 232
+        },
+        "remaining_groups": {
+          "allocation_calls": 0,
+          "ms": 5.6e-05,
+          "requested_allocation_bytes": 0
+        }
+      }
+    }
+  },
+  {
+    "case": "long-code-1000000-syntax-on",
+    "source_bytes": 1000011,
+    "syntax_details": true,
+    "nodes": 2,
+    "groups": 1,
+    "html_bytes": 1322687,
+    "first_group_bytes": 1322687,
+    "largest_group_source_bytes": 1000011,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 3.9293389999999997,
+    "full_ms_p50": 7.7474620000000005,
+    "prepare_ms_p50": 0.0027045000000000003,
+    "first_render_ms_p50": 7.745087,
+    "first_ready_ms_p50": 7.747808,
+    "all_groups_ms_p50": 7.7478585,
+    "parse_plus_first_ms_p50": 11.6630965,
+    "parse_plus_full_ms_p50": 11.587048,
+    "timing_samples_ms": {
+      "parse": [
+        3.597341,
+        3.937781,
+        3.931737,
+        3.926308,
+        3.923197,
+        3.940278,
+        3.926941,
+        3.943893
+      ],
+      "full": [
+        8.209133,
+        7.407456,
+        8.07015,
+        7.434002,
+        8.075716,
+        7.427344,
+        8.060922,
+        7.418042
+      ],
+      "first_ready": [
+        7.457326,
+        8.054553,
+        7.429858,
+        8.03829,
+        7.402463,
+        8.072531,
+        7.4124870000000005,
+        8.04282
+      ],
+      "all_groups": [
+        7.457383,
+        8.054595,
+        7.429905000000001,
+        8.038334,
+        7.4025039999999995,
+        8.072562999999999,
+        7.4125190000000005,
+        8.042863
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        24572,
+        24296,
+        24444
+      ],
+      "full": [
+        28052,
+        28068,
+        28056
+      ],
+      "first": [
+        28512,
+        28444,
+        28724
+      ],
+      "groups": [
+        28656,
+        28516,
+        28748
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 24444,
+      "full": 28056,
+      "first": 28512,
+      "groups": 28656
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 54,
+          "ms": 4.839563,
+          "requested_allocation_bytes": 8040101
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 20,
+          "ms": 9.625452,
+          "requested_allocation_bytes": 9614435
+        },
+        "html_bytes": 1322687,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 54,
+          "ms": 4.739497,
+          "requested_allocation_bytes": 8040101
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 21,
+          "ms": 10.131774,
+          "requested_allocation_bytes": 9614404
+        },
+        "first_group_bytes": 1322687,
+        "groups": 1,
+        "largest_group_source_bytes": 1000011,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 54,
+          "ms": 5.116668,
+          "requested_allocation_bytes": 8040101
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 4,
+          "ms": 0.005425,
+          "requested_allocation_bytes": 232
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 21,
+          "ms": 10.005161,
+          "requested_allocation_bytes": 9614404
+        },
+        "first_group_bytes": 1322687,
+        "grouped_html_bytes": 1322687,
+        "groups": 1,
+        "largest_group_source_bytes": 1000011,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 54,
+          "ms": 4.833028,
+          "requested_allocation_bytes": 8040101
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 4,
+          "ms": 0.005142,
+          "requested_allocation_bytes": 232
+        },
+        "remaining_groups": {
+          "allocation_calls": 0,
+          "ms": 4.6e-05,
+          "requested_allocation_bytes": 0
+        }
+      }
+    }
+  },
+  {
+    "case": "long-code-5000000-syntax-off",
+    "source_bytes": 5000003,
+    "syntax_details": false,
+    "nodes": 2,
+    "groups": 1,
+    "html_bytes": 6612999,
+    "first_group_bytes": 6612999,
+    "largest_group_source_bytes": 5000003,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 17.210773,
+    "full_ms_p50": 39.147728,
+    "prepare_ms_p50": 0.0032875,
+    "first_render_ms_p50": 39.010924,
+    "first_ready_ms_p50": 39.0138,
+    "all_groups_ms_p50": 39.01384,
+    "parse_plus_first_ms_p50": 56.226062,
+    "parse_plus_full_ms_p50": 56.6634555,
+    "timing_samples_ms": {
+      "parse": [
+        17.750115,
+        17.188708,
+        17.150096,
+        17.188109,
+        17.174337,
+        17.232838,
+        17.234474,
+        18.619616
+      ],
+      "full": [
+        39.727621,
+        38.728115,
+        42.399569,
+        37.772856,
+        39.63007,
+        37.887102,
+        39.567341,
+        37.90548
+      ],
+      "first_ready": [
+        37.832477999999995,
+        39.596661999999995,
+        37.904975,
+        39.654859,
+        37.811321,
+        39.59532,
+        38.43228,
+        39.887843000000004
+      ],
+      "all_groups": [
+        37.832575,
+        39.596751,
+        37.905008,
+        39.654894,
+        37.811363,
+        39.595361000000004,
+        38.432319,
+        39.887877
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        46092,
+        45968,
+        45892
+      ],
+      "full": [
+        60240,
+        59768,
+        60924
+      ],
+      "first": [
+        61436,
+        60756,
+        60580
+      ],
+      "groups": [
+        60924,
+        59872,
+        60004
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 45968,
+      "full": 60240,
+      "first": 60756,
+      "groups": 60004
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 47,
+          "ms": 17.12582,
+          "requested_allocation_bytes": 40168229
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 19,
+          "ms": 41.907255,
+          "requested_allocation_bytes": 34840107
+        },
+        "html_bytes": 6612999,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 47,
+          "ms": 17.253653,
+          "requested_allocation_bytes": 40168229
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20,
+          "ms": 40.829164,
+          "requested_allocation_bytes": 34840076
+        },
+        "first_group_bytes": 6612999,
+        "groups": 1,
+        "largest_group_source_bytes": 5000003,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 47,
+          "ms": 17.808053,
+          "requested_allocation_bytes": 40168229
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 4,
+          "ms": 0.005053,
+          "requested_allocation_bytes": 232
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20,
+          "ms": 39.862445,
+          "requested_allocation_bytes": 34840076
+        },
+        "first_group_bytes": 6612999,
+        "grouped_html_bytes": 6612999,
+        "groups": 1,
+        "largest_group_source_bytes": 5000003,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 47,
+          "ms": 17.880322,
+          "requested_allocation_bytes": 40168229
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 4,
+          "ms": 0.005109,
+          "requested_allocation_bytes": 232
+        },
+        "remaining_groups": {
+          "allocation_calls": 0,
+          "ms": 0.00013,
+          "requested_allocation_bytes": 0
+        }
+      }
+    }
+  },
+  {
+    "case": "long-code-5000000-syntax-on",
+    "source_bytes": 5000003,
+    "syntax_details": true,
+    "nodes": 2,
+    "groups": 1,
+    "html_bytes": 6612999,
+    "first_group_bytes": 6612999,
+    "largest_group_source_bytes": 5000003,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 16.349196499999998,
+    "full_ms_p50": 39.3140695,
+    "prepare_ms_p50": 0.003072,
+    "first_render_ms_p50": 39.7606985,
+    "first_ready_ms_p50": 39.763338,
+    "all_groups_ms_p50": 39.763375999999994,
+    "parse_plus_first_ms_p50": 56.0541195,
+    "parse_plus_full_ms_p50": 56.06202,
+    "timing_samples_ms": {
+      "parse": [
+        17.048128,
+        16.342451,
+        16.262094,
+        16.355942,
+        16.517194,
+        16.326995,
+        16.254568,
+        17.701528
+      ],
+      "full": [
+        40.330488,
+        38.297651,
+        40.361377,
+        37.866432,
+        40.391908,
+        37.858444,
+        40.375221,
+        37.799041
+      ],
+      "first_ready": [
+        37.762746,
+        41.334118000000004,
+        38.102427,
+        40.399827,
+        37.847410999999994,
+        40.350801,
+        39.175875,
+        40.430738999999996
+      ],
+      "all_groups": [
+        37.762786,
+        41.334152,
+        38.102458999999996,
+        40.399859,
+        37.847451,
+        40.350837,
+        39.175914999999996,
+        40.430773
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        45920,
+        46036,
+        46096
+      ],
+      "full": [
+        59460,
+        60720,
+        59284
+      ],
+      "first": [
+        60040,
+        61156,
+        60088
+      ],
+      "groups": [
+        60176,
+        59600,
+        60892
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 46036,
+      "full": 59460,
+      "first": 60088,
+      "groups": 60176
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 54,
+          "ms": 16.978266,
+          "requested_allocation_bytes": 40169061
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 19,
+          "ms": 40.943803,
+          "requested_allocation_bytes": 34840107
+        },
+        "html_bytes": 6612999,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 54,
+          "ms": 18.782466,
+          "requested_allocation_bytes": 40169061
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20,
+          "ms": 40.783702,
+          "requested_allocation_bytes": 34840076
+        },
+        "first_group_bytes": 6612999,
+        "groups": 1,
+        "largest_group_source_bytes": 5000003,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 54,
+          "ms": 17.925166,
+          "requested_allocation_bytes": 40169061
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 4,
+          "ms": 0.005035,
+          "requested_allocation_bytes": 232
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 20,
+          "ms": 41.182338,
+          "requested_allocation_bytes": 34840076
+        },
+        "first_group_bytes": 6612999,
+        "grouped_html_bytes": 6612999,
+        "groups": 1,
+        "largest_group_source_bytes": 5000003,
+        "nodes": 2,
+        "parse": {
+          "allocation_calls": 54,
+          "ms": 17.290608,
+          "requested_allocation_bytes": 40169061
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 4,
+          "ms": 0.00488,
+          "requested_allocation_bytes": 232
+        },
+        "remaining_groups": {
+          "allocation_calls": 0,
+          "ms": 5e-05,
+          "requested_allocation_bytes": 0
+        }
+      }
+    }
+  },
+  {
+    "case": "multibyte-100000-syntax-off",
+    "source_bytes": 100104,
+    "syntax_details": false,
+    "nodes": 7567,
+    "groups": 4,
+    "html_bytes": 201523,
+    "first_group_bytes": 65601,
+    "largest_group_source_bytes": 32710,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 2.947242,
+    "full_ms_p50": 2.976768,
+    "prepare_ms_p50": 0.041472499999999995,
+    "first_render_ms_p50": 0.968152,
+    "first_ready_ms_p50": 1.0100485,
+    "all_groups_ms_p50": 3.0173734999999997,
+    "parse_plus_first_ms_p50": 3.9581225,
+    "parse_plus_full_ms_p50": 5.926387999999999,
+    "timing_samples_ms": {
+      "parse": [
+        3.878908,
+        2.941871,
+        2.945802,
+        2.955791,
+        2.957369,
+        2.948682,
+        2.908974,
+        2.89288
+      ],
+      "full": [
+        3.005473,
+        2.970363,
+        3.00905,
+        3.021558,
+        2.983173,
+        2.910644,
+        2.89851,
+        2.892897
+      ],
+      "first_ready": [
+        1.011557,
+        1.016982,
+        1.011387,
+        1.01164,
+        1.007715,
+        1.00871,
+        0.984738,
+        0.9831179999999999
+      ],
+      "all_groups": [
+        3.018528,
+        3.04243,
+        3.026205,
+        3.0336209999999997,
+        3.016219,
+        3.012394,
+        2.948056,
+        2.975274
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        22124,
+        21972,
+        21908
+      ],
+      "full": [
+        21796,
+        21936,
+        22048
+      ],
+      "first": [
+        21920,
+        22076,
+        22008
+      ],
+      "groups": [
+        21980,
+        22188,
+        22000
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 21972,
+      "full": 21936,
+      "first": 22008,
+      "groups": 22000
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 7567,
+        "parse": {
+          "allocation_calls": 4723,
+          "ms": 4.706043,
+          "requested_allocation_bytes": 4473290
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 22005,
+          "ms": 3.284013,
+          "requested_allocation_bytes": 2155644
+        },
+        "html_bytes": 201523,
+        "nodes": 7567,
+        "parse": {
+          "allocation_calls": 4723,
+          "ms": 4.695209,
+          "requested_allocation_bytes": 4473290
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 7097,
+          "ms": 1.06238,
+          "requested_allocation_bytes": 640768
+        },
+        "first_group_bytes": 65601,
+        "groups": 4,
+        "largest_group_source_bytes": 32710,
+        "nodes": 7567,
+        "parse": {
+          "allocation_calls": 4723,
+          "ms": 4.592219,
+          "requested_allocation_bytes": 4473290
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 47,
+          "ms": 0.047485,
+          "requested_allocation_bytes": 58960
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 7097,
+          "ms": 1.020207,
+          "requested_allocation_bytes": 640768
+        },
+        "first_group_bytes": 65601,
+        "grouped_html_bytes": 201523,
+        "groups": 4,
+        "largest_group_source_bytes": 32710,
+        "nodes": 7567,
+        "parse": {
+          "allocation_calls": 4723,
+          "ms": 4.609311,
+          "requested_allocation_bytes": 4473290
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 47,
+          "ms": 0.047589,
+          "requested_allocation_bytes": 58960
+        },
+        "remaining_groups": {
+          "allocation_calls": 14922,
+          "ms": 2.07978,
+          "requested_allocation_bytes": 1409149
+        }
+      }
+    }
+  },
+  {
+    "case": "multibyte-100000-syntax-on",
+    "source_bytes": 100104,
+    "syntax_details": true,
+    "nodes": 7567,
+    "groups": 4,
+    "html_bytes": 201523,
+    "first_group_bytes": 65601,
+    "largest_group_source_bytes": 32710,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 4.3552,
+    "full_ms_p50": 2.9869114999999997,
+    "prepare_ms_p50": 0.042612,
+    "first_render_ms_p50": 0.9761715,
+    "first_ready_ms_p50": 1.0191035,
+    "all_groups_ms_p50": 3.0266425,
+    "parse_plus_first_ms_p50": 5.3689095,
+    "parse_plus_full_ms_p50": 7.3284205,
+    "timing_samples_ms": {
+      "parse": [
+        4.281747,
+        4.359122,
+        4.356515,
+        4.353885,
+        4.357786,
+        4.359313,
+        3.248212,
+        3.431646
+      ],
+      "full": [
+        2.987768,
+        2.984145,
+        2.9995,
+        2.959689,
+        3.175644,
+        2.986055,
+        3.094575,
+        2.940912
+      ],
+      "first_ready": [
+        1.022554,
+        1.019337,
+        1.0073590000000001,
+        1.02006,
+        1.02489,
+        1.01887,
+        1.013169,
+        1.010297
+      ],
+      "all_groups": [
+        3.036854,
+        3.026777,
+        3.0107440000000003,
+        3.0265079999999998,
+        3.034083,
+        3.027041,
+        3.015974,
+        3.0071190000000003
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        22512,
+        22316,
+        22240
+      ],
+      "full": [
+        22144,
+        22248,
+        22280
+      ],
+      "first": [
+        22308,
+        22312,
+        22168
+      ],
+      "groups": [
+        22156,
+        22216,
+        22352
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 22316,
+      "full": 22248,
+      "first": 22308,
+      "groups": 22216
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 7567,
+        "parse": {
+          "allocation_calls": 4747,
+          "ms": 5.138302,
+          "requested_allocation_bytes": 5138866
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 22005,
+          "ms": 3.326369,
+          "requested_allocation_bytes": 2155644
+        },
+        "html_bytes": 201523,
+        "nodes": 7567,
+        "parse": {
+          "allocation_calls": 4747,
+          "ms": 5.204855,
+          "requested_allocation_bytes": 5138866
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 7099,
+          "ms": 1.064169,
+          "requested_allocation_bytes": 641200
+        },
+        "first_group_bytes": 65601,
+        "groups": 4,
+        "largest_group_source_bytes": 32710,
+        "nodes": 7567,
+        "parse": {
+          "allocation_calls": 4747,
+          "ms": 5.159002,
+          "requested_allocation_bytes": 5138866
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 47,
+          "ms": 0.049345,
+          "requested_allocation_bytes": 58960
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 7099,
+          "ms": 1.048083,
+          "requested_allocation_bytes": 641200
+        },
+        "first_group_bytes": 65601,
+        "grouped_html_bytes": 201523,
+        "groups": 4,
+        "largest_group_source_bytes": 32710,
+        "nodes": 7567,
+        "parse": {
+          "allocation_calls": 4747,
+          "ms": 5.134532,
+          "requested_allocation_bytes": 5138866
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 47,
+          "ms": 0.049774,
+          "requested_allocation_bytes": 58960
+        },
+        "remaining_groups": {
+          "allocation_calls": 14922,
+          "ms": 2.168151,
+          "requested_allocation_bytes": 1409149
+        }
+      }
+    }
+  },
+  {
+    "case": "multibyte-1000000-syntax-off",
+    "source_bytes": 1000008,
+    "syntax_details": false,
+    "nodes": 75583,
+    "groups": 31,
+    "html_bytes": 2048045,
+    "first_group_bytes": 65601,
+    "largest_group_source_bytes": 32710,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 31.669852499999998,
+    "full_ms_p50": 31.032951,
+    "prepare_ms_p50": 1.1535285,
+    "first_render_ms_p50": 0.993616,
+    "first_ready_ms_p50": 2.1452194999999996,
+    "all_groups_ms_p50": 31.772616,
+    "parse_plus_first_ms_p50": 33.7857675,
+    "parse_plus_full_ms_p50": 62.7107135,
+    "timing_samples_ms": {
+      "parse": [
+        34.330009,
+        31.758374,
+        31.685238,
+        31.578503,
+        32.830777,
+        31.654467,
+        31.488184,
+        31.533098
+      ],
+      "full": [
+        31.114062,
+        30.759126,
+        31.218689,
+        30.906408,
+        31.092437,
+        30.627856,
+        34.750344,
+        30.973465
+      ],
+      "first_ready": [
+        2.080145,
+        2.152621,
+        2.078167,
+        2.1459029999999997,
+        2.112323,
+        2.153663,
+        2.177184,
+        2.144536
+      ],
+      "all_groups": [
+        31.504358000000003,
+        31.735306,
+        31.809926,
+        31.837567,
+        31.585273,
+        31.638813999999996,
+        31.880179000000002,
+        31.811784
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        49092,
+        49260,
+        49100
+      ],
+      "full": [
+        49380,
+        49340,
+        49264
+      ],
+      "first": [
+        49188,
+        49180,
+        49044
+      ],
+      "groups": [
+        49300,
+        49352,
+        49116
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 49100,
+      "full": 49340,
+      "first": 49180,
+      "groups": 49300
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 75583,
+        "parse": {
+          "allocation_calls": 46582,
+          "ms": 39.423377,
+          "requested_allocation_bytes": 44513050
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 226062,
+          "ms": 33.25312,
+          "requested_allocation_bytes": 21145964
+        },
+        "html_bytes": 2048045,
+        "nodes": 75583,
+        "parse": {
+          "allocation_calls": 46582,
+          "ms": 39.189998,
+          "requested_allocation_bytes": 44513050
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 7097,
+          "ms": 1.071057,
+          "requested_allocation_bytes": 640768
+        },
+        "first_group_bytes": 65601,
+        "groups": 31,
+        "largest_group_source_bytes": 32710,
+        "nodes": 75583,
+        "parse": {
+          "allocation_calls": 46582,
+          "ms": 39.095082,
+          "requested_allocation_bytes": 44513050
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 299,
+          "ms": 1.12434,
+          "requested_allocation_bytes": 519208
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 7097,
+          "ms": 1.051055,
+          "requested_allocation_bytes": 640768
+        },
+        "first_group_bytes": 65601,
+        "grouped_html_bytes": 2048045,
+        "groups": 31,
+        "largest_group_source_bytes": 32710,
+        "nodes": 75583,
+        "parse": {
+          "allocation_calls": 46582,
+          "ms": 39.205594,
+          "requested_allocation_bytes": 44513050
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 299,
+          "ms": 1.131817,
+          "requested_allocation_bytes": 519208
+        },
+        "remaining_groups": {
+          "allocation_calls": 219298,
+          "ms": 30.175576,
+          "requested_allocation_bytes": 20872637
+        }
+      }
+    }
+  },
+  {
+    "case": "multibyte-1000000-syntax-on",
+    "source_bytes": 1000008,
+    "syntax_details": true,
+    "nodes": 75583,
+    "groups": 31,
+    "html_bytes": 2048045,
+    "first_group_bytes": 65601,
+    "largest_group_source_bytes": 32710,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 34.731536,
+    "full_ms_p50": 30.7058825,
+    "prepare_ms_p50": 1.1033945,
+    "first_render_ms_p50": 0.990748,
+    "first_ready_ms_p50": 2.0949095,
+    "all_groups_ms_p50": 31.560052,
+    "parse_plus_first_ms_p50": 36.8220225,
+    "parse_plus_full_ms_p50": 65.473003,
+    "timing_samples_ms": {
+      "parse": [
+        39.278083,
+        34.743913,
+        34.638966,
+        35.531766,
+        34.719159,
+        34.633088,
+        34.674734,
+        34.746492
+      ],
+      "full": [
+        30.865291,
+        30.575246,
+        30.740703,
+        30.652752,
+        30.884402,
+        30.671062,
+        30.891603,
+        30.570482
+      ],
+      "first_ready": [
+        2.068959,
+        2.210125,
+        2.050767,
+        2.21603,
+        2.057534,
+        2.1259449999999998,
+        2.057125,
+        2.12086
+      ],
+      "all_groups": [
+        31.334007,
+        31.734869,
+        31.555464,
+        31.832031,
+        31.492981,
+        31.751558000000003,
+        31.478944,
+        31.56464
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        51344,
+        51720,
+        51684
+      ],
+      "full": [
+        51784,
+        51996,
+        51716
+      ],
+      "first": [
+        51832,
+        51924,
+        51920
+      ],
+      "groups": [
+        51896,
+        51388,
+        51940
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 51684,
+      "full": 51784,
+      "first": 51920,
+      "groups": 51896
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 75583,
+        "parse": {
+          "allocation_calls": 46609,
+          "ms": 43.622706,
+          "requested_allocation_bytes": 49880482
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 226062,
+          "ms": 33.953546,
+          "requested_allocation_bytes": 21145964
+        },
+        "html_bytes": 2048045,
+        "nodes": 75583,
+        "parse": {
+          "allocation_calls": 46609,
+          "ms": 44.157427,
+          "requested_allocation_bytes": 49880482
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 7099,
+          "ms": 1.040975,
+          "requested_allocation_bytes": 641200
+        },
+        "first_group_bytes": 65601,
+        "groups": 31,
+        "largest_group_source_bytes": 32710,
+        "nodes": 75583,
+        "parse": {
+          "allocation_calls": 46609,
+          "ms": 44.147199,
+          "requested_allocation_bytes": 49880482
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 299,
+          "ms": 1.135736,
+          "requested_allocation_bytes": 519208
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 7099,
+          "ms": 1.045709,
+          "requested_allocation_bytes": 641200
+        },
+        "first_group_bytes": 65601,
+        "grouped_html_bytes": 2048045,
+        "groups": 31,
+        "largest_group_source_bytes": 32710,
+        "nodes": 75583,
+        "parse": {
+          "allocation_calls": 46609,
+          "ms": 44.014317,
+          "requested_allocation_bytes": 49880482
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 299,
+          "ms": 1.133165,
+          "requested_allocation_bytes": 519208
+        },
+        "remaining_groups": {
+          "allocation_calls": 219298,
+          "ms": 30.972676,
+          "requested_allocation_bytes": 20872637
+        }
+      }
+    }
+  },
+  {
+    "case": "multibyte-5000000-syntax-off",
+    "source_bytes": 5000040,
+    "syntax_details": false,
+    "nodes": 377911,
+    "groups": 153,
+    "html_bytes": 10393191,
+    "first_group_bytes": 65601,
+    "largest_group_source_bytes": 32710,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 163.5114545,
+    "full_ms_p50": 154.41917,
+    "prepare_ms_p50": 5.818210499999999,
+    "first_render_ms_p50": 1.062164,
+    "first_ready_ms_p50": 6.8863685,
+    "all_groups_ms_p50": 159.25487399999997,
+    "parse_plus_first_ms_p50": 170.4186445,
+    "parse_plus_full_ms_p50": 318.65972550000004,
+    "timing_samples_ms": {
+      "parse": [
+        170.38074,
+        163.416918,
+        163.666095,
+        162.857053,
+        163.056257,
+        163.56767,
+        163.455239,
+        163.73631
+      ],
+      "full": [
+        153.600437,
+        156.123877,
+        154.112561,
+        154.477208,
+        154.361132,
+        156.084135,
+        153.660087,
+        156.969186
+      ],
+      "first_ready": [
+        6.793422,
+        6.9507769999999995,
+        6.803499,
+        6.967759,
+        6.802822,
+        6.954064,
+        6.82196,
+        6.973616
+      ],
+      "all_groups": [
+        159.263093,
+        160.999729,
+        159.24665499999998,
+        160.870264,
+        158.467658,
+        162.000934,
+        158.342167,
+        158.698053
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        166728,
+        165828,
+        166636
+      ],
+      "full": [
+        165700,
+        166868,
+        165904
+      ],
+      "first": [
+        166808,
+        166760,
+        167012
+      ],
+      "groups": [
+        165784,
+        165824,
+        165836
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 166636,
+      "full": 165904,
+      "first": 166808,
+      "groups": 165824
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 377911,
+        "parse": {
+          "allocation_calls": 232632,
+          "ms": 179.062794,
+          "requested_allocation_bytes": 222239258
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 1109796,
+          "ms": 163.179178,
+          "requested_allocation_bytes": 96565436
+        },
+        "html_bytes": 10393191,
+        "nodes": 377911,
+        "parse": {
+          "allocation_calls": 232632,
+          "ms": 183.008699,
+          "requested_allocation_bytes": 222239258
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 7097,
+          "ms": 1.162394,
+          "requested_allocation_bytes": 641760
+        },
+        "first_group_bytes": 65601,
+        "groups": 153,
+        "largest_group_source_bytes": 32710,
+        "nodes": 377911,
+        "parse": {
+          "allocation_calls": 232632,
+          "ms": 182.567789,
+          "requested_allocation_bytes": 222239258
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1403,
+          "ms": 6.324517,
+          "requested_allocation_bytes": 2343816
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 7097,
+          "ms": 1.251515,
+          "requested_allocation_bytes": 641760
+        },
+        "first_group_bytes": 65601,
+        "grouped_html_bytes": 10393191,
+        "groups": 153,
+        "largest_group_source_bytes": 32710,
+        "nodes": 377911,
+        "parse": {
+          "allocation_calls": 232632,
+          "ms": 178.968192,
+          "requested_allocation_bytes": 222239258
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1403,
+          "ms": 6.320424,
+          "requested_allocation_bytes": 2343816
+        },
+        "remaining_groups": {
+          "allocation_calls": 1104613,
+          "ms": 161.073528,
+          "requested_allocation_bytes": 107963773
+        }
+      }
+    }
+  },
+  {
+    "case": "multibyte-5000000-syntax-on",
+    "source_bytes": 5000040,
+    "syntax_details": true,
+    "nodes": 377911,
+    "groups": 153,
+    "html_bytes": 10393191,
+    "first_group_bytes": 65601,
+    "largest_group_source_bytes": 32710,
+    "appendix_groups": 0,
+    "plan_mode": "structural",
+    "parse_ms_p50": 182.2412015,
+    "full_ms_p50": 155.1378735,
+    "prepare_ms_p50": 5.8847404999999995,
+    "first_render_ms_p50": 1.098883,
+    "first_ready_ms_p50": 6.9843665,
+    "all_groups_ms_p50": 159.8391765,
+    "parse_plus_first_ms_p50": 189.22584799999998,
+    "parse_plus_full_ms_p50": 337.40702749999997,
+    "timing_samples_ms": {
+      "parse": [
+        190.605942,
+        181.628641,
+        182.444284,
+        182.924195,
+        181.598021,
+        181.316365,
+        186.767026,
+        182.038119
+      ],
+      "full": [
+        155.474409,
+        154.455305,
+        154.888665,
+        155.387082,
+        154.183443,
+        154.617438,
+        155.407456,
+        155.442987
+      ],
+      "first_ready": [
+        6.784008,
+        7.152635,
+        6.788128,
+        7.321443,
+        6.805879,
+        7.162039,
+        6.816098,
+        7.181165
+      ],
+      "all_groups": [
+        160.450654,
+        159.419911,
+        161.44916,
+        159.584676,
+        160.595041,
+        159.458891,
+        159.748579,
+        159.92977399999998
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        178448,
+        178164,
+        178428
+      ],
+      "full": [
+        178392,
+        178224,
+        178396
+      ],
+      "first": [
+        178392,
+        178140,
+        178168
+      ],
+      "groups": [
+        178328,
+        178236,
+        178392
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 178428,
+      "full": 178392,
+      "first": 178168,
+      "groups": 178328
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 377911,
+        "parse": {
+          "allocation_calls": 232662,
+          "ms": 201.488649,
+          "requested_allocation_bytes": 264437906
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 1109796,
+          "ms": 163.564738,
+          "requested_allocation_bytes": 96565436
+        },
+        "html_bytes": 10393191,
+        "nodes": 377911,
+        "parse": {
+          "allocation_calls": 232662,
+          "ms": 201.484945,
+          "requested_allocation_bytes": 264437906
+        }
+      },
+      "first": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 7099,
+          "ms": 1.232251,
+          "requested_allocation_bytes": 642192
+        },
+        "first_group_bytes": 65601,
+        "groups": 153,
+        "largest_group_source_bytes": 32710,
+        "nodes": 377911,
+        "parse": {
+          "allocation_calls": 232662,
+          "ms": 199.529497,
+          "requested_allocation_bytes": 264437906
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1403,
+          "ms": 6.317726,
+          "requested_allocation_bytes": 2343816
+        }
+      },
+      "groups": {
+        "appendix_groups": 0,
+        "first": {
+          "allocation_calls": 7099,
+          "ms": 1.272609,
+          "requested_allocation_bytes": 642192
+        },
+        "first_group_bytes": 65601,
+        "grouped_html_bytes": 10393191,
+        "groups": 153,
+        "largest_group_source_bytes": 32710,
+        "nodes": 377911,
+        "parse": {
+          "allocation_calls": 232662,
+          "ms": 203.386394,
+          "requested_allocation_bytes": 264437906
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 1403,
+          "ms": 6.423374,
+          "requested_allocation_bytes": 2343816
+        },
+        "remaining_groups": {
+          "allocation_calls": 1104613,
+          "ms": 155.555484,
+          "requested_allocation_bytes": 107963773
+        }
+      }
+    }
+  },
+  {
+    "case": "extensions-100000-syntax-off",
+    "source_bytes": 100106,
+    "syntax_details": false,
+    "nodes": 13444,
+    "groups": 5,
+    "html_bytes": 519909,
+    "first_group_bytes": 123307,
+    "largest_group_source_bytes": 100106,
+    "appendix_groups": 1,
+    "plan_mode": "structural",
+    "parse_ms_p50": 25.7829975,
+    "full_ms_p50": 10.792459000000001,
+    "prepare_ms_p50": 2.796209,
+    "first_render_ms_p50": 1.774547,
+    "first_ready_ms_p50": 4.5643195,
+    "all_groups_ms_p50": 10.800927999999999,
+    "parse_plus_first_ms_p50": 30.355331999999997,
+    "parse_plus_full_ms_p50": 36.674445500000004,
+    "timing_samples_ms": {
+      "parse": [
+        25.841417,
+        25.724578,
+        25.544127,
+        25.535693,
+        24.988375,
+        25.987492,
+        25.841621,
+        25.875661
+      ],
+      "full": [
+        10.808968,
+        11.234069,
+        10.755314,
+        10.668118,
+        10.74107,
+        10.77595,
+        10.856885,
+        10.854111
+      ],
+      "first_ready": [
+        4.5947700000000005,
+        4.591488,
+        4.557944,
+        4.5657,
+        4.550204,
+        4.592472,
+        4.552977,
+        4.562939
+      ],
+      "all_groups": [
+        10.829303,
+        10.783491999999999,
+        10.753176,
+        10.756744,
+        10.825558000000001,
+        10.818364,
+        10.743457,
+        10.898944
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        26816,
+        26952,
+        27048
+      ],
+      "full": [
+        26800,
+        26872,
+        26664
+      ],
+      "first": [
+        26840,
+        26172,
+        26848
+      ],
+      "groups": [
+        27020,
+        26660,
+        26792
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 26952,
+      "full": 26800,
+      "first": 26840,
+      "groups": 26792
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 13444,
+        "parse": {
+          "allocation_calls": 93404,
+          "ms": 27.753667,
+          "requested_allocation_bytes": 19554969
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 75726,
+          "ms": 11.902397,
+          "requested_allocation_bytes": 7987501
+        },
+        "html_bytes": 519909,
+        "nodes": 13444,
+        "parse": {
+          "allocation_calls": 93405,
+          "ms": 27.746853,
+          "requested_allocation_bytes": 19555017
+        }
+      },
+      "first": {
+        "appendix_groups": 1,
+        "first": {
+          "allocation_calls": 11611,
+          "ms": 2.030683,
+          "requested_allocation_bytes": 1176176
+        },
+        "first_group_bytes": 123307,
+        "groups": 5,
+        "largest_group_source_bytes": 100106,
+        "nodes": 13444,
+        "parse": {
+          "allocation_calls": 93404,
+          "ms": 27.634054,
+          "requested_allocation_bytes": 19554969
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 20055,
+          "ms": 2.94747,
+          "requested_allocation_bytes": 1691167
+        }
+      },
+      "groups": {
+        "appendix_groups": 1,
+        "first": {
+          "allocation_calls": 11611,
+          "ms": 1.987756,
+          "requested_allocation_bytes": 1176176
+        },
+        "first_group_bytes": 123307,
+        "grouped_html_bytes": 519909,
+        "groups": 5,
+        "largest_group_source_bytes": 100106,
+        "nodes": 13444,
+        "parse": {
+          "allocation_calls": 93404,
+          "ms": 27.709844,
+          "requested_allocation_bytes": 19554969
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 20055,
+          "ms": 2.960299,
+          "requested_allocation_bytes": 1691167
+        },
+        "remaining_groups": {
+          "allocation_calls": 44112,
+          "ms": 6.526652,
+          "requested_allocation_bytes": 4332166
+        }
+      }
+    }
+  },
+  {
+    "case": "extensions-100000-syntax-on",
+    "source_bytes": 100106,
+    "syntax_details": true,
+    "nodes": 13444,
+    "groups": 5,
+    "html_bytes": 519909,
+    "first_group_bytes": 123307,
+    "largest_group_source_bytes": 100106,
+    "appendix_groups": 1,
+    "plan_mode": "structural",
+    "parse_ms_p50": 47.009617500000004,
+    "full_ms_p50": 11.2455295,
+    "prepare_ms_p50": 2.8584125,
+    "first_render_ms_p50": 1.8551945,
+    "first_ready_ms_p50": 4.7109380000000005,
+    "all_groups_ms_p50": 11.1739105,
+    "parse_plus_first_ms_p50": 51.731443,
+    "parse_plus_full_ms_p50": 58.2259155,
+    "timing_samples_ms": {
+      "parse": [
+        46.98999,
+        46.877476,
+        48.710127,
+        47.073626,
+        46.993191,
+        46.963605,
+        47.077894,
+        47.026044
+      ],
+      "full": [
+        11.248576,
+        11.105324,
+        11.340302,
+        11.139639,
+        11.262148,
+        11.242483,
+        11.324918,
+        11.077247
+      ],
+      "first_ready": [
+        4.637182,
+        4.773412,
+        4.671245,
+        4.750631,
+        4.654571,
+        4.768214,
+        4.653173000000001,
+        4.799784
+      ],
+      "all_groups": [
+        11.00839,
+        11.16865,
+        11.058606000000001,
+        11.212136000000001,
+        11.045587,
+        11.179171,
+        11.219521,
+        11.248055
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        30920,
+        30604,
+        30188
+      ],
+      "full": [
+        30504,
+        30096,
+        30064
+      ],
+      "first": [
+        30560,
+        30868,
+        30112
+      ],
+      "groups": [
+        30192,
+        30488,
+        29956
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 30604,
+      "full": 30096,
+      "first": 30560,
+      "groups": 30192
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 13444,
+        "parse": {
+          "allocation_calls": 93537,
+          "ms": 52.407884,
+          "requested_allocation_bytes": 34028593
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 75728,
+          "ms": 11.616887,
+          "requested_allocation_bytes": 7987485
+        },
+        "html_bytes": 519909,
+        "nodes": 13444,
+        "parse": {
+          "allocation_calls": 93537,
+          "ms": 52.342008,
+          "requested_allocation_bytes": 34028593
+        }
+      },
+      "first": {
+        "appendix_groups": 1,
+        "first": {
+          "allocation_calls": 11609,
+          "ms": 1.956421,
+          "requested_allocation_bytes": 1192264
+        },
+        "first_group_bytes": 123307,
+        "groups": 5,
+        "largest_group_source_bytes": 100106,
+        "nodes": 13444,
+        "parse": {
+          "allocation_calls": 93537,
+          "ms": 52.141134,
+          "requested_allocation_bytes": 34028593
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 20059,
+          "ms": 3.072597,
+          "requested_allocation_bytes": 1691399
+        }
+      },
+      "groups": {
+        "appendix_groups": 1,
+        "first": {
+          "allocation_calls": 11609,
+          "ms": 1.978651,
+          "requested_allocation_bytes": 1175912
+        },
+        "first_group_bytes": 123307,
+        "grouped_html_bytes": 519909,
+        "groups": 5,
+        "largest_group_source_bytes": 100106,
+        "nodes": 13444,
+        "parse": {
+          "allocation_calls": 93537,
+          "ms": 54.287524,
+          "requested_allocation_bytes": 34028593
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 20057,
+          "ms": 3.11733,
+          "requested_allocation_bytes": 1691303
+        },
+        "remaining_groups": {
+          "allocation_calls": 44112,
+          "ms": 6.516284,
+          "requested_allocation_bytes": 4332166
+        }
+      }
+    }
+  },
+  {
+    "case": "extensions-1000000-syntax-off",
+    "source_bytes": 1000152,
+    "syntax_details": false,
+    "nodes": 132966,
+    "groups": 32,
+    "html_bytes": 5249079,
+    "first_group_bytes": 123307,
+    "largest_group_source_bytes": 1000152,
+    "appendix_groups": 1,
+    "plan_mode": "structural",
+    "parse_ms_p50": 268.7803375,
+    "full_ms_p50": 117.62200899999999,
+    "prepare_ms_p50": 35.2544125,
+    "first_render_ms_p50": 1.882416,
+    "first_ready_ms_p50": 37.148697999999996,
+    "all_groups_ms_p50": 117.8088625,
+    "parse_plus_first_ms_p50": 305.895669,
+    "parse_plus_full_ms_p50": 386.8769265,
+    "timing_samples_ms": {
+      "parse": [
+        271.422611,
+        268.218422,
+        260.694073,
+        266.500317,
+        268.620594,
+        270.401889,
+        268.940081,
+        269.710202
+      ],
+      "full": [
+        117.695681,
+        117.321372,
+        118.061003,
+        117.576906,
+        119.489971,
+        117.292999,
+        117.667112,
+        117.436458
+      ],
+      "first_ready": [
+        37.843713,
+        36.969442,
+        37.327954,
+        36.502369,
+        37.563449,
+        36.605066,
+        36.667214,
+        37.727136
+      ],
+      "all_groups": [
+        119.024685,
+        118.047839,
+        116.75999699999998,
+        117.569886,
+        118.489777,
+        118.57097200000001,
+        116.54571,
+        117.423347
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        89680,
+        87624,
+        87684
+      ],
+      "full": [
+        89836,
+        89660,
+        87572
+      ],
+      "first": [
+        87728,
+        89536,
+        89576
+      ],
+      "groups": [
+        89784,
+        89768,
+        89556
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 87684,
+      "full": 89660,
+      "first": 89536,
+      "groups": 89768
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 132966,
+        "parse": {
+          "allocation_calls": 920916,
+          "ms": 300.159668,
+          "requested_allocation_bytes": 188518570
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 755873,
+          "ms": 128.130194,
+          "requested_allocation_bytes": 79695375
+        },
+        "html_bytes": 5249079,
+        "nodes": 132966,
+        "parse": {
+          "allocation_calls": 920916,
+          "ms": 291.764604,
+          "requested_allocation_bytes": 188518570
+        }
+      },
+      "first": {
+        "appendix_groups": 1,
+        "first": {
+          "allocation_calls": 11611,
+          "ms": 2.076852,
+          "requested_allocation_bytes": 1176176
+        },
+        "first_group_bytes": 123307,
+        "groups": 32,
+        "largest_group_source_bytes": 1000152,
+        "nodes": 132966,
+        "parse": {
+          "allocation_calls": 920916,
+          "ms": 289.986239,
+          "requested_allocation_bytes": 188518570
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 197309,
+          "ms": 37.595767,
+          "requested_allocation_bytes": 15978523
+        }
+      },
+      "groups": {
+        "appendix_groups": 1,
+        "first": {
+          "allocation_calls": 11611,
+          "ms": 2.156297,
+          "requested_allocation_bytes": 1176176
+        },
+        "first_group_bytes": 123307,
+        "grouped_html_bytes": 5249079,
+        "groups": 32,
+        "largest_group_source_bytes": 1000152,
+        "nodes": 132966,
+        "parse": {
+          "allocation_calls": 920916,
+          "ms": 296.87218,
+          "requested_allocation_bytes": 188518570
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 197305,
+          "ms": 35.798951,
+          "requested_allocation_bytes": 15978339
+        },
+        "remaining_groups": {
+          "allocation_calls": 547578,
+          "ms": 83.701226,
+          "requested_allocation_bytes": 54042556
+        }
+      }
+    }
+  },
+  {
+    "case": "extensions-1000000-syntax-on",
+    "source_bytes": 1000152,
+    "syntax_details": true,
+    "nodes": 132966,
+    "groups": 32,
+    "html_bytes": 5249079,
+    "first_group_bytes": 123307,
+    "largest_group_source_bytes": 1000152,
+    "appendix_groups": 1,
+    "plan_mode": "structural",
+    "parse_ms_p50": 518.8084200000001,
+    "full_ms_p50": 121.0077045,
+    "prepare_ms_p50": 35.804342500000004,
+    "first_render_ms_p50": 1.9627515,
+    "first_ready_ms_p50": 37.9938055,
+    "all_groups_ms_p50": 121.1956025,
+    "parse_plus_first_ms_p50": 556.788738,
+    "parse_plus_full_ms_p50": 639.444057,
+    "timing_samples_ms": {
+      "parse": [
+        520.702221,
+        520.068762,
+        520.237844,
+        518.25314,
+        519.3637,
+        515.637862,
+        517.025272,
+        516.996066
+      ],
+      "full": [
+        123.134322,
+        119.230255,
+        121.367998,
+        120.246716,
+        120.225397,
+        124.707149,
+        120.813568,
+        121.201841
+      ],
+      "first_ready": [
+        37.439828,
+        37.982399,
+        37.31649,
+        38.024864,
+        37.022375,
+        38.005212,
+        40.166129000000005,
+        38.158519
+      ],
+      "all_groups": [
+        119.908753,
+        120.906262,
+        123.952706,
+        121.31783800000001,
+        120.294912,
+        136.138765,
+        123.725436,
+        121.073367
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        120684,
+        121084,
+        121440
+      ],
+      "full": [
+        122264,
+        121496,
+        122460
+      ],
+      "first": [
+        121132,
+        121220,
+        122172
+      ],
+      "groups": [
+        122072,
+        121616,
+        120772
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 121084,
+      "full": 122264,
+      "first": 121220,
+      "groups": 121616
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 132966,
+        "parse": {
+          "allocation_calls": 921073,
+          "ms": 545.897632,
+          "requested_allocation_bytes": 304123458
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 755871,
+          "ms": 122.488047,
+          "requested_allocation_bytes": 79695167
+        },
+        "html_bytes": 5249079,
+        "nodes": 132966,
+        "parse": {
+          "allocation_calls": 921073,
+          "ms": 540.628271,
+          "requested_allocation_bytes": 304123458
+        }
+      },
+      "first": {
+        "appendix_groups": 1,
+        "first": {
+          "allocation_calls": 11609,
+          "ms": 2.117059,
+          "requested_allocation_bytes": 1175912
+        },
+        "first_group_bytes": 123307,
+        "groups": 32,
+        "largest_group_source_bytes": 1000152,
+        "nodes": 132966,
+        "parse": {
+          "allocation_calls": 921073,
+          "ms": 534.842731,
+          "requested_allocation_bytes": 304123458
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 197321,
+          "ms": 37.42121,
+          "requested_allocation_bytes": 15979147
+        }
+      },
+      "groups": {
+        "appendix_groups": 1,
+        "first": {
+          "allocation_calls": 11609,
+          "ms": 2.146709,
+          "requested_allocation_bytes": 1175912
+        },
+        "first_group_bytes": 123307,
+        "grouped_html_bytes": 5249079,
+        "groups": 32,
+        "largest_group_source_bytes": 1000152,
+        "nodes": 132966,
+        "parse": {
+          "allocation_calls": 921073,
+          "ms": 543.140362,
+          "requested_allocation_bytes": 304123458
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 197319,
+          "ms": 37.170566,
+          "requested_allocation_bytes": 15979051
+        },
+        "remaining_groups": {
+          "allocation_calls": 547578,
+          "ms": 82.897801,
+          "requested_allocation_bytes": 54042556
+        }
+      }
+    }
+  },
+  {
+    "case": "extensions-5000000-syntax-off",
+    "source_bytes": 5000078,
+    "syntax_details": false,
+    "nodes": 659492,
+    "groups": 154,
+    "html_bytes": 26463068,
+    "first_group_bytes": 123307,
+    "largest_group_source_bytes": 5000078,
+    "appendix_groups": 1,
+    "plan_mode": "structural",
+    "parse_ms_p50": 1385.9293815,
+    "full_ms_p50": 614.709415,
+    "prepare_ms_p50": 192.3225315,
+    "first_render_ms_p50": 2.4743934999999997,
+    "first_ready_ms_p50": 194.805241,
+    "all_groups_ms_p50": 608.8874364999999,
+    "parse_plus_first_ms_p50": 1581.6698515,
+    "parse_plus_full_ms_p50": 1998.9856,
+    "timing_samples_ms": {
+      "parse": [
+        1388.707234,
+        1390.946216,
+        1382.831202,
+        1389.008883,
+        1386.005239,
+        1385.3607729999999,
+        1384.542889,
+        1385.853524
+      ],
+      "full": [
+        615.48948,
+        606.995154,
+        615.849875,
+        616.098642,
+        617.236751,
+        613.92935,
+        605.098596,
+        606.425724
+      ],
+      "first_ready": [
+        194.082854,
+        194.471113,
+        195.061634,
+        194.956931,
+        194.653551,
+        196.532793,
+        193.908727,
+        195.592613
+      ],
+      "all_groups": [
+        605.576659,
+        612.979971,
+        608.485182,
+        608.824669,
+        608.950204,
+        607.993886,
+        616.975704,
+        615.166737
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        355220,
+        355228,
+        355244
+      ],
+      "full": [
+        355272,
+        355288,
+        353208
+      ],
+      "first": [
+        355224,
+        355088,
+        353092
+      ],
+      "groups": [
+        355240,
+        353288,
+        355076
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 355228,
+      "full": 355272,
+      "first": 355088,
+      "groups": 355076
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 659492,
+        "parse": {
+          "allocation_calls": 4566138,
+          "ms": 1426.470529,
+          "requested_allocation_bytes": 924531607
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 3722659,
+          "ms": 624.994385,
+          "requested_allocation_bytes": 399555786
+        },
+        "html_bytes": 26463068,
+        "nodes": 659492,
+        "parse": {
+          "allocation_calls": 4566138,
+          "ms": 1451.921585,
+          "requested_allocation_bytes": 924531607
+        }
+      },
+      "first": {
+        "appendix_groups": 1,
+        "first": {
+          "allocation_calls": 11611,
+          "ms": 2.62434,
+          "requested_allocation_bytes": 1176176
+        },
+        "first_group_bytes": 123307,
+        "groups": 154,
+        "largest_group_source_bytes": 5000078,
+        "nodes": 659492,
+        "parse": {
+          "allocation_calls": 4566138,
+          "ms": 1431.714518,
+          "requested_allocation_bytes": 924531607
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 978083,
+          "ms": 196.56574,
+          "requested_allocation_bytes": 80587931
+        }
+      },
+      "groups": {
+        "appendix_groups": 1,
+        "first": {
+          "allocation_calls": 11611,
+          "ms": 2.73993,
+          "requested_allocation_bytes": 1176176
+        },
+        "first_group_bytes": 123307,
+        "grouped_html_bytes": 26463068,
+        "groups": 154,
+        "largest_group_source_bytes": 5000078,
+        "nodes": 659492,
+        "parse": {
+          "allocation_calls": 4566138,
+          "ms": 1426.822715,
+          "requested_allocation_bytes": 924531607
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 978083,
+          "ms": 194.668729,
+          "requested_allocation_bytes": 80587931
+        },
+        "remaining_groups": {
+          "allocation_calls": 2736152,
+          "ms": 429.022249,
+          "requested_allocation_bytes": 269603671
+        }
+      }
+    }
+  },
+  {
+    "case": "extensions-5000000-syntax-on",
+    "source_bytes": 5000078,
+    "syntax_details": true,
+    "nodes": 659492,
+    "groups": 154,
+    "html_bytes": 26463068,
+    "first_group_bytes": 123307,
+    "largest_group_source_bytes": 5000078,
+    "appendix_groups": 1,
+    "plan_mode": "structural",
+    "parse_ms_p50": 2869.233091,
+    "full_ms_p50": 613.385164,
+    "prepare_ms_p50": 192.808719,
+    "first_render_ms_p50": 2.4904885,
+    "first_ready_ms_p50": 195.19917199999998,
+    "all_groups_ms_p50": 615.6759059999999,
+    "parse_plus_first_ms_p50": 3067.0102184999996,
+    "parse_plus_full_ms_p50": 3483.9480974999997,
+    "timing_samples_ms": {
+      "parse": [
+        2882.839509,
+        2869.0722690000002,
+        2885.859687,
+        2872.221926,
+        2864.135112,
+        2869.393913,
+        2861.37306,
+        2858.315136
+      ],
+      "full": [
+        623.707311,
+        612.985422,
+        623.106821,
+        613.784906,
+        621.703392,
+        607.362864,
+        609.832123,
+        611.653161
+      ],
+      "first_ready": [
+        194.50434199999998,
+        199.06588299999999,
+        195.104758,
+        195.29358599999998,
+        193.06595000000002,
+        197.111012,
+        192.22296400000002,
+        197.526398
+      ],
+      "all_groups": [
+        613.634672,
+        624.6338440000001,
+        612.246024,
+        615.0767539999999,
+        614.386129,
+        620.224401,
+        616.2750580000001,
+        621.353294
+      ]
+    },
+    "rss_kib": {
+      "parse": [
+        497516,
+        495876,
+        495340
+      ],
+      "full": [
+        496884,
+        496172,
+        495356
+      ],
+      "first": [
+        495048,
+        496236,
+        496436
+      ],
+      "groups": [
+        496468,
+        495236,
+        495036
+      ]
+    },
+    "rss_kib_p50": {
+      "parse": 495876,
+      "full": 496172,
+      "first": 496236,
+      "groups": 495236
+    },
+    "allocation_stage_samples": {
+      "parse": {
+        "nodes": 659492,
+        "parse": {
+          "allocation_calls": 4566311,
+          "ms": 2918.79916,
+          "requested_allocation_bytes": 1386724527
+        }
+      },
+      "full": {
+        "full": {
+          "allocation_calls": 3722680,
+          "ms": 627.506923,
+          "requested_allocation_bytes": 399556666
+        },
+        "html_bytes": 26463068,
+        "nodes": 659492,
+        "parse": {
+          "allocation_calls": 4566311,
+          "ms": 2912.577574,
+          "requested_allocation_bytes": 1386724527
+        }
+      },
+      "first": {
+        "appendix_groups": 1,
+        "first": {
+          "allocation_calls": 11609,
+          "ms": 2.669497,
+          "requested_allocation_bytes": 1175912
+        },
+        "first_group_bytes": 123307,
+        "groups": 154,
+        "largest_group_source_bytes": 5000078,
+        "nodes": 659492,
+        "parse": {
+          "allocation_calls": 4566311,
+          "ms": 2922.084477,
+          "requested_allocation_bytes": 1386724527
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 978115,
+          "ms": 200.042348,
+          "requested_allocation_bytes": 80589515
+        }
+      },
+      "groups": {
+        "appendix_groups": 1,
+        "first": {
+          "allocation_calls": 11609,
+          "ms": 2.636539,
+          "requested_allocation_bytes": 1175912
+        },
+        "first_group_bytes": 123307,
+        "grouped_html_bytes": 26463068,
+        "groups": 154,
+        "largest_group_source_bytes": 5000078,
+        "nodes": 659492,
+        "parse": {
+          "allocation_calls": 4566311,
+          "ms": 2940.415033,
+          "requested_allocation_bytes": 1386724527
+        },
+        "plan_mode": "structural",
+        "prepare": {
+          "allocation_calls": 978106,
+          "ms": 197.479058,
+          "requested_allocation_bytes": 80589083
+        },
+        "remaining_groups": {
+          "allocation_calls": 2736152,
+          "ms": 420.083948,
+          "requested_allocation_bytes": 269603671
+        }
+      }
+    }
+  }
+]

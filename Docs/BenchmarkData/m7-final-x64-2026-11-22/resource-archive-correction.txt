@@ -1,0 +1,1 @@
+The matrix completed all 42 cases. The initial archive checker exited 2 because run-linux-matrix.py emits raw directories, receipt and summary, but not the archive/checksum/CSV wrapper required by check_progressive_html_budget.py. Added that wrapper from unchanged raw records; no measurement was repeated.

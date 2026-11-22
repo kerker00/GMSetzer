@@ -32,7 +32,7 @@ first HTML in about half the parse-plus-full-output time on that host. Full pars
 output; giant blocks remain indivisible and no general peak-memory reduction
 is established. The [0.6.0 installation](#installation) includes progressive output.
 
-Next is **M7: general speed and hardening**, beginning with reproducible
+Current work is **M7: general speed and hardening**, with reproducible
 adversarial/mutation coverage and a measured investigation of remaining costs.
 API/DocC/1.0 completion stays **M8**. Full benchmark and long fuzzing execution
 follow the existing approval requirement.
@@ -95,8 +95,13 @@ requested bytes by **53%** on M2. Validating C takes 5.251 ms; this is still
 1.96× C time, with different source-coordinate services. All **252 Mac library
 tests**, 12 Release tool tests, the full AddressSanitizer suite and a bounded
 8,192-parse ASan mutation run pass. This is not coverage-guided fuzzing.
-Current x64/full-resource/minimum-compiler results are tracked in the report;
-M7 acceptance and general C parity remain open.
+The [current x64/resource report](Docs/Validation/M7/final-x64-2026-11-22.md)
+records passing native suites/tools, all 36/69/72 benchmark cases and a fresh
+42-case progressive matrix with matching runtime/tool hashes. Swift 6.2 CI
+passes on macOS/Linux. A separate [coverage-guided campaign](Docs/Validation/M7/fuzz-2026-11-22.md)
+completes 3,510 units without failure using the existing Linux Clang runtime.
+See [candidate readiness](Docs/M7Readiness.md): owner review/acceptance and
+general C parity remain open; there is no 0.7 release yet.
 
 Merged PR #17 (`0434ff5`) adds an optional English/German lookup for native
 findings and fix titles on `main`, with a documented

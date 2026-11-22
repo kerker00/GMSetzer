@@ -29,3 +29,30 @@ This is bounded deterministic mutation, **not coverage-guided libFuzzer**.
 It does not prove larger-input scaling, absence of all memory errors or every
 extension combination. See [M7 validation](../../Docs/Validation/M7/utf8-2026-11-22.md)
 for actual toolchain capabilities and retained evidence.
+
+## Separate coverage-guided Linux harness
+
+`Fuzzing/ParserFuzz.swift` exports `LLVMFuzzerTestOneInput` and checks the same
+four profile pairs, document/source invariants and progressive HTML equality.
+It is outside the CLI target. On an existing native Linux host with Swift,
+Clang, `nm` and installed Clang fuzzer/UBSan archives:
+
+```sh
+python3 -I Tools/ParserStressProbe/Fuzzing/run-linux.py \
+  --output /tmp/gmsetzer-parser-fuzz --seconds 180
+```
+
+The output directory must be new. The runner installs nothing, records source,
+runtime and executable hashes, builds Debug library objects with Swift fuzzer
+instrumentation, and links the existing system archives separately. This avoids
+depending on Swift's packaged sanitizer-linker archives. It checks library
+coverage symbols and libFuzzer's counters/executed-unit report; a successful
+link alone is not a campaign result. Compatibility depends on the installed
+compiler/runtime pair and must be established by actual execution.
+
+The campaign uses seven authored seeds, seed `7348327`, a 4,096-byte maximum,
+five-second per-input timeout, 2 GiB RSS limit and a whole-process time bound.
+Failures and crash inputs remain in the output directory. Assertions stay
+enabled. This runner enables coverage-guided fuzzing **without ASan**; the
+separate Mac ASan evidence is not attributed to this Linux executable. Obtain
+owner approval for long runs and do not compete with timings on that host.

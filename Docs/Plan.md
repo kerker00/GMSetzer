@@ -65,8 +65,11 @@ At compatible malformed 256 KiB, Mac time is **12.812 → 10.297 ms (−19.63%)*
 gross requested bytes fall **53.05%**, and validating C takes 5.251 ms (1.96×).
 All 252 Mac Debug/Release/AddressSanitizer tests, 12 Release tool tests and
 8,192 bounded ASan stress parses pass; all 1,324 public spec snapshots match.
-This is not coverage-guided fuzzing. Current x64/full-resource/minimum-compiler
-evidence is tracked in the report; M7 remains in progress.
+This ASan mutation run is not coverage-guided fuzzing. The later
+[current x64/resource/minimum-compiler checks](Validation/M7/final-x64-2026-11-22.md)
+pass, and a separate [coverage-guided campaign](Validation/M7/fuzz-2026-11-22.md)
+completes 3,510 units without failure. The [candidate](M7Readiness.md) is ready
+for owner review; M7 remains unmerged and unaccepted.
 
 The M4 follow-ups are merged in PR #15 (`1473d49`). The source-only v0.4.0
 release preparation and macOS/Linux CI are merged in PR #16 (`6a0eb8e`);
@@ -534,7 +537,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | M4 | GFM extensions including tag filtering; resolve version differences explicitly | 672/672 pinned GFM corpus, including task lists; independent extension switch tests pass | 4–6 | **merged in PR #14 (`e163e6f`)**: tables, task lists, strikethrough, extended autolinks and tag filter as built-in payloads (owner decision 1A); 672/672 GFM and 652/652 CommonMark; generated documents agree with cmark-gfm. Library and reference tests pass on macOS; GFM parses at 0.88× cmark-gfm and both budget checks pass. Swift 6.2/Linux not re-run. See [M4GFM](M4GFM.md) |
 | M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Declared extension fixtures and profile/combination tests pass | 5–8 | **first step merged in PR #19 (`4b0f105`)**: raw YAML/TOML front matter; 153 tests pass on both hosts and macOS/Swift 6.2. PR/main CI pass on both hosts. Named footnotes merged in PR #20 (`a6a2da6`), with 178 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on macOS/Linux. Opaque inline/display/fenced TeX is merged in PR #21 (`6f166b7`), with 202 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on both hosts. Alerts and callouts merged in PR #22 (`c9543fe`); all 227 local tests pass on both hosts and macOS/Swift 6.2, and PR/main CI pass on both hosts. **Functional M5 accepted** against the declared extension/profile/combination criterion; see [M5Acceptance](M5Acceptance.md). See [FrontMatter](FrontMatter.md), [Footnotes](Footnotes.md), [Math](Math.md) and [Admonitions](Admonitions.md) |
 | M6 / 0.6 development | Progressive HTML: prepared complete-document context, structural groups and bounded/on-demand emission | Plan 10.1 gates pass | Accepted; no remaining implementation estimate | **merged in PR #24 (`a8a0351`) and accepted**: exact grouped/full output, explicit fallbacks, source/cancellation/M5 contracts, 42-case measurements with matching runtime hashes and reviewed budgets; merged-main macOS/Swift 6.2.3 and Linux/Swift 6.2 CI pass 242 Swift tests, optimized builds and 31 Python tests. See [M6Acceptance](M6Acceptance.md) |
-| M7 | General speed and hardening: selected-extension measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met; robustness and allocation evidence recorded | previous 5–8; re-estimate after M6 | **in progress on `feature/m7-hardening`**. Historical Mac/Pi/x64 and 69-case baselines retain their identities. Measured scratch-buffer, token-arena, inline-capacity and [UTF-8](Validation/M7/utf8-2026-11-22.md) changes address demonstrated costs. The latest candidate passes 252 Mac Debug/Release/ASan tests, 12 tool tests, 8,192 bounded ASan parses and all 1,324 public snapshots; current full Mac 69/72 exports and six C/absolute plus nine M2 checks pass. Current x64/resource and minimum Swift 6.2 evidence is tracked as it completes. Coverage-guided fuzzing and general C parity remain open. See [self-review](Review-M7.md) and [M7Hardening](M7Hardening.md) |
+| M7 | General speed and hardening: selected-extension measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met; robustness and allocation evidence recorded | previous 5–8; re-estimate after M6 | **candidate ready for owner review on `feature/m7-hardening`**, not merged or accepted. [Readiness](M7Readiness.md) records 252-test Mac/x64 Debug/Release and minimum Swift 6.2 CI passes, 12 tool tests per native host, full 69/72-case refreshes with unchanged C/M2 gates, 36 explicit UTF-8 controls, 42 source-matched resource cases, Mac ASan and bounded mutation plus 3,510 coverage-guided x64 units. General C parity and further copying/output work remain aims. See [self-review](Review-M7.md) and [M7Hardening](M7Hardening.md) |
 | M8 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | previous 3–5; re-estimate after M7 | **planned; former M7 moved back one milestone** |
 | | **Original total before explicit editor-analysis scope** | | **38–59; re-estimate required** | |
 
@@ -806,36 +809,20 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: finish the full cross-host/resource/minimum-compiler checks
-for the [UTF-8 candidate](Validation/M7/utf8-2026-11-22.md), after the measured
-[token](Validation/M7/token-arena-2026-11-22.md) and
-[buffer](Validation/M7/inline-capacity-2026-11-22.md) improvements. Explicit
-validation-enabled C controls now distinguish repair-policy and original-source
-coordinate work. CommonMark parity, HTML emission,
-progressive resource checks and broader isolated fuzzing remain M7 work. The
-initial [M7 hardening step](M7Hardening.md) passes 245 Debug/Release tests
-on macOS and native Linux ARM64/x64 with Swift 6.4.2. The owner-approved
-72-case Apple M2 baseline passes all six parser/C and nine frozen M2 checks;
-see the [Mac report](Validation/M7/baseline-2026-11-21.md). The separate
-[72-case Pi series](Validation/M7/linux-arm64-2026-11-21.md) satisfies all six
-same-host C ratios; its high-load/small-sample limitations remain explicit.
-The [direct x64 series](Validation/M7/linux-x64-2026-11-21.md) also passes
-all six C ratios: GFM is within about 7% of C on this corpus; CommonMark
-remains 33–62% slower. Direct invocation avoids an observed CPU-heavy SwiftPM
-parent; historical wrapped series retain their recorded conditions. The new
-tests still need minimum-compiler validation. The subsequent
-[inline scratch-buffer optimization](Validation/M7/inline-scratch-2026-11-21.md)
-reduces CommonMark time by 15–17% on M2 / 6–7% on x64, with 245 current
-Debug/Release tests and 6 Release reference tests passing per host. Fresh
-targeted Mac C/absolute/frozen-M2 and x64 C checks pass unchanged. CommonMark
-remains 24–54% slower than C on x64; continue profiling toward parity.
-The later token arena candidate also passes current Linux ARM64 suites.
-Minimum-compiler/current x64 and fresh progressive resource measurements remain
-pending; historical M6 runtime hashes do not match these parser optimizations.
+Current next work: owner review of the [M7 candidate](M7Readiness.md), followed
+by the separately reviewed source-only 0.7 release preparation. The measured
+scratch/token/buffer/UTF-8 optimizations now have current full Mac/x64 benchmark
+controls, minimum Swift 6.2 CI, a source-matched 42-case progressive resource
+matrix and bounded ASan/coverage-guided evidence. Historical baseline reports
+retain their original identities; current reports link the actual hashes and
+coverage limits. General C parity remains the aim: current x64 CommonMark takes
+1.24–1.55× C time and GFM 0.92–0.99× on mixed-v1. Further intermediate-copy and
+HTML-emission profiling, longer/larger campaigns and peak-memory investigation
+remain useful follow-ups rather than claims established by these measurements.
 The M6 progressive-output API and reviewed post-baseline budgets are accepted;
 merged-main CI passes on macOS/Linux at the minimum Swift 6.2 toolchain.
-Fresh general performance acceptance, broader hostile-input/fuzzing campaigns
-and allocation work remain M7; API/DocC/1.0 completion stays M8. Full benchmark
+Owner acceptance of the recorded M7 performance/robustness candidate remains
+open; API/DocC/1.0 completion stays M8. Full benchmark
 and long-test execution still requires the existing owner confirmation.
 Consumer scheduling, dependency pinning and device acceptance remain in their
 own repositories. The source-only v0.6.0 preview is published; 0.7 work remains separate.

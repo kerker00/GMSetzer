@@ -182,3 +182,12 @@ bridge that rejects invalid UTF-8. Legacy `c0 af` repair intentionally differs
 (Swift two replacements, C one). C validation-off is informational; even
 matching HTML leaves different original-byte coordinate services. See the
 [UTF-8 report](Validation/M7/utf8-2026-11-22.md) for paired results and limits.
+
+The later [native x64 completion report](Validation/M7/final-x64-2026-11-22.md)
+executes all 36 UTF-8, 69 hardening and 72 historical cases with unchanged
+source/executable hashes, plus 12 Release tool tests and the source-matched
+42-case progressive matrix. Mac full refresh and minimum Swift 6.2 library CI
+also pass. Tools/fuzz builds are measured with their actual native Swift 6.4.2
+compilers; existing minimum-compiler CI does not execute those separate packages.
+The [coverage-guided campaign](Validation/M7/fuzz-2026-11-22.md) is a separate
+bounded robustness check, not a timing sample or proof of all-input linearity.
