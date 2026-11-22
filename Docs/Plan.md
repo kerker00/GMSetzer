@@ -75,7 +75,8 @@ in [PR #26](https://github.com/kerker00/GMSetzer/pull/26) at `a273810` on
 preparation/publication remain separate.
 
 **Owner-approved follow-up, 22 November 2026:** the documentation/scanning
-branch keeps the reviewed M7 runtime intact. The README now leads with a small
+experiment merged in [PR #27](https://github.com/kerker00/GMSetzer/pull/27) at
+`6372cfc`, keeping the reviewed M7 runtime intact. The README now leads with a small
 GFM example, published-release links and an explicitly unreleased-candidate
 benchmark table; historical checkpoints move to [Status](Status.md) and the
 reference index to [Documentation](README.md). A separate
@@ -828,7 +829,8 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: the agreed documentation/scanning follow-up and separately
+Current next work: profile intermediate copies and HTML output after the merged
+scan experiment, alongside separately
 reviewed source-only 0.7 release preparation after the [M7 candidate](M7Readiness.md)
 merged in PR #26 (`a273810`). The measured
 scratch/token/buffer/UTF-8 optimizations now have current full Mac/x64 benchmark

@@ -5,8 +5,10 @@ The M7 candidate merged in [PR #26](https://github.com/kerker00/GMSetzer/pull/26
 at `a273810`, with identity `0.7.0-dev.1`. It is not a published 0.7 release;
 explicit milestone acceptance and release preparation remain separate. See
 [candidate readiness](M7Readiness.md) for its current checks and limits.
-The next development branch evaluates scanning and Span after reorganising
-user documentation; measurements do not imply adoption into the parser.
+The scan/Span experiment merged in [PR #27](https://github.com/kerker00/GMSetzer/pull/27)
+at `6372cfc`, after the README reorganisation. It leaves the production scanner
+unchanged; the measured variants do not justify blanket adoption. The next
+step profiles intermediate copies and HTML output.
 M8 owns the high-level API/configuration review. Input streaming needs a
 separate design for global definitions and document ownership.
 
