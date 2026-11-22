@@ -1,5 +1,10 @@
 # M7 speed and hardening
 
+**Merged candidate, 22 November 2026:** [PR #26](https://github.com/kerker00/GMSetzer/pull/26)
+merged at `a273810`, with development identity `0.7.0-dev.1`. The measured
+checkpoints below retain their historical source identities and scope. Explicit
+M7 acceptance and source-only 0.7 publication remain separate.
+
 21 November 2026, initial work on `feature/m7-hardening`, based on the
 accepted M6 runtime (`a8a0351`) and documentation follow-up `0cf6690`.
 Development identity is now `0.7.0-dev.1`, separating M7 from the accepted

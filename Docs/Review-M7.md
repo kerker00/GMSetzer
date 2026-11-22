@@ -1,6 +1,6 @@
 # M7 implementation self-review
 
-22 November 2026. Review scope is `origin/main` through the local
+22 November 2026. Recorded review scope is `59bc567..dd075ee`, covering the
 `feature/m7-hardening` candidate, including the UTF-8 step measured over
 `e3b4b0c` and committed in `8ab9786`, plus the subsequent development fuzz
 harness. This is a self-review, not independent external review or M7
@@ -53,4 +53,5 @@ uses existing Clang archives and preserves failed commands; no installation is
 introduced. This Linux executable has no ASan; Mac ASan retains its own scope.
 General C parity, larger-input/peak-memory conclusions and a future HTML
 byte-buffer rewrite are not established.
-M7 acceptance, owner merge and release publication remain separate steps.
+The owner merged PR #26 at `a273810` after this review. Explicit M7 acceptance
+and release publication remain separate steps.
