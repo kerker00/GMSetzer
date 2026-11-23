@@ -19,7 +19,8 @@ and **Codex (OpenAI)**.
 [Documentation](Docs/README.md) · [Development status](Docs/Development.md#current-state)
 
 Requires **Swift 6.2+**. Declared Apple deployment minimums: macOS 15,
-iOS 18 and visionOS 2. The [1.x source-compatibility policy](Docs/README.md#source-compatibility) applies.
+iOS 18 and visionOS 2. Linux builds are verified on x86_64 and aarch64
+([record](Docs/Validation/Release/1.0.0.md#native-platform-builds-after-publication-23-november-2026)). The [1.x source-compatibility policy](Docs/README.md#source-compatibility) applies.
 
 ## Usage
 

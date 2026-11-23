@@ -22,6 +22,8 @@ provides task guides and individual symbol references.
 
 Requires Swift 6.2+, with declared deployment minimums macOS 15, iOS 18 and
 visionOS 2; Linux is supported. The package has no runtime dependencies.
+`1.0.0` builds natively on Linux x86_64 and aarch64 (Ubuntu 24.04, CachyOS,
+Debian 13 on Raspberry Pi 5); see the [native build record](Validation/Release/1.0.0.md#native-platform-builds-after-publication-23-november-2026).
 GMSetzer `1.0.0` is published as the first stable source release and is
 available through SwiftPM.
 The examples below describe the 1.0 API. The [release checklist](Development.md#release-checklist)

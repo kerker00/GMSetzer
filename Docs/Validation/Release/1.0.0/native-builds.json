@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-23",
+  "tag": "v1.0.0",
+  "commit": "9d87e68ccd459f4d12f8543768e72eebfd8e30e1",
+  "source": "anonymous HTTPS clone of https://github.com/kerker00/GMSetzer.git into a fresh temporary directory",
+  "scope": "swift package dump-package JSON validation and swift build; no tests or benchmarks",
+  "hosts": [
+    {
+      "hardware": "Apple silicon Mac",
+      "os": "macOS 27.0.1",
+      "arch": "arm64",
+      "swift": "6.4.2",
+      "dump_package": "valid JSON",
+      "debug_build": "pass",
+      "release_build": "not run"
+    },
+    {
+      "hardware": "Intel Core i5-6600K",
+      "os": "CachyOS Linux",
+      "kernel": "7.3.4-1-cachyos",
+      "arch": "x86_64",
+      "libc": "glibc 2.44",
+      "swift": "swift-6.4.2-RELEASE",
+      "dump_package": "valid JSON",
+      "debug_build": "pass (8.04 s)",
+      "release_build": "pass (53.27 s)"
+    },
+    {
+      "hardware": "Raspberry Pi 5 Model B Rev 1.0",
+      "os": "Debian GNU/Linux 13 (trixie)",
+      "kernel": "6.18.60+rpt-rpi-2712",
+      "arch": "aarch64",
+      "page_size": 16384,
+      "libc": "glibc 2.41-12+rpt1+deb13u4",
+      "swift": "swift-6.4.2-RELEASE via swiftly 1.2.0",
+      "dump_package": "valid JSON",
+      "debug_build": "pass (38.03 s)",
+      "release_build": "pass (107.27 s)",
+      "notes": "Swift runtime notice: backtracing disabled on the 16 KiB-page kernel; build unaffected"
+    }
+  ]
+}
