@@ -114,13 +114,14 @@ receipts or imply M7 acceptance; the remaining validation is in
 
 ## Swift Package Index and 1.0 preparation
 
-The owner requested preparation toward 1.0 on 23 November 2026. M8 uses
-`1.0.0-dev.1`; see [readiness](M8Readiness.md), [API stability](APIStability.md)
-and the [draft notes](Releases/1.0.0.md). The published preview remains 0.6.0.
-An intermediate 0.7 tag is not required. Before an approved stable tag, set
-the runtime identity to the exact final version and finalise the notes/title.
-`Scripts/check_release_version.py v1.0.0` deliberately rejects the current
-development identity/draft. The release workflow now enforces this check in
+The owner confirmed M8's PR #30 merge (`5f81308`) and requested 1.0 release
+preparation on 23 November 2026. `release/1.0.0` finalises identity `1.0.0`,
+the frozen API baseline and [notes](Releases/1.0.0.md); see
+[candidate checks](Validation/Release/1.0.0.md), [readiness](M8Readiness.md)
+and [API stability](APIStability.md). The published preview remains 0.6.0.
+An intermediate 0.7 tag is not required.
+`Scripts/check_release_version.py v1.0.0` now passes without creating a tag.
+The release workflow enforces the same version/notes agreement in
 addition to tag ancestry, CI, DocC and public-API validation.
 
 The [Index inclusion requirements](https://swiftpackageindex.com/add-a-package)
@@ -146,6 +147,7 @@ After M8 review/merge and successful minimum-toolchain checks:
    consumer and GitHub's automatic source archives. Publish the release with
    the owner's confirmation.
 3. Prepare the package submission through the Index's Add a Package flow.
+   Check whether the repository is already indexed before sending a new request.
    Review its exact URL and obtain confirmation before sending the submission;
    it creates an externally visible request. Record the resulting URL/status.
 4. After the listing/build results exist, verify all six documentation targets

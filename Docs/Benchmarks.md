@@ -1106,3 +1106,11 @@ resource, Linux or full acceptance refresh is claimed here.
 and [checksums](BenchmarkData/readme-check-2026-11-23/sha256.json) retain the
 bounded check. Initial sandbox/cache setup failures produced no timing rows;
 the completed run used the unchanged pinned dependency versions.
+
+## 1.0.0 release preparation
+
+The release branch finalises the result identity and public documentation after
+merged M8. Parser/renderer/analysis implementation and all frozen budgets remain
+unchanged. No fresh full benchmark, allocation or resource series is run for
+this version-only preparation. Historical M7/README snapshots retain their
+measured identities and dates; they are not relabelled as 1.0 release timings.

@@ -14,7 +14,7 @@ let strict: [SwiftSetting] = [
 let package = Package(
     name: "GMSetzer",
     platforms: [
-        // Provisional; the minimum versions are an open decision.
+        // Declared deployment minimums for the 1.0 source API.
         .macOS(.v15), .iOS(.v18), .visionOS(.v2),
     ],
     products: [

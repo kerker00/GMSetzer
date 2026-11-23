@@ -7,7 +7,7 @@ The library has no runtime dependencies and supports Linux.
 [Releases](https://github.com/kerker00/GMSetzer/releases) ·
 [Documentation](Docs/README.md) · [Development status](Docs/Status.md)
 
-Requires **Swift 6.2+**. Current provisional Apple minimums: macOS 15,
+Requires **Swift 6.2+**. Declared Apple deployment minimums: macOS 15,
 iOS 18 and visionOS 2. APIs may change before 1.0.
 
 ## Usage
@@ -26,7 +26,7 @@ HTML supplied by your own renderer hooks.
 
 ## Performance
 
-The **unreleased M7 candidate** (runtime `f2e0a0e`), measured on
+The **M7 measurement snapshot** (runtime `f2e0a0e`), measured on
 22 November 2026 on Apple M2 / macOS 27.0.1 / Swift 6.4.2 in Release mode,
 parses the same `mixed-v1` documents as follows.
 These are median parse times, including parser/tree construction and teardown;
@@ -39,7 +39,7 @@ HTML rendering is outside the measurement; GMSetzer syntax-token collection is o
 
 GMSetzer and C enable source positions. `swift-markdown` uses different default
 options and includes its Swift tree; it is a contextual comparison. The rows
-are not measurements of the published 0.6.0 release or a general speed guarantee.
+predate 1.0 release preparation and are not release-specific timings or a general speed guarantee.
 Actual inputs are 100,284 and 1,000,100 UTF-8 bytes. See
 [measurement conditions and native x64 results](Docs/Validation/M7/inline-input-2026-11-22.md#completion),
 [same-run raw timings](Docs/BenchmarkData/m7-inline-input-2026-11-22/mac-parser-b/receipt.json) and
@@ -87,17 +87,17 @@ Pin it with Swift Package Manager:
 Add `.product(name: "GMSetzer", package: "GMSetzer")` to your target's
 dependencies. GitHub provides source ZIP/tar.gz archives; no binary assets or
 package registry are required. See [release notes](Docs/Releases/0.6.0.md).
-The M7 performance candidate is not a published 0.7 release; its
-[readiness report](Docs/M7Readiness.md) records validation and remaining scope.
+The prepared 1.0.0 release is not yet tagged or published. Its
+[release notes](Docs/Releases/1.0.0.md) and [checks](Docs/Validation/Release/1.0.0.md)
+record the candidate; use `from: "1.0.0"` after confirmed publication.
 
-## Development toward 1.0
+## 1.0 release preparation
 
-M8 preparation uses `1.0.0-dev.1`: a small validated HTML convenience API,
-DocC catalogs for all six products, a proposed source-compatibility contract
-and Swift Package Index documentation configuration. This is development
-work; the published preview and installation example above remain 0.6.0.
-PR #30 merged the M8 implementation into `main` at `5f81308`; this includes
-the new `MarkdownHTML` facade. Release preparation is now the next step.
+The release candidate uses identity `1.0.0` and freezes the reviewed 1.x source
+API, including validated `MarkdownHTML` convenience rendering, six DocC
+catalogs and Swift Package Index documentation configuration. PR #30 merged
+the implementation at `5f81308`. This preparation does not publish a tag;
+the published preview and installation example above remain 0.6.0.
 See the [1.0 readiness gates](Docs/M8Readiness.md),
 [development roadmap](Docs/Roadmap.md),
 [API contract](Docs/APIStability.md) and

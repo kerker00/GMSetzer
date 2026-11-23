@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Check the reviewed 1.0 candidate's source API against Swift symbol graphs.
+"""Check the frozen 1.0 source API against Swift symbol graphs.
 
 This catches removed declarations, changed signatures and lost conformances.
 Defaults, raw identifier values and behavioural compatibility still need review.
-The candidate baseline is not an assertion that 1.0 has been released.
+The release baseline is not an assertion that 1.0 has been published.
 """
 
 import argparse
@@ -150,7 +150,7 @@ def main():
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--graph-dir", type=Path, required=True)
-    parser.add_argument("--baseline", type=Path, default=root / "Docs/API/1.0-candidate.json")
+    parser.add_argument("--baseline", type=Path, default=root / "Docs/API/1.0.0.json")
     parser.add_argument("--write-baseline", action="store_true",
                         help="create a new baseline; refuses to overwrite an existing file")
     args = parser.parse_args()
@@ -158,7 +158,7 @@ def main():
     if args.write_baseline:
         args.baseline.parent.mkdir(parents=True, exist_ok=True)
         with args.baseline.open("x") as output:
-            json.dump({"format": 1, "status": "1.0 candidate; owner review pending", "modules": current},
+            json.dump({"format": 1, "status": "API review snapshot; publication not implied", "modules": current},
                       output, indent=2, sort_keys=True)
             output.write("\n")
     else:

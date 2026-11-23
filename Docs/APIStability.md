@@ -1,9 +1,9 @@
-# Proposed 1.0 compatibility contract
+# 1.0 source compatibility contract
 
-23 November 2026. This is the API review candidate for M8, not a declaration
-that 1.0 is released. The latest published version remains 0.6.0. The owner
-requested development toward 1.0 and Swift Package Index publication; final
-API acceptance, an exact release commit, tagging and publication remain separate.
+23 November 2026. Release preparation freezes the source API reviewed in M8,
+merged through PR #30 at `5f81308`. The owner requested this preparation after
+confirming the merge. The latest published preview remains 0.6.0; choosing an
+exact merged release commit, tagging and publication remain separate steps.
 
 ## Supported surface
 
@@ -12,16 +12,18 @@ All six public library products remain supported: `GMSetzer`, `SetzerSyntax`,
 `GMSetzer` continues re-exporting the five lower-level modules. None acquires
 a runtime dependency, platform UI framework, file/network access or consumer
 checkout requirement. Swift 6.2 and the existing declared Apple deployment
-minimums (macOS 15, iOS 18, visionOS 2) are the proposed 1.0 floor; Linux remains
+minimums (macOS 15, iOS 18, visionOS 2) are the declared 1.0 floor; Linux remains
 supported. Actual runtime/minimum-compiler evidence has its own recorded scope.
 
-The source API inventory is [API/1.0-candidate.json](API/1.0-candidate.json).
-Its original 611 export records include 610 source-declared public symbols
+The frozen source API inventory is [API/1.0.0.json](API/1.0.0.json). Its module
+records are exactly equal to the [review inventory](API/1.0-candidate.json),
+which remains unchanged as historical evidence. Its 611 export records include 610 source-declared public symbols
 and one presentation-only `extension Profile` grouping node. Checks normalise
 that grouping node while retaining the actual `Profile` type, the GFM member
 and declared conformances. The baseline is preserved without source paths or line numbers.
 Compiler-synthesised declarations and re-export duplicates are not counted as
-new owned declarations. It is a review baseline until 1.0 acceptance.
+new owned declarations. This is the compatibility baseline used by release
+and subsequent 1.x CI.
 
 ## 1.x policy
 

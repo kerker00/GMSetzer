@@ -1,0 +1,14 @@
+{
+  "originHash" : "df5d27802ee924cf86af4b74af2354005a33ba8344080f325dccb4f70fc88089",
+  "pins" : [
+    {
+      "identity" : "gmsetzer",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kerker00/GMSetzer.git",
+      "state" : {
+        "revision" : "4c21547916ffaa2d54b366863bc971d81e465bc2"
+      }
+    }
+  ],
+  "version" : 3
+}

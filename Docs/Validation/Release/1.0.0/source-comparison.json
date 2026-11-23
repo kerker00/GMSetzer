@@ -1,0 +1,11 @@
+{
+  "base_commit": "ef179125da302962976f9d1b13839dcd23302b7f",
+  "runtime_files": 43,
+  "runtime_changes": [
+    "Sources/SetzerSyntax/LibraryIdentity.swift"
+  ],
+  "identity_only": true,
+  "frozen_modules_equal_reviewed_modules": true,
+  "baseline_records": 611,
+  "review_baseline_sha256": "55df1e12291be884e055511486e1daf22712a69fa455d5ac71b69f6148e64305"
+}
