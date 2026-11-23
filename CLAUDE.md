@@ -19,9 +19,15 @@ describes the workflow.
 - Keep every specification example ID recorded in
   `Tests/SetzerSpecTests/Resources/baseline.json` passing; add IDs when more
   pass. A new pass must never compensate for a regression elsewhere.
-- Follow the [licence rules](Docs/Development.md#licences-and-origins) when taking
-  over code or tests: MIT, BSD or Apache-2.0 only, origin in the file header, licence in `NOTICE`;
-  never GPL or LGPL.
+- Use other Markdown libraries only to learn about algorithms, architecture,
+  features and pitfalls. Never copy, adapt, translate or port their implementation
+  code into GMSetzer, even when their licence permits it. Implement solutions
+  independently from specifications and our own requirements; do not reproduce
+  another implementation through line-by-line rewriting or AI paraphrasing.
+  Reference checkouts under `Parser/` are study material, not code to import.
+- Preserve existing third-party notices and provenance. This rule applies to
+  future work; it does not erase historical origins. Specification fixtures and
+  generated standards data retain their separate licences and attribution.
 - For every feature, fix or review correction, follow
   [feature-docs](.claude/skills/feature-docs/SKILL.md) and include the affected
   documentation with the implementation.

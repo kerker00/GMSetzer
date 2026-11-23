@@ -22,8 +22,8 @@ provides task guides and individual symbol references.
 
 Requires Swift 6.2+, with declared deployment minimums macOS 15, iOS 18 and
 visionOS 2; Linux is supported. The package has no runtime dependencies.
-The public `v1.0.0` tag is available to SwiftPM; its GitHub release is a reviewed
-draft awaiting publication. The latest published GitHub preview remains 0.6.0.
+GMSetzer `1.0.0` is published as the first stable source release and is
+available through SwiftPM.
 The examples below describe the 1.0 API. The [release checklist](Development.md#release-checklist)
 distinguishes tagging from release publication.
 

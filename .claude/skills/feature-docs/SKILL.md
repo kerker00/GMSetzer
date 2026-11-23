@@ -48,8 +48,9 @@ fill a documentation entry; follow the owner's existing authorization.
 - `Tests/SetzerSpecTests/Resources/baseline.json` and its `README.md`: add newly
   passing IDs with the implementation and keep corpus descriptions current.
   Never remove protected IDs to hide regressions or trade failures for passes.
-- [NOTICE](../../../NOTICE): record origins and licenses when code or tests
-  are copied or ported, following Plan section 7.
+- [NOTICE](../../../NOTICE): preserve existing origins and licences, and maintain
+  attribution for specification fixtures/generated standards data. Other libraries
+  are for learning only; never copy or port their implementation code.
 
 ## Before committing or updating the PR
 

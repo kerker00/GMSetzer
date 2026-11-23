@@ -1,5 +1,13 @@
 # GMSetzer
 
+[![Release](https://img.shields.io/github/v/release/kerker00/GMSetzer)](https://github.com/kerker00/GMSetzer/releases/latest)
+[![CI](https://github.com/kerker00/GMSetzer/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/kerker00/GMSetzer/actions/workflows/ci.yml)
+[![Swift](https://img.shields.io/badge/Swift-6.2%2B-F05138?logo=swift&logoColor=white)](Package.swift)
+[![SwiftPM](https://img.shields.io/badge/SwiftPM-compatible-brightgreen)](Package.swift)
+[![License](https://img.shields.io/github/license/kerker00/GMSetzer)](LICENSE)
+[![CommonMark](https://img.shields.io/badge/CommonMark-652%2F652-brightgreen)](Tests/SetzerSpecTests/Resources/README.md)
+[![GFM](https://img.shields.io/badge/GFM-672%2F672-brightgreen)](Tests/SetzerSpecTests/Resources/README.md)
+
 A pure Swift Markdown parser with CommonMark, GitHub Flavored Markdown,
 optional extensions, exact source positions and safe-default HTML output.
 The library has no runtime dependencies and supports Linux.
@@ -8,7 +16,7 @@ The library has no runtime dependencies and supports Linux.
 [Documentation](Docs/README.md) · [Development status](Docs/Development.md#current-state)
 
 Requires **Swift 6.2+**. Declared Apple deployment minimums: macOS 15,
-iOS 18 and visionOS 2. APIs may change before 1.0.
+iOS 18 and visionOS 2. The [1.x source-compatibility policy](Docs/README.md#source-compatibility) applies.
 
 ## Usage
 
@@ -77,32 +85,20 @@ peak-memory reduction is established. See the [API and limits](Docs/README.md#pr
 
 ## Installation
 
-The latest published source-only preview is **[v0.6.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0)**.
-Pin it with Swift Package Manager:
+The first stable source release is **[GMSetzer 1.0.0](https://github.com/kerker00/GMSetzer/releases/tag/v1.0.0)**.
+Use Swift Package Manager:
 
 ```swift
-.package(url: "https://github.com/kerker00/GMSetzer.git", exact: "0.6.0")
+.package(url: "https://github.com/kerker00/GMSetzer.git", from: "1.0.0")
 ```
 
-Add `.product(name: "GMSetzer", package: "GMSetzer")` to your target's
-dependencies. GitHub provides source ZIP/tar.gz archives; no binary assets or
-package registry are required. See [release notes](Docs/Releases/0.6.0.md).
-The public `v1.0.0` tag is also available to SwiftPM with `from: "1.0.0"`;
-its GitHub release remains a reviewed draft. See its
-[release notes](Docs/Releases/1.0.0.md) and [checks](Docs/Validation/Release/1.0.0.md).
-
-## 1.0 release preparation
-
-The release candidate uses identity `1.0.0` and freezes the reviewed 1.x source
-API, including validated `MarkdownHTML` convenience rendering, six DocC
-catalogs and Swift Package Index documentation configuration. PR #30 merged
-the implementation at `5f81308`; PR #31 merged release preparation at `418882f`.
-Owner-confirmed annotated `v1.0.0` points to `9d87e68`. Tagged CI, exact-version
-consumption and source-archive checks pass; GitHub release publication remains
-open. The published preview and installation example above remain 0.6.0.
-See the [release checklist and roadmap](Docs/Development.md),
+Add `.product(name: "GMSetzer", package: "GMSetzer")` to your target, or choose
+one of the five lower-level products. GitHub provides automatic source ZIP and
+tar.gz downloads; no registry or binary assets are required.
+See the [release notes](Docs/Releases/1.0.0.md),
+[executed release checks](Docs/Validation/Release/1.0.0.md),
 [API contract](Docs/README.md#source-compatibility) and
-[DocC entry point](Sources/GMSetzer/GMSetzer.docc/GMSetzer.md).
+[development roadmap](Docs/Development.md#roadmap).
 
 ## Development
 

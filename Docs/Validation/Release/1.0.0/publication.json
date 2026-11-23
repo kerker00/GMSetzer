@@ -1,0 +1,55 @@
+{
+  "assets": [],
+  "isDraft": false,
+  "isPrerelease": false,
+  "publishedAt": "2026-11-23T11:13:48Z",
+  "tagName": "v1.0.0",
+  "url": "https://github.com/kerker00/GMSetzer/releases/tag/v1.0.0",
+  "public_url_checks": [
+    {
+      "url": "https://img.shields.io/github/v/release/kerker00/GMSetzer",
+      "status": 200,
+      "resolved_url": "https://img.shields.io/github/v/release/kerker00/GMSetzer"
+    },
+    {
+      "url": "https://github.com/kerker00/GMSetzer/actions/workflows/ci.yml/badge.svg?branch=main",
+      "status": 200,
+      "resolved_url": "https://github.com/kerker00/GMSetzer/actions/workflows/ci.yml/badge.svg?branch=main"
+    },
+    {
+      "url": "https://img.shields.io/badge/Swift-6.2%2B-F05138?logo=swift&logoColor=white",
+      "status": 200,
+      "resolved_url": "https://img.shields.io/badge/Swift-6.2%2B-F05138?logo=swift&logoColor=white"
+    },
+    {
+      "url": "https://img.shields.io/badge/SwiftPM-compatible-brightgreen",
+      "status": 200,
+      "resolved_url": "https://img.shields.io/badge/SwiftPM-compatible-brightgreen"
+    },
+    {
+      "url": "https://img.shields.io/github/license/kerker00/GMSetzer",
+      "status": 200,
+      "resolved_url": "https://img.shields.io/github/license/kerker00/GMSetzer"
+    },
+    {
+      "url": "https://img.shields.io/badge/CommonMark-652%2F652-brightgreen",
+      "status": 200,
+      "resolved_url": "https://img.shields.io/badge/CommonMark-652%2F652-brightgreen"
+    },
+    {
+      "url": "https://img.shields.io/badge/GFM-672%2F672-brightgreen",
+      "status": 200,
+      "resolved_url": "https://img.shields.io/badge/GFM-672%2F672-brightgreen"
+    },
+    {
+      "url": "https://github.com/kerker00/GMSetzer/archive/refs/tags/v1.0.0.zip",
+      "status": 200,
+      "resolved_url": "https://codeload.github.com/kerker00/GMSetzer/zip/refs/tags/v1.0.0"
+    },
+    {
+      "url": "https://github.com/kerker00/GMSetzer/archive/refs/tags/v1.0.0.tar.gz",
+      "status": 200,
+      "resolved_url": "https://codeload.github.com/kerker00/GMSetzer/tar.gz/refs/tags/v1.0.0"
+    }
+  ]
+}

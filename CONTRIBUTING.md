@@ -45,8 +45,10 @@ checkout may be required. Preserve historical validation records as history.
 - English for code, comments, commits, pull requests and documentation.
 - No runtime dependencies in the library targets. Development dependencies go
   into `Tools/` or test targets.
-- Code taken over or ported from other projects: MIT, BSD or Apache-2.0 only,
-  origin in the file header and licence in `NOTICE`. Never GPL or LGPL code.
+- Study other implementations for ideas and lessons only. Never copy, adapt,
+  translate or port their implementation code, regardless of licence. Develop
+  independently from specifications and our own requirements; preserve existing
+  notices and the separate provenance of specification fixtures/generated data.
 - Every bug fix comes with a regression test.
 - The owner authorised macOS/Linux CI and source-only release preparation on
   20 November 2026. See [Releasing](Docs/Development.md#release-checklist) for checks and the draft

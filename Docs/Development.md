@@ -16,9 +16,9 @@
 
 23 November 2026: M8 merged through PR #30 at `5f81308`. Release preparation
 PR #31 merged at `418882f`, setting identity `1.0.0`, finalising the notes and
-freezing the reviewed source API. The latest published source-only preview remains 0.6.0.
+freezing the reviewed source API. The first stable source release is now 1.0.0.
 Annotated `v1.0.0` now points to owner-confirmed `9d87e68`; the GitHub release
-is a reviewed draft. Stable release publication and Index submission remain open.
+is published as the latest stable source release. Index submission remains open.
 The 1.0 syntax scope is implemented; later syntax is roadmap work.
 
 The prepared implementation at `4c21547` passes 263 Swift tests / 31 suites on
@@ -36,8 +36,8 @@ Documentation cleanup PR #32 merged at `a8ca98b`; merged-main
 passes all three jobs. The two handbooks replace the old standalone documents;
 there is no archive folder. Tagged [release CI](https://github.com/kerker00/GMSetzer/actions/runs/45157785373),
 an independent exact-version public-HTTPS consumer and both source archives pass.
-Next: obtain confirmation to publish the reviewed draft, then follow the Index
-submission steps. Owner confirmation remains explicit. Warning-free DocC does not claim every member has a source summary;
+Next: follow the Index inclusion checks and submission steps. Owner confirmation
+for an external inclusion request remains explicit. Warning-free DocC does not claim every member has a source summary;
 minimum Apple OS runtime and consumer UI/device acceptance are not established
 by CI.
 
@@ -363,6 +363,29 @@ extensions, caller-controlled resource handling and rendering fallbacks are
 specified and tested. Profile names do not imply compatibility with every
 external dialect feature.
 
+### Feature expansion priorities after the 1.0 release
+
+A first static API/feature review identifies these additive candidates. This is
+planning, not delivered functionality or a benchmark result. Proposed names are
+not a public contract. All implementation and tests must be independently authored.
+
+| Priority | Candidate | Boundary |
+| --- | --- | --- |
+| First | Typed traversal, document summary and link/image queries | Extend existing snapshot queries; support subtree skipping and early stop |
+| First | Validated transformation helpers and Markdown writer | Define source/token invalidation and normalized round trips before implementation |
+| First | Heading links/slugs and safe Markdown attributes | Separate content links from existing source anchors; sanitize attribute selection |
+| First | Deterministic size/work budgets and parse checkpoints | Add compatible opt-in APIs; arbitrary callbacks remain a trust boundary |
+| Next | Definition lists and additional opt-in math delimiters | Preserve CommonMark/GFM defaults and exact provenance |
+| Next | Full-document plaintext, shared output contracts, terminal output and CLI | Reuse one tree; keep filesystem/terminal interaction in separate tools |
+| Next | Versioned structured export, source maps and additional native analysis | Do not promise stable internal layout or persistent node identities |
+| Separate products | Attributed text, math, highlighting and diagram adapters | Keep Foundation/UI/engines/resource loading outside the portable core |
+| Investigation | Incremental parsing, input streaming and event output | Require invalidation/finalisation and ownership designs first |
+
+Capability count does not substitute for tested semantics. Existing hooks,
+outline, plain-text node queries, front matter and math are partial building
+blocks for these proposals, not absent functionality. Public 1.x enum cases
+cannot be expanded silently; use custom nodes and additive declarations.
+
 ### Separate architectural investigations
 
 | Investigation | Required decision before implementation |
@@ -381,12 +404,14 @@ the current runtime dependency boundary.
 
 ## Licences and origins
 
-The package is MIT. Take over or port code/tests only from MIT, BSD or
-Apache-2.0 sources with a recognizable licence. Record origin in file headers
-and the licence in [NOTICE](../NOTICE); exclude GPL/LGPL and unlicensed code.
+The package is MIT. Other libraries are study material for algorithms, design,
+features and pitfalls. Never copy, adapt, translate or port their implementation
+code, even under a permissive licence. Implement independently from specifications
+and our own requirements; line-by-line rewriting and AI paraphrasing are not
+independent implementation. Preserve existing origins and [NOTICE](../NOTICE).
 Generated Unicode/HTML data keep their pinned source/version/licence metadata.
 Specification texts remain separate CC-BY-SA 4.0 test data, outside the library.
-Ideas do not remove the attribution obligations for copied code or fixtures.
+The new policy does not rewrite historical provenance or remove existing notices.
 
 ## Historical records
 
