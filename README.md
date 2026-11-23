@@ -12,6 +12,9 @@ A pure Swift Markdown parser with CommonMark, GitHub Flavored Markdown,
 optional extensions, exact source positions and safe-default HTML output.
 The library has no runtime dependencies and supports Linux.
 
+Developed by **Markus Müller** with assistance from **Claude (Anthropic)**
+and **Codex (OpenAI)**.
+
 [Releases](https://github.com/kerker00/GMSetzer/releases) ·
 [Documentation](Docs/README.md) · [Development status](Docs/Development.md#current-state)
 
