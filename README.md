@@ -26,23 +26,26 @@ HTML supplied by your own renderer hooks.
 
 ## Performance
 
-The **unreleased M7 candidate**, measured on Apple M2 / macOS 27.0.1 /
-Swift 6.4.2 in Release mode, parses the same `mixed-v1` documents as follows.
+The **unreleased M7 candidate** (runtime `f2e0a0e`), measured on
+22 November 2026 on Apple M2 / macOS 27.0.1 / Swift 6.4.2 in Release mode,
+parses the same `mixed-v1` documents as follows.
 These are median parse times, including parser/tree construction and teardown;
 HTML rendering is outside the measurement; GMSetzer syntax-token collection is off.
 
 | Input | GMSetzer CommonMark | cmark-gfm C core | swift-markdown |
 | --- | ---: | ---: | ---: |
-| 100 KB | 2.30 ms | 1.68 ms | 22.63 ms |
-| 1 MB | 24.17 ms | 18.37 ms | 223.22 ms |
+| 100 KB | 2.13 ms | 1.68 ms | 24.41 ms |
+| 1 MB | 23.13 ms | 18.76 ms | 249.82 ms |
 
 GMSetzer and C enable source positions. `swift-markdown` uses different default
 options and includes its Swift tree; it is a contextual comparison. The rows
 are not measurements of the published 0.6.0 release or a general speed guarantee.
 Actual inputs are 100,284 and 1,000,100 UTF-8 bytes. See
-[measurement conditions and raw evidence](Docs/Validation/M7/utf8-2026-11-22.md#full-mac-control-refresh),
-[native x64 results](Docs/Validation/M7/final-x64-2026-11-22.md) and
-[all benchmark reports](Docs/Benchmarks.md).
+[measurement conditions and native x64 results](Docs/Validation/M7/inline-input-2026-11-22.md#completion),
+[same-run raw timings](Docs/BenchmarkData/m7-inline-input-2026-11-22/mac-parser-b/receipt.json) and
+[all benchmark reports](Docs/Benchmarks.md). A
+[23 November control check](Docs/Benchmarks.md#readme-control-check-23-november-2026)
+records 2.14 / 22.33 ms for GMSetzer on the same runtime sources.
 
 ## What it provides
 
@@ -87,6 +90,18 @@ package registry are required. See [release notes](Docs/Releases/0.6.0.md).
 The M7 performance candidate is not a published 0.7 release; its
 [readiness report](Docs/M7Readiness.md) records validation and remaining scope.
 
+## Development toward 1.0
+
+M8 preparation uses `1.0.0-dev.1`: a small validated HTML convenience API,
+DocC catalogs for all six products, a proposed source-compatibility contract
+and Swift Package Index documentation configuration. This is development
+work; the published preview and installation example above remain 0.6.0.
+The new `MarkdownHTML` facade is available only on the M8 development branch.
+See the [1.0 readiness gates](Docs/M8Readiness.md),
+[development roadmap](Docs/Roadmap.md),
+[API contract](Docs/APIStability.md) and
+[DocC entry point](Sources/GMSetzer/GMSetzer.docc/GMSetzer.md).
+
 ## Development
 
 Run `swift test` for library/specification tests and
@@ -95,6 +110,10 @@ Reference comparisons and benchmarks live in the separate `Tools/` package;
 their dependencies do not reach library users. Follow
 [CONTRIBUTING](CONTRIBUTING.md) and the [measurement instructions](Docs/Benchmarks.md)
 before full benchmark or long-test runs.
+
+Build the six DocC archives with `python3 -I Scripts/build_documentation.py`.
+Check public source compatibility with
+`python3 -I Scripts/check_public_api.py --graph-dir .build/documentation/symbolgraph`.
 
 ## Licence
 

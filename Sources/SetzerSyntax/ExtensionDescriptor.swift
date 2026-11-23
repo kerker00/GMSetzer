@@ -18,7 +18,10 @@ public struct ExtensionDescriptor: Hashable, Sendable {
     }
 }
 
+/// An extension option schema. Type, finite allowed values and an optional
+/// integer range are checked by the registry; defaults do not select grammar.
 public struct ExtensionOption: Hashable, Sendable {
+    /// Supported portable `SyntaxValue` categories for an option.
     public enum ValueType: Hashable, Sendable { case boolean, integer, string, array, object }
     public let type: ValueType
     public let defaultValue: SyntaxValue?
@@ -46,6 +49,7 @@ public struct ExtensionOption: Hashable, Sendable {
 
 /// Configuration has no source range and must never become an editor underline.
 public struct ConfigurationIssue: Hashable, Sendable {
+    /// Stable categories for rejected extension descriptors, options and rule IDs.
     public enum Code: Hashable, Sendable {
         case duplicateIdentifier, unavailableExtension, invalidDescriptor
         case namespaceViolation, unknownOption, invalidOption, unknownRule
@@ -61,6 +65,7 @@ public struct ConfigurationIssue: Hashable, Sendable {
     }
 }
 
+/// The configuration issues rejected by a strict parser's `validated()` call.
 public struct ConfigurationError: Error, Equatable, Sendable {
     public let issues: [ConfigurationIssue]
     public init(_ issues: [ConfigurationIssue]) { self.issues = issues }

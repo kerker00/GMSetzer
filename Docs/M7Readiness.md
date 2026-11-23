@@ -3,8 +3,9 @@
 22 November 2026. The M7 candidate merged in [PR #26](https://github.com/kerker00/GMSetzer/pull/26)
 at `a273810`. Explicit milestone acceptance remains separate, and no 0.7
 tag/release exists.
-Development identity remains `0.7.0-dev.1`; the latest published version stays
-0.6.0. API/DocC/1.0 completion stays M8.
+The recorded M7 development identity is `0.7.0-dev.1`; the latest published
+version stays 0.6.0. [M8 preparation](M8Readiness.md) now uses `1.0.0-dev.1`.
+The measurements here keep their original source identities.
 
 The table below records the merged PR #26 snapshot. The subsequent
 [HTML-copy follow-up](Validation/M7/html-copies-2026-11-22.md), merged in PR #28
@@ -14,12 +15,12 @@ fresh native resource/ASan checks and passing minimum Swift 6.2 CI. Its own
 source hashes identify that changed renderer; earlier receipts remain history.
 
 The later [inline-input follow-up](Validation/M7/inline-input-2026-11-22.md),
-in PR #29, records 256-test current suites, a retained-context capacity
+merged in PR #29 (`49afec9`), records 256-test current suites, a retained-context capacity
 review correction, 19.34% fewer 1 MB allocation requests, complete native
 72/69/36-case refreshes, 42 source-matched resource cases / 126 checks and
 minimum Swift 6.2 CI. Optional MD4C/pulldown comparisons expose a remaining
 full-HTML throughput gap; the original ≤2× C parser gate and general C parity
-remain distinct. This follow-up is not merged or released.
+remain distinct. That follow-up is merged but not released.
 
 | Library gate | Candidate evidence |
 | --- | --- |
@@ -47,8 +48,8 @@ remaining intermediate copies and measured HTML emission improvements remain
 useful follow-ups. Library evidence does not establish consumer device/UI
 acceptance.
 
-The owner merge is confirmed. The agreed performance follow-up and separately
-reviewed source-only 0.7 release preparation come next. Release preparation must
+The owner merges are confirmed. Work now moves toward stable 1.0 in M8;
+an intermediate 0.7 tag is not required. Release preparation must
 choose its final version identity and exact merged commit, rerun required CI
 and consumer/archive checks, and obtain separate confirmation before tagging
 or publishing. The current candidate's matching receipts remain historical

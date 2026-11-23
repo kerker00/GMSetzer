@@ -3,6 +3,9 @@
 ## Use the package
 
 - [Installation and quick start](../README.md#usage)
+- [DocC guides and API reference](../Sources/GMSetzer/GMSetzer.docc/GMSetzer.md)
+- [1.0 preparation](M8Readiness.md) and [proposed source compatibility](APIStability.md)
+- [Development roadmap](Roadmap.md)
 - [Front matter](FrontMatter.md), [footnotes](Footnotes.md), [math](Math.md) and [alerts/callouts](Admonitions.md)
 - [Progressive HTML](ProgressiveHTML.md) and [safe HTML policies](HTMLReferences.md)
 - [Source positions and syntax tree](SyntaxTree.md), [editor services](M3EditorServices.md) and [extension configuration](ExtensionContracts.md)
@@ -59,7 +62,7 @@ M5 selection/rendering examples are documented in [FrontMatter](FrontMatter.md),
 | `SetzerExtensions` | GFM profile; raw YAML/TOML front matter; named footnotes; opaque TeX; alerts/callouts | Further dialects |
 | `SetzerHTML` | CommonMark/GFM HTML, source anchors and safe defaults; prepared/grouped output with explicit fallbacks | Further rendering conveniences |
 | `SetzerAnalysis` | Three optional native rules over the existing document | Broader rule catalogue |
-| `GMSetzer` | Imports the five modules above; composed footnote HTML and admonition HTML recipe | Additional convenience APIs |
+| `GMSetzer` | Imports the five modules above; composed footnote HTML and admonition HTML recipe; M8 adds validated `MarkdownHTML` convenience rendering | Final 1.0 review |
 
 
 For installation and a short example, see the [package README](../README.md).

@@ -23,6 +23,7 @@ public struct UTF16Range: Hashable, Sendable {
 /// is one physical newline (two UTF-16 units) with no addressable interior.
 public struct SourceIndex: Sendable {
     private let source: [UInt8]
+    /// Total replacement-decoded UTF-16 code units, including original line endings.
     public let utf16Count: Int
     private struct Checkpoint: Sendable {
         var byte: Int
@@ -46,6 +47,7 @@ public struct SourceIndex: Sendable {
         }
     }
     private let checkpoints: Points
+    /// Physical line count, including an empty final line after a terminator.
     public let lineCount: Int
 
     /// Owns this document's original byte snapshot. Bare ranges do not carry
@@ -97,10 +99,16 @@ public struct SourceIndex: Sendable {
         return checkpoints[low].byte
     }
 
+    /// Converts an original-byte boundary to a UTF-16 code-unit offset. Returns
+    /// nil outside the snapshot or inside a decoded scalar/CRLF pair.
     public func utf16Offset(atUTF8Offset offset: Int) -> Int? { point(atByte: offset)?.utf16 }
+    /// Returns a one-based physical line/scalar column for an exact byte boundary.
+    /// Invalid boundaries return nil rather than being rounded.
     public func position(atUTF8Offset offset: Int) -> SourcePosition? {
         point(atByte: offset).map { SourcePosition(line: $0.line, column: $0.column) }
     }
+    /// Converts an exact UTF-16 boundary to original bytes. Returns nil for
+    /// out-of-range offsets, surrogate interiors or the interior of CRLF.
     public func utf8Offset(atUTF16Offset offset: Int) -> Int? {
         guard offset >= 0, offset <= utf16Count else { return nil }
         var point = checkpoints[checkpoint(before: offset, utf16: true)]
@@ -108,6 +116,8 @@ public struct SourceIndex: Sendable {
         walk(&point) { $0.utf16 < offset ? $0.byte + (offset - $0.utf16) : nil }
         return point.utf16 == offset ? point.byte : nil
     }
+    /// Converts a one-based physical line/Unicode-scalar column to original bytes.
+    /// Columns beyond a line's content/terminator boundary return nil.
     public func utf8Offset(at position: SourcePosition) -> Int? {
         guard position.line > 0, position.line <= lineCount, position.column > 0 else { return nil }
         var low = 0, high = checkpoints.count
@@ -125,11 +135,15 @@ public struct SourceIndex: Sendable {
             source[$0.byte] != 10 && source[$0.byte] != 13 ? $0.byte + (position.column - $0.column) : nil }
         return point.column == position.column && point.line == line ? point.byte : nil
     }
+    /// Converts both original-byte endpoints without widening the selection.
+    /// Returns nil if either endpoint is outside or not an addressable boundary.
     public func utf16Range(for range: SourceRange) -> UTF16Range? {
         guard let lower = utf16Offset(atUTF8Offset: range.lowerBound),
               let upper = utf16Offset(atUTF8Offset: range.upperBound) else { return nil }
         return UTF16Range(location: lower, length: upper - lower)
     }
+    /// Converts both UTF-16 endpoints to a half-open original-byte range.
+    /// Returns nil if either endpoint would require rounding.
     public func sourceRange(for range: UTF16Range) -> SourceRange? {
         guard let lower = utf8Offset(atUTF16Offset: range.location),
               let upper = utf8Offset(atUTF16Offset: range.location + range.length) else { return nil }

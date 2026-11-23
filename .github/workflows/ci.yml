@@ -40,3 +40,18 @@ jobs:
         run: swift build -c release
       - name: Test offline development scripts
         run: python3 -I -m unittest discover -s Scripts
+
+  documentation:
+    name: DocC / Swift 6.2
+    runs-on: macos-26
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Select Xcode 26.2
+        run: echo 'DEVELOPER_DIR=/Applications/Xcode_26.2.app/Contents/Developer' >> "$GITHUB_ENV"
+      - name: Build all public documentation with warnings as errors
+        run: python3 -I Scripts/build_documentation.py --output-dir "$RUNNER_TEMP/gmsetzer-documentation"
+      - name: Check the public source API against the reviewed candidate
+        run: python3 -I Scripts/check_public_api.py --graph-dir "$RUNNER_TEMP/gmsetzer-documentation/symbolgraph"

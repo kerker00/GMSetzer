@@ -4,6 +4,7 @@ public import SetzerParser
 /// Opaque TeX from a document snapshot. This extension recognises syntax;
 /// callers select a TeX renderer, its configuration and presentation policy.
 public struct Math: Hashable, Sendable {
+    /// Single-dollar inline, display-dollar block or fenced math source.
     public enum Format: String, Hashable, Sendable { case inline, display, fenced }
     public static let identifier = "math"
     public static let inlineKind = NodeKind("math.inline")
@@ -46,6 +47,8 @@ public struct Math: Hashable, Sendable {
     /// escape/entity decoding. Fenced content follows core code normalization.
     public let tex: String
 
+    /// Reads a well-formed math node from this snapshot. Returns nil for an
+    /// invalid index, a different kind or an inconsistent custom payload.
     public init?(_ document: Document, at index: Int) {
         guard document.nodes.indices.contains(index) else { return nil }
         let node = document.nodes[index]

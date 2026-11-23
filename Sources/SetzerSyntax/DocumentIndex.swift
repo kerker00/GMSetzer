@@ -2,6 +2,7 @@
 /// and one flat child table. The common representation uses three Int32 arrays;
 /// documents beyond Int32 capacity transparently use native-width tables.
 public struct DocumentIndex: Sendable {
+    /// Immutable owning snapshot for all indices returned by this index.
     public let document: Document
     fileprivate enum Tables: Sendable {
         case compact(parents: [Int32], starts: [Int32], children: [Int32])
@@ -21,6 +22,7 @@ public struct DocumentIndex: Sendable {
     }
     private let tables: Tables
 
+    /// Builds optional parent/child lookup tables over an already validated tree.
     public init(_ document: Document) {
         self.document = document
         if document.nodes.count <= Int32.max {
@@ -93,6 +95,7 @@ public struct DocumentIndex: Sendable {
         return (parents, starts, children)
     }
 
+    /// Returns the snapshot-local parent, or nil for the root/an invalid index.
     public func parent(of index: Int) -> Int? {
         guard document.nodes.indices.contains(index) else { return nil }
         let parent = tables.parent(index)
@@ -101,10 +104,12 @@ public struct DocumentIndex: Sendable {
 
     /// Nearest parent first, excluding the node. Iteration allocates no array.
     public func ancestors(of index: Int) -> Ancestors { Ancestors(tables: tables, next: parent(of: index)) }
+    /// Snapshot-owned parent-chain sequence, nearest ancestor first.
     public struct Ancestors: Sequence, Sendable {
         fileprivate let tables: Tables
         fileprivate let next: Int?
         public func makeIterator() -> Iterator { Iterator(tables: tables, current: next) }
+        /// Walks one ancestor chain without allocating an intermediate array.
         public struct Iterator: IteratorProtocol {
             fileprivate let tables: Tables
             fileprivate var current: Int?
@@ -160,10 +165,14 @@ public struct DocumentIndex: Sendable {
         }
         return result
     }
+    /// Joins semantic text/code/image labels and line breaks in a subtree,
+    /// excluding raw HTML/custom payloads. An invalid index returns an empty string.
     public func plainText(of index: Int) -> String { document.plainText(of: index) }
 }
 
+/// Which adjacent source span owns a caret exactly at a boundary.
 public enum SourceAffinity: Sendable { case downstream, upstream }
+/// A source-ordered heading with a snapshot-local node and heading parent.
 public struct OutlineEntry: Hashable, Sendable {
     public let node: Int
     public let level: Int

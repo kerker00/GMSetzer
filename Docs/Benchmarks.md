@@ -1062,3 +1062,47 @@ callbacks/events still do not provide GMSetzer's complete AST/source services.
 All 24 cases / 192 batch samples, 12 output comparisons and raw outputs are
 retained. These timings expose a remaining full-HTML throughput gap; they are
 not rows to mix with the package-benchmark series or a general C-parity claim.
+
+The README's parse-only summary now uses the complete 72-case Mac B run
+(22 November, runtime `f2e0a0e`), with GMSetzer, C and swift-markdown values
+from the [same retained receipt](BenchmarkData/m7-inline-input-2026-11-22/mac-parser-b/receipt.json).
+It supersedes the earlier UTF-8-stage README snapshot; the historical exports
+remain unchanged. Neither the focused repeats nor the separate x64 batch
+timers are mixed into that summary.
+
+## README control check, 23 November 2026
+
+A fresh filtered Release run checks only the six README parse cases at
+checkout `194164d`. All 54 source/configuration hashes in the prior Mac B
+receipt match before and after, covering every runtime Swift file, benchmark
+source, corpus and dependency lockfile. The runtime still matches `f2e0a0e`;
+all six README values also match the prior raw export and archive checksums.
+
+Same Apple M2 / 8-core / 16-GB host, macOS 27.0.1 (26A434), Swift 6.4.2,
+unchanged profiles, allocation metrics and five-second case limits. The new
+build uses SwiftPM's default Xcode build system with Release optimization and
+debug symbols disabled; the prior build used the native build system. Builds
+finish before timing. Host load is elevated during preparation (one-minute
+load 11.69, initially 34.52); this is a single control run under uncontrolled
+host activity, not a statistical-equivalence test or a paired optimization.
+
+| Parse case | README's 22 November run, ms | 23 November control, ms | Change |
+| --- | ---: | ---: | ---: |
+| GMSetzer CommonMark 100 KB | 2.132 | 2.138 | +0.28% |
+| GMSetzer CommonMark 1 MB | 23.134 | 22.331 | −3.47% |
+| C CommonMark 100 KB | 1.677 | 1.736 | +3.52% |
+| C CommonMark 1 MB | 18.760 | 21.414 | +14.15% |
+| swift-markdown 100 KB | 24.412 | 22.659 | −7.18% |
+| swift-markdown 1 MB | 249.823 | 231.866 | −7.19% |
+
+The current-code GMSetzer results are close to the documented snapshot.
+Different control-parser drift and build backends prevent treating changed
+cross-run ratios as a code speedup. The README keeps its dated 22 November
+series and links this check separately. No 5 MB, GFM, annotations, HTML,
+resource, Linux or full acceptance refresh is claimed here.
+
+[Raw output](BenchmarkData/readme-check-2026-11-23/results.md.gz),
+[receipt, source/binary identities and sampling context](BenchmarkData/readme-check-2026-11-23/receipt.json)
+and [checksums](BenchmarkData/readme-check-2026-11-23/sha256.json) retain the
+bounded check. Initial sandbox/cache setup failures produced no timing rows;
+the completed run used the unchanged pinned dependency versions.

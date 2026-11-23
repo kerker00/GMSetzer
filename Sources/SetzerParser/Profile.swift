@@ -12,13 +12,20 @@ public struct ExtensionConfiguration: Hashable, Sendable {
     }
 }
 
+/// Reproducible grammar selection, independent of implementation closures.
+/// The name is a label; all selections/options/order contribute to behaviour.
 public struct Profile: Hashable, Sendable {
+    /// Caller-chosen profile name; it alone does not enable grammar.
     public let name: String
+    /// Ordered selected extension identifiers and their option values.
     public let extensions: [ExtensionConfiguration]
+    /// Qualified rule identifiers to suppress within the selected grammar.
     public let disabledRules: Set<String>
     /// Explicit precedence within opening/leaf phases; unspecified rules keep default order.
     public let ruleOrder: [String]
 
+    /// Records selections without resolving or validating implementations.
+    /// `MarkdownParser.configurationIssues` and `validated()` expose failures.
     public init(name: String, extensions: [ExtensionConfiguration] = [], disabledRules: Set<String> = [], ruleOrder: [String] = []) {
         self.name = name
         self.extensions = extensions
@@ -26,6 +33,7 @@ public struct Profile: Hashable, Sendable {
         self.ruleOrder = ruleOrder
     }
 
+    /// Strict CommonMark with no optional extensions or rule overrides.
     public static let commonMark = Profile(name: "commonmark")
 }
 
@@ -114,6 +122,8 @@ public struct BlockContext: Sendable {
     public func line(at index: Int) -> SourceLine? { project(index) }
 }
 
+/// Bounds built-in container depth and recursive custom-inline child parsing.
+/// These limits do not bound document size, elapsed time or caller callback work.
 public struct ParserLimits: Hashable, Sendable {
     /// Counts quote, list and item nodes; lists require two slots. Parsing is
     /// iterative, and the limit bounds prefix work per physical source line.
@@ -122,6 +132,9 @@ public struct ParserLimits: Hashable, Sendable {
     /// conservative bound; built-in delimiters/links use an iterative controller.
     public let maximumInlineExtensionDepth: Int
 
+    /// Creates explicit depth limits; values are not silently clamped.
+    ///
+    /// - Precondition: Container depth is 1...256 and inline-extension depth is 1...32.
     public init(maximumContainerDepth: Int = 128, maximumInlineExtensionDepth: Int = 16) {
         precondition((1...256).contains(maximumContainerDepth), "container depth must be between 1 and 256")
         precondition((1...32).contains(maximumInlineExtensionDepth), "inline extension depth must be between 1 and 32")
@@ -159,6 +172,8 @@ public struct BlockToken: Hashable, Sendable {
     public init(_ role: String, range: SourceRange) { self.role = role; self.range = range }
 }
 
+/// Trusted block matcher with an identifier, phase priority and optional
+/// byte trigger. A nil match declines without consuming source.
 public struct BlockRule: Sendable {
     public let identifier: String
     public let priority: Int
@@ -179,6 +194,9 @@ public struct BlockRule: Sendable {
     }
 }
 
+/// Available custom grammar implementation. A parser profile must select its
+/// identifier before its rules/transforms run. Callbacks are trusted compiled
+/// code and must obey ownership, projection and validation contracts.
 public struct MarkdownExtension: Sendable {
     public let descriptor: ExtensionDescriptor
     public var identifier: String { descriptor.identifier }

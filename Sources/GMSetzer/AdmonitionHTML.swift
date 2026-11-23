@@ -4,6 +4,9 @@ public import SetzerHTML
 /// Optional, CSS-neutral HTML policy for parsed alerts and callouts. Use the
 /// returned renderer directly or pass it to FootnotesHTMLRenderer.
 public enum AdmonitionHTML {
+    /// Adds standard alert/callout presentation to a base renderer. Supplied
+    /// title overrides are plain text and escaped; custom parsed callout titles
+    /// use their Markdown inlines. The recipe owns the admonition node kinds.
     public static func renderer(_ base: HTMLRenderer = HTMLRenderer(),
                                 alertTitles: [Alert.Category: String] = [:],
                                 calloutTitles: [String: String] = [:]) -> HTMLRenderer {

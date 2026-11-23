@@ -8,6 +8,7 @@ public enum HTMLRendering: Sendable {
     case wrapChildren(open: String, close: String)
 }
 
+/// Snapshot-local node, ancestry and list context for a trusted renderer hook.
 public struct HTMLRendererContext: Sendable {
     public let index: Int
     fileprivate let anchorPrefix: String?
@@ -28,24 +29,36 @@ public struct HTMLRendererContext: Sendable {
     public var ancestors: [Int] { Array(tree.ancestors(of: index)) }
 }
 
+/// Supplies trusted markup with ancestry/context, or nil for default rendering.
 public typealias ContextualHTMLRendererHook = @Sendable (HTMLRendererContext) -> HTMLRendering?
+/// Supplies trusted markup for a node/snapshot, or nil for default rendering.
 public typealias HTMLRendererHook = @Sendable (Node, Document) -> HTMLRendering?
 
 /// Iterative rendering of CommonMark blocks and inlines. Source
 /// literals and HTML blocks are escaped by default. Raw HTML and comment
 /// preservation require explicit options. Hook output is a caller trust boundary.
 public struct HTMLRenderer: Sendable {
+    /// Include original-byte source attributes on rendered block elements.
     public let includeSourceRanges: Bool
+    /// Optional namespace for snapshot-local block anchor IDs.
     public let sourceAnchorPrefix: String?
+    /// Emit source HTML rather than escaped text; this is not sanitisation.
     public let allowRawHTML: Bool
+    /// Preserve recognised HTML comments instead of omitting them.
     public let preserveHTMLComments: Bool
+    /// Bypass decoded URL scheme checks; intended only for trusted content.
     public let allowUnsafeURLs: Bool
+    /// Explicit permitted schemes when URL checks are active; relative URLs
+    /// and fragments are handled separately.
     public let allowedURLSchemes: Set<HTMLURLScheme>
     private let escapedAnchorPrefix: String?
     private let contextualHooks: [NodeKind: ContextualHTMLRendererHook]
     private let hooks: [NodeKind: HTMLRendererHook]
     private let independentlyRenderableHooks: Bool
 
+    /// Chooses HTML policies without rendering a document. Hook output is
+    /// trusted caller markup. Default hook behaviour requires document order;
+    /// opt into independence only when every hook meets that contract.
     public init(includeSourceRanges: Bool = false, sourceAnchorPrefix: String? = nil, allowRawHTML: Bool = false,
                 preserveHTMLComments: Bool = false, allowUnsafeURLs: Bool = false, allowedURLSchemes: Set<HTMLURLScheme> = [.http, .https, .mailto], hooks: [NodeKind: HTMLRendererHook] = [:],
                 contextualHooks: [NodeKind: ContextualHTMLRendererHook] = [:],
@@ -67,6 +80,8 @@ public struct HTMLRenderer: Sendable {
     /// cells, and a strong parent for strong nodes.
     private enum Event { case enter(Int, flag: Bool = false), output(String) }
 
+    /// Renders a complete validated snapshot as an HTML fragment. The document's
+    /// profile-selected HTML policies are applied alongside this renderer's options.
     public func render(_ document: Document) -> String {
         let tree = contextualHooks.isEmpty ? nil : DocumentIndex(document)
         return render(document, events: [.enter(0)], tree: tree, checkpoint: {})
@@ -419,6 +434,8 @@ public struct HTMLRenderer: Sendable {
         return id + (includeSourceRanges ? " data-source-start=\"\(node.range.lowerBound)\" data-source-end=\"\(node.range.upperBound)\"" : "")
     }
 
+    /// Escapes ampersand, angle brackets and double quotes for generated HTML.
+    /// This does not validate URLs, sanitise markup or encode single-quoted attributes.
     public static func escape(_ text: String) -> String {
         // Most text needs no escaping. Preserve its existing storage instead
         // of building a byte array and decoding an identical second string.

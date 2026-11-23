@@ -8,6 +8,7 @@ public enum HTMLHookBehavior: Equatable, Sendable {
     case independent
 }
 
+/// Rejected grouping configuration or a group ordinal outside the plan.
 public enum HTMLRenderPlanError: Error, Equatable, Sendable {
     case invalidGroupSize
     case invalidGroupIndex(Int)
@@ -16,6 +17,7 @@ public enum HTMLRenderPlanError: Error, Equatable, Sendable {
 /// A complete, insertable output group. Ordinals and node indices belong to
 /// this plan's immutable document, not to later edits of the source.
 public struct HTMLRenderGroup: Hashable, Sendable {
+    /// Normal document blocks or a composed extension appendix.
     public enum Kind: Hashable, Sendable { case body, appendix }
     public let ordinal: Int
     public let kind: Kind
@@ -27,10 +29,13 @@ public struct HTMLRenderGroup: Hashable, Sendable {
 /// does not render hooks, blocks or appendices. Only the requested group is
 /// materialised; callers control consumption, scheduling and result lifetime.
 public struct HTMLRenderPlan: Sendable {
+    /// Whether independently requested structural groups or a single
+    /// whole-document fallback preserve the configured output contract.
     public enum Mode: Equatable, Sendable {
         case structural
         case wholeDocument(Fallback)
     }
+    /// Why complete-document HTML emission is required for this renderer.
     public enum Fallback: Equatable, Sendable {
         /// Source HTML may open a wrapper in one block and close it in another.
         case rawHTML
