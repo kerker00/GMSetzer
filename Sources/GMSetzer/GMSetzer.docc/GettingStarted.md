@@ -5,10 +5,13 @@ Choose a simple HTML fragment or retain a parsed document for additional service
 ## Install
 
 Add the public repository `https://github.com/kerker00/GMSetzer.git` in Xcode
-or Swift Package Manager and depend on the `GMSetzer` product. The currently
-published preview is 0.6.0. This documentation describes development toward
-1.0; `MarkdownHTML` is not available in the 0.6.0 tag. After 1.0 is published,
-an up-to-next-major dependency can start at 1.0.0.
+or Swift Package Manager and depend on the `GMSetzer` product. This catalog
+describes the 1.0 API. Use a matching released tag; older previews can have
+different APIs. A 1.x dependency uses an up-to-next-major requirement:
+
+```swift
+.package(url: "https://github.com/kerker00/GMSetzer.git", from: "1.0.0")
+```
 
 ## Render an HTML fragment
 

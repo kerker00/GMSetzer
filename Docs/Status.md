@@ -21,6 +21,8 @@ passes 263 Swift tests, both protected corpora, 61 Python checks and optimized
 builds on macOS/Linux, plus all six DocC archives and 610 source API declarations.
 Merged-main CI run 45131801793 also passes all three jobs at `5f81308`.
 The owner confirmed the merge and requested the 1.0 release-preparation step.
+`release/1.0.0` now prepares the final identity, notes and frozen API baseline;
+[candidate verification](Validation/Release/1.0.0.md) is recorded separately.
 See [readiness](M8Readiness.md) for the checked scope and open
 1.0 review/release gates. Input streaming needs a
 separate design for global definitions and document ownership.

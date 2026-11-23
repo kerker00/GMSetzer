@@ -1,0 +1,167 @@
+{
+  "scope": "prepared release sources; only runtime identity differs from ef17912",
+  "platform": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n",
+  "architecture": "arm64",
+  "swift": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0",
+  "phases": {
+    "mac-debug": {
+      "exit_code": 0,
+      "seconds": 56.077,
+      "command": [
+        "swift",
+        "test",
+        "--build-system",
+        "native",
+        "--disable-sandbox",
+        "--jobs",
+        "2",
+        "--cache-path",
+        "/private/tmp/gmsetzer-release100-cache",
+        "--config-path",
+        "/private/tmp/gmsetzer-release100-config",
+        "--security-path",
+        "/private/tmp/gmsetzer-release100-security",
+        "--scratch-path",
+        "/private/tmp/gmsetzer-release100-build",
+        "-debug-info-format",
+        "none"
+      ]
+    },
+    "mac-release": {
+      "exit_code": 0,
+      "seconds": 68.235,
+      "command": [
+        "swift",
+        "test",
+        "--build-system",
+        "native",
+        "--disable-sandbox",
+        "--jobs",
+        "2",
+        "--cache-path",
+        "/private/tmp/gmsetzer-release100-cache",
+        "--config-path",
+        "/private/tmp/gmsetzer-release100-config",
+        "--security-path",
+        "/private/tmp/gmsetzer-release100-security",
+        "--scratch-path",
+        "/private/tmp/gmsetzer-release100-build",
+        "-debug-info-format",
+        "none",
+        "-c",
+        "release"
+      ]
+    },
+    "python": {
+      "exit_code": 0,
+      "seconds": 4.171,
+      "command": [
+        "python3",
+        "-I",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts"
+      ]
+    },
+    "python-optimized": {
+      "exit_code": 0,
+      "seconds": 3.956,
+      "command": [
+        "python3",
+        "-O",
+        "-I",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts"
+      ]
+    },
+    "docc": {
+      "exit_code": 0,
+      "seconds": 12.295,
+      "command": [
+        "python3",
+        "-I",
+        "Scripts/build_documentation.py",
+        "--output-dir",
+        "/private/tmp/gmsetzer-release100-documentation"
+      ]
+    },
+    "api": {
+      "exit_code": 0,
+      "seconds": 0.141,
+      "command": [
+        "python3",
+        "-I",
+        "Scripts/check_public_api.py",
+        "--graph-dir",
+        "/private/tmp/gmsetzer-release100-documentation/symbolgraph"
+      ]
+    },
+    "version": {
+      "exit_code": 0,
+      "seconds": 0.095,
+      "command": [
+        "python3",
+        "-I",
+        "Scripts/check_release_version.py",
+        "v1.0.0"
+      ]
+    },
+    "consumer-local": {
+      "exit_code": 0,
+      "seconds": 25.792,
+      "command": [
+        "swift",
+        "run",
+        "--package-path",
+        "/private/tmp/gmsetzer-release100-consumer-local",
+        "--disable-sandbox",
+        "--jobs",
+        "2",
+        "--cache-path",
+        "/private/tmp/gmsetzer-release100-cache",
+        "--config-path",
+        "/private/tmp/gmsetzer-release100-config",
+        "--security-path",
+        "/private/tmp/gmsetzer-release100-security",
+        "-debug-info-format",
+        "none",
+        "-c",
+        "release",
+        "Consumer"
+      ]
+    },
+    "manifest": {
+      "exit_code": 0,
+      "seconds": 0.281,
+      "command": [
+        "swift",
+        "package",
+        "--disable-sandbox",
+        "--jobs",
+        "2",
+        "--cache-path",
+        "/private/tmp/gmsetzer-release100-cache",
+        "--config-path",
+        "/private/tmp/gmsetzer-release100-config",
+        "--security-path",
+        "/private/tmp/gmsetzer-release100-security",
+        "dump-package"
+      ]
+    }
+  },
+  "swift_tests_per_mode": 263,
+  "swift_suites": 31,
+  "protected_commonmark_examples": 652,
+  "protected_gfm_examples": 672,
+  "python_tests_per_mode": 61,
+  "docc_archives": 6,
+  "public_declarations": 610,
+  "manifest_products": 6,
+  "runtime_dependencies": 0,
+  "publication": "no tag, release or Index submission"
+}

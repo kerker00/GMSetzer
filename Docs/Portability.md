@@ -1,5 +1,13 @@
 # Minimum toolchain and Linux verification
 
+**Current 1.0 preparation baseline, 23 November 2026:** merged M8 (`5f81308`)
+passes 263 Swift tests, both complete protected corpora, 61 Python checks,
+optimized builds and DocC/API checks on minimum-toolchain macOS/Linux CI.
+Earlier M8 Release cross-builds cover arm64 iOS 18 and visionOS 2, with no
+minimum-OS runtime claim. Release identity/consumer checks are recorded in
+[1.0 preparation validation](Validation/Release/1.0.0.md); historical records
+below retain their original source/toolchain scopes.
+
 **Subsequent release verification:** v0.4.0 (`50991b3`) passes all 118 Swift
 tests, both complete specification corpora, the optimized build and 17 Python
 tests on Ubuntu 24.04 with Swift 6.2 and macOS 26 with Swift 6.2.3. This closes

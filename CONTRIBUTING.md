@@ -27,9 +27,9 @@ checkout may be required. Preserve historical validation records as history.
    affected documentation with the implementation, including milestone,
    contract and validation changes.
    Build all six DocC catalogs with `python3 -I Scripts/build_documentation.py`.
-   Check the public candidate API with `python3 -I Scripts/check_public_api.py
+   Check the frozen 1.0 source API with `python3 -I Scripts/check_public_api.py
    --graph-dir .build/documentation/symbolgraph`. Review behavioural/default/identifier
-   changes separately; never regenerate the candidate inventory to hide a break.
+   changes separately; never regenerate the compatibility baseline to hide a break.
 5. Open a pull request against `main`. The owner merges.
 6. After a confirmed merge, follow
    [branch-cleanup](.claude/skills/branch-cleanup/SKILL.md) to verify and remove

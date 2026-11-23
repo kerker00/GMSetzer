@@ -1,6 +1,6 @@
 # GMSetzer – Plan and Requirements
 
-**23 November 2026 — M8 started:** the owner requested development toward
+**Historical M8 start, 23 November 2026:** the owner requested development toward
 1.0 and Swift Package Index publication. PR #29 merged at `49afec9`.
 The [development roadmap](Roadmap.md) defines the 1.0 acceptance boundary and
 the proposed sequence of later work, with independent opt-in syntax stages.
@@ -10,8 +10,8 @@ configuration, six DocC catalogs, a proposed compatibility inventory
 `1.0.0-dev.1`. See [M8 readiness](M8Readiness.md) and [API review](Review-M8.md).
 Minimum Swift 6.2 macOS/Linux tests, optimized builds, 61 Python checks,
 six DocC archives and the API inventory check now pass at `cbdc977` in PR #30.
-Final owner acceptance, merging, tagging, release publication and Index
-submission remain separate. The latest
+At that checkpoint, final owner acceptance, merging, tagging, release publication
+and Index submission remained separate. The latest
 published preview remains 0.6.0; no intermediate 0.7 release is required.
 
 **Merged M8 checkpoint:** PR #30 merged at `5f81308`; merged-main CI run
@@ -19,6 +19,10 @@ published preview remains 0.6.0; no intermediate 0.7 release is required.
 The owner confirmed the merge and requested release preparation: final version
 identity/notes, frozen source-API baseline and release-candidate verification.
 Tag creation, release publication and Index submission remain separate actions.
+The `release/1.0.0` branch prepares the final runtime identity, release notes
+and frozen API inventory while preserving the implementation and existing
+deployment declarations. [Candidate checks](Validation/Release/1.0.0.md)
+record the changed identity separately from M8 and historical performance data.
 
 The dated checkpoint below records the preceding M7 state.
 

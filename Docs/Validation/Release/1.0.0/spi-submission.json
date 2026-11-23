@@ -1,0 +1,18 @@
+{
+  "state": "prepared only; no submission sent",
+  "package_url": "https://github.com/kerker00/GMSetzer.git",
+  "entry_point": "https://swiftpackageindex.com/add-a-package",
+  "submission_flow": "https://github.com/SwiftPackageIndex/PackageList/issues/new/choose",
+  "version": "1.0.0 after approved tag/publication",
+  "documentation_targets": [
+    "GMSetzer",
+    "SetzerSyntax",
+    "SetzerParser",
+    "SetzerExtensions",
+    "SetzerHTML",
+    "SetzerAnalysis"
+  ],
+  "existing_listing": "not confirmed; verify before requesting inclusion",
+  "requirements": "public root Swift package; valid dump-package JSON; SemVer release tag; builds successfully",
+  "next_action": "confirm immutable tag/release checks, then obtain owner approval before sending any external submission"
+}

@@ -1,0 +1,5904 @@
+{
+  "format": 1,
+  "modules": {
+    "GMSetzer": {
+      "s:8GMSetzer12MarkdownHTMLO": {
+        "conformances": [],
+        "declaration": "enum MarkdownHTML",
+        "kind": "swift.enum",
+        "path": [
+          "MarkdownHTML"
+        ]
+      },
+      "s:8GMSetzer12MarkdownHTMLO6render5bytes6parser8rendererSSSays5UInt8VG_12SetzerParser0bJ0V0iC012HTMLRendererVtKFZ": {
+        "conformances": [],
+        "declaration": "static func render(bytes: [UInt8], parser: MarkdownParser = MarkdownParser(), renderer: HTMLRenderer = HTMLRenderer()) throws -> String",
+        "kind": "swift.type.method",
+        "path": [
+          "MarkdownHTML",
+          "render(bytes:parser:renderer:)"
+        ]
+      },
+      "s:8GMSetzer12MarkdownHTMLO6render_6parser8rendererS2S_12SetzerParser0bH0V0gC012HTMLRendererVtKFZ": {
+        "conformances": [],
+        "declaration": "static func render(_ source: String, parser: MarkdownParser = MarkdownParser(), renderer: HTMLRenderer = HTMLRenderer()) throws -> String",
+        "kind": "swift.type.method",
+        "path": [
+          "MarkdownHTML",
+          "render(_:parser:renderer:)"
+        ]
+      },
+      "s:8GMSetzer14AdmonitionHTMLO": {
+        "conformances": [],
+        "declaration": "enum AdmonitionHTML",
+        "kind": "swift.enum",
+        "path": [
+          "AdmonitionHTML"
+        ]
+      },
+      "s:8GMSetzer14AdmonitionHTMLO8renderer_11alertTitles07calloutF006SetzerC012HTMLRendererVAI_SDy0H10Extensions5AlertV8CategoryOSSGSDyS2SGtFZ": {
+        "conformances": [],
+        "declaration": "static func renderer(_ base: HTMLRenderer = HTMLRenderer(), alertTitles: [Alert.Category : String] = [:], calloutTitles: [String : String] = [:]) -> HTMLRenderer",
+        "kind": "swift.type.method",
+        "path": [
+          "AdmonitionHTML",
+          "renderer(_:alertTitles:calloutTitles:)"
+        ]
+      },
+      "s:8GMSetzer21FootnotesHTMLRendererV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct FootnotesHTMLRenderer",
+        "kind": "swift.struct",
+        "path": [
+          "FootnotesHTMLRenderer"
+        ]
+      },
+      "s:8GMSetzer21FootnotesHTMLRendererV13backlinkLabelSSvp": {
+        "conformances": [],
+        "declaration": "let backlinkLabel: String",
+        "kind": "swift.property",
+        "path": [
+          "FootnotesHTMLRenderer",
+          "backlinkLabel"
+        ]
+      },
+      "s:8GMSetzer21FootnotesHTMLRendererV6renderySS12SetzerSyntax8DocumentVF": {
+        "conformances": [],
+        "declaration": "func render(_ document: Document) -> String",
+        "kind": "swift.method",
+        "path": [
+          "FootnotesHTMLRenderer",
+          "render(_:)"
+        ]
+      },
+      "s:8GMSetzer21FootnotesHTMLRendererV7prepare_26maximumSourceBytesPerGroup10SetzerHTML14HTMLRenderPlanV0J6Syntax8DocumentV_SitKF": {
+        "conformances": [],
+        "declaration": "func prepare(_ document: Document, maximumSourceBytesPerGroup: Int = 32_768) throws -> HTMLRenderPlan",
+        "kind": "swift.method",
+        "path": [
+          "FootnotesHTMLRenderer",
+          "prepare(_:maximumSourceBytesPerGroup:)"
+        ]
+      },
+      "s:8GMSetzer21FootnotesHTMLRendererV8idPrefixSSvp": {
+        "conformances": [],
+        "declaration": "let idPrefix: String",
+        "kind": "swift.property",
+        "path": [
+          "FootnotesHTMLRenderer",
+          "idPrefix"
+        ]
+      },
+      "s:8GMSetzer21FootnotesHTMLRendererV8renderer10SetzerHTML0C0Vvp": {
+        "conformances": [],
+        "declaration": "let renderer: HTMLRenderer",
+        "kind": "swift.property",
+        "path": [
+          "FootnotesHTMLRenderer",
+          "renderer"
+        ]
+      },
+      "s:8GMSetzer21FootnotesHTMLRendererV8renderer8idPrefix13backlinkLabelAC10SetzerHTML0C0V_S2Stcfc": {
+        "conformances": [],
+        "declaration": "init(renderer: HTMLRenderer = HTMLRenderer(), idPrefix: String = \"fn-\", backlinkLabel: String = \"Back to reference\")",
+        "kind": "swift.init",
+        "path": [
+          "FootnotesHTMLRenderer",
+          "init(renderer:idPrefix:backlinkLabel:)"
+        ]
+      }
+    },
+    "SetzerAnalysis": {
+      "s:14SetzerAnalysis06NativeB13ConfigurationV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct NativeAnalysisConfiguration",
+        "kind": "swift.struct",
+        "path": [
+          "NativeAnalysisConfiguration"
+        ]
+      },
+      "s:14SetzerAnalysis06NativeB13ConfigurationV12suppressionsSayAA0C11SuppressionVGvp": {
+        "conformances": [],
+        "declaration": "var suppressions: [NativeSuppression]",
+        "kind": "swift.property",
+        "path": [
+          "NativeAnalysisConfiguration",
+          "suppressions"
+        ]
+      },
+      "s:14SetzerAnalysis06NativeB13ConfigurationV5rules12suppressionsACShyAA0C4RuleOG_SayAA0C11SuppressionVGtcfc": {
+        "conformances": [],
+        "declaration": "init(rules: Set<NativeRule> = [], suppressions: [NativeSuppression] = [])",
+        "kind": "swift.init",
+        "path": [
+          "NativeAnalysisConfiguration",
+          "init(rules:suppressions:)"
+        ]
+      },
+      "s:14SetzerAnalysis06NativeB13ConfigurationV5rulesShyAA0C4RuleOGvp": {
+        "conformances": [],
+        "declaration": "var rules: Set<NativeRule>",
+        "kind": "swift.property",
+        "path": [
+          "NativeAnalysisConfiguration",
+          "rules"
+        ]
+      },
+      "s:14SetzerAnalysis06NativeB13ConfigurationV8identitySSvp": {
+        "conformances": [],
+        "declaration": "var identity: String { get }",
+        "kind": "swift.property",
+        "path": [
+          "NativeAnalysisConfiguration",
+          "identity"
+        ]
+      },
+      "s:14SetzerAnalysis06NativeB5ErrorO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s5ErrorP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum NativeAnalysisError",
+        "kind": "swift.enum",
+        "path": [
+          "NativeAnalysisError"
+        ]
+      },
+      "s:14SetzerAnalysis06NativeB5ErrorO18invalidSuppressionyA2CmF": {
+        "conformances": [],
+        "declaration": "case invalidSuppression",
+        "kind": "swift.enum.case",
+        "path": [
+          "NativeAnalysisError",
+          "invalidSuppression"
+        ]
+      },
+      "s:14SetzerAnalysis06NativeB8MessagesO": {
+        "conformances": [],
+        "declaration": "enum NativeAnalysisMessages",
+        "kind": "swift.enum",
+        "path": [
+          "NativeAnalysisMessages"
+        ]
+      },
+      "s:14SetzerAnalysis06NativeB8MessagesO4text3for11languageTagSS0A6Syntax17DiagnosticMessageV_SStFZ": {
+        "conformances": [],
+        "declaration": "static func text(for message: DiagnosticMessage, languageTag: String) -> String",
+        "kind": "swift.type.method",
+        "path": [
+          "NativeAnalysisMessages",
+          "text(for:languageTag:)"
+        ]
+      },
+      "s:14SetzerAnalysis10NativeRuleO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:SY\"}",
+          "{\"target\": \"s:s12CaseIterableP\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum NativeRule",
+        "kind": "swift.enum",
+        "path": [
+          "NativeRule"
+        ]
+      },
+      "s:14SetzerAnalysis10NativeRuleO12headingLevelyA2CmF": {
+        "conformances": [],
+        "declaration": "case headingLevel",
+        "kind": "swift.enum.case",
+        "path": [
+          "NativeRule",
+          "headingLevel"
+        ]
+      },
+      "s:14SetzerAnalysis10NativeRuleO16duplicateHeadingyA2CmF": {
+        "conformances": [],
+        "declaration": "case duplicateHeading",
+        "kind": "swift.enum.case",
+        "path": [
+          "NativeRule",
+          "duplicateHeading"
+        ]
+      },
+      "s:14SetzerAnalysis10NativeRuleO18trailingWhitespaceyA2CmF": {
+        "conformances": [],
+        "declaration": "case trailingWhitespace",
+        "kind": "swift.enum.case",
+        "path": [
+          "NativeRule",
+          "trailingWhitespace"
+        ]
+      },
+      "s:14SetzerAnalysis14NativeAnalyzerO": {
+        "conformances": [],
+        "declaration": "enum NativeAnalyzer",
+        "kind": "swift.enum",
+        "path": [
+          "NativeAnalyzer"
+        ]
+      },
+      "s:14SetzerAnalysis14NativeAnalyzerO7analyze_7dialect13configuration0A6Syntax16DiagnosticReportVAG8DocumentV_AG15MarkdownDialectVAA0cB13ConfigurationVtKFZ": {
+        "conformances": [],
+        "declaration": "static func analyze(_ document: Document, dialect: MarkdownDialect = .commonMark, configuration: NativeAnalysisConfiguration = .init()) throws -> DiagnosticReport",
+        "kind": "swift.type.method",
+        "path": [
+          "NativeAnalyzer",
+          "analyze(_:dialect:configuration:)"
+        ]
+      },
+      "s:14SetzerAnalysis14NativeAnalyzerO7versionSSvpZ": {
+        "conformances": [],
+        "declaration": "static let version: String",
+        "kind": "swift.type.property",
+        "path": [
+          "NativeAnalyzer",
+          "version"
+        ]
+      },
+      "s:14SetzerAnalysis14NativeAnalyzerO8providerSSvpZ": {
+        "conformances": [],
+        "declaration": "static let provider: String",
+        "kind": "swift.type.property",
+        "path": [
+          "NativeAnalyzer",
+          "provider"
+        ]
+      },
+      "s:14SetzerAnalysis17NativeSuppressionV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct NativeSuppression",
+        "kind": "swift.struct",
+        "path": [
+          "NativeSuppression"
+        ]
+      },
+      "s:14SetzerAnalysis17NativeSuppressionV4rule5rangeAcA0C4RuleO_0A6Syntax11SourceRangeVtcfc": {
+        "conformances": [],
+        "declaration": "init(rule: NativeRule, range: SourceRange)",
+        "kind": "swift.init",
+        "path": [
+          "NativeSuppression",
+          "init(rule:range:)"
+        ]
+      },
+      "s:14SetzerAnalysis17NativeSuppressionV4ruleAA0C4RuleOvp": {
+        "conformances": [],
+        "declaration": "let rule: NativeRule",
+        "kind": "swift.property",
+        "path": [
+          "NativeSuppression",
+          "rule"
+        ]
+      },
+      "s:14SetzerAnalysis17NativeSuppressionV5range0A6Syntax11SourceRangeVvp": {
+        "conformances": [],
+        "declaration": "let range: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "NativeSuppression",
+          "range"
+        ]
+      }
+    },
+    "SetzerExtensions": {
+      "s:12SetzerParser7ProfileV0A10ExtensionsE3gfmACvpZ": {
+        "conformances": [],
+        "declaration": "static let gfm: Profile",
+        "kind": "swift.type.property",
+        "path": [
+          "Profile",
+          "gfm"
+        ]
+      },
+      "s:16SetzerExtensions11FrontMatterV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct FrontMatter",
+        "kind": "swift.struct",
+        "path": [
+          "FrontMatter"
+        ]
+      },
+      "s:16SetzerExtensions11FrontMatterV10identifierSSvpZ": {
+        "conformances": [],
+        "declaration": "static let identifier: String",
+        "kind": "swift.type.property",
+        "path": [
+          "FrontMatter",
+          "identifier"
+        ]
+      },
+      "s:16SetzerExtensions11FrontMatterV12contentRange0A6Syntax06SourceF0Vvp": {
+        "conformances": [],
+        "declaration": "let contentRange: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "FrontMatter",
+          "contentRange"
+        ]
+      },
+      "s:16SetzerExtensions11FrontMatterV14implementation0A6Parser17MarkdownExtensionVvpZ": {
+        "conformances": [],
+        "declaration": "static let implementation: MarkdownExtension",
+        "kind": "swift.type.property",
+        "path": [
+          "FrontMatter",
+          "implementation"
+        ]
+      },
+      "s:16SetzerExtensions11FrontMatterV4kind0A6Syntax8NodeKindVvpZ": {
+        "conformances": [],
+        "declaration": "static let kind: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "FrontMatter",
+          "kind"
+        ]
+      },
+      "s:16SetzerExtensions11FrontMatterV5range0A6Syntax11SourceRangeVvp": {
+        "conformances": [],
+        "declaration": "let range: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "FrontMatter",
+          "range"
+        ]
+      },
+      "s:16SetzerExtensions11FrontMatterV6FormatO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:SY\"}",
+          "{\"target\": \"s:s12CaseIterableP\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum Format",
+        "kind": "swift.enum",
+        "path": [
+          "FrontMatter",
+          "Format"
+        ]
+      },
+      "s:16SetzerExtensions11FrontMatterV6FormatO4tomlyA2EmF": {
+        "conformances": [],
+        "declaration": "case toml",
+        "kind": "swift.enum.case",
+        "path": [
+          "FrontMatter",
+          "Format",
+          "toml"
+        ]
+      },
+      "s:16SetzerExtensions11FrontMatterV6FormatO4yamlyA2EmF": {
+        "conformances": [],
+        "declaration": "case yaml",
+        "kind": "swift.enum.case",
+        "path": [
+          "FrontMatter",
+          "Format",
+          "yaml"
+        ]
+      },
+      "s:16SetzerExtensions11FrontMatterV6formatAC6FormatOvp": {
+        "conformances": [],
+        "declaration": "let format: Format",
+        "kind": "swift.property",
+        "path": [
+          "FrontMatter",
+          "format"
+        ]
+      },
+      "s:16SetzerExtensions11FrontMatterV7rawTextSSvp": {
+        "conformances": [],
+        "declaration": "var rawText: String { get }",
+        "kind": "swift.property",
+        "path": [
+          "FrontMatter",
+          "rawText"
+        ]
+      },
+      "s:16SetzerExtensions11FrontMatterV8rawBytesSays5UInt8VGvp": {
+        "conformances": [],
+        "declaration": "let rawBytes: [UInt8]",
+        "kind": "swift.property",
+        "path": [
+          "FrontMatter",
+          "rawBytes"
+        ]
+      },
+      "s:16SetzerExtensions11FrontMatterV_2atACSg0A6Syntax8DocumentV_Sitcfc": {
+        "conformances": [],
+        "declaration": "init?(_ document: Document, at index: Int)",
+        "kind": "swift.init",
+        "path": [
+          "FrontMatter",
+          "init(_:at:)"
+        ]
+      },
+      "s:16SetzerExtensions4MathV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct Math",
+        "kind": "swift.struct",
+        "path": [
+          "Math"
+        ]
+      },
+      "s:16SetzerExtensions4MathV10identifierSSvpZ": {
+        "conformances": [],
+        "declaration": "static let identifier: String",
+        "kind": "swift.type.property",
+        "path": [
+          "Math",
+          "identifier"
+        ]
+      },
+      "s:16SetzerExtensions4MathV10inlineKind0A6Syntax04NodeE0VvpZ": {
+        "conformances": [],
+        "declaration": "static let inlineKind: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "Math",
+          "inlineKind"
+        ]
+      },
+      "s:16SetzerExtensions4MathV13contentRangesSay0A6Syntax11SourceRangeVGvp": {
+        "conformances": [],
+        "declaration": "let contentRanges: [SourceRange]",
+        "kind": "swift.property",
+        "path": [
+          "Math",
+          "contentRanges"
+        ]
+      },
+      "s:16SetzerExtensions4MathV14implementation0A6Parser17MarkdownExtensionVvpZ": {
+        "conformances": [],
+        "declaration": "static let implementation: MarkdownExtension",
+        "kind": "swift.type.property",
+        "path": [
+          "Math",
+          "implementation"
+        ]
+      },
+      "s:16SetzerExtensions4MathV3texSSvp": {
+        "conformances": [],
+        "declaration": "let tex: String",
+        "kind": "swift.property",
+        "path": [
+          "Math",
+          "tex"
+        ]
+      },
+      "s:16SetzerExtensions4MathV5range0A6Syntax11SourceRangeVvp": {
+        "conformances": [],
+        "declaration": "let range: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "Math",
+          "range"
+        ]
+      },
+      "s:16SetzerExtensions4MathV6FormatO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:SY\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum Format",
+        "kind": "swift.enum",
+        "path": [
+          "Math",
+          "Format"
+        ]
+      },
+      "s:16SetzerExtensions4MathV6FormatO6fencedyA2EmF": {
+        "conformances": [],
+        "declaration": "case fenced",
+        "kind": "swift.enum.case",
+        "path": [
+          "Math",
+          "Format",
+          "fenced"
+        ]
+      },
+      "s:16SetzerExtensions4MathV6FormatO6inlineyA2EmF": {
+        "conformances": [],
+        "declaration": "case inline",
+        "kind": "swift.enum.case",
+        "path": [
+          "Math",
+          "Format",
+          "inline"
+        ]
+      },
+      "s:16SetzerExtensions4MathV6FormatO7displayyA2EmF": {
+        "conformances": [],
+        "declaration": "case display",
+        "kind": "swift.enum.case",
+        "path": [
+          "Math",
+          "Format",
+          "display"
+        ]
+      },
+      "s:16SetzerExtensions4MathV6formatAC6FormatOvp": {
+        "conformances": [],
+        "declaration": "let format: Format",
+        "kind": "swift.property",
+        "path": [
+          "Math",
+          "format"
+        ]
+      },
+      "s:16SetzerExtensions4MathV8rawBytesSays5UInt8VGvp": {
+        "conformances": [],
+        "declaration": "let rawBytes: [UInt8]",
+        "kind": "swift.property",
+        "path": [
+          "Math",
+          "rawBytes"
+        ]
+      },
+      "s:16SetzerExtensions4MathV9blockKind0A6Syntax04NodeE0VvpZ": {
+        "conformances": [],
+        "declaration": "static let blockKind: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "Math",
+          "blockKind"
+        ]
+      },
+      "s:16SetzerExtensions4MathV9isDisplaySbvp": {
+        "conformances": [],
+        "declaration": "var isDisplay: Bool { get }",
+        "kind": "swift.property",
+        "path": [
+          "Math",
+          "isDisplay"
+        ]
+      },
+      "s:16SetzerExtensions4MathV_2atACSg0A6Syntax8DocumentV_Sitcfc": {
+        "conformances": [],
+        "declaration": "init?(_ document: Document, at index: Int)",
+        "kind": "swift.init",
+        "path": [
+          "Math",
+          "init(_:at:)"
+        ]
+      },
+      "s:16SetzerExtensions5AlertV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct Alert",
+        "kind": "swift.struct",
+        "path": [
+          "Alert"
+        ]
+      },
+      "s:16SetzerExtensions5AlertV10identifierSSvpZ": {
+        "conformances": [],
+        "declaration": "static let identifier: String",
+        "kind": "swift.type.property",
+        "path": [
+          "Alert",
+          "identifier"
+        ]
+      },
+      "s:16SetzerExtensions5AlertV14implementation0A6Parser17MarkdownExtensionVvpZ": {
+        "conformances": [],
+        "declaration": "static let implementation: MarkdownExtension",
+        "kind": "swift.type.property",
+        "path": [
+          "Alert",
+          "implementation"
+        ]
+      },
+      "s:16SetzerExtensions5AlertV4kind0A6Syntax8NodeKindVvpZ": {
+        "conformances": [],
+        "declaration": "static let kind: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "Alert",
+          "kind"
+        ]
+      },
+      "s:16SetzerExtensions5AlertV5range0A6Syntax11SourceRangeVvp": {
+        "conformances": [],
+        "declaration": "let range: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "Alert",
+          "range"
+        ]
+      },
+      "s:16SetzerExtensions5AlertV8CategoryO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:SY\"}",
+          "{\"target\": \"s:s12CaseIterableP\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum Category",
+        "kind": "swift.enum",
+        "path": [
+          "Alert",
+          "Category"
+        ]
+      },
+      "s:16SetzerExtensions5AlertV8CategoryO12defaultTitleSSvp": {
+        "conformances": [],
+        "declaration": "var defaultTitle: String { get }",
+        "kind": "swift.property",
+        "path": [
+          "Alert",
+          "Category",
+          "defaultTitle"
+        ]
+      },
+      "s:16SetzerExtensions5AlertV8CategoryO3tipyA2EmF": {
+        "conformances": [],
+        "declaration": "case tip",
+        "kind": "swift.enum.case",
+        "path": [
+          "Alert",
+          "Category",
+          "tip"
+        ]
+      },
+      "s:16SetzerExtensions5AlertV8CategoryO4noteyA2EmF": {
+        "conformances": [],
+        "declaration": "case note",
+        "kind": "swift.enum.case",
+        "path": [
+          "Alert",
+          "Category",
+          "note"
+        ]
+      },
+      "s:16SetzerExtensions5AlertV8CategoryO7cautionyA2EmF": {
+        "conformances": [],
+        "declaration": "case caution",
+        "kind": "swift.enum.case",
+        "path": [
+          "Alert",
+          "Category",
+          "caution"
+        ]
+      },
+      "s:16SetzerExtensions5AlertV8CategoryO7warningyA2EmF": {
+        "conformances": [],
+        "declaration": "case warning",
+        "kind": "swift.enum.case",
+        "path": [
+          "Alert",
+          "Category",
+          "warning"
+        ]
+      },
+      "s:16SetzerExtensions5AlertV8CategoryO9importantyA2EmF": {
+        "conformances": [],
+        "declaration": "case important",
+        "kind": "swift.enum.case",
+        "path": [
+          "Alert",
+          "Category",
+          "important"
+        ]
+      },
+      "s:16SetzerExtensions5AlertV8categoryAC8CategoryOvp": {
+        "conformances": [],
+        "declaration": "let category: Category",
+        "kind": "swift.property",
+        "path": [
+          "Alert",
+          "category"
+        ]
+      },
+      "s:16SetzerExtensions5AlertV_2atACSg0A6Syntax8DocumentV_Sitcfc": {
+        "conformances": [],
+        "declaration": "init?(_ document: Document, at index: Int)",
+        "kind": "swift.init",
+        "path": [
+          "Alert",
+          "init(_:at:)"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct Callout",
+        "kind": "swift.struct",
+        "path": [
+          "Callout"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV10identifierSSvpZ": {
+        "conformances": [],
+        "declaration": "static let identifier: String",
+        "kind": "swift.type.property",
+        "path": [
+          "Callout",
+          "identifier"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV14hasCustomTitleSbvp": {
+        "conformances": [],
+        "declaration": "let hasCustomTitle: Bool",
+        "kind": "swift.property",
+        "path": [
+          "Callout",
+          "hasCustomTitle"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV14implementation0A6Parser17MarkdownExtensionVvpZ": {
+        "conformances": [],
+        "declaration": "static let implementation: MarkdownExtension",
+        "kind": "swift.type.property",
+        "path": [
+          "Callout",
+          "implementation"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV4FoldO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:SY\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum Fold",
+        "kind": "swift.enum",
+        "path": [
+          "Callout",
+          "Fold"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV4FoldO4noneyA2EmF": {
+        "conformances": [],
+        "declaration": "case none",
+        "kind": "swift.enum.case",
+        "path": [
+          "Callout",
+          "Fold",
+          "none"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV4FoldO8expandedyA2EmF": {
+        "conformances": [],
+        "declaration": "case expanded",
+        "kind": "swift.enum.case",
+        "path": [
+          "Callout",
+          "Fold",
+          "expanded"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV4FoldO9collapsedyA2EmF": {
+        "conformances": [],
+        "declaration": "case collapsed",
+        "kind": "swift.enum.case",
+        "path": [
+          "Callout",
+          "Fold",
+          "collapsed"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV4foldAC4FoldOvp": {
+        "conformances": [],
+        "declaration": "let fold: Fold",
+        "kind": "swift.property",
+        "path": [
+          "Callout",
+          "fold"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV4kind0A6Syntax8NodeKindVvpZ": {
+        "conformances": [],
+        "declaration": "static let kind: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "Callout",
+          "kind"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV4typeSSvp": {
+        "conformances": [],
+        "declaration": "let type: String",
+        "kind": "swift.property",
+        "path": [
+          "Callout",
+          "type"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV5range0A6Syntax11SourceRangeVvp": {
+        "conformances": [],
+        "declaration": "let range: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "Callout",
+          "range"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV5styleSSvp": {
+        "conformances": [],
+        "declaration": "let style: String",
+        "kind": "swift.property",
+        "path": [
+          "Callout",
+          "style"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV5titleSSvp": {
+        "conformances": [],
+        "declaration": "let title: String",
+        "kind": "swift.property",
+        "path": [
+          "Callout",
+          "title"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV9titleKind0A6Syntax04NodeE0VvpZ": {
+        "conformances": [],
+        "declaration": "static let titleKind: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "Callout",
+          "titleKind"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV9titleNodeSiSgvp": {
+        "conformances": [],
+        "declaration": "let titleNode: Int?",
+        "kind": "swift.property",
+        "path": [
+          "Callout",
+          "titleNode"
+        ]
+      },
+      "s:16SetzerExtensions7CalloutV_2atACSg0A6Syntax8DocumentV_Sitcfc": {
+        "conformances": [],
+        "declaration": "init?(_ document: Document, at index: Int)",
+        "kind": "swift.init",
+        "path": [
+          "Callout",
+          "init(_:at:)"
+        ]
+      },
+      "s:16SetzerExtensions9FootnotesO": {
+        "conformances": [],
+        "declaration": "enum Footnotes",
+        "kind": "swift.enum",
+        "path": [
+          "Footnotes"
+        ]
+      },
+      "s:16SetzerExtensions9FootnotesO10identifierSSvpZ": {
+        "conformances": [],
+        "declaration": "static let identifier: String",
+        "kind": "swift.type.property",
+        "path": [
+          "Footnotes",
+          "identifier"
+        ]
+      },
+      "s:16SetzerExtensions9FootnotesO13referenceKind0A6Syntax04NodeE0VvpZ": {
+        "conformances": [],
+        "declaration": "static let referenceKind: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "Footnotes",
+          "referenceKind"
+        ]
+      },
+      "s:16SetzerExtensions9FootnotesO14definitionKind0A6Syntax04NodeE0VvpZ": {
+        "conformances": [],
+        "declaration": "static let definitionKind: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "Footnotes",
+          "definitionKind"
+        ]
+      },
+      "s:16SetzerExtensions9FootnotesO14implementation0A6Parser17MarkdownExtensionVvpZ": {
+        "conformances": [],
+        "declaration": "static let implementation: MarkdownExtension",
+        "kind": "swift.type.property",
+        "path": [
+          "Footnotes",
+          "implementation"
+        ]
+      },
+      "s:16SetzerExtensions9FootnotesO4NoteV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct Note",
+        "kind": "swift.struct",
+        "path": [
+          "Footnotes",
+          "Note"
+        ]
+      },
+      "s:16SetzerExtensions9FootnotesO4NoteV10definitionSivp": {
+        "conformances": [],
+        "declaration": "let definition: Int",
+        "kind": "swift.property",
+        "path": [
+          "Footnotes",
+          "Note",
+          "definition"
+        ]
+      },
+      "s:16SetzerExtensions9FootnotesO4NoteV10referencesSaySiGvp": {
+        "conformances": [],
+        "declaration": "var references: [Int] { get }",
+        "kind": "swift.property",
+        "path": [
+          "Footnotes",
+          "Note",
+          "references"
+        ]
+      },
+      "s:16SetzerExtensions9FootnotesO4NoteV6numberSivp": {
+        "conformances": [],
+        "declaration": "let number: Int",
+        "kind": "swift.property",
+        "path": [
+          "Footnotes",
+          "Note",
+          "number"
+        ]
+      },
+      "s:16SetzerExtensions9FootnotesO5IndexV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct Index",
+        "kind": "swift.struct",
+        "path": [
+          "Footnotes",
+          "Index"
+        ]
+      },
+      "s:16SetzerExtensions9FootnotesO5IndexV5notesSayAC4NoteVGvp": {
+        "conformances": [],
+        "declaration": "let notes: [Note]",
+        "kind": "swift.property",
+        "path": [
+          "Footnotes",
+          "Index",
+          "notes"
+        ]
+      },
+      "s:16SetzerExtensions9FootnotesO5IndexVyAE0A6Syntax8DocumentVcfc": {
+        "conformances": [],
+        "declaration": "init(_ document: Document)",
+        "kind": "swift.init",
+        "path": [
+          "Footnotes",
+          "Index",
+          "init(_:)"
+        ]
+      },
+      "s:16SetzerExtensions9FootnotesO5labelySSSg0A6Syntax4NodeVFZ": {
+        "conformances": [],
+        "declaration": "static func label(_ node: Node) -> String?",
+        "kind": "swift.type.method",
+        "path": [
+          "Footnotes",
+          "label(_:)"
+        ]
+      },
+      "s:e:s:12SetzerParser7ProfileV0A10ExtensionsE3gfmACvpZ": {
+        "conformances": [],
+        "declaration": "extension Profile",
+        "kind": "swift.extension",
+        "path": [
+          "Profile"
+        ]
+      }
+    },
+    "SetzerHTML": {
+      "s:10SetzerHTML12HTMLRendererV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct HTMLRenderer",
+        "kind": "swift.struct",
+        "path": [
+          "HTMLRenderer"
+        ]
+      },
+      "s:10SetzerHTML12HTMLRendererV08allowRawB0Sbvp": {
+        "conformances": [],
+        "declaration": "let allowRawHTML: Bool",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRenderer",
+          "allowRawHTML"
+        ]
+      },
+      "s:10SetzerHTML12HTMLRendererV11conformanceACvpZ": {
+        "conformances": [],
+        "declaration": "static let conformance: HTMLRenderer",
+        "kind": "swift.type.property",
+        "path": [
+          "HTMLRenderer",
+          "conformance"
+        ]
+      },
+      "s:10SetzerHTML12HTMLRendererV14sourceAnchorID7forNodeSSSgSi_tF": {
+        "conformances": [],
+        "declaration": "func sourceAnchorID(forNode index: Int) -> String?",
+        "kind": "swift.method",
+        "path": [
+          "HTMLRenderer",
+          "sourceAnchorID(forNode:)"
+        ]
+      },
+      "s:10SetzerHTML12HTMLRendererV15allowUnsafeURLsSbvp": {
+        "conformances": [],
+        "declaration": "let allowUnsafeURLs: Bool",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRenderer",
+          "allowUnsafeURLs"
+        ]
+      },
+      "s:10SetzerHTML12HTMLRendererV17allowedURLSchemesShyAA13HTMLURLSchemeVGvp": {
+        "conformances": [],
+        "declaration": "let allowedURLSchemes: Set<HTMLURLScheme>",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRenderer",
+          "allowedURLSchemes"
+        ]
+      },
+      "s:10SetzerHTML12HTMLRendererV18sourceAnchorPrefixSSSgvp": {
+        "conformances": [],
+        "declaration": "let sourceAnchorPrefix: String?",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRenderer",
+          "sourceAnchorPrefix"
+        ]
+      },
+      "s:10SetzerHTML12HTMLRendererV19includeSourceRanges18sourceAnchorPrefix08allowRawB020preserveHTMLComments0J10UnsafeURLs17allowedURLSchemes5hooks15contextualHooks12hookBehaviorACSb_SSSgS3bShyAA13HTMLURLSchemeVGSDy0A6Syntax8NodeKindVAA13HTMLRenderingOSgAQ0Y0V_AQ8DocumentVtYbcGSDyAsvA0C7ContextVYbcGAA08HTMLHookV0Otcfc": {
+        "conformances": [],
+        "declaration": "init(includeSourceRanges: Bool = false, sourceAnchorPrefix: String? = nil, allowRawHTML: Bool = false, preserveHTMLComments: Bool = false, allowUnsafeURLs: Bool = false, allowedURLSchemes: Set<HTMLURLScheme> = [.http, .https, .mailto], hooks: [NodeKind : HTMLRendererHook] = [:], contextualHooks: [NodeKind : ContextualHTMLRendererHook] = [:], hookBehavior: HTMLHookBehavior = .documentOrder)",
+        "kind": "swift.init",
+        "path": [
+          "HTMLRenderer",
+          "init(includeSourceRanges:sourceAnchorPrefix:allowRawHTML:preserveHTMLComments:allowUnsafeURLs:allowedURLSchemes:hooks:contextualHooks:hookBehavior:)"
+        ]
+      },
+      "s:10SetzerHTML12HTMLRendererV19includeSourceRangesSbvp": {
+        "conformances": [],
+        "declaration": "let includeSourceRanges: Bool",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRenderer",
+          "includeSourceRanges"
+        ]
+      },
+      "s:10SetzerHTML12HTMLRendererV20preserveHTMLCommentsSbvp": {
+        "conformances": [],
+        "declaration": "let preserveHTMLComments: Bool",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRenderer",
+          "preserveHTMLComments"
+        ]
+      },
+      "s:10SetzerHTML12HTMLRendererV23filteringDisallowedTagsyS2SFZ": {
+        "conformances": [],
+        "declaration": "static func filteringDisallowedTags(_ html: String) -> String",
+        "kind": "swift.type.method",
+        "path": [
+          "HTMLRenderer",
+          "filteringDisallowedTags(_:)"
+        ]
+      },
+      "s:10SetzerHTML12HTMLRendererV6escapeyS2SFZ": {
+        "conformances": [],
+        "declaration": "static func escape(_ text: String) -> String",
+        "kind": "swift.type.method",
+        "path": [
+          "HTMLRenderer",
+          "escape(_:)"
+        ]
+      },
+      "s:10SetzerHTML12HTMLRendererV6renderySS0A6Syntax8DocumentVF": {
+        "conformances": [],
+        "declaration": "func render(_ document: Document) -> String",
+        "kind": "swift.method",
+        "path": [
+          "HTMLRenderer",
+          "render(_:)"
+        ]
+      },
+      "s:10SetzerHTML12HTMLRendererV7prepare_26maximumSourceBytesPerGroupAA14HTMLRenderPlanV0A6Syntax8DocumentV_SitKF": {
+        "conformances": [],
+        "declaration": "func prepare(_ document: Document, maximumSourceBytesPerGroup: Int = 32_768) throws -> HTMLRenderPlan",
+        "kind": "swift.method",
+        "path": [
+          "HTMLRenderer",
+          "prepare(_:maximumSourceBytesPerGroup:)"
+        ]
+      },
+      "s:10SetzerHTML13HTMLRenderingO": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum HTMLRendering",
+        "kind": "swift.enum",
+        "path": [
+          "HTMLRendering"
+        ]
+      },
+      "s:10SetzerHTML13HTMLRenderingO12wrapChildrenyACSS_SStcACmF": {
+        "conformances": [],
+        "declaration": "case wrapChildren(open: String, close: String)",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLRendering",
+          "wrapChildren(open:close:)"
+        ]
+      },
+      "s:10SetzerHTML13HTMLRenderingO7replaceyACSScACmF": {
+        "conformances": [],
+        "declaration": "case replace(String)",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLRendering",
+          "replace(_:)"
+        ]
+      },
+      "s:10SetzerHTML13HTMLURLSchemeV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:SY\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct HTMLURLScheme",
+        "kind": "swift.struct",
+        "path": [
+          "HTMLURLScheme"
+        ]
+      },
+      "s:10SetzerHTML13HTMLURLSchemeV3ftpACvpZ": {
+        "conformances": [],
+        "declaration": "static let ftp: HTMLURLScheme",
+        "kind": "swift.type.property",
+        "path": [
+          "HTMLURLScheme",
+          "ftp"
+        ]
+      },
+      "s:10SetzerHTML13HTMLURLSchemeV3telACvpZ": {
+        "conformances": [],
+        "declaration": "static let tel: HTMLURLScheme",
+        "kind": "swift.type.property",
+        "path": [
+          "HTMLURLScheme",
+          "tel"
+        ]
+      },
+      "s:10SetzerHTML13HTMLURLSchemeV4httpACvpZ": {
+        "conformances": [],
+        "declaration": "static let http: HTMLURLScheme",
+        "kind": "swift.type.property",
+        "path": [
+          "HTMLURLScheme",
+          "http"
+        ]
+      },
+      "s:10SetzerHTML13HTMLURLSchemeV5httpsACvpZ": {
+        "conformances": [],
+        "declaration": "static let https: HTMLURLScheme",
+        "kind": "swift.type.property",
+        "path": [
+          "HTMLURLScheme",
+          "https"
+        ]
+      },
+      "s:10SetzerHTML13HTMLURLSchemeV6mailtoACvpZ": {
+        "conformances": [],
+        "declaration": "static let mailto: HTMLURLScheme",
+        "kind": "swift.type.property",
+        "path": [
+          "HTMLURLScheme",
+          "mailto"
+        ]
+      },
+      "s:10SetzerHTML13HTMLURLSchemeV8rawValueACSgSS_tcfc": {
+        "conformances": [],
+        "declaration": "init?(rawValue: String)",
+        "kind": "swift.init",
+        "path": [
+          "HTMLURLScheme",
+          "init(rawValue:)"
+        ]
+      },
+      "s:10SetzerHTML13HTMLURLSchemeV8rawValueSSvp": {
+        "conformances": [],
+        "declaration": "let rawValue: String",
+        "kind": "swift.property",
+        "path": [
+          "HTMLURLScheme",
+          "rawValue"
+        ]
+      },
+      "s:10SetzerHTML14HTMLRenderPlanV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct HTMLRenderPlan",
+        "kind": "swift.struct",
+        "path": [
+          "HTMLRenderPlan"
+        ]
+      },
+      "s:10SetzerHTML14HTMLRenderPlanV11renderGroup2at10checkpointSSSi_yyKXEtKF": {
+        "conformances": [],
+        "declaration": "func renderGroup(at ordinal: Int, checkpoint: () throws -> Void = {}) throws -> String",
+        "kind": "swift.method",
+        "path": [
+          "HTMLRenderPlan",
+          "renderGroup(at:checkpoint:)"
+        ]
+      },
+      "s:10SetzerHTML14HTMLRenderPlanV12forEachGroup10checkpoint_SiyyKXE_SbAA0cG0V_SStKXEtKF": {
+        "conformances": [],
+        "declaration": "@discardableResult func forEachGroup(checkpoint: () throws -> Void = {}, _ consume: (HTMLRenderGroup, String) throws -> Bool) throws -> Int",
+        "kind": "swift.method",
+        "path": [
+          "HTMLRenderPlan",
+          "forEachGroup(checkpoint:_:)"
+        ]
+      },
+      "s:10SetzerHTML14HTMLRenderPlanV26maximumSourceBytesPerGroupSivp": {
+        "conformances": [],
+        "declaration": "let maximumSourceBytesPerGroup: Int",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRenderPlan",
+          "maximumSourceBytesPerGroup"
+        ]
+      },
+      "s:10SetzerHTML14HTMLRenderPlanV4ModeO": {
+        "conformances": [
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum Mode",
+        "kind": "swift.enum",
+        "path": [
+          "HTMLRenderPlan",
+          "Mode"
+        ]
+      },
+      "s:10SetzerHTML14HTMLRenderPlanV4ModeO10structuralyA2EmF": {
+        "conformances": [],
+        "declaration": "case structural",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLRenderPlan",
+          "Mode",
+          "structural"
+        ]
+      },
+      "s:10SetzerHTML14HTMLRenderPlanV4ModeO13wholeDocumentyAeC8FallbackOcAEmF": {
+        "conformances": [],
+        "declaration": "case wholeDocument(Fallback)",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLRenderPlan",
+          "Mode",
+          "wholeDocument(_:)"
+        ]
+      },
+      "s:10SetzerHTML14HTMLRenderPlanV4modeAC4ModeOvp": {
+        "conformances": [],
+        "declaration": "let mode: Mode",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRenderPlan",
+          "mode"
+        ]
+      },
+      "s:10SetzerHTML14HTMLRenderPlanV6groupsSayAA0C5GroupVGvp": {
+        "conformances": [],
+        "declaration": "let groups: [HTMLRenderGroup]",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRenderPlan",
+          "groups"
+        ]
+      },
+      "s:10SetzerHTML14HTMLRenderPlanV8FallbackO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum Fallback",
+        "kind": "swift.enum",
+        "path": [
+          "HTMLRenderPlan",
+          "Fallback"
+        ]
+      },
+      "s:10SetzerHTML14HTMLRenderPlanV8FallbackO03rawB0yA2EmF": {
+        "conformances": [],
+        "declaration": "case rawHTML",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLRenderPlan",
+          "Fallback",
+          "rawHTML"
+        ]
+      },
+      "s:10SetzerHTML14HTMLRenderPlanV8FallbackO12documentHookyA2EmF": {
+        "conformances": [],
+        "declaration": "case documentHook",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLRenderPlan",
+          "Fallback",
+          "documentHook"
+        ]
+      },
+      "s:10SetzerHTML14HTMLRenderPlanV8FallbackO18documentOrderHooksyA2EmF": {
+        "conformances": [],
+        "declaration": "case documentOrderHooks",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLRenderPlan",
+          "Fallback",
+          "documentOrderHooks"
+        ]
+      },
+      "s:10SetzerHTML15HTMLRenderGroupV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct HTMLRenderGroup",
+        "kind": "swift.struct",
+        "path": [
+          "HTMLRenderGroup"
+        ]
+      },
+      "s:10SetzerHTML15HTMLRenderGroupV11nodeIndicesSaySiGvp": {
+        "conformances": [],
+        "declaration": "let nodeIndices: [Int]",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRenderGroup",
+          "nodeIndices"
+        ]
+      },
+      "s:10SetzerHTML15HTMLRenderGroupV11sourceRange0A6Syntax06SourceF0Vvp": {
+        "conformances": [],
+        "declaration": "let sourceRange: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRenderGroup",
+          "sourceRange"
+        ]
+      },
+      "s:10SetzerHTML15HTMLRenderGroupV4KindO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum Kind",
+        "kind": "swift.enum",
+        "path": [
+          "HTMLRenderGroup",
+          "Kind"
+        ]
+      },
+      "s:10SetzerHTML15HTMLRenderGroupV4KindO4bodyyA2EmF": {
+        "conformances": [],
+        "declaration": "case body",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLRenderGroup",
+          "Kind",
+          "body"
+        ]
+      },
+      "s:10SetzerHTML15HTMLRenderGroupV4KindO8appendixyA2EmF": {
+        "conformances": [],
+        "declaration": "case appendix",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLRenderGroup",
+          "Kind",
+          "appendix"
+        ]
+      },
+      "s:10SetzerHTML15HTMLRenderGroupV4kindAC4KindOvp": {
+        "conformances": [],
+        "declaration": "let kind: Kind",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRenderGroup",
+          "kind"
+        ]
+      },
+      "s:10SetzerHTML15HTMLRenderGroupV7ordinalSivp": {
+        "conformances": [],
+        "declaration": "let ordinal: Int",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRenderGroup",
+          "ordinal"
+        ]
+      },
+      "s:10SetzerHTML16HTMLHookBehaviorO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum HTMLHookBehavior",
+        "kind": "swift.enum",
+        "path": [
+          "HTMLHookBehavior"
+        ]
+      },
+      "s:10SetzerHTML16HTMLHookBehaviorO11independentyA2CmF": {
+        "conformances": [],
+        "declaration": "case independent",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLHookBehavior",
+          "independent"
+        ]
+      },
+      "s:10SetzerHTML16HTMLHookBehaviorO13documentOrderyA2CmF": {
+        "conformances": [],
+        "declaration": "case documentOrder",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLHookBehavior",
+          "documentOrder"
+        ]
+      },
+      "s:10SetzerHTML16HTMLRendererHooka": {
+        "conformances": [],
+        "declaration": "typealias HTMLRendererHook = @Sendable (Node, Document) -> HTMLRendering?",
+        "kind": "swift.typealias",
+        "path": [
+          "HTMLRendererHook"
+        ]
+      },
+      "s:10SetzerHTML19HTMLRenderPlanErrorO": {
+        "conformances": [
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s5ErrorP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum HTMLRenderPlanError",
+        "kind": "swift.enum",
+        "path": [
+          "HTMLRenderPlanError"
+        ]
+      },
+      "s:10SetzerHTML19HTMLRenderPlanErrorO16invalidGroupSizeyA2CmF": {
+        "conformances": [],
+        "declaration": "case invalidGroupSize",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLRenderPlanError",
+          "invalidGroupSize"
+        ]
+      },
+      "s:10SetzerHTML19HTMLRenderPlanErrorO17invalidGroupIndexyACSicACmF": {
+        "conformances": [],
+        "declaration": "case invalidGroupIndex(Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLRenderPlanError",
+          "invalidGroupIndex(_:)"
+        ]
+      },
+      "s:10SetzerHTML19HTMLRendererContextV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct HTMLRendererContext",
+        "kind": "swift.struct",
+        "path": [
+          "HTMLRendererContext"
+        ]
+      },
+      "s:10SetzerHTML19HTMLRendererContextV14sourceAnchorIDSSSgvp": {
+        "conformances": [],
+        "declaration": "var sourceAnchorID: String? { get }",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRendererContext",
+          "sourceAnchorID"
+        ]
+      },
+      "s:10SetzerHTML19HTMLRendererContextV4node0A6Syntax4NodeVvp": {
+        "conformances": [],
+        "declaration": "var node: Node { get }",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRendererContext",
+          "node"
+        ]
+      },
+      "s:10SetzerHTML19HTMLRendererContextV4tree0A6Syntax13DocumentIndexVvp": {
+        "conformances": [],
+        "declaration": "let tree: DocumentIndex",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRendererContext",
+          "tree"
+        ]
+      },
+      "s:10SetzerHTML19HTMLRendererContextV5indexSivp": {
+        "conformances": [],
+        "declaration": "let index: Int",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRendererContext",
+          "index"
+        ]
+      },
+      "s:10SetzerHTML19HTMLRendererContextV6parentSiSgvp": {
+        "conformances": [],
+        "declaration": "var parent: Int? { get }",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRendererContext",
+          "parent"
+        ]
+      },
+      "s:10SetzerHTML19HTMLRendererContextV9ancestorsSaySiGvp": {
+        "conformances": [],
+        "declaration": "var ancestors: [Int] { get }",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRendererContext",
+          "ancestors"
+        ]
+      },
+      "s:10SetzerHTML19HTMLRendererContextV9tightItemSbvp": {
+        "conformances": [],
+        "declaration": "let tightItem: Bool",
+        "kind": "swift.property",
+        "path": [
+          "HTMLRendererContext",
+          "tightItem"
+        ]
+      },
+      "s:10SetzerHTML26ContextualHTMLRendererHooka": {
+        "conformances": [],
+        "declaration": "typealias ContextualHTMLRendererHook = @Sendable (HTMLRendererContext) -> HTMLRendering?",
+        "kind": "swift.typealias",
+        "path": [
+          "ContextualHTMLRendererHook"
+        ]
+      }
+    },
+    "SetzerParser": {
+      "s:12SetzerParser08MarkdownB0V": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct MarkdownParser",
+        "kind": "swift.struct",
+        "path": [
+          "MarkdownParser"
+        ]
+      },
+      "s:12SetzerParser08MarkdownB0V19configurationIssuesSay0A6Syntax18ConfigurationIssueVGvp": {
+        "conformances": [],
+        "declaration": "var configurationIssues: [ConfigurationIssue] { get }",
+        "kind": "swift.property",
+        "path": [
+          "MarkdownParser",
+          "configurationIssues"
+        ]
+      },
+      "s:12SetzerParser08MarkdownB0V20collectSyntaxDetailsSbvp": {
+        "conformances": [],
+        "declaration": "let collectSyntaxDetails: Bool",
+        "kind": "swift.property",
+        "path": [
+          "MarkdownParser",
+          "collectSyntaxDetails"
+        ]
+      },
+      "s:12SetzerParser08MarkdownB0V5parse5bytes0A6Syntax8DocumentVSays5UInt8VG_tF": {
+        "conformances": [],
+        "declaration": "func parse(bytes: [UInt8]) -> Document",
+        "kind": "swift.method",
+        "path": [
+          "MarkdownParser",
+          "parse(bytes:)"
+        ]
+      },
+      "s:12SetzerParser08MarkdownB0V5parsey0A6Syntax8DocumentVSSF": {
+        "conformances": [],
+        "declaration": "func parse(_ text: String) -> Document",
+        "kind": "swift.method",
+        "path": [
+          "MarkdownParser",
+          "parse(_:)"
+        ]
+      },
+      "s:12SetzerParser08MarkdownB0V6limitsAA0B6LimitsVvp": {
+        "conformances": [],
+        "declaration": "let limits: ParserLimits",
+        "kind": "swift.property",
+        "path": [
+          "MarkdownParser",
+          "limits"
+        ]
+      },
+      "s:12SetzerParser08MarkdownB0V7profile10extensions6limits20collectSyntaxDetailsAcA7ProfileV_SayAA0C9ExtensionVGAA0B6LimitsVSbtcfc": {
+        "conformances": [],
+        "declaration": "init(profile: Profile = .commonMark, extensions: [MarkdownExtension] = [], limits: ParserLimits = ParserLimits(), collectSyntaxDetails: Bool = false)",
+        "kind": "swift.init",
+        "path": [
+          "MarkdownParser",
+          "init(profile:extensions:limits:collectSyntaxDetails:)"
+        ]
+      },
+      "s:12SetzerParser08MarkdownB0V7profileAA7ProfileVvp": {
+        "conformances": [],
+        "declaration": "let profile: Profile",
+        "kind": "swift.property",
+        "path": [
+          "MarkdownParser",
+          "profile"
+        ]
+      },
+      "s:12SetzerParser08MarkdownB0V9validatedACyKF": {
+        "conformances": [],
+        "declaration": "func validated() throws -> MarkdownParser",
+        "kind": "swift.method",
+        "path": [
+          "MarkdownParser",
+          "validated()"
+        ]
+      },
+      "s:12SetzerParser0B6LimitsV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct ParserLimits",
+        "kind": "swift.struct",
+        "path": [
+          "ParserLimits"
+        ]
+      },
+      "s:12SetzerParser0B6LimitsV21maximumContainerDepth0d15InlineExtensionF0ACSi_Sitcfc": {
+        "conformances": [],
+        "declaration": "init(maximumContainerDepth: Int = 128, maximumInlineExtensionDepth: Int = 16)",
+        "kind": "swift.init",
+        "path": [
+          "ParserLimits",
+          "init(maximumContainerDepth:maximumInlineExtensionDepth:)"
+        ]
+      },
+      "s:12SetzerParser0B6LimitsV21maximumContainerDepthSivp": {
+        "conformances": [],
+        "declaration": "let maximumContainerDepth: Int",
+        "kind": "swift.property",
+        "path": [
+          "ParserLimits",
+          "maximumContainerDepth"
+        ]
+      },
+      "s:12SetzerParser0B6LimitsV27maximumInlineExtensionDepthSivp": {
+        "conformances": [],
+        "declaration": "let maximumInlineExtensionDepth: Int",
+        "kind": "swift.property",
+        "path": [
+          "ParserLimits",
+          "maximumInlineExtensionDepth"
+        ]
+      },
+      "s:12SetzerParser10BlockMatchV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct BlockMatch",
+        "kind": "swift.struct",
+        "path": [
+          "BlockMatch"
+        ]
+      },
+      "s:12SetzerParser10BlockMatchV11diagnosticsSay0A6Syntax15ParseDiagnosticVGvp": {
+        "conformances": [],
+        "declaration": "let diagnostics: [ParseDiagnostic]",
+        "kind": "swift.property",
+        "path": [
+          "BlockMatch",
+          "diagnostics"
+        ]
+      },
+      "s:12SetzerParser10BlockMatchV13consumedLines4data14sourceSegments8children6tokens11diagnosticsACSi_0A6Syntax8NodeDataOSayAJ11SourceRangeVGSayAA0P4LineVGSgSayAA0C5TokenVGSayAJ15ParseDiagnosticVGtcfc": {
+        "conformances": [],
+        "declaration": "init(consumedLines: Int, data: NodeData, sourceSegments: [SourceRange] = [], children: [SourceLine]? = nil, tokens: [BlockToken] = [], diagnostics: [ParseDiagnostic] = [])",
+        "kind": "swift.init",
+        "path": [
+          "BlockMatch",
+          "init(consumedLines:data:sourceSegments:children:tokens:diagnostics:)"
+        ]
+      },
+      "s:12SetzerParser10BlockMatchV13consumedLinesSivp": {
+        "conformances": [],
+        "declaration": "let consumedLines: Int",
+        "kind": "swift.property",
+        "path": [
+          "BlockMatch",
+          "consumedLines"
+        ]
+      },
+      "s:12SetzerParser10BlockMatchV14sourceSegmentsSay0A6Syntax11SourceRangeVGvp": {
+        "conformances": [],
+        "declaration": "let sourceSegments: [SourceRange]",
+        "kind": "swift.property",
+        "path": [
+          "BlockMatch",
+          "sourceSegments"
+        ]
+      },
+      "s:12SetzerParser10BlockMatchV4data0A6Syntax8NodeDataOvp": {
+        "conformances": [],
+        "declaration": "let data: NodeData",
+        "kind": "swift.property",
+        "path": [
+          "BlockMatch",
+          "data"
+        ]
+      },
+      "s:12SetzerParser10BlockMatchV6tokensSayAA0C5TokenVGvp": {
+        "conformances": [],
+        "declaration": "let tokens: [BlockToken]",
+        "kind": "swift.property",
+        "path": [
+          "BlockMatch",
+          "tokens"
+        ]
+      },
+      "s:12SetzerParser10BlockMatchV8childrenSayAA10SourceLineVGSgvp": {
+        "conformances": [],
+        "declaration": "let children: [SourceLine]?",
+        "kind": "swift.property",
+        "path": [
+          "BlockMatch",
+          "children"
+        ]
+      },
+      "s:12SetzerParser10BlockTokenV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct BlockToken",
+        "kind": "swift.struct",
+        "path": [
+          "BlockToken"
+        ]
+      },
+      "s:12SetzerParser10BlockTokenV4roleSSvp": {
+        "conformances": [],
+        "declaration": "let role: String",
+        "kind": "swift.property",
+        "path": [
+          "BlockToken",
+          "role"
+        ]
+      },
+      "s:12SetzerParser10BlockTokenV5range0A6Syntax11SourceRangeVvp": {
+        "conformances": [],
+        "declaration": "let range: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "BlockToken",
+          "range"
+        ]
+      },
+      "s:12SetzerParser10BlockTokenV_5rangeACSS_0A6Syntax11SourceRangeVtcfc": {
+        "conformances": [],
+        "declaration": "init(_ role: String, range: SourceRange)",
+        "kind": "swift.init",
+        "path": [
+          "BlockToken",
+          "init(_:range:)"
+        ]
+      },
+      "s:12SetzerParser10InlineRuleV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct InlineRule",
+        "kind": "swift.struct",
+        "path": [
+          "InlineRule"
+        ]
+      },
+      "s:12SetzerParser10InlineRuleV10identifierSSvp": {
+        "conformances": [],
+        "declaration": "let identifier: String",
+        "kind": "swift.property",
+        "path": [
+          "InlineRule",
+          "identifier"
+        ]
+      },
+      "s:12SetzerParser10InlineRuleV19allowsBracketSyntaxSbvp": {
+        "conformances": [],
+        "declaration": "let allowsBracketSyntax: Bool",
+        "kind": "swift.property",
+        "path": [
+          "InlineRule",
+          "allowsBracketSyntax"
+        ]
+      },
+      "s:12SetzerParser10InlineRuleV5matchyAA0C5MatchVSgAA0C7ContextVYbcvp": {
+        "conformances": [],
+        "declaration": "let match: Matcher",
+        "kind": "swift.property",
+        "path": [
+          "InlineRule",
+          "match"
+        ]
+      },
+      "s:12SetzerParser10InlineRuleV7Matchera": {
+        "conformances": [],
+        "declaration": "typealias Matcher = @Sendable (InlineContext) -> InlineMatch?",
+        "kind": "swift.typealias",
+        "path": [
+          "InlineRule",
+          "Matcher"
+        ]
+      },
+      "s:12SetzerParser10InlineRuleV7prepareAA0C5MatchVSgAA0C7ContextVYbc0A6Syntax8DocumentVYbcSgvp": {
+        "conformances": [],
+        "declaration": "let prepare: (@Sendable (Document) -> Matcher)?",
+        "kind": "swift.property",
+        "path": [
+          "InlineRule",
+          "prepare"
+        ]
+      },
+      "s:12SetzerParser10InlineRuleV7triggers5UInt8Vvp": {
+        "conformances": [],
+        "declaration": "let trigger: UInt8",
+        "kind": "swift.property",
+        "path": [
+          "InlineRule",
+          "trigger"
+        ]
+      },
+      "s:12SetzerParser10InlineRuleV8prioritySivp": {
+        "conformances": [],
+        "declaration": "let priority: Int",
+        "kind": "swift.property",
+        "path": [
+          "InlineRule",
+          "priority"
+        ]
+      },
+      "s:12SetzerParser10InlineRuleV_7trigger8priority19allowsBracketSyntax5matchACSS_s5UInt8VSiSbAA0C5MatchVSgAA0C7ContextVYbctcfc": {
+        "conformances": [],
+        "declaration": "init(_ identifier: String, trigger: UInt8, priority: Int = 0, allowsBracketSyntax: Bool = false, match: @escaping Matcher)",
+        "kind": "swift.init",
+        "path": [
+          "InlineRule",
+          "init(_:trigger:priority:allowsBracketSyntax:match:)"
+        ]
+      },
+      "s:12SetzerParser10InlineRuleV_7trigger8priority19allowsBracketSyntax7prepareACSS_s5UInt8VSiSbAA0C5MatchVSgAA0C7ContextVYbc0aI08DocumentVYbctcfc": {
+        "conformances": [],
+        "declaration": "init(_ identifier: String, trigger: UInt8, priority: Int = 0, allowsBracketSyntax: Bool = false, prepare: @escaping @Sendable (Document) -> Matcher)",
+        "kind": "swift.init",
+        "path": [
+          "InlineRule",
+          "init(_:trigger:priority:allowsBracketSyntax:prepare:)"
+        ]
+      },
+      "s:12SetzerParser10SourceLineV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct SourceLine",
+        "kind": "swift.struct",
+        "path": [
+          "SourceLine"
+        ]
+      },
+      "s:12SetzerParser10SourceLineV12contentRange0A6Syntax0cF0Vvp": {
+        "conformances": [],
+        "declaration": "let contentRange: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "SourceLine",
+          "contentRange"
+        ]
+      },
+      "s:12SetzerParser10SourceLineV13physicalRange0A6Syntax0cF0Vvp": {
+        "conformances": [],
+        "declaration": "let physicalRange: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "SourceLine",
+          "physicalRange"
+        ]
+      },
+      "s:12SetzerParser10SourceLineV18virtualIndentationSivp": {
+        "conformances": [],
+        "declaration": "let virtualIndentation: Int",
+        "kind": "swift.property",
+        "path": [
+          "SourceLine",
+          "virtualIndentation"
+        ]
+      },
+      "s:12SetzerParser10SourceLineV5range0A6Syntax0C5RangeVvp": {
+        "conformances": [],
+        "declaration": "let range: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "SourceLine",
+          "range"
+        ]
+      },
+      "s:12SetzerParser11InlineMatchV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct InlineMatch",
+        "kind": "swift.struct",
+        "path": [
+          "InlineMatch"
+        ]
+      },
+      "s:12SetzerParser11InlineMatchV4data0A6Syntax8NodeDataOvp": {
+        "conformances": [],
+        "declaration": "let data: NodeData",
+        "kind": "swift.property",
+        "path": [
+          "InlineMatch",
+          "data"
+        ]
+      },
+      "s:12SetzerParser11InlineMatchV6tokensSayAA10BlockTokenVGvp": {
+        "conformances": [],
+        "declaration": "let tokens: [BlockToken]",
+        "kind": "swift.property",
+        "path": [
+          "InlineMatch",
+          "tokens"
+        ]
+      },
+      "s:12SetzerParser11InlineMatchV8children0A6Syntax11SourceRangeVSgvp": {
+        "conformances": [],
+        "declaration": "let children: SourceRange?",
+        "kind": "swift.property",
+        "path": [
+          "InlineMatch",
+          "children"
+        ]
+      },
+      "s:12SetzerParser11InlineMatchV8consumed4data8children9delimiter6tokensACSi_0A6Syntax8NodeDataOAI11SourceRangeVSgAA16DelimiterRequestOSayAA10BlockTokenVGtcfc": {
+        "conformances": [],
+        "declaration": "init(consumed: Int, data: NodeData, children: SourceRange? = nil, delimiter: DelimiterRequest = .none, tokens: [BlockToken] = [])",
+        "kind": "swift.init",
+        "path": [
+          "InlineMatch",
+          "init(consumed:data:children:delimiter:tokens:)"
+        ]
+      },
+      "s:12SetzerParser11InlineMatchV8consumedSivp": {
+        "conformances": [],
+        "declaration": "let consumed: Int",
+        "kind": "swift.property",
+        "path": [
+          "InlineMatch",
+          "consumed"
+        ]
+      },
+      "s:12SetzerParser11InlineMatchV9delimiterAA16DelimiterRequestOvp": {
+        "conformances": [],
+        "declaration": "let delimiter: DelimiterRequest",
+        "kind": "swift.property",
+        "path": [
+          "InlineMatch",
+          "delimiter"
+        ]
+      },
+      "s:12SetzerParser12BlockContextV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct BlockContext",
+        "kind": "swift.struct",
+        "path": [
+          "BlockContext"
+        ]
+      },
+      "s:12SetzerParser12BlockContextV02isC10QuoteStartSbvp": {
+        "conformances": [],
+        "declaration": "let isBlockQuoteStart: Bool",
+        "kind": "swift.property",
+        "path": [
+          "BlockContext",
+          "isBlockQuoteStart"
+        ]
+      },
+      "s:12SetzerParser12BlockContextV13droppingASCII_4fromAA10SourceLineVSgSi_AGtF": {
+        "conformances": [],
+        "declaration": "func droppingASCII(_ count: Int, from line: SourceLine) -> SourceLine?",
+        "kind": "swift.method",
+        "path": [
+          "BlockContext",
+          "droppingASCII(_:from:)"
+        ]
+      },
+      "s:12SetzerParser12BlockContextV13droppingBytes_4fromAA10SourceLineVSgSi_AGtF": {
+        "conformances": [],
+        "declaration": "func droppingBytes(_ count: Int, from line: SourceLine) -> SourceLine?",
+        "kind": "swift.method",
+        "path": [
+          "BlockContext",
+          "droppingBytes(_:from:)"
+        ]
+      },
+      "s:12SetzerParser12BlockContextV15isDocumentStartSbvp": {
+        "conformances": [],
+        "declaration": "let isDocumentStart: Bool",
+        "kind": "swift.property",
+        "path": [
+          "BlockContext",
+          "isDocumentStart"
+        ]
+      },
+      "s:12SetzerParser12BlockContextV19droppingIndentation_4fromAA10SourceLineVSgSi_AGtF": {
+        "conformances": [],
+        "declaration": "func droppingIndentation(_ columns: Int, from line: SourceLine) -> SourceLine?",
+        "kind": "swift.method",
+        "path": [
+          "BlockContext",
+          "droppingIndentation(_:from:)"
+        ]
+      },
+      "s:12SetzerParser12BlockContextV4line2atAA10SourceLineVSgSi_tF": {
+        "conformances": [],
+        "declaration": "func line(at index: Int) -> SourceLine?",
+        "kind": "swift.method",
+        "path": [
+          "BlockContext",
+          "line(at:)"
+        ]
+      },
+      "s:12SetzerParser12BlockContextV4lineAA10SourceLineVvp": {
+        "conformances": [],
+        "declaration": "let line: SourceLine",
+        "kind": "swift.property",
+        "path": [
+          "BlockContext",
+          "line"
+        ]
+      },
+      "s:12SetzerParser12BlockContextV6sourceSays5UInt8VGvp": {
+        "conformances": [],
+        "declaration": "let source: [UInt8]",
+        "kind": "swift.property",
+        "path": [
+          "BlockContext",
+          "source"
+        ]
+      },
+      "s:12SetzerParser12BlockContextV7optionsSDySS0A6Syntax0F5ValueOGvp": {
+        "conformances": [],
+        "declaration": "let options: [String : SyntaxValue]",
+        "kind": "swift.property",
+        "path": [
+          "BlockContext",
+          "options"
+        ]
+      },
+      "s:12SetzerParser12BlockContextV9lineCountSivp": {
+        "conformances": [],
+        "declaration": "let lineCount: Int",
+        "kind": "swift.property",
+        "path": [
+          "BlockContext",
+          "lineCount"
+        ]
+      },
+      "s:12SetzerParser12BlockContextV9lineIndexSivp": {
+        "conformances": [],
+        "declaration": "let lineIndex: Int",
+        "kind": "swift.property",
+        "path": [
+          "BlockContext",
+          "lineIndex"
+        ]
+      },
+      "s:12SetzerParser13CoreBlockRuleO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:SY\"}",
+          "{\"target\": \"s:s12CaseIterableP\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum CoreBlockRule",
+        "kind": "swift.enum",
+        "path": [
+          "CoreBlockRule"
+        ]
+      },
+      "s:12SetzerParser13CoreBlockRuleO04htmlD0yA2CmF": {
+        "conformances": [],
+        "declaration": "case htmlBlock",
+        "kind": "swift.enum.case",
+        "path": [
+          "CoreBlockRule",
+          "htmlBlock"
+        ]
+      },
+      "s:12SetzerParser13CoreBlockRuleO10atxHeadingyA2CmF": {
+        "conformances": [],
+        "declaration": "case atxHeading",
+        "kind": "swift.enum.case",
+        "path": [
+          "CoreBlockRule",
+          "atxHeading"
+        ]
+      },
+      "s:12SetzerParser13CoreBlockRuleO10blockQuoteyA2CmF": {
+        "conformances": [],
+        "declaration": "case blockQuote",
+        "kind": "swift.enum.case",
+        "path": [
+          "CoreBlockRule",
+          "blockQuote"
+        ]
+      },
+      "s:12SetzerParser13CoreBlockRuleO10fencedCodeyA2CmF": {
+        "conformances": [],
+        "declaration": "case fencedCode",
+        "kind": "swift.enum.case",
+        "path": [
+          "CoreBlockRule",
+          "fencedCode"
+        ]
+      },
+      "s:12SetzerParser13CoreBlockRuleO12indentedCodeyA2CmF": {
+        "conformances": [],
+        "declaration": "case indentedCode",
+        "kind": "swift.enum.case",
+        "path": [
+          "CoreBlockRule",
+          "indentedCode"
+        ]
+      },
+      "s:12SetzerParser13CoreBlockRuleO13setextHeadingyA2CmF": {
+        "conformances": [],
+        "declaration": "case setextHeading",
+        "kind": "swift.enum.case",
+        "path": [
+          "CoreBlockRule",
+          "setextHeading"
+        ]
+      },
+      "s:12SetzerParser13CoreBlockRuleO13thematicBreakyA2CmF": {
+        "conformances": [],
+        "declaration": "case thematicBreak",
+        "kind": "swift.enum.case",
+        "path": [
+          "CoreBlockRule",
+          "thematicBreak"
+        ]
+      },
+      "s:12SetzerParser13CoreBlockRuleO19referenceDefinitionyA2CmF": {
+        "conformances": [],
+        "declaration": "case referenceDefinition",
+        "kind": "swift.enum.case",
+        "path": [
+          "CoreBlockRule",
+          "referenceDefinition"
+        ]
+      },
+      "s:12SetzerParser13CoreBlockRuleO4listyA2CmF": {
+        "conformances": [],
+        "declaration": "case list",
+        "kind": "swift.enum.case",
+        "path": [
+          "CoreBlockRule",
+          "list"
+        ]
+      },
+      "s:12SetzerParser13InlineContextV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct InlineContext",
+        "kind": "swift.struct",
+        "path": [
+          "InlineContext"
+        ]
+      },
+      "s:12SetzerParser13InlineContextV14originalRanges3forSay0A6Syntax11SourceRangeVGSgAH_tF": {
+        "conformances": [],
+        "declaration": "func originalRanges(for range: SourceRange) -> [SourceRange]?",
+        "kind": "swift.method",
+        "path": [
+          "InlineContext",
+          "originalRanges(for:)"
+        ]
+      },
+      "s:12SetzerParser13InlineContextV5inputSays5UInt8VGvp": {
+        "conformances": [],
+        "declaration": "let input: [UInt8]",
+        "kind": "swift.property",
+        "path": [
+          "InlineContext",
+          "input"
+        ]
+      },
+      "s:12SetzerParser13InlineContextV6offsetSivp": {
+        "conformances": [],
+        "declaration": "let offset: Int",
+        "kind": "swift.property",
+        "path": [
+          "InlineContext",
+          "offset"
+        ]
+      },
+      "s:12SetzerParser13InlineContextV6sourceSays5UInt8VGvp": {
+        "conformances": [],
+        "declaration": "let source: [UInt8]",
+        "kind": "swift.property",
+        "path": [
+          "InlineContext",
+          "source"
+        ]
+      },
+      "s:12SetzerParser13InlineContextV7canOpenSbvp": {
+        "conformances": [],
+        "declaration": "let canOpen: Bool",
+        "kind": "swift.property",
+        "path": [
+          "InlineContext",
+          "canOpen"
+        ]
+      },
+      "s:12SetzerParser13InlineContextV7openersSayAA15DelimiterHandleVGvp": {
+        "conformances": [],
+        "declaration": "let openers: [DelimiterHandle]",
+        "kind": "swift.property",
+        "path": [
+          "InlineContext",
+          "openers"
+        ]
+      },
+      "s:12SetzerParser13InlineContextV7optionsSDySS0A6Syntax0F5ValueOGvp": {
+        "conformances": [],
+        "declaration": "let options: [String : SyntaxValue]",
+        "kind": "swift.property",
+        "path": [
+          "InlineContext",
+          "options"
+        ]
+      },
+      "s:12SetzerParser13InlineContextV8canCloseSbvp": {
+        "conformances": [],
+        "declaration": "let canClose: Bool",
+        "kind": "swift.property",
+        "path": [
+          "InlineContext",
+          "canClose"
+        ]
+      },
+      "s:12SetzerParser13InlineContextV9runLengthSivp": {
+        "conformances": [],
+        "declaration": "let runLength: Int",
+        "kind": "swift.property",
+        "path": [
+          "InlineContext",
+          "runLength"
+        ]
+      },
+      "s:12SetzerParser14BlockTransformV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct BlockTransform",
+        "kind": "swift.struct",
+        "path": [
+          "BlockTransform"
+        ]
+      },
+      "s:12SetzerParser14BlockTransformV10identifierSSvp": {
+        "conformances": [],
+        "declaration": "let identifier: String",
+        "kind": "swift.property",
+        "path": [
+          "BlockTransform",
+          "identifier"
+        ]
+      },
+      "s:12SetzerParser14BlockTransformV9transformy0A6Syntax8DocumentVAGYbKcvp": {
+        "conformances": [],
+        "declaration": "let transform: @Sendable (Document) throws -> Document",
+        "kind": "swift.property",
+        "path": [
+          "BlockTransform",
+          "transform"
+        ]
+      },
+      "s:12SetzerParser14BlockTransformV_9transformACSS_0A6Syntax8DocumentVAGYbKctcfc": {
+        "conformances": [],
+        "declaration": "init(_ identifier: String, transform: @escaping @Sendable (Document) throws -> Document)",
+        "kind": "swift.init",
+        "path": [
+          "BlockTransform",
+          "init(_:transform:)"
+        ]
+      },
+      "s:12SetzerParser15DelimiterHandleV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct DelimiterHandle",
+        "kind": "swift.struct",
+        "path": [
+          "DelimiterHandle"
+        ]
+      },
+      "s:12SetzerParser15DelimiterHandleV2eeoiySbAC_ACtFZ": {
+        "conformances": [],
+        "declaration": "static func == (lhs: `Self`, rhs: `Self`) -> Bool",
+        "kind": "swift.func.op",
+        "path": [
+          "DelimiterHandle",
+          "==(_:_:)"
+        ]
+      },
+      "s:12SetzerParser15DelimiterHandleV4hash4intoys6HasherVz_tF": {
+        "conformances": [],
+        "declaration": "func hash(into hasher: inout Hasher)",
+        "kind": "swift.method",
+        "path": [
+          "DelimiterHandle",
+          "hash(into:)"
+        ]
+      },
+      "s:12SetzerParser15DelimiterHandleV5ownerSSvp": {
+        "conformances": [],
+        "declaration": "let owner: String",
+        "kind": "swift.property",
+        "path": [
+          "DelimiterHandle",
+          "owner"
+        ]
+      },
+      "s:12SetzerParser15DelimiterHandleV5widthSivp": {
+        "conformances": [],
+        "declaration": "let width: Int",
+        "kind": "swift.property",
+        "path": [
+          "DelimiterHandle",
+          "width"
+        ]
+      },
+      "s:12SetzerParser15DelimiterHandleV6offsetSivp": {
+        "conformances": [],
+        "declaration": "let offset: Int",
+        "kind": "swift.property",
+        "path": [
+          "DelimiterHandle",
+          "offset"
+        ]
+      },
+      "s:12SetzerParser16BuiltinExtensionO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:SY\"}",
+          "{\"target\": \"s:s12CaseIterableP\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum BuiltinExtension",
+        "kind": "swift.enum",
+        "path": [
+          "BuiltinExtension"
+        ]
+      },
+      "s:12SetzerParser16BuiltinExtensionO13strikethroughyA2CmF": {
+        "conformances": [],
+        "declaration": "case strikethrough",
+        "kind": "swift.enum.case",
+        "path": [
+          "BuiltinExtension",
+          "strikethrough"
+        ]
+      },
+      "s:12SetzerParser16BuiltinExtensionO20collapseNestedStrongyA2CmF": {
+        "conformances": [],
+        "declaration": "case collapseNestedStrong",
+        "kind": "swift.enum.case",
+        "path": [
+          "BuiltinExtension",
+          "collapseNestedStrong"
+        ]
+      },
+      "s:12SetzerParser16BuiltinExtensionO5tableyA2CmF": {
+        "conformances": [],
+        "declaration": "case table",
+        "kind": "swift.enum.case",
+        "path": [
+          "BuiltinExtension",
+          "table"
+        ]
+      },
+      "s:12SetzerParser16BuiltinExtensionO8autolinkyA2CmF": {
+        "conformances": [],
+        "declaration": "case autolink",
+        "kind": "swift.enum.case",
+        "path": [
+          "BuiltinExtension",
+          "autolink"
+        ]
+      },
+      "s:12SetzerParser16BuiltinExtensionO8taskListyA2CmF": {
+        "conformances": [],
+        "declaration": "case taskList",
+        "kind": "swift.enum.case",
+        "path": [
+          "BuiltinExtension",
+          "taskList"
+        ]
+      },
+      "s:12SetzerParser16BuiltinExtensionO9tagFilteryA2CmF": {
+        "conformances": [],
+        "declaration": "case tagFilter",
+        "kind": "swift.enum.case",
+        "path": [
+          "BuiltinExtension",
+          "tagFilter"
+        ]
+      },
+      "s:12SetzerParser16DelimiterRequestO": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum DelimiterRequest",
+        "kind": "swift.enum",
+        "path": [
+          "DelimiterRequest"
+        ]
+      },
+      "s:12SetzerParser16DelimiterRequestO4noneyA2CmF": {
+        "conformances": [],
+        "declaration": "case none",
+        "kind": "swift.enum.case",
+        "path": [
+          "DelimiterRequest",
+          "none"
+        ]
+      },
+      "s:12SetzerParser16DelimiterRequestO4openyACSi_tcACmF": {
+        "conformances": [],
+        "declaration": "case open(width: Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DelimiterRequest",
+          "open(width:)"
+        ]
+      },
+      "s:12SetzerParser16DelimiterRequestO5closeyAcA0C6HandleV_SitcACmF": {
+        "conformances": [],
+        "declaration": "case close(DelimiterHandle, width: Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DelimiterRequest",
+          "close(_:width:)"
+        ]
+      },
+      "s:12SetzerParser17MarkdownExtensionV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct MarkdownExtension",
+        "kind": "swift.struct",
+        "path": [
+          "MarkdownExtension"
+        ]
+      },
+      "s:12SetzerParser17MarkdownExtensionV10blockRulesSayAA9BlockRuleVGvp": {
+        "conformances": [],
+        "declaration": "let blockRules: [BlockRule]",
+        "kind": "swift.property",
+        "path": [
+          "MarkdownExtension",
+          "blockRules"
+        ]
+      },
+      "s:12SetzerParser17MarkdownExtensionV10descriptor0A6Syntax0D10DescriptorVvp": {
+        "conformances": [],
+        "declaration": "let descriptor: ExtensionDescriptor",
+        "kind": "swift.property",
+        "path": [
+          "MarkdownExtension",
+          "descriptor"
+        ]
+      },
+      "s:12SetzerParser17MarkdownExtensionV10descriptor10blockRules10transforms06inlineG020postInlineTransformsAC0A6Syntax0D10DescriptorV_SayAA9BlockRuleVGSayAA0O9TransformVGSayAA0kP0VGAQtcfc": {
+        "conformances": [],
+        "declaration": "init(descriptor: ExtensionDescriptor, blockRules: [BlockRule] = [], transforms: [BlockTransform] = [], inlineRules: [InlineRule] = [], postInlineTransforms: [BlockTransform] = [])",
+        "kind": "swift.init",
+        "path": [
+          "MarkdownExtension",
+          "init(descriptor:blockRules:transforms:inlineRules:postInlineTransforms:)"
+        ]
+      },
+      "s:12SetzerParser17MarkdownExtensionV10identifierSSvp": {
+        "conformances": [],
+        "declaration": "var identifier: String { get }",
+        "kind": "swift.property",
+        "path": [
+          "MarkdownExtension",
+          "identifier"
+        ]
+      },
+      "s:12SetzerParser17MarkdownExtensionV10transformsSayAA14BlockTransformVGvp": {
+        "conformances": [],
+        "declaration": "let transforms: [BlockTransform]",
+        "kind": "swift.property",
+        "path": [
+          "MarkdownExtension",
+          "transforms"
+        ]
+      },
+      "s:12SetzerParser17MarkdownExtensionV11inlineRulesSayAA10InlineRuleVGvp": {
+        "conformances": [],
+        "declaration": "let inlineRules: [InlineRule]",
+        "kind": "swift.property",
+        "path": [
+          "MarkdownExtension",
+          "inlineRules"
+        ]
+      },
+      "s:12SetzerParser17MarkdownExtensionV20postInlineTransformsSayAA14BlockTransformVGvp": {
+        "conformances": [],
+        "declaration": "let postInlineTransforms: [BlockTransform]",
+        "kind": "swift.property",
+        "path": [
+          "MarkdownExtension",
+          "postInlineTransforms"
+        ]
+      },
+      "s:12SetzerParser17MarkdownExtensionV_9nodeKinds7options10blockRules10transforms06inlineI020postInlineTransformsACSS_Shy0A6Syntax8NodeKindVGSDySSAJ0D6OptionVGSayAA9BlockRuleVGSayAA0S9TransformVGSayAA0mT0VGAVtcfc": {
+        "conformances": [],
+        "declaration": "init(_ identifier: String, nodeKinds: Set<NodeKind>, options: [String : ExtensionOption] = [:], blockRules: [BlockRule] = [], transforms: [BlockTransform] = [], inlineRules: [InlineRule] = [], postInlineTransforms: [BlockTransform] = [])",
+        "kind": "swift.init",
+        "path": [
+          "MarkdownExtension",
+          "init(_:nodeKinds:options:blockRules:transforms:inlineRules:postInlineTransforms:)"
+        ]
+      },
+      "s:12SetzerParser22ExtensionConfigurationV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct ExtensionConfiguration",
+        "kind": "swift.struct",
+        "path": [
+          "ExtensionConfiguration"
+        ]
+      },
+      "s:12SetzerParser22ExtensionConfigurationV10identifierSSvp": {
+        "conformances": [],
+        "declaration": "let identifier: String",
+        "kind": "swift.property",
+        "path": [
+          "ExtensionConfiguration",
+          "identifier"
+        ]
+      },
+      "s:12SetzerParser22ExtensionConfigurationV7optionsSDySS0A6Syntax0F5ValueOGvp": {
+        "conformances": [],
+        "declaration": "let options: [String : SyntaxValue]",
+        "kind": "swift.property",
+        "path": [
+          "ExtensionConfiguration",
+          "options"
+        ]
+      },
+      "s:12SetzerParser22ExtensionConfigurationV_7optionsACSS_SDySS0A6Syntax0F5ValueOGtcfc": {
+        "conformances": [],
+        "declaration": "init(_ identifier: String, options: [String : SyntaxValue] = [:])",
+        "kind": "swift.init",
+        "path": [
+          "ExtensionConfiguration",
+          "init(_:options:)"
+        ]
+      },
+      "s:12SetzerParser7ProfileV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct Profile",
+        "kind": "swift.struct",
+        "path": [
+          "Profile"
+        ]
+      },
+      "s:12SetzerParser7ProfileV10commonMarkACvpZ": {
+        "conformances": [],
+        "declaration": "static let commonMark: Profile",
+        "kind": "swift.type.property",
+        "path": [
+          "Profile",
+          "commonMark"
+        ]
+      },
+      "s:12SetzerParser7ProfileV10extensionsSayAA22ExtensionConfigurationVGvp": {
+        "conformances": [],
+        "declaration": "let extensions: [ExtensionConfiguration]",
+        "kind": "swift.property",
+        "path": [
+          "Profile",
+          "extensions"
+        ]
+      },
+      "s:12SetzerParser7ProfileV13disabledRulesShySSGvp": {
+        "conformances": [],
+        "declaration": "let disabledRules: Set<String>",
+        "kind": "swift.property",
+        "path": [
+          "Profile",
+          "disabledRules"
+        ]
+      },
+      "s:12SetzerParser7ProfileV4name10extensions13disabledRules9ruleOrderACSS_SayAA22ExtensionConfigurationVGShySSGSaySSGtcfc": {
+        "conformances": [],
+        "declaration": "init(name: String, extensions: [ExtensionConfiguration] = [], disabledRules: Set<String> = [], ruleOrder: [String] = [])",
+        "kind": "swift.init",
+        "path": [
+          "Profile",
+          "init(name:extensions:disabledRules:ruleOrder:)"
+        ]
+      },
+      "s:12SetzerParser7ProfileV4nameSSvp": {
+        "conformances": [],
+        "declaration": "let name: String",
+        "kind": "swift.property",
+        "path": [
+          "Profile",
+          "name"
+        ]
+      },
+      "s:12SetzerParser7ProfileV9ruleOrderSaySSGvp": {
+        "conformances": [],
+        "declaration": "let ruleOrder: [String]",
+        "kind": "swift.property",
+        "path": [
+          "Profile",
+          "ruleOrder"
+        ]
+      },
+      "s:12SetzerParser9BlockRuleV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct BlockRule",
+        "kind": "swift.struct",
+        "path": [
+          "BlockRule"
+        ]
+      },
+      "s:12SetzerParser9BlockRuleV10identifierSSvp": {
+        "conformances": [],
+        "declaration": "let identifier: String",
+        "kind": "swift.property",
+        "path": [
+          "BlockRule",
+          "identifier"
+        ]
+      },
+      "s:12SetzerParser9BlockRuleV19interruptsParagraphSbvp": {
+        "conformances": [],
+        "declaration": "let interruptsParagraph: Bool",
+        "kind": "swift.property",
+        "path": [
+          "BlockRule",
+          "interruptsParagraph"
+        ]
+      },
+      "s:12SetzerParser9BlockRuleV5matchyAA0C5MatchVSgAA0C7ContextVYbcvp": {
+        "conformances": [],
+        "declaration": "let match: @Sendable (BlockContext) -> BlockMatch?",
+        "kind": "swift.property",
+        "path": [
+          "BlockRule",
+          "match"
+        ]
+      },
+      "s:12SetzerParser9BlockRuleV7triggers5UInt8VSgvp": {
+        "conformances": [],
+        "declaration": "let trigger: UInt8?",
+        "kind": "swift.property",
+        "path": [
+          "BlockRule",
+          "trigger"
+        ]
+      },
+      "s:12SetzerParser9BlockRuleV8prioritySivp": {
+        "conformances": [],
+        "declaration": "let priority: Int",
+        "kind": "swift.property",
+        "path": [
+          "BlockRule",
+          "priority"
+        ]
+      },
+      "s:12SetzerParser9BlockRuleV_8priority7trigger19interruptsParagraph5matchACSS_Sis5UInt8VSgSbAA0C5MatchVSgAA0C7ContextVYbctcfc": {
+        "conformances": [],
+        "declaration": "init(_ identifier: String, priority: Int = 0, trigger: UInt8? = nil, interruptsParagraph: Bool = false, match: @escaping @Sendable (BlockContext) -> BlockMatch?)",
+        "kind": "swift.init",
+        "path": [
+          "BlockRule",
+          "init(_:priority:trigger:interruptsParagraph:match:)"
+        ]
+      }
+    },
+    "SetzerSyntax": {
+      "s:12SetzerSyntax09ReferenceB0V": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct ReferenceSyntax",
+        "kind": "swift.struct",
+        "path": [
+          "ReferenceSyntax"
+        ]
+      },
+      "s:12SetzerSyntax09ReferenceB0V11destinationSayAA11SourceRangeVGvp": {
+        "conformances": [],
+        "declaration": "let destination: [SourceRange]",
+        "kind": "swift.property",
+        "path": [
+          "ReferenceSyntax",
+          "destination"
+        ]
+      },
+      "s:12SetzerSyntax09ReferenceB0V5label11destination5title7markersACSayAA11SourceRangeVG_A3Jtcfc": {
+        "conformances": [],
+        "declaration": "init(label: [SourceRange], destination: [SourceRange], title: [SourceRange], markers: [SourceRange])",
+        "kind": "swift.init",
+        "path": [
+          "ReferenceSyntax",
+          "init(label:destination:title:markers:)"
+        ]
+      },
+      "s:12SetzerSyntax09ReferenceB0V5labelSayAA11SourceRangeVGvp": {
+        "conformances": [],
+        "declaration": "let label: [SourceRange]",
+        "kind": "swift.property",
+        "path": [
+          "ReferenceSyntax",
+          "label"
+        ]
+      },
+      "s:12SetzerSyntax09ReferenceB0V5titleSayAA11SourceRangeVGvp": {
+        "conformances": [],
+        "declaration": "let title: [SourceRange]",
+        "kind": "swift.property",
+        "path": [
+          "ReferenceSyntax",
+          "title"
+        ]
+      },
+      "s:12SetzerSyntax09ReferenceB0V7markersSayAA11SourceRangeVGvp": {
+        "conformances": [],
+        "declaration": "let markers: [SourceRange]",
+        "kind": "swift.property",
+        "path": [
+          "ReferenceSyntax",
+          "markers"
+        ]
+      },
+      "s:12SetzerSyntax0B5TokenV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct SyntaxToken",
+        "kind": "swift.struct",
+        "path": [
+          "SyntaxToken"
+        ]
+      },
+      "s:12SetzerSyntax0B5TokenV4roleSSvp": {
+        "conformances": [],
+        "declaration": "let role: String",
+        "kind": "swift.property",
+        "path": [
+          "SyntaxToken",
+          "role"
+        ]
+      },
+      "s:12SetzerSyntax0B5TokenV5ownerSivp": {
+        "conformances": [],
+        "declaration": "let owner: Int",
+        "kind": "swift.property",
+        "path": [
+          "SyntaxToken",
+          "owner"
+        ]
+      },
+      "s:12SetzerSyntax0B5TokenV5rangeAA11SourceRangeVvp": {
+        "conformances": [],
+        "declaration": "let range: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "SyntaxToken",
+          "range"
+        ]
+      },
+      "s:12SetzerSyntax0B5TokenV_5range5ownerACSS_AA11SourceRangeVSitcfc": {
+        "conformances": [],
+        "declaration": "init(_ role: String, range: SourceRange, owner: Int)",
+        "kind": "swift.init",
+        "path": [
+          "SyntaxToken",
+          "init(_:range:owner:)"
+        ]
+      },
+      "s:12SetzerSyntax0B5ValueO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "indirect enum SyntaxValue",
+        "kind": "swift.enum",
+        "path": [
+          "SyntaxValue"
+        ]
+      },
+      "s:12SetzerSyntax0B5ValueO5arrayyACSayACGcACmF": {
+        "conformances": [],
+        "declaration": "case array([SyntaxValue])",
+        "kind": "swift.enum.case",
+        "path": [
+          "SyntaxValue",
+          "array(_:)"
+        ]
+      },
+      "s:12SetzerSyntax0B5ValueO6objectyACSDySSACGcACmF": {
+        "conformances": [],
+        "declaration": "case object([String : SyntaxValue])",
+        "kind": "swift.enum.case",
+        "path": [
+          "SyntaxValue",
+          "object(_:)"
+        ]
+      },
+      "s:12SetzerSyntax0B5ValueO6stringyACSScACmF": {
+        "conformances": [],
+        "declaration": "case string(String)",
+        "kind": "swift.enum.case",
+        "path": [
+          "SyntaxValue",
+          "string(_:)"
+        ]
+      },
+      "s:12SetzerSyntax0B5ValueO7booleanyACSbcACmF": {
+        "conformances": [],
+        "declaration": "case boolean(Bool)",
+        "kind": "swift.enum.case",
+        "path": [
+          "SyntaxValue",
+          "boolean(_:)"
+        ]
+      },
+      "s:12SetzerSyntax0B5ValueO7integeryACSicACmF": {
+        "conformances": [],
+        "declaration": "case integer(Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "SyntaxValue",
+          "integer(_:)"
+        ]
+      },
+      "s:12SetzerSyntax10UTF16RangeV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct UTF16Range",
+        "kind": "swift.struct",
+        "path": [
+          "UTF16Range"
+        ]
+      },
+      "s:12SetzerSyntax10UTF16RangeV6lengthSivp": {
+        "conformances": [],
+        "declaration": "let length: Int",
+        "kind": "swift.property",
+        "path": [
+          "UTF16Range",
+          "length"
+        ]
+      },
+      "s:12SetzerSyntax10UTF16RangeV8location6lengthACSi_Sitcfc": {
+        "conformances": [],
+        "declaration": "init(location: Int, length: Int)",
+        "kind": "swift.init",
+        "path": [
+          "UTF16Range",
+          "init(location:length:)"
+        ]
+      },
+      "s:12SetzerSyntax10UTF16RangeV8locationSivp": {
+        "conformances": [],
+        "declaration": "let location: Int",
+        "kind": "swift.property",
+        "path": [
+          "UTF16Range",
+          "location"
+        ]
+      },
+      "s:12SetzerSyntax11SourceIndexV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct SourceIndex",
+        "kind": "swift.struct",
+        "path": [
+          "SourceIndex"
+        ]
+      },
+      "s:12SetzerSyntax11SourceIndexV10utf16CountSivp": {
+        "conformances": [],
+        "declaration": "let utf16Count: Int",
+        "kind": "swift.property",
+        "path": [
+          "SourceIndex",
+          "utf16Count"
+        ]
+      },
+      "s:12SetzerSyntax11SourceIndexV10utf16Range3forAA05UTF16F0VSgAA0cF0V_tF": {
+        "conformances": [],
+        "declaration": "func utf16Range(for range: SourceRange) -> UTF16Range?",
+        "kind": "swift.method",
+        "path": [
+          "SourceIndex",
+          "utf16Range(for:)"
+        ]
+      },
+      "s:12SetzerSyntax11SourceIndexV10utf8Offset07atUTF16F0SiSgSi_tF": {
+        "conformances": [],
+        "declaration": "func utf8Offset(atUTF16Offset offset: Int) -> Int?",
+        "kind": "swift.method",
+        "path": [
+          "SourceIndex",
+          "utf8Offset(atUTF16Offset:)"
+        ]
+      },
+      "s:12SetzerSyntax11SourceIndexV10utf8Offset2atSiSgAA0C8PositionV_tF": {
+        "conformances": [],
+        "declaration": "func utf8Offset(at position: SourcePosition) -> Int?",
+        "kind": "swift.method",
+        "path": [
+          "SourceIndex",
+          "utf8Offset(at:)"
+        ]
+      },
+      "s:12SetzerSyntax11SourceIndexV10utf8Offset6ofLineSiSgSi_tF": {
+        "conformances": [],
+        "declaration": "func utf8Offset(ofLine line: Int) -> Int?",
+        "kind": "swift.method",
+        "path": [
+          "SourceIndex",
+          "utf8Offset(ofLine:)"
+        ]
+      },
+      "s:12SetzerSyntax11SourceIndexV11sourceRange3forAA0cF0VSgAA05UTF16F0V_tF": {
+        "conformances": [],
+        "declaration": "func sourceRange(for range: UTF16Range) -> SourceRange?",
+        "kind": "swift.method",
+        "path": [
+          "SourceIndex",
+          "sourceRange(for:)"
+        ]
+      },
+      "s:12SetzerSyntax11SourceIndexV11utf16Offset06atUTF8F0SiSgSi_tF": {
+        "conformances": [],
+        "declaration": "func utf16Offset(atUTF8Offset offset: Int) -> Int?",
+        "kind": "swift.method",
+        "path": [
+          "SourceIndex",
+          "utf16Offset(atUTF8Offset:)"
+        ]
+      },
+      "s:12SetzerSyntax11SourceIndexV8position12atUTF8OffsetAA0C8PositionVSgSi_tF": {
+        "conformances": [],
+        "declaration": "func position(atUTF8Offset offset: Int) -> SourcePosition?",
+        "kind": "swift.method",
+        "path": [
+          "SourceIndex",
+          "position(atUTF8Offset:)"
+        ]
+      },
+      "s:12SetzerSyntax11SourceIndexV9lineCountSivp": {
+        "conformances": [],
+        "declaration": "let lineCount: Int",
+        "kind": "swift.property",
+        "path": [
+          "SourceIndex",
+          "lineCount"
+        ]
+      },
+      "s:12SetzerSyntax11SourceIndexVyACSays5UInt8VGcfc": {
+        "conformances": [],
+        "declaration": "init(_ source: [UInt8])",
+        "kind": "swift.init",
+        "path": [
+          "SourceIndex",
+          "init(_:)"
+        ]
+      },
+      "s:12SetzerSyntax11SourceIndexVyAcA8DocumentVcfc": {
+        "conformances": [],
+        "declaration": "init(_ document: Document)",
+        "kind": "swift.init",
+        "path": [
+          "SourceIndex",
+          "init(_:)"
+        ]
+      },
+      "s:12SetzerSyntax11SourceRangeV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct SourceRange",
+        "kind": "swift.struct",
+        "path": [
+          "SourceRange"
+        ]
+      },
+      "s:12SetzerSyntax11SourceRangeV10lowerBoundSivp": {
+        "conformances": [],
+        "declaration": "let lowerBound: Int",
+        "kind": "swift.property",
+        "path": [
+          "SourceRange",
+          "lowerBound"
+        ]
+      },
+      "s:12SetzerSyntax11SourceRangeV10upperBoundSivp": {
+        "conformances": [],
+        "declaration": "let upperBound: Int",
+        "kind": "swift.property",
+        "path": [
+          "SourceRange",
+          "upperBound"
+        ]
+      },
+      "s:12SetzerSyntax11SourceRangeV5countSivp": {
+        "conformances": [],
+        "declaration": "var count: Int { get }",
+        "kind": "swift.property",
+        "path": [
+          "SourceRange",
+          "count"
+        ]
+      },
+      "s:12SetzerSyntax11SourceRangeV7isEmptySbvp": {
+        "conformances": [],
+        "declaration": "var isEmpty: Bool { get }",
+        "kind": "swift.property",
+        "path": [
+          "SourceRange",
+          "isEmpty"
+        ]
+      },
+      "s:12SetzerSyntax11SourceRangeV8containsySbACF": {
+        "conformances": [],
+        "declaration": "func contains(_ other: SourceRange) -> Bool",
+        "kind": "swift.method",
+        "path": [
+          "SourceRange",
+          "contains(_:)"
+        ]
+      },
+      "s:12SetzerSyntax11SourceRangeVyACSi_Sitcfc": {
+        "conformances": [],
+        "declaration": "init(_ lowerBound: Int, _ upperBound: Int)",
+        "kind": "swift.init",
+        "path": [
+          "SourceRange",
+          "init(_:_:)"
+        ]
+      },
+      "s:12SetzerSyntax12OutlineEntryV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct OutlineEntry",
+        "kind": "swift.struct",
+        "path": [
+          "OutlineEntry"
+        ]
+      },
+      "s:12SetzerSyntax12OutlineEntryV13parentHeadingSiSgvp": {
+        "conformances": [],
+        "declaration": "let parentHeading: Int?",
+        "kind": "swift.property",
+        "path": [
+          "OutlineEntry",
+          "parentHeading"
+        ]
+      },
+      "s:12SetzerSyntax12OutlineEntryV4nodeSivp": {
+        "conformances": [],
+        "declaration": "let node: Int",
+        "kind": "swift.property",
+        "path": [
+          "OutlineEntry",
+          "node"
+        ]
+      },
+      "s:12SetzerSyntax12OutlineEntryV5levelSivp": {
+        "conformances": [],
+        "declaration": "let level: Int",
+        "kind": "swift.property",
+        "path": [
+          "OutlineEntry",
+          "level"
+        ]
+      },
+      "s:12SetzerSyntax12OutlineEntryV5rangeAA11SourceRangeVvp": {
+        "conformances": [],
+        "declaration": "let range: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "OutlineEntry",
+          "range"
+        ]
+      },
+      "s:12SetzerSyntax12OutlineEntryV5titleSSvp": {
+        "conformances": [],
+        "declaration": "let title: String",
+        "kind": "swift.property",
+        "path": [
+          "OutlineEntry",
+          "title"
+        ]
+      },
+      "s:12SetzerSyntax12SuggestedFixV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct SuggestedFix",
+        "kind": "swift.struct",
+        "path": [
+          "SuggestedFix"
+        ]
+      },
+      "s:12SetzerSyntax12SuggestedFixV5editsSayAA0C4EditVGvp": {
+        "conformances": [],
+        "declaration": "let edits: [SuggestedEdit]",
+        "kind": "swift.property",
+        "path": [
+          "SuggestedFix",
+          "edits"
+        ]
+      },
+      "s:12SetzerSyntax12SuggestedFixV7message5editsAcA17DiagnosticMessageV_SayAA0C4EditVGtKcfc": {
+        "conformances": [],
+        "declaration": "init(message: DiagnosticMessage, edits: [SuggestedEdit]) throws",
+        "kind": "swift.init",
+        "path": [
+          "SuggestedFix",
+          "init(message:edits:)"
+        ]
+      },
+      "s:12SetzerSyntax12SuggestedFixV7messageAA17DiagnosticMessageVvp": {
+        "conformances": [],
+        "declaration": "let message: DiagnosticMessage",
+        "kind": "swift.property",
+        "path": [
+          "SuggestedFix",
+          "message"
+        ]
+      },
+      "s:12SetzerSyntax12SuggestedFixV8applying2toSays5UInt8VGAH_tKF": {
+        "conformances": [],
+        "declaration": "func applying(to source: [UInt8]) throws -> [UInt8]",
+        "kind": "swift.method",
+        "path": [
+          "SuggestedFix",
+          "applying(to:)"
+        ]
+      },
+      "s:12SetzerSyntax12SuggestedFixV8validate2inySays5UInt8VG_tKF": {
+        "conformances": [],
+        "declaration": "func validate(in source: [UInt8]) throws",
+        "kind": "swift.method",
+        "path": [
+          "SuggestedFix",
+          "validate(in:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentErrorO": {
+        "conformances": [
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s5ErrorP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum DocumentError",
+        "kind": "swift.enum",
+        "path": [
+          "DocumentError"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentErrorO11invalidRootyA2CmF": {
+        "conformances": [],
+        "declaration": "case invalidRoot",
+        "kind": "swift.enum.case",
+        "path": [
+          "DocumentError",
+          "invalidRoot"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentErrorO12invalidChildyACSi_SitcACmF": {
+        "conformances": [],
+        "declaration": "case invalidChild(parent: Int, child: Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DocumentError",
+          "invalidChild(parent:child:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentErrorO12invalidIndexyACSi_SitcACmF": {
+        "conformances": [],
+        "declaration": "case invalidIndex(node: Int, target: Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DocumentError",
+          "invalidIndex(node:target:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentErrorO12invalidRangeyACSi_tcACmF": {
+        "conformances": [],
+        "declaration": "case invalidRange(node: Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DocumentError",
+          "invalidRange(node:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentErrorO12invalidTokenyACSicACmF": {
+        "conformances": [],
+        "declaration": "case invalidToken(Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DocumentError",
+          "invalidToken(_:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentErrorO12repeatedNodeyACSicACmF": {
+        "conformances": [],
+        "declaration": "case repeatedNode(Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DocumentError",
+          "repeatedNode(_:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentErrorO13invalidParentyACSicACmF": {
+        "conformances": [],
+        "declaration": "case invalidParent(Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DocumentError",
+          "invalidParent(_:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentErrorO14invalidPayloadyACSi_tcACmF": {
+        "conformances": [],
+        "declaration": "case invalidPayload(node: Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DocumentError",
+          "invalidPayload(node:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentErrorO15invalidFallbackyACSi_tcACmF": {
+        "conformances": [],
+        "declaration": "case invalidFallback(node: Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DocumentError",
+          "invalidFallback(node:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentErrorO15invalidSegmentsyACSi_tcACmF": {
+        "conformances": [],
+        "declaration": "case invalidSegments(node: Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DocumentError",
+          "invalidSegments(node:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentErrorO15unreachableNodeyACSicACmF": {
+        "conformances": [],
+        "declaration": "case unreachableNode(Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DocumentError",
+          "unreachableNode(_:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentErrorO17invalidDiagnosticyACSicACmF": {
+        "conformances": [],
+        "declaration": "case invalidDiagnostic(Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DocumentError",
+          "invalidDiagnostic(_:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentErrorO17unorderedSiblingsyACSi_tcACmF": {
+        "conformances": [],
+        "declaration": "case unorderedSiblings(node: Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DocumentError",
+          "unorderedSiblings(node:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentIndexV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct DocumentIndex",
+        "kind": "swift.struct",
+        "path": [
+          "DocumentIndex"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentIndexV4node12atUTF8Offset8affinitySiSgSi_AA14SourceAffinityOtF": {
+        "conformances": [],
+        "declaration": "func node(atUTF8Offset offset: Int, affinity: SourceAffinity = .downstream) -> Int?",
+        "kind": "swift.method",
+        "path": [
+          "DocumentIndex",
+          "node(atUTF8Offset:affinity:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentIndexV6parent2ofSiSgSi_tF": {
+        "conformances": [],
+        "declaration": "func parent(of index: Int) -> Int?",
+        "kind": "swift.method",
+        "path": [
+          "DocumentIndex",
+          "parent(of:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentIndexV7outlineSayAA12OutlineEntryVGyF": {
+        "conformances": [],
+        "declaration": "func outline() -> [OutlineEntry]",
+        "kind": "swift.method",
+        "path": [
+          "DocumentIndex",
+          "outline()"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentIndexV8documentAA0C0Vvp": {
+        "conformances": [],
+        "declaration": "let document: Document",
+        "kind": "swift.property",
+        "path": [
+          "DocumentIndex",
+          "document"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentIndexV9AncestorsV": {
+        "conformances": [
+          "{\"target\": \"s:ST\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct Ancestors",
+        "kind": "swift.struct",
+        "path": [
+          "DocumentIndex",
+          "Ancestors"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentIndexV9AncestorsV12makeIteratorAE0G0VyF": {
+        "conformances": [],
+        "declaration": "func makeIterator() -> Iterator",
+        "kind": "swift.method",
+        "path": [
+          "DocumentIndex",
+          "Ancestors",
+          "makeIterator()"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentIndexV9AncestorsV8IteratorV": {
+        "conformances": [
+          "{\"target\": \"s:St\"}"
+        ],
+        "declaration": "struct Iterator",
+        "kind": "swift.struct",
+        "path": [
+          "DocumentIndex",
+          "Ancestors",
+          "Iterator"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentIndexV9AncestorsV8IteratorV4nextSiSgyF": {
+        "conformances": [],
+        "declaration": "mutating func next() -> Int?",
+        "kind": "swift.method",
+        "path": [
+          "DocumentIndex",
+          "Ancestors",
+          "Iterator",
+          "next()"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentIndexV9ancestors2ofAC9AncestorsVSi_tF": {
+        "conformances": [],
+        "declaration": "func ancestors(of index: Int) -> Ancestors",
+        "kind": "swift.method",
+        "path": [
+          "DocumentIndex",
+          "ancestors(of:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentIndexV9plainText2ofSSSi_tF": {
+        "conformances": [],
+        "declaration": "func plainText(of index: Int) -> String",
+        "kind": "swift.method",
+        "path": [
+          "DocumentIndex",
+          "plainText(of:)"
+        ]
+      },
+      "s:12SetzerSyntax13DocumentIndexVyAcA0C0Vcfc": {
+        "conformances": [],
+        "declaration": "init(_ document: Document)",
+        "kind": "swift.init",
+        "path": [
+          "DocumentIndex",
+          "init(_:)"
+        ]
+      },
+      "s:12SetzerSyntax13HTMLBlockKindO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum HTMLBlockKind",
+        "kind": "swift.enum",
+        "path": [
+          "HTMLBlockKind"
+        ]
+      },
+      "s:12SetzerSyntax13HTMLBlockKindO11completeTagyA2CmF": {
+        "conformances": [],
+        "declaration": "case completeTag",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLBlockKind",
+          "completeTag"
+        ]
+      },
+      "s:12SetzerSyntax13HTMLBlockKindO11declarationyA2CmF": {
+        "conformances": [],
+        "declaration": "case declaration",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLBlockKind",
+          "declaration"
+        ]
+      },
+      "s:12SetzerSyntax13HTMLBlockKindO21processingInstructionyA2CmF": {
+        "conformances": [],
+        "declaration": "case processingInstruction",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLBlockKind",
+          "processingInstruction"
+        ]
+      },
+      "s:12SetzerSyntax13HTMLBlockKindO5cdatayA2CmF": {
+        "conformances": [],
+        "declaration": "case cdata",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLBlockKind",
+          "cdata"
+        ]
+      },
+      "s:12SetzerSyntax13HTMLBlockKindO7commentyA2CmF": {
+        "conformances": [],
+        "declaration": "case comment",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLBlockKind",
+          "comment"
+        ]
+      },
+      "s:12SetzerSyntax13HTMLBlockKindO7rawTextyA2CmF": {
+        "conformances": [],
+        "declaration": "case rawText",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLBlockKind",
+          "rawText"
+        ]
+      },
+      "s:12SetzerSyntax13HTMLBlockKindO8blockTagyA2CmF": {
+        "conformances": [],
+        "declaration": "case blockTag",
+        "kind": "swift.enum.case",
+        "path": [
+          "HTMLBlockKind",
+          "blockTag"
+        ]
+      },
+      "s:12SetzerSyntax13SuggestedEditV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct SuggestedEdit",
+        "kind": "swift.struct",
+        "path": [
+          "SuggestedEdit"
+        ]
+      },
+      "s:12SetzerSyntax13SuggestedEditV11replacementSays5UInt8VGvp": {
+        "conformances": [],
+        "declaration": "let replacement: [UInt8]",
+        "kind": "swift.property",
+        "path": [
+          "SuggestedEdit",
+          "replacement"
+        ]
+      },
+      "s:12SetzerSyntax13SuggestedEditV5range8expected11replacementAcA11SourceRangeV_S2Stcfc": {
+        "conformances": [],
+        "declaration": "init(range: SourceRange, expected: String, replacement: String)",
+        "kind": "swift.init",
+        "path": [
+          "SuggestedEdit",
+          "init(range:expected:replacement:)"
+        ]
+      },
+      "s:12SetzerSyntax13SuggestedEditV5range8expected11replacementAcA11SourceRangeV_Says5UInt8VGAKtcfc": {
+        "conformances": [],
+        "declaration": "init(range: SourceRange, expected: [UInt8], replacement: [UInt8])",
+        "kind": "swift.init",
+        "path": [
+          "SuggestedEdit",
+          "init(range:expected:replacement:)"
+        ]
+      },
+      "s:12SetzerSyntax13SuggestedEditV5rangeAA11SourceRangeVvp": {
+        "conformances": [],
+        "declaration": "let range: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "SuggestedEdit",
+          "range"
+        ]
+      },
+      "s:12SetzerSyntax13SuggestedEditV8expectedSays5UInt8VGvp": {
+        "conformances": [],
+        "declaration": "let expected: [UInt8]",
+        "kind": "swift.property",
+        "path": [
+          "SuggestedEdit",
+          "expected"
+        ]
+      },
+      "s:12SetzerSyntax14ListAttributesV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct ListAttributes",
+        "kind": "swift.struct",
+        "path": [
+          "ListAttributes"
+        ]
+      },
+      "s:12SetzerSyntax14ListAttributesV5style7isTightAcA0C5StyleO_Sbtcfc": {
+        "conformances": [],
+        "declaration": "init(style: ListStyle, isTight: Bool = true)",
+        "kind": "swift.init",
+        "path": [
+          "ListAttributes",
+          "init(style:isTight:)"
+        ]
+      },
+      "s:12SetzerSyntax14ListAttributesV5styleAA0C5StyleOvp": {
+        "conformances": [],
+        "declaration": "let style: ListStyle",
+        "kind": "swift.property",
+        "path": [
+          "ListAttributes",
+          "style"
+        ]
+      },
+      "s:12SetzerSyntax14ListAttributesV7isTightSbvp": {
+        "conformances": [],
+        "declaration": "let isTight: Bool",
+        "kind": "swift.property",
+        "path": [
+          "ListAttributes",
+          "isTight"
+        ]
+      },
+      "s:12SetzerSyntax14SourceAffinityO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum SourceAffinity",
+        "kind": "swift.enum",
+        "path": [
+          "SourceAffinity"
+        ]
+      },
+      "s:12SetzerSyntax14SourceAffinityO10downstreamyA2CmF": {
+        "conformances": [],
+        "declaration": "case downstream",
+        "kind": "swift.enum.case",
+        "path": [
+          "SourceAffinity",
+          "downstream"
+        ]
+      },
+      "s:12SetzerSyntax14SourceAffinityO8upstreamyA2CmF": {
+        "conformances": [],
+        "declaration": "case upstream",
+        "kind": "swift.enum.case",
+        "path": [
+          "SourceAffinity",
+          "upstream"
+        ]
+      },
+      "s:12SetzerSyntax14SourcePositionV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct SourcePosition",
+        "kind": "swift.struct",
+        "path": [
+          "SourcePosition"
+        ]
+      },
+      "s:12SetzerSyntax14SourcePositionV4line6columnACSi_Sitcfc": {
+        "conformances": [],
+        "declaration": "init(line: Int, column: Int)",
+        "kind": "swift.init",
+        "path": [
+          "SourcePosition",
+          "init(line:column:)"
+        ]
+      },
+      "s:12SetzerSyntax14SourcePositionV4lineSivp": {
+        "conformances": [],
+        "declaration": "let line: Int",
+        "kind": "swift.property",
+        "path": [
+          "SourcePosition",
+          "line"
+        ]
+      },
+      "s:12SetzerSyntax14SourcePositionV6columnSivp": {
+        "conformances": [],
+        "declaration": "let column: Int",
+        "kind": "swift.property",
+        "path": [
+          "SourcePosition",
+          "column"
+        ]
+      },
+      "s:12SetzerSyntax14TableAlignmentO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum TableAlignment",
+        "kind": "swift.enum",
+        "path": [
+          "TableAlignment"
+        ]
+      },
+      "s:12SetzerSyntax14TableAlignmentO4leftyA2CmF": {
+        "conformances": [],
+        "declaration": "case left",
+        "kind": "swift.enum.case",
+        "path": [
+          "TableAlignment",
+          "left"
+        ]
+      },
+      "s:12SetzerSyntax14TableAlignmentO4noneyA2CmF": {
+        "conformances": [],
+        "declaration": "case none",
+        "kind": "swift.enum.case",
+        "path": [
+          "TableAlignment",
+          "none"
+        ]
+      },
+      "s:12SetzerSyntax14TableAlignmentO5rightyA2CmF": {
+        "conformances": [],
+        "declaration": "case right",
+        "kind": "swift.enum.case",
+        "path": [
+          "TableAlignment",
+          "right"
+        ]
+      },
+      "s:12SetzerSyntax14TableAlignmentO6centeryA2CmF": {
+        "conformances": [],
+        "declaration": "case center",
+        "kind": "swift.enum.case",
+        "path": [
+          "TableAlignment",
+          "center"
+        ]
+      },
+      "s:12SetzerSyntax15DiagnosticErrorO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s5ErrorP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum DiagnosticError",
+        "kind": "swift.enum",
+        "path": [
+          "DiagnosticError"
+        ]
+      },
+      "s:12SetzerSyntax15DiagnosticErrorO11invalidEdityA2CmF": {
+        "conformances": [],
+        "declaration": "case invalidEdit",
+        "kind": "swift.enum.case",
+        "path": [
+          "DiagnosticError",
+          "invalidEdit"
+        ]
+      },
+      "s:12SetzerSyntax15DiagnosticErrorO15invalidLocationyA2CmF": {
+        "conformances": [],
+        "declaration": "case invalidLocation",
+        "kind": "swift.enum.case",
+        "path": [
+          "DiagnosticError",
+          "invalidLocation"
+        ]
+      },
+      "s:12SetzerSyntax15DiagnosticErrorO16overlappingEditsyA2CmF": {
+        "conformances": [],
+        "declaration": "case overlappingEdits",
+        "kind": "swift.enum.case",
+        "path": [
+          "DiagnosticError",
+          "overlappingEdits"
+        ]
+      },
+      "s:12SetzerSyntax15DiagnosticErrorO17invalidIdentifieryA2CmF": {
+        "conformances": [],
+        "declaration": "case invalidIdentifier",
+        "kind": "swift.enum.case",
+        "path": [
+          "DiagnosticError",
+          "invalidIdentifier"
+        ]
+      },
+      "s:12SetzerSyntax15DiagnosticErrorO8emptyFixyA2CmF": {
+        "conformances": [],
+        "declaration": "case emptyFix",
+        "kind": "swift.enum.case",
+        "path": [
+          "DiagnosticError",
+          "emptyFix"
+        ]
+      },
+      "s:12SetzerSyntax15DiagnosticErrorO9staleEdityA2CmF": {
+        "conformances": [],
+        "declaration": "case staleEdit",
+        "kind": "swift.enum.case",
+        "path": [
+          "DiagnosticError",
+          "staleEdit"
+        ]
+      },
+      "s:12SetzerSyntax15DocumentBuilderV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct DocumentBuilder",
+        "kind": "swift.struct",
+        "path": [
+          "DocumentBuilder"
+        ]
+      },
+      "s:12SetzerSyntax15DocumentBuilderV13clearFallback3forySi_tF": {
+        "conformances": [],
+        "declaration": "mutating func clearFallback(for index: Int)",
+        "kind": "swift.method",
+        "path": [
+          "DocumentBuilder",
+          "clearFallback(for:)"
+        ]
+      },
+      "s:12SetzerSyntax15DocumentBuilderV15renderingPolicyAA09RenderingF0Vvp": {
+        "conformances": [],
+        "declaration": "var renderingPolicy: RenderingPolicy",
+        "kind": "swift.property",
+        "path": [
+          "DocumentBuilder",
+          "renderingPolicy"
+        ]
+      },
+      "s:12SetzerSyntax15DocumentBuilderV5buildAA0C0VyKF": {
+        "conformances": [],
+        "declaration": "func build() throws -> Document",
+        "kind": "swift.method",
+        "path": [
+          "DocumentBuilder",
+          "build()"
+        ]
+      },
+      "s:12SetzerSyntax15DocumentBuilderV6append_5range14sourceSegments15fallbackLiteral2toSiAA8NodeDataO_AA11SourceRangeVSayALGSSSgSitKF": {
+        "conformances": [],
+        "declaration": "@discardableResult mutating func append(_ data: NodeData, range: SourceRange, sourceSegments: [SourceRange] = [], fallbackLiteral: String? = nil, to parent: Int = 0) throws -> Int",
+        "kind": "swift.method",
+        "path": [
+          "DocumentBuilder",
+          "append(_:range:sourceSegments:fallbackLiteral:to:)"
+        ]
+      },
+      "s:12SetzerSyntax15DocumentBuilderV6finish_4data5range14sourceSegments15fallbackLiteralySi_AA8NodeDataOAA11SourceRangeVSayALGSSSgtKF": {
+        "conformances": [],
+        "declaration": "mutating func finish(_ index: Int, data: NodeData, range: SourceRange, sourceSegments: [SourceRange] = [], fallbackLiteral: String? = nil) throws",
+        "kind": "swift.method",
+        "path": [
+          "DocumentBuilder",
+          "finish(_:data:range:sourceSegments:fallbackLiteral:)"
+        ]
+      },
+      "s:12SetzerSyntax15DocumentBuilderV6recordyyAA0B5TokenVF": {
+        "conformances": [],
+        "declaration": "mutating func record(_ token: SyntaxToken)",
+        "kind": "swift.method",
+        "path": [
+          "DocumentBuilder",
+          "record(_:)"
+        ]
+      },
+      "s:12SetzerSyntax15DocumentBuilderV6reportyyAA15ParseDiagnosticVF": {
+        "conformances": [],
+        "declaration": "mutating func report(_ diagnostic: ParseDiagnostic)",
+        "kind": "swift.method",
+        "path": [
+          "DocumentBuilder",
+          "report(_:)"
+        ]
+      },
+      "s:12SetzerSyntax15DocumentBuilderV6source07collectB7DetailsACSays5UInt8VG_Sbtcfc": {
+        "conformances": [],
+        "declaration": "init(source: [UInt8], collectSyntaxDetails: Bool = false)",
+        "kind": "swift.init",
+        "path": [
+          "DocumentBuilder",
+          "init(source:collectSyntaxDetails:)"
+        ]
+      },
+      "s:12SetzerSyntax15ExtensionOptionV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct ExtensionOption",
+        "kind": "swift.struct",
+        "path": [
+          "ExtensionOption"
+        ]
+      },
+      "s:12SetzerSyntax15ExtensionOptionV12defaultValueAA0bF0OSgvp": {
+        "conformances": [],
+        "declaration": "let defaultValue: SyntaxValue?",
+        "kind": "swift.property",
+        "path": [
+          "ExtensionOption",
+          "defaultValue"
+        ]
+      },
+      "s:12SetzerSyntax15ExtensionOptionV12integerRangeSNySiGSgvp": {
+        "conformances": [],
+        "declaration": "let integerRange: ClosedRange<Int>?",
+        "kind": "swift.property",
+        "path": [
+          "ExtensionOption",
+          "integerRange"
+        ]
+      },
+      "s:12SetzerSyntax15ExtensionOptionV13allowedValuesShyAA0B5ValueOGSgvp": {
+        "conformances": [],
+        "declaration": "let allowedValues: Set<SyntaxValue>?",
+        "kind": "swift.property",
+        "path": [
+          "ExtensionOption",
+          "allowedValues"
+        ]
+      },
+      "s:12SetzerSyntax15ExtensionOptionV4typeAC9ValueTypeOvp": {
+        "conformances": [],
+        "declaration": "let type: ValueType",
+        "kind": "swift.property",
+        "path": [
+          "ExtensionOption",
+          "type"
+        ]
+      },
+      "s:12SetzerSyntax15ExtensionOptionV7acceptsySbAA0B5ValueOF": {
+        "conformances": [],
+        "declaration": "func accepts(_ value: SyntaxValue) -> Bool",
+        "kind": "swift.method",
+        "path": [
+          "ExtensionOption",
+          "accepts(_:)"
+        ]
+      },
+      "s:12SetzerSyntax15ExtensionOptionV9ValueTypeO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum ValueType",
+        "kind": "swift.enum",
+        "path": [
+          "ExtensionOption",
+          "ValueType"
+        ]
+      },
+      "s:12SetzerSyntax15ExtensionOptionV9ValueTypeO5arrayyA2EmF": {
+        "conformances": [],
+        "declaration": "case array",
+        "kind": "swift.enum.case",
+        "path": [
+          "ExtensionOption",
+          "ValueType",
+          "array"
+        ]
+      },
+      "s:12SetzerSyntax15ExtensionOptionV9ValueTypeO6objectyA2EmF": {
+        "conformances": [],
+        "declaration": "case object",
+        "kind": "swift.enum.case",
+        "path": [
+          "ExtensionOption",
+          "ValueType",
+          "object"
+        ]
+      },
+      "s:12SetzerSyntax15ExtensionOptionV9ValueTypeO6stringyA2EmF": {
+        "conformances": [],
+        "declaration": "case string",
+        "kind": "swift.enum.case",
+        "path": [
+          "ExtensionOption",
+          "ValueType",
+          "string"
+        ]
+      },
+      "s:12SetzerSyntax15ExtensionOptionV9ValueTypeO7booleanyA2EmF": {
+        "conformances": [],
+        "declaration": "case boolean",
+        "kind": "swift.enum.case",
+        "path": [
+          "ExtensionOption",
+          "ValueType",
+          "boolean"
+        ]
+      },
+      "s:12SetzerSyntax15ExtensionOptionV9ValueTypeO7integeryA2EmF": {
+        "conformances": [],
+        "declaration": "case integer",
+        "kind": "swift.enum.case",
+        "path": [
+          "ExtensionOption",
+          "ValueType",
+          "integer"
+        ]
+      },
+      "s:12SetzerSyntax15ExtensionOptionV_12defaultValue13allowedValues12integerRangeA2C0F4TypeO_AA0bF0OSgShyAJGSgSNySiGSgtcfc": {
+        "conformances": [],
+        "declaration": "init(_ type: ValueType, defaultValue: SyntaxValue? = nil, allowedValues: Set<SyntaxValue>? = nil, integerRange: ClosedRange<Int>? = nil)",
+        "kind": "swift.init",
+        "path": [
+          "ExtensionOption",
+          "init(_:defaultValue:allowedValues:integerRange:)"
+        ]
+      },
+      "s:12SetzerSyntax15GMSetzerVersionO": {
+        "conformances": [],
+        "declaration": "enum GMSetzerVersion",
+        "kind": "swift.enum",
+        "path": [
+          "GMSetzerVersion"
+        ]
+      },
+      "s:12SetzerSyntax15GMSetzerVersionO7currentSSvpZ": {
+        "conformances": [],
+        "declaration": "static let current: String",
+        "kind": "swift.type.property",
+        "path": [
+          "GMSetzerVersion",
+          "current"
+        ]
+      },
+      "s:12SetzerSyntax15MarkdownDialectV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct MarkdownDialect",
+        "kind": "swift.struct",
+        "path": [
+          "MarkdownDialect"
+        ]
+      },
+      "s:12SetzerSyntax15MarkdownDialectV10commonMarkACvpZ": {
+        "conformances": [],
+        "declaration": "static let commonMark: MarkdownDialect",
+        "kind": "swift.type.property",
+        "path": [
+          "MarkdownDialect",
+          "commonMark"
+        ]
+      },
+      "s:12SetzerSyntax15MarkdownDialectV10identifierACSgSS_tcfc": {
+        "conformances": [],
+        "declaration": "init?(identifier: String)",
+        "kind": "swift.init",
+        "path": [
+          "MarkdownDialect",
+          "init(identifier:)"
+        ]
+      },
+      "s:12SetzerSyntax15MarkdownDialectV10identifierSSvp": {
+        "conformances": [],
+        "declaration": "let identifier: String",
+        "kind": "swift.property",
+        "path": [
+          "MarkdownDialect",
+          "identifier"
+        ]
+      },
+      "s:12SetzerSyntax15MarkdownDialectV3gfmACvpZ": {
+        "conformances": [],
+        "declaration": "static let gfm: MarkdownDialect",
+        "kind": "swift.type.property",
+        "path": [
+          "MarkdownDialect",
+          "gfm"
+        ]
+      },
+      "s:12SetzerSyntax15ParseDiagnosticV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct ParseDiagnostic",
+        "kind": "swift.struct",
+        "path": [
+          "ParseDiagnostic"
+        ]
+      },
+      "s:12SetzerSyntax15ParseDiagnosticV4CodeO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum Code",
+        "kind": "swift.enum",
+        "path": [
+          "ParseDiagnostic",
+          "Code"
+        ]
+      },
+      "s:12SetzerSyntax15ParseDiagnosticV4CodeO16extensionFindingyAESS_S2StcAEmF": {
+        "conformances": [],
+        "declaration": "case extensionFinding(owner: String, code: String, message: String)",
+        "kind": "swift.enum.case",
+        "path": [
+          "ParseDiagnostic",
+          "Code",
+          "extensionFinding(owner:code:message:)"
+        ]
+      },
+      "s:12SetzerSyntax15ParseDiagnosticV4CodeO20nestingLimitExceededyAESicAEmF": {
+        "conformances": [],
+        "declaration": "case nestingLimitExceeded(Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "ParseDiagnostic",
+          "Code",
+          "nestingLimitExceeded(_:)"
+        ]
+      },
+      "s:12SetzerSyntax15ParseDiagnosticV4CodeO22invalidExtensionResultyAESScAEmF": {
+        "conformances": [],
+        "declaration": "case invalidExtensionResult(String)",
+        "kind": "swift.enum.case",
+        "path": [
+          "ParseDiagnostic",
+          "Code",
+          "invalidExtensionResult(_:)"
+        ]
+      },
+      "s:12SetzerSyntax15ParseDiagnosticV4codeAC4CodeOvp": {
+        "conformances": [],
+        "declaration": "let code: Code",
+        "kind": "swift.property",
+        "path": [
+          "ParseDiagnostic",
+          "code"
+        ]
+      },
+      "s:12SetzerSyntax15ParseDiagnosticV5rangeAA11SourceRangeVvp": {
+        "conformances": [],
+        "declaration": "let range: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "ParseDiagnostic",
+          "range"
+        ]
+      },
+      "s:12SetzerSyntax15ParseDiagnosticV_5rangeA2C4CodeO_AA11SourceRangeVtcfc": {
+        "conformances": [],
+        "declaration": "init(_ code: Code, range: SourceRange)",
+        "kind": "swift.init",
+        "path": [
+          "ParseDiagnostic",
+          "init(_:range:)"
+        ]
+      },
+      "s:12SetzerSyntax15RenderingPolicyV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:SY\"}",
+          "{\"target\": \"s:s10SetAlgebraP\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s25ExpressibleByArrayLiteralP\"}",
+          "{\"target\": \"s:s8SendableP\"}",
+          "{\"target\": \"s:s9OptionSetP\"}"
+        ],
+        "declaration": "struct RenderingPolicy",
+        "kind": "swift.struct",
+        "path": [
+          "RenderingPolicy"
+        ]
+      },
+      "s:12SetzerSyntax15RenderingPolicyV21collapsesNestedStrongACvpZ": {
+        "conformances": [],
+        "declaration": "static let collapsesNestedStrong: RenderingPolicy",
+        "kind": "swift.type.property",
+        "path": [
+          "RenderingPolicy",
+          "collapsesNestedStrong"
+        ]
+      },
+      "s:12SetzerSyntax15RenderingPolicyV24filtersDisallowedRawHTMLACvpZ": {
+        "conformances": [],
+        "declaration": "static let filtersDisallowedRawHTML: RenderingPolicy",
+        "kind": "swift.type.property",
+        "path": [
+          "RenderingPolicy",
+          "filtersDisallowedRawHTML"
+        ]
+      },
+      "s:12SetzerSyntax15RenderingPolicyV8rawValueACs5UInt8V_tcfc": {
+        "conformances": [],
+        "declaration": "init(rawValue: UInt8)",
+        "kind": "swift.init",
+        "path": [
+          "RenderingPolicy",
+          "init(rawValue:)"
+        ]
+      },
+      "s:12SetzerSyntax15RenderingPolicyV8rawValues5UInt8Vvp": {
+        "conformances": [],
+        "declaration": "let rawValue: UInt8",
+        "kind": "swift.property",
+        "path": [
+          "RenderingPolicy",
+          "rawValue"
+        ]
+      },
+      "s:12SetzerSyntax15TableAttributesV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct TableAttributes",
+        "kind": "swift.struct",
+        "path": [
+          "TableAttributes"
+        ]
+      },
+      "s:12SetzerSyntax15TableAttributesV10alignmentsACSayAA0C9AlignmentOG_tcfc": {
+        "conformances": [],
+        "declaration": "init(alignments: [TableAlignment])",
+        "kind": "swift.init",
+        "path": [
+          "TableAttributes",
+          "init(alignments:)"
+        ]
+      },
+      "s:12SetzerSyntax15TableAttributesV10alignmentsSayAA0C9AlignmentOGvp": {
+        "conformances": [],
+        "declaration": "let alignments: [TableAlignment]",
+        "kind": "swift.property",
+        "path": [
+          "TableAttributes",
+          "alignments"
+        ]
+      },
+      "s:12SetzerSyntax16DiagnosticReportV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct DiagnosticReport",
+        "kind": "swift.struct",
+        "path": [
+          "DiagnosticReport"
+        ]
+      },
+      "s:12SetzerSyntax16DiagnosticReportV15configurationIDSSvp": {
+        "conformances": [],
+        "declaration": "let configurationID: String",
+        "kind": "swift.property",
+        "path": [
+          "DiagnosticReport",
+          "configurationID"
+        ]
+      },
+      "s:12SetzerSyntax16DiagnosticReportV15providerVersionSSvp": {
+        "conformances": [],
+        "declaration": "let providerVersion: String",
+        "kind": "swift.property",
+        "path": [
+          "DiagnosticReport",
+          "providerVersion"
+        ]
+      },
+      "s:12SetzerSyntax16DiagnosticReportV6source8provider0F7Version7dialect15configurationID8findingsACSays5UInt8VG_S4SSayAA08DocumentC0VGtKcfc": {
+        "conformances": [],
+        "declaration": "init(source: [UInt8], provider: String, providerVersion: String, dialect: String, configurationID: String, findings: [DocumentDiagnostic]) throws",
+        "kind": "swift.init",
+        "path": [
+          "DiagnosticReport",
+          "init(source:provider:providerVersion:dialect:configurationID:findings:)"
+        ]
+      },
+      "s:12SetzerSyntax16DiagnosticReportV6sourceSays5UInt8VGvp": {
+        "conformances": [],
+        "declaration": "let source: [UInt8]",
+        "kind": "swift.property",
+        "path": [
+          "DiagnosticReport",
+          "source"
+        ]
+      },
+      "s:12SetzerSyntax16DiagnosticReportV7dialectSSvp": {
+        "conformances": [],
+        "declaration": "let dialect: String",
+        "kind": "swift.property",
+        "path": [
+          "DiagnosticReport",
+          "dialect"
+        ]
+      },
+      "s:12SetzerSyntax16DiagnosticReportV8findingsSayAA08DocumentC0VGvp": {
+        "conformances": [],
+        "declaration": "let findings: [DocumentDiagnostic]",
+        "kind": "swift.property",
+        "path": [
+          "DiagnosticReport",
+          "findings"
+        ]
+      },
+      "s:12SetzerSyntax16DiagnosticReportV8providerSSvp": {
+        "conformances": [],
+        "declaration": "let provider: String",
+        "kind": "swift.property",
+        "path": [
+          "DiagnosticReport",
+          "provider"
+        ]
+      },
+      "s:12SetzerSyntax17DiagnosticMessageV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct DiagnosticMessage",
+        "kind": "swift.struct",
+        "path": [
+          "DiagnosticMessage"
+        ]
+      },
+      "s:12SetzerSyntax17DiagnosticMessageV11defaultTextSSvp": {
+        "conformances": [],
+        "declaration": "let defaultText: String",
+        "kind": "swift.property",
+        "path": [
+          "DiagnosticMessage",
+          "defaultText"
+        ]
+      },
+      "s:12SetzerSyntax17DiagnosticMessageV3keySSvp": {
+        "conformances": [],
+        "declaration": "let key: String",
+        "kind": "swift.property",
+        "path": [
+          "DiagnosticMessage",
+          "key"
+        ]
+      },
+      "s:12SetzerSyntax17DiagnosticMessageV9argumentsSDySSAA0B5ValueOGvp": {
+        "conformances": [],
+        "declaration": "let arguments: [String : SyntaxValue]",
+        "kind": "swift.property",
+        "path": [
+          "DiagnosticMessage",
+          "arguments"
+        ]
+      },
+      "s:12SetzerSyntax17DiagnosticMessageV_9arguments11defaultTextACSS_SDySSAA0B5ValueOGSStcfc": {
+        "conformances": [],
+        "declaration": "init(_ key: String, arguments: [String : SyntaxValue] = [:], defaultText: String)",
+        "kind": "swift.init",
+        "path": [
+          "DiagnosticMessage",
+          "init(_:arguments:defaultText:)"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationErrorV": {
+        "conformances": [
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s5ErrorP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct ConfigurationError",
+        "kind": "swift.struct",
+        "path": [
+          "ConfigurationError"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationErrorV6issuesSayAA0C5IssueVGvp": {
+        "conformances": [],
+        "declaration": "let issues: [ConfigurationIssue]",
+        "kind": "swift.property",
+        "path": [
+          "ConfigurationError",
+          "issues"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationErrorVyACSayAA0C5IssueVGcfc": {
+        "conformances": [],
+        "declaration": "init(_ issues: [ConfigurationIssue])",
+        "kind": "swift.init",
+        "path": [
+          "ConfigurationError",
+          "init(_:)"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationIssueV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct ConfigurationIssue",
+        "kind": "swift.struct",
+        "path": [
+          "ConfigurationIssue"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationIssueV10identifierSSvp": {
+        "conformances": [],
+        "declaration": "let identifier: String",
+        "kind": "swift.property",
+        "path": [
+          "ConfigurationIssue",
+          "identifier"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationIssueV4CodeO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum Code",
+        "kind": "swift.enum",
+        "path": [
+          "ConfigurationIssue",
+          "Code"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationIssueV4CodeO11unknownRuleyA2EmF": {
+        "conformances": [],
+        "declaration": "case unknownRule",
+        "kind": "swift.enum.case",
+        "path": [
+          "ConfigurationIssue",
+          "Code",
+          "unknownRule"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationIssueV4CodeO13invalidOptionyA2EmF": {
+        "conformances": [],
+        "declaration": "case invalidOption",
+        "kind": "swift.enum.case",
+        "path": [
+          "ConfigurationIssue",
+          "Code",
+          "invalidOption"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationIssueV4CodeO13unknownOptionyA2EmF": {
+        "conformances": [],
+        "declaration": "case unknownOption",
+        "kind": "swift.enum.case",
+        "path": [
+          "ConfigurationIssue",
+          "Code",
+          "unknownOption"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationIssueV4CodeO17invalidDescriptoryA2EmF": {
+        "conformances": [],
+        "declaration": "case invalidDescriptor",
+        "kind": "swift.enum.case",
+        "path": [
+          "ConfigurationIssue",
+          "Code",
+          "invalidDescriptor"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationIssueV4CodeO18namespaceViolationyA2EmF": {
+        "conformances": [],
+        "declaration": "case namespaceViolation",
+        "kind": "swift.enum.case",
+        "path": [
+          "ConfigurationIssue",
+          "Code",
+          "namespaceViolation"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationIssueV4CodeO19duplicateIdentifieryA2EmF": {
+        "conformances": [],
+        "declaration": "case duplicateIdentifier",
+        "kind": "swift.enum.case",
+        "path": [
+          "ConfigurationIssue",
+          "Code",
+          "duplicateIdentifier"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationIssueV4CodeO20unavailableExtensionyA2EmF": {
+        "conformances": [],
+        "declaration": "case unavailableExtension",
+        "kind": "swift.enum.case",
+        "path": [
+          "ConfigurationIssue",
+          "Code",
+          "unavailableExtension"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationIssueV4codeAC4CodeOvp": {
+        "conformances": [],
+        "declaration": "let code: Code",
+        "kind": "swift.property",
+        "path": [
+          "ConfigurationIssue",
+          "code"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationIssueV6detailSSvp": {
+        "conformances": [],
+        "declaration": "let detail: String",
+        "kind": "swift.property",
+        "path": [
+          "ConfigurationIssue",
+          "detail"
+        ]
+      },
+      "s:12SetzerSyntax18ConfigurationIssueV_10identifier6detailA2C4CodeO_S2Stcfc": {
+        "conformances": [],
+        "declaration": "init(_ code: Code, identifier: String, detail: String = \"\")",
+        "kind": "swift.init",
+        "path": [
+          "ConfigurationIssue",
+          "init(_:identifier:detail:)"
+        ]
+      },
+      "s:12SetzerSyntax18DiagnosticCategoryO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:SY\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum DiagnosticCategory",
+        "kind": "swift.enum",
+        "path": [
+          "DiagnosticCategory"
+        ]
+      },
+      "s:12SetzerSyntax18DiagnosticCategoryO13accessibilityyA2CmF": {
+        "conformances": [],
+        "declaration": "case accessibility",
+        "kind": "swift.enum.case",
+        "path": [
+          "DiagnosticCategory",
+          "accessibility"
+        ]
+      },
+      "s:12SetzerSyntax18DiagnosticCategoryO5styleyA2CmF": {
+        "conformances": [],
+        "declaration": "case style",
+        "kind": "swift.enum.case",
+        "path": [
+          "DiagnosticCategory",
+          "style"
+        ]
+      },
+      "s:12SetzerSyntax18DiagnosticCategoryO6syntaxyA2CmF": {
+        "conformances": [],
+        "declaration": "case syntax",
+        "kind": "swift.enum.case",
+        "path": [
+          "DiagnosticCategory",
+          "syntax"
+        ]
+      },
+      "s:12SetzerSyntax18DiagnosticLocationO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum DiagnosticLocation",
+        "kind": "swift.enum",
+        "path": [
+          "DiagnosticLocation"
+        ]
+      },
+      "s:12SetzerSyntax18DiagnosticLocationO4lineyACSi_tcACmF": {
+        "conformances": [],
+        "declaration": "case line(start: Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DiagnosticLocation",
+          "line(start:)"
+        ]
+      },
+      "s:12SetzerSyntax18DiagnosticLocationO6sourceyAcA11SourceRangeVcACmF": {
+        "conformances": [],
+        "declaration": "case source(SourceRange)",
+        "kind": "swift.enum.case",
+        "path": [
+          "DiagnosticLocation",
+          "source(_:)"
+        ]
+      },
+      "s:12SetzerSyntax18DiagnosticLocationO8documentyA2CmF": {
+        "conformances": [],
+        "declaration": "case document",
+        "kind": "swift.enum.case",
+        "path": [
+          "DiagnosticLocation",
+          "document"
+        ]
+      },
+      "s:12SetzerSyntax18DiagnosticSeverityO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:SY\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum DiagnosticSeverity",
+        "kind": "swift.enum",
+        "path": [
+          "DiagnosticSeverity"
+        ]
+      },
+      "s:12SetzerSyntax18DiagnosticSeverityO11informationyA2CmF": {
+        "conformances": [],
+        "declaration": "case information",
+        "kind": "swift.enum.case",
+        "path": [
+          "DiagnosticSeverity",
+          "information"
+        ]
+      },
+      "s:12SetzerSyntax18DiagnosticSeverityO5erroryA2CmF": {
+        "conformances": [],
+        "declaration": "case error",
+        "kind": "swift.enum.case",
+        "path": [
+          "DiagnosticSeverity",
+          "error"
+        ]
+      },
+      "s:12SetzerSyntax18DiagnosticSeverityO7warningyA2CmF": {
+        "conformances": [],
+        "declaration": "case warning",
+        "kind": "swift.enum.case",
+        "path": [
+          "DiagnosticSeverity",
+          "warning"
+        ]
+      },
+      "s:12SetzerSyntax18DocumentDiagnosticV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct DocumentDiagnostic",
+        "kind": "swift.struct",
+        "path": [
+          "DocumentDiagnostic"
+        ]
+      },
+      "s:12SetzerSyntax18DocumentDiagnosticV4codeSSvp": {
+        "conformances": [],
+        "declaration": "let code: String",
+        "kind": "swift.property",
+        "path": [
+          "DocumentDiagnostic",
+          "code"
+        ]
+      },
+      "s:12SetzerSyntax18DocumentDiagnosticV5fixesSayAA12SuggestedFixVGvp": {
+        "conformances": [],
+        "declaration": "let fixes: [SuggestedFix]",
+        "kind": "swift.property",
+        "path": [
+          "DocumentDiagnostic",
+          "fixes"
+        ]
+      },
+      "s:12SetzerSyntax18DocumentDiagnosticV7messageAA0D7MessageVvp": {
+        "conformances": [],
+        "declaration": "let message: DiagnosticMessage",
+        "kind": "swift.property",
+        "path": [
+          "DocumentDiagnostic",
+          "message"
+        ]
+      },
+      "s:12SetzerSyntax18DocumentDiagnosticV7relatedSayAA07RelatedD8LocationVGvp": {
+        "conformances": [],
+        "declaration": "let related: [RelatedDiagnosticLocation]",
+        "kind": "swift.property",
+        "path": [
+          "DocumentDiagnostic",
+          "related"
+        ]
+      },
+      "s:12SetzerSyntax18DocumentDiagnosticV8categoryAA0D8CategoryOvp": {
+        "conformances": [],
+        "declaration": "let category: DiagnosticCategory",
+        "kind": "swift.property",
+        "path": [
+          "DocumentDiagnostic",
+          "category"
+        ]
+      },
+      "s:12SetzerSyntax18DocumentDiagnosticV8locationAA0D8LocationOvp": {
+        "conformances": [],
+        "declaration": "let location: DiagnosticLocation",
+        "kind": "swift.property",
+        "path": [
+          "DocumentDiagnostic",
+          "location"
+        ]
+      },
+      "s:12SetzerSyntax18DocumentDiagnosticV8provider4code8category8severity7message8location7related5fixesACSS_SSAA0D8CategoryOAA0D8SeverityOAA0D7MessageVAA0D8LocationOSayAA07RelateddP0VGSayAA12SuggestedFixVGtKcfc": {
+        "conformances": [],
+        "declaration": "init(provider: String, code: String, category: DiagnosticCategory, severity: DiagnosticSeverity, message: DiagnosticMessage, location: DiagnosticLocation, related: [RelatedDiagnosticLocation] = [], fixes: [SuggestedFix] = []) throws",
+        "kind": "swift.init",
+        "path": [
+          "DocumentDiagnostic",
+          "init(provider:code:category:severity:message:location:related:fixes:)"
+        ]
+      },
+      "s:12SetzerSyntax18DocumentDiagnosticV8providerSSvp": {
+        "conformances": [],
+        "declaration": "let provider: String",
+        "kind": "swift.property",
+        "path": [
+          "DocumentDiagnostic",
+          "provider"
+        ]
+      },
+      "s:12SetzerSyntax18DocumentDiagnosticV8severityAA0D8SeverityOvp": {
+        "conformances": [],
+        "declaration": "let severity: DiagnosticSeverity",
+        "kind": "swift.property",
+        "path": [
+          "DocumentDiagnostic",
+          "severity"
+        ]
+      },
+      "s:12SetzerSyntax18DocumentDiagnosticV8validate2inySays5UInt8VG_tKF": {
+        "conformances": [],
+        "declaration": "func validate(in source: [UInt8]) throws",
+        "kind": "swift.method",
+        "path": [
+          "DocumentDiagnostic",
+          "validate(in:)"
+        ]
+      },
+      "s:12SetzerSyntax19ExtensionDescriptorV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct ExtensionDescriptor",
+        "kind": "swift.struct",
+        "path": [
+          "ExtensionDescriptor"
+        ]
+      },
+      "s:12SetzerSyntax19ExtensionDescriptorV10identifierSSvp": {
+        "conformances": [],
+        "declaration": "let identifier: String",
+        "kind": "swift.property",
+        "path": [
+          "ExtensionDescriptor",
+          "identifier"
+        ]
+      },
+      "s:12SetzerSyntax19ExtensionDescriptorV4ownsySbSSF": {
+        "conformances": [],
+        "declaration": "func owns(_ identifier: String) -> Bool",
+        "kind": "swift.method",
+        "path": [
+          "ExtensionDescriptor",
+          "owns(_:)"
+        ]
+      },
+      "s:12SetzerSyntax19ExtensionDescriptorV7optionsSDySSAA0C6OptionVGvp": {
+        "conformances": [],
+        "declaration": "let options: [String : ExtensionOption]",
+        "kind": "swift.property",
+        "path": [
+          "ExtensionDescriptor",
+          "options"
+        ]
+      },
+      "s:12SetzerSyntax19ExtensionDescriptorV7versionSSvp": {
+        "conformances": [],
+        "declaration": "let version: String",
+        "kind": "swift.property",
+        "path": [
+          "ExtensionDescriptor",
+          "version"
+        ]
+      },
+      "s:12SetzerSyntax19ExtensionDescriptorV9nodeKindsShyAA8NodeKindVGvp": {
+        "conformances": [],
+        "declaration": "let nodeKinds: Set<NodeKind>",
+        "kind": "swift.property",
+        "path": [
+          "ExtensionDescriptor",
+          "nodeKinds"
+        ]
+      },
+      "s:12SetzerSyntax19ExtensionDescriptorV_7version9nodeKinds7optionsACSS_SSShyAA8NodeKindVGSDySSAA0C6OptionVGtcfc": {
+        "conformances": [],
+        "declaration": "init(_ identifier: String, version: String = \"1\", nodeKinds: Set<NodeKind>, options: [String : ExtensionOption] = [:])",
+        "kind": "swift.init",
+        "path": [
+          "ExtensionDescriptor",
+          "init(_:version:nodeKinds:options:)"
+        ]
+      },
+      "s:12SetzerSyntax19ReferenceDefinitionV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct ReferenceDefinition",
+        "kind": "swift.struct",
+        "path": [
+          "ReferenceDefinition"
+        ]
+      },
+      "s:12SetzerSyntax19ReferenceDefinitionV14rawDestinationSSvp": {
+        "conformances": [],
+        "declaration": "let rawDestination: String",
+        "kind": "swift.property",
+        "path": [
+          "ReferenceDefinition",
+          "rawDestination"
+        ]
+      },
+      "s:12SetzerSyntax19ReferenceDefinitionV8rawLabel0E11Destination0E5TitleACSS_S2SSgtcfc": {
+        "conformances": [],
+        "declaration": "init(rawLabel: String, rawDestination: String, rawTitle: String? = nil)",
+        "kind": "swift.init",
+        "path": [
+          "ReferenceDefinition",
+          "init(rawLabel:rawDestination:rawTitle:)"
+        ]
+      },
+      "s:12SetzerSyntax19ReferenceDefinitionV8rawLabelSSvp": {
+        "conformances": [],
+        "declaration": "let rawLabel: String",
+        "kind": "swift.property",
+        "path": [
+          "ReferenceDefinition",
+          "rawLabel"
+        ]
+      },
+      "s:12SetzerSyntax19ReferenceDefinitionV8rawTitleSSSgvp": {
+        "conformances": [],
+        "declaration": "let rawTitle: String?",
+        "kind": "swift.property",
+        "path": [
+          "ReferenceDefinition",
+          "rawTitle"
+        ]
+      },
+      "s:12SetzerSyntax25RelatedDiagnosticLocationV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct RelatedDiagnosticLocation",
+        "kind": "swift.struct",
+        "path": [
+          "RelatedDiagnosticLocation"
+        ]
+      },
+      "s:12SetzerSyntax25RelatedDiagnosticLocationV7messageAA0D7MessageVSgvp": {
+        "conformances": [],
+        "declaration": "let message: DiagnosticMessage?",
+        "kind": "swift.property",
+        "path": [
+          "RelatedDiagnosticLocation",
+          "message"
+        ]
+      },
+      "s:12SetzerSyntax25RelatedDiagnosticLocationV8locationAA0dE0Ovp": {
+        "conformances": [],
+        "declaration": "let location: DiagnosticLocation",
+        "kind": "swift.property",
+        "path": [
+          "RelatedDiagnosticLocation",
+          "location"
+        ]
+      },
+      "s:12SetzerSyntax25RelatedDiagnosticLocationV_7messageAcA0dE0O_AA0D7MessageVSgtcfc": {
+        "conformances": [],
+        "declaration": "init(_ location: DiagnosticLocation, message: DiagnosticMessage? = nil)",
+        "kind": "swift.init",
+        "path": [
+          "RelatedDiagnosticLocation",
+          "init(_:message:)"
+        ]
+      },
+      "s:12SetzerSyntax4NodeV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct Node",
+        "kind": "swift.struct",
+        "path": [
+          "Node"
+        ]
+      },
+      "s:12SetzerSyntax4NodeV10firstChildSiSgvp": {
+        "conformances": [],
+        "declaration": "var firstChild: Int? { get }",
+        "kind": "swift.property",
+        "path": [
+          "Node",
+          "firstChild"
+        ]
+      },
+      "s:12SetzerSyntax4NodeV11nextSiblingSiSgvp": {
+        "conformances": [],
+        "declaration": "var nextSibling: Int? { get }",
+        "kind": "swift.property",
+        "path": [
+          "Node",
+          "nextSibling"
+        ]
+      },
+      "s:12SetzerSyntax4NodeV14sourceSegmentsSayAA11SourceRangeVGvp": {
+        "conformances": [],
+        "declaration": "var sourceSegments: [SourceRange] { get }",
+        "kind": "swift.property",
+        "path": [
+          "Node",
+          "sourceSegments"
+        ]
+      },
+      "s:12SetzerSyntax4NodeV4data5range14sourceSegments10firstChild11nextSiblingAcA0C4DataO_AA11SourceRangeVSayALGSiSgANtcfc": {
+        "conformances": [],
+        "declaration": "init(data: NodeData, range: SourceRange, sourceSegments: [SourceRange] = [], firstChild: Int? = nil, nextSibling: Int? = nil)",
+        "kind": "swift.init",
+        "path": [
+          "Node",
+          "init(data:range:sourceSegments:firstChild:nextSibling:)"
+        ]
+      },
+      "s:12SetzerSyntax4NodeV4dataAA0C4DataOvp": {
+        "conformances": [],
+        "declaration": "let data: NodeData",
+        "kind": "swift.property",
+        "path": [
+          "Node",
+          "data"
+        ]
+      },
+      "s:12SetzerSyntax4NodeV4kindAA0C4KindVvp": {
+        "conformances": [],
+        "declaration": "var kind: NodeKind { get }",
+        "kind": "swift.property",
+        "path": [
+          "Node",
+          "kind"
+        ]
+      },
+      "s:12SetzerSyntax4NodeV5rangeAA11SourceRangeVvp": {
+        "conformances": [],
+        "declaration": "let range: SourceRange",
+        "kind": "swift.property",
+        "path": [
+          "Node",
+          "range"
+        ]
+      },
+      "s:12SetzerSyntax8DocumentV": {
+        "conformances": [
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct Document",
+        "kind": "swift.struct",
+        "path": [
+          "Document"
+        ]
+      },
+      "s:12SetzerSyntax8DocumentV09referenceB03forAA09ReferenceB0VSgSi_tF": {
+        "conformances": [],
+        "declaration": "func referenceSyntax(for owner: Int) -> ReferenceSyntax?",
+        "kind": "swift.method",
+        "path": [
+          "Document",
+          "referenceSyntax(for:)"
+        ]
+      },
+      "s:12SetzerSyntax8DocumentV11diagnosticsSayAA15ParseDiagnosticVGvp": {
+        "conformances": [],
+        "declaration": "var diagnostics: [ParseDiagnostic] { get }",
+        "kind": "swift.property",
+        "path": [
+          "Document",
+          "diagnostics"
+        ]
+      },
+      "s:12SetzerSyntax8DocumentV15renderingPolicyAA09RenderingE0Vvp": {
+        "conformances": [],
+        "declaration": "var renderingPolicy: RenderingPolicy { get }",
+        "kind": "swift.property",
+        "path": [
+          "Document",
+          "renderingPolicy"
+        ]
+      },
+      "s:12SetzerSyntax8DocumentV19customLeafFallbacksSDySiSSGvp": {
+        "conformances": [],
+        "declaration": "let customLeafFallbacks: [Int : String]",
+        "kind": "swift.property",
+        "path": [
+          "Document",
+          "customLeafFallbacks"
+        ]
+      },
+      "s:12SetzerSyntax8DocumentV4rootAA4NodeVvp": {
+        "conformances": [],
+        "declaration": "var root: Node { get }",
+        "kind": "swift.property",
+        "path": [
+          "Document",
+          "root"
+        ]
+      },
+      "s:12SetzerSyntax8DocumentV5nodesSayAA4NodeVGvp": {
+        "conformances": [],
+        "declaration": "let nodes: [Node]",
+        "kind": "swift.property",
+        "path": [
+          "Document",
+          "nodes"
+        ]
+      },
+      "s:12SetzerSyntax8DocumentV6source5nodes11diagnostics19customLeafFallbacks6tokens15renderingPolicyACSays5UInt8VG_SayAA4NodeVGSayAA15ParseDiagnosticVGSDySiSSGSayAA0B5TokenVGSgAA09RenderingL0VtKcfc": {
+        "conformances": [],
+        "declaration": "init(source: [UInt8], nodes: [Node], diagnostics: [ParseDiagnostic] = [], customLeafFallbacks: [Int : String] = [:], tokens: [SyntaxToken]? = nil, renderingPolicy: RenderingPolicy = []) throws",
+        "kind": "swift.init",
+        "path": [
+          "Document",
+          "init(source:nodes:diagnostics:customLeafFallbacks:tokens:renderingPolicy:)"
+        ]
+      },
+      "s:12SetzerSyntax8DocumentV6sourceSays5UInt8VGvp": {
+        "conformances": [],
+        "declaration": "let source: [UInt8]",
+        "kind": "swift.property",
+        "path": [
+          "Document",
+          "source"
+        ]
+      },
+      "s:12SetzerSyntax8DocumentV6tokensSayAA0B5TokenVGSgvp": {
+        "conformances": [],
+        "declaration": "let tokens: [SyntaxToken]?",
+        "kind": "swift.property",
+        "path": [
+          "Document",
+          "tokens"
+        ]
+      },
+      "s:12SetzerSyntax8DocumentV8children2ofSaySiGSi_tF": {
+        "conformances": [],
+        "declaration": "func children(of index: Int) -> [Int]",
+        "kind": "swift.method",
+        "path": [
+          "Document",
+          "children(of:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum NodeData",
+        "kind": "swift.enum",
+        "path": [
+          "NodeData"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO10blockQuoteyA2CmF": {
+        "conformances": [],
+        "declaration": "case blockQuote",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "blockQuote"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO10htmlInlineyACSScACmF": {
+        "conformances": [],
+        "declaration": "case htmlInline(String)",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "htmlInline(_:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO12taskListItemyACSb_tcACmF": {
+        "conformances": [],
+        "declaration": "case taskListItem(checked: Bool)",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "taskListItem(checked:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO13strikethroughyA2CmF": {
+        "conformances": [],
+        "declaration": "case strikethrough",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "strikethrough"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO13thematicBreakyA2CmF": {
+        "conformances": [],
+        "declaration": "case thematicBreak",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "thematicBreak"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO19referenceDefinitionyAcA09ReferenceF0VcACmF": {
+        "conformances": [],
+        "declaration": "case referenceDefinition(ReferenceDefinition)",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "referenceDefinition(_:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO4codeyACSScACmF": {
+        "conformances": [],
+        "declaration": "case code(String)",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "code(_:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO4kindAA0C4KindVvp": {
+        "conformances": [],
+        "declaration": "var kind: NodeKind { get }",
+        "kind": "swift.property",
+        "path": [
+          "NodeData",
+          "kind"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO4linkyACSS_SSSgtcACmF": {
+        "conformances": [],
+        "declaration": "case link(destination: String, title: String?)",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "link(destination:title:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO4listyAcA14ListAttributesVcACmF": {
+        "conformances": [],
+        "declaration": "case list(ListAttributes)",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "list(_:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO4roleAA0C4RoleOvp": {
+        "conformances": [],
+        "declaration": "var role: NodeRole { get }",
+        "kind": "swift.property",
+        "path": [
+          "NodeData",
+          "role"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO4textyACSScACmF": {
+        "conformances": [],
+        "declaration": "case text(String)",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "text(_:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO5imageyACSS_SSSgtcACmF": {
+        "conformances": [],
+        "declaration": "case image(destination: String, title: String?)",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "image(destination:title:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO5tableyAcA15TableAttributesVcACmF": {
+        "conformances": [],
+        "declaration": "case table(TableAttributes)",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "table(_:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO6customyAcA0C4KindV_AA0C4RoleOSDySSAA0B5ValueOGtcACmF": {
+        "conformances": [],
+        "declaration": "case custom(kind: NodeKind, role: NodeRole, attributes: [String : SyntaxValue])",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "custom(kind:role:attributes:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO6strongyA2CmF": {
+        "conformances": [],
+        "declaration": "case strong",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "strong"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO7headingyACSi_tcACmF": {
+        "conformances": [],
+        "declaration": "case heading(level: Int)",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "heading(level:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO8documentyA2CmF": {
+        "conformances": [],
+        "declaration": "case document",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "document"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO8emphasisyA2CmF": {
+        "conformances": [],
+        "declaration": "case emphasis",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "emphasis"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO8listItemyA2CmF": {
+        "conformances": [],
+        "declaration": "case listItem",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "listItem"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO8tableRowyACSb_tcACmF": {
+        "conformances": [],
+        "declaration": "case tableRow(isHeader: Bool)",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "tableRow(isHeader:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO9codeBlockyACSSSg_SStcACmF": {
+        "conformances": [],
+        "declaration": "case codeBlock(info: String?, literal: String)",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "codeBlock(info:literal:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO9hardBreakyA2CmF": {
+        "conformances": [],
+        "declaration": "case hardBreak",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "hardBreak"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO9htmlBlockyAcA9HTMLBlockVcACmF": {
+        "conformances": [],
+        "declaration": "case htmlBlock(HTMLBlock)",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "htmlBlock(_:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO9paragraphyA2CmF": {
+        "conformances": [],
+        "declaration": "case paragraph",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "paragraph"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO9softBreakyA2CmF": {
+        "conformances": [],
+        "declaration": "case softBreak",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "softBreak"
+        ]
+      },
+      "s:12SetzerSyntax8NodeDataO9tableCellyAcA14TableAlignmentO_tcACmF": {
+        "conformances": [],
+        "declaration": "case tableCell(alignment: TableAlignment)",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeData",
+          "tableCell(alignment:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s23CustomStringConvertibleP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct NodeKind",
+        "kind": "swift.struct",
+        "path": [
+          "NodeKind"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV10blockQuoteACvpZ": {
+        "conformances": [],
+        "declaration": "static let blockQuote: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "blockQuote"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV10htmlInlineACvpZ": {
+        "conformances": [],
+        "declaration": "static let htmlInline: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "htmlInline"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV11descriptionSSvp": {
+        "conformances": [],
+        "declaration": "var description: String { get }",
+        "kind": "swift.property",
+        "path": [
+          "NodeKind",
+          "description"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV12taskListItemACvpZ": {
+        "conformances": [],
+        "declaration": "static let taskListItem: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "taskListItem"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV13strikethroughACvpZ": {
+        "conformances": [],
+        "declaration": "static let strikethrough: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "strikethrough"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV13thematicBreakACvpZ": {
+        "conformances": [],
+        "declaration": "static let thematicBreak: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "thematicBreak"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV19referenceDefinitionACvpZ": {
+        "conformances": [],
+        "declaration": "static let referenceDefinition: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "referenceDefinition"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV4codeACvpZ": {
+        "conformances": [],
+        "declaration": "static let code: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "code"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV4linkACvpZ": {
+        "conformances": [],
+        "declaration": "static let link: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "link"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV4listACvpZ": {
+        "conformances": [],
+        "declaration": "static let list: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "list"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV4nameSSvp": {
+        "conformances": [],
+        "declaration": "let name: String",
+        "kind": "swift.property",
+        "path": [
+          "NodeKind",
+          "name"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV4textACvpZ": {
+        "conformances": [],
+        "declaration": "static let text: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "text"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV5imageACvpZ": {
+        "conformances": [],
+        "declaration": "static let image: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "image"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV5tableACvpZ": {
+        "conformances": [],
+        "declaration": "static let table: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "table"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV6strongACvpZ": {
+        "conformances": [],
+        "declaration": "static let strong: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "strong"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV7headingACvpZ": {
+        "conformances": [],
+        "declaration": "static let heading: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "heading"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV8builtinsShyACGvpZ": {
+        "conformances": [],
+        "declaration": "static let builtins: Set<NodeKind>",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "builtins"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV8documentACvpZ": {
+        "conformances": [],
+        "declaration": "static let document: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "document"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV8emphasisACvpZ": {
+        "conformances": [],
+        "declaration": "static let emphasis: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "emphasis"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV8listItemACvpZ": {
+        "conformances": [],
+        "declaration": "static let listItem: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "listItem"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV8tableRowACvpZ": {
+        "conformances": [],
+        "declaration": "static let tableRow: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "tableRow"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV9codeBlockACvpZ": {
+        "conformances": [],
+        "declaration": "static let codeBlock: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "codeBlock"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV9hardBreakACvpZ": {
+        "conformances": [],
+        "declaration": "static let hardBreak: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "hardBreak"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV9htmlBlockACvpZ": {
+        "conformances": [],
+        "declaration": "static let htmlBlock: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "htmlBlock"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV9paragraphACvpZ": {
+        "conformances": [],
+        "declaration": "static let paragraph: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "paragraph"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV9softBreakACvpZ": {
+        "conformances": [],
+        "declaration": "static let softBreak: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "softBreak"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindV9tableCellACvpZ": {
+        "conformances": [],
+        "declaration": "static let tableCell: NodeKind",
+        "kind": "swift.type.property",
+        "path": [
+          "NodeKind",
+          "tableCell"
+        ]
+      },
+      "s:12SetzerSyntax8NodeKindVyACSScfc": {
+        "conformances": [],
+        "declaration": "init(_ name: String)",
+        "kind": "swift.init",
+        "path": [
+          "NodeKind",
+          "init(_:)"
+        ]
+      },
+      "s:12SetzerSyntax8NodeRoleO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum NodeRole",
+        "kind": "swift.enum",
+        "path": [
+          "NodeRole"
+        ]
+      },
+      "s:12SetzerSyntax8NodeRoleO5blockyA2CmF": {
+        "conformances": [],
+        "declaration": "case block",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeRole",
+          "block"
+        ]
+      },
+      "s:12SetzerSyntax8NodeRoleO6inlineyA2CmF": {
+        "conformances": [],
+        "declaration": "case inline",
+        "kind": "swift.enum.case",
+        "path": [
+          "NodeRole",
+          "inline"
+        ]
+      },
+      "s:12SetzerSyntax9HTMLBlockV": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "struct HTMLBlock",
+        "kind": "swift.struct",
+        "path": [
+          "HTMLBlock"
+        ]
+      },
+      "s:12SetzerSyntax9HTMLBlockV4kind7literalAcA0C4KindO_SStcfc": {
+        "conformances": [],
+        "declaration": "init(kind: HTMLBlockKind, literal: String)",
+        "kind": "swift.init",
+        "path": [
+          "HTMLBlock",
+          "init(kind:literal:)"
+        ]
+      },
+      "s:12SetzerSyntax9HTMLBlockV4kindAA0C4KindOvp": {
+        "conformances": [],
+        "declaration": "let kind: HTMLBlockKind",
+        "kind": "swift.property",
+        "path": [
+          "HTMLBlock",
+          "kind"
+        ]
+      },
+      "s:12SetzerSyntax9HTMLBlockV7literalSSvp": {
+        "conformances": [],
+        "declaration": "let literal: String",
+        "kind": "swift.property",
+        "path": [
+          "HTMLBlock",
+          "literal"
+        ]
+      },
+      "s:12SetzerSyntax9ListStyleO": {
+        "conformances": [
+          "{\"target\": \"s:SH\"}",
+          "{\"target\": \"s:SQ\"}",
+          "{\"target\": \"s:s16SendableMetatypeP\"}",
+          "{\"target\": \"s:s8SendableP\"}"
+        ],
+        "declaration": "enum ListStyle",
+        "kind": "swift.enum",
+        "path": [
+          "ListStyle"
+        ]
+      },
+      "s:12SetzerSyntax9ListStyleO6bulletyACs5UInt8V_tcACmF": {
+        "conformances": [],
+        "declaration": "case bullet(marker: UInt8)",
+        "kind": "swift.enum.case",
+        "path": [
+          "ListStyle",
+          "bullet(marker:)"
+        ]
+      },
+      "s:12SetzerSyntax9ListStyleO7orderedyACSi_s5UInt8VtcACmF": {
+        "conformances": [],
+        "declaration": "case ordered(start: Int, delimiter: UInt8)",
+        "kind": "swift.enum.case",
+        "path": [
+          "ListStyle",
+          "ordered(start:delimiter:)"
+        ]
+      }
+    }
+  },
+  "status": "1.0.0 frozen source API baseline"
+}

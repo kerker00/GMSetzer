@@ -4,8 +4,9 @@
 Swift Package Index publication. PR #30 merged the reviewed technical candidate
 into `main` at `5f81308`, following PR #29 (`49afec9`). Merged-main CI run
 45131801793 passes macOS/Linux and DocC/API checks. The owner requested release
-preparation after confirming the merge. The development
-identity is `1.0.0-dev.1`; the latest published preview remains 0.6.0.
+preparation after confirming the merge. The merged development identity was
+`1.0.0-dev.1`; `release/1.0.0` now prepares the final `1.0.0` identity, frozen
+API baseline and notes. The latest published preview remains 0.6.0.
 
 ## Implemented and checked
 
@@ -42,10 +43,10 @@ M7 source; no new performance acceptance is inferred for the facade.
 | Gate | Current state |
 | --- | --- |
 | Review/merge M8 changes | Complete: PR #30 merged at `5f81308`; merged-main CI passes |
-| Accept M7 and proposed 1.x contracts | Final owner acceptance pending |
+| Review release scope and 1.x contracts | M8 reviewed/merged; frozen release policy is packaged in the release-preparation change for final review |
 | Minimum Swift 6.2 CI, including DocC/API checks | All three jobs pass at `cbdc977`: macOS, Linux and DocC/API. Exact run/logs are retained in the follow-up receipt |
 | Final documentation review | Every source-owned public type/typealias now has a summary; consequential defaults, preconditions and ownership are clarified, with a public tree-query guide. Final owner review of guides/remaining individual member summaries pending |
-| Exact merged release identity and notes | [Draft 1.0 notes](Releases/1.0.0.md) prepared; final commit/identity not chosen |
+| Exact merged release identity and notes | Final `1.0.0` identity and [notes](Releases/1.0.0.md) prepared on `release/1.0.0`; [candidate checks](Validation/Release/1.0.0.md) precede choosing the exact merged tag commit |
 | Independent exact-version consumer and source archives | Required after confirmed tag; no 1.0 tag exists |
 | Swift Package Index submission | Configuration ready; no submission sent |
 

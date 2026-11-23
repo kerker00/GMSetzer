@@ -4,7 +4,7 @@
 
 - [Installation and quick start](../README.md#usage)
 - [DocC guides and API reference](../Sources/GMSetzer/GMSetzer.docc/GMSetzer.md)
-- [1.0 preparation](M8Readiness.md) and [proposed source compatibility](APIStability.md)
+- [1.0 preparation](M8Readiness.md) and [source compatibility contract](APIStability.md)
 - [Development roadmap](Roadmap.md)
 - [Front matter](FrontMatter.md), [footnotes](Footnotes.md), [math](Math.md) and [alerts/callouts](Admonitions.md)
 - [Progressive HTML](ProgressiveHTML.md) and [safe HTML policies](HTMLReferences.md)
