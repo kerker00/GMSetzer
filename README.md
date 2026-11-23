@@ -98,6 +98,7 @@ and Swift Package Index documentation configuration. This is development
 work; the published preview and installation example above remain 0.6.0.
 The new `MarkdownHTML` facade is available only on the M8 development branch.
 See the [1.0 readiness gates](Docs/M8Readiness.md),
+[development roadmap](Docs/Roadmap.md),
 [API contract](Docs/APIStability.md) and
 [DocC entry point](Sources/GMSetzer/GMSetzer.docc/GMSetzer.md).
 
@@ -112,7 +113,7 @@ before full benchmark or long-test runs.
 
 Build the six DocC archives with `python3 -I Scripts/build_documentation.py`.
 Check public source compatibility with
-`python3 -I Scripts/check_public_api.py --graph-dir .build/documentation/build`.
+`python3 -I Scripts/check_public_api.py --graph-dir .build/documentation/symbolgraph`.
 
 ## Licence
 

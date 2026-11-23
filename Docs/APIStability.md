@@ -16,8 +16,10 @@ minimums (macOS 15, iOS 18, visionOS 2) are the proposed 1.0 floor; Linux remain
 supported. Actual runtime/minimum-compiler evidence has its own recorded scope.
 
 The source API inventory is [API/1.0-candidate.json](API/1.0-candidate.json).
-It records 611 source-declared public symbols and their declared conformances,
-including the GFM profile extension, without source paths or line numbers.
+Its original 611 export records include 610 source-declared public symbols
+and one presentation-only `extension Profile` grouping node. Checks normalise
+that grouping node while retaining the actual `Profile` type, the GFM member
+and declared conformances. The baseline is preserved without source paths or line numbers.
 Compiler-synthesised declarations and re-export duplicates are not counted as
 new owned declarations. It is a review baseline until 1.0 acceptance.
 
@@ -85,12 +87,14 @@ Build DocC and check the inventory with:
 
 ```sh
 python3 -I Scripts/build_documentation.py
-python3 -I Scripts/check_public_api.py --graph-dir .build/documentation/build
+python3 -I Scripts/check_public_api.py --graph-dir .build/documentation/symbolgraph
 ```
 
 The checker rejects removed/changed declarations, lost conformances and cases
 added to existing enums, while allowing additive methods/types. Five Python
-regressions exercise these boundaries. A new baseline is created only with
+regressions exercise these boundaries. Further checks cover extraction-format
+normalisation without accepting removal of the defining type or its extension
+members. A new baseline is created only with
 `--write-baseline`, which refuses to overwrite an existing file. Do not reset
 the baseline to hide a breaking change.
 

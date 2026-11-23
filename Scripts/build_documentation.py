@@ -12,11 +12,36 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import tempfile
 from urllib.parse import unquote, urlparse
 
 
 MODULES = ("SetzerSyntax", "SetzerParser", "SetzerExtensions", "SetzerHTML",
            "SetzerAnalysis", "GMSetzer")
+
+
+def emit_library_graphs(root, output, jobs, run=subprocess.run):
+    """Emit fresh library graphs during compilation, without test discovery."""
+    graph_dir = output / "symbolgraph"
+    with tempfile.TemporaryDirectory(prefix=".symbolgraph-", dir=output) as temporary:
+        fresh = Path(temporary)
+        command = ["swift", "build", "--package-path", str(root), "--disable-sandbox",
+                   "--target", "GMSetzer", "--scratch-path", str(output / "build"),
+                   "--cache-path", str(output / "cache"),
+                   "--config-path", str(output / "config"),
+                   "--security-path", str(output / "security"), "--jobs", str(jobs),
+                   "-Xswiftc", "-emit-symbol-graph", "-Xswiftc", "-emit-symbol-graph-dir",
+                   "-Xswiftc", str(fresh), "-Xswiftc", "-symbol-graph-skip-synthesized-members"]
+        run(command, check=True)
+        for module in MODULES:
+            path = fresh / f"{module}.symbols.json"
+            graph = json.loads(path.read_text())
+            if graph.get("module", {}).get("name") != module or not isinstance(graph.get("symbols"), list):
+                raise ValueError(f"invalid fresh library graph for {module}")
+        if graph_dir.exists():
+            shutil.rmtree(graph_dir)
+        shutil.copytree(fresh, graph_dir)
+    return graph_dir
 
 
 def main():
@@ -34,18 +59,7 @@ def main():
         docc = subprocess.check_output(["xcrun", "--find", "docc"], text=True).strip()
     if not docc:
         parser.error("DocC must be installed with the selected Swift toolchain")
-    command = ["swift", "package", "--package-path", str(root), "--disable-sandbox",
-               "--scratch-path", str(output / "build"),
-               "--cache-path", str(output / "cache"),
-               "--config-path", str(output / "config"),
-               "--security-path", str(output / "security"),
-               "--jobs", str(args.jobs), "dump-symbol-graph", "--skip-synthesized-members"]
-    subprocess.run(command, check=True)
-    graph_dirs = [p for p in (output / "build").rglob("symbolgraph")
-                  if (p / "GMSetzer.symbols.json").is_file()]
-    if len(graph_dirs) != 1:
-        raise RuntimeError(f"expected one symbol graph directory, found {graph_dirs}")
-    graph_dir = graph_dirs[0]
+    graph_dir = emit_library_graphs(root, output, args.jobs)
     summary = {}
     for module in MODULES:
         # A fresh directory prevents a removed symbol graph surviving a rerun.

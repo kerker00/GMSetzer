@@ -54,4 +54,4 @@ jobs:
       - name: Build all public documentation with warnings as errors
         run: python3 -I Scripts/build_documentation.py --output-dir "$RUNNER_TEMP/gmsetzer-documentation"
       - name: Check the public source API against the reviewed candidate
-        run: python3 -I Scripts/check_public_api.py --graph-dir "$RUNNER_TEMP/gmsetzer-documentation/build"
+        run: python3 -I Scripts/check_public_api.py --graph-dir "$RUNNER_TEMP/gmsetzer-documentation/symbolgraph"

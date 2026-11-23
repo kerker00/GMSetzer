@@ -48,7 +48,22 @@ def public_api(graph_dir, root):
     return result
 
 
+def normalise_extension_contexts(modules):
+    """Drop presentation-only extension blocks, retaining real declarations.
+
+    Standalone extraction can repeat the extended type in its extension's
+    graph as a `swift.extension` grouping node. Compile-time emission omits
+    that node. The defining type and every member are still tracked. An
+    extension block with recorded conformances is deliberately not discarded.
+    """
+    return {module: {key: entry for key, entry in symbols.items()
+                     if entry["kind"] != "swift.extension" or entry["conformances"]}
+            for module, symbols in modules.items()}
+
+
 def incompatibilities(baseline, current):
+    baseline = normalise_extension_contexts(baseline)
+    current = normalise_extension_contexts(current)
     errors = []
     for module, symbols in baseline.items():
         for key, old in symbols.items():
@@ -75,7 +90,7 @@ def main():
     parser.add_argument("--write-baseline", action="store_true",
                         help="create a new baseline; refuses to overwrite an existing file")
     args = parser.parse_args()
-    current = public_api(args.graph_dir, root)
+    current = normalise_extension_contexts(public_api(args.graph_dir, root))
     if args.write_baseline:
         args.baseline.parent.mkdir(parents=True, exist_ok=True)
         with args.baseline.open("x") as output:

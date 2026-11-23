@@ -2,6 +2,8 @@
 
 **23 November 2026 — M8 started:** the owner requested development toward
 1.0 and Swift Package Index publication. PR #29 merged at `49afec9`.
+The [development roadmap](Roadmap.md) defines the 1.0 acceptance boundary and
+the proposed sequence of later work, with independent opt-in syntax stages.
 `feature/m8-api-docs` prepares a validated HTML facade over existing parser
 configuration, six DocC catalogs, a proposed 611-declaration compatibility
 inventory and Index documentation configuration, with development identity
@@ -608,8 +610,11 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | M8 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | In progress | **local preparation on `feature/m8-api-docs`**: validated HTML convenience API, six DocC catalogs, candidate API inventory/checks and Swift Package Index configuration; [readiness](M8Readiness.md) tracks current tests and open release gates |
 | | **Original total before explicit editor-analysis scope** | | **38–59; re-estimate required** | |
 
-After 1.0: further profiles (Obsidian, Pandoc), a Markdown serialiser for
-profile conversions, incremental parsing if measurements call for it.
+The [development roadmap](Roadmap.md) defines the proposed post-1.0 sequence:
+document links/attributes, focused authoring extensions, tree processing and
+Markdown output, then further reusable document structures. Event-oriented
+processing, incremental parsing, input streaming and additional renderers need
+separate measured designs. These are planned capabilities, not 1.0 blockers.
 
 ### 10.1 M6 progressive HTML for large documents
 

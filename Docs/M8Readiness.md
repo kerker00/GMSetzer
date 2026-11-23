@@ -2,13 +2,15 @@
 
 23 November 2026. The owner requested moving GMSetzer toward a stable 1.0 and
 Swift Package Index publication. Preparation is implemented locally on
-`feature/m8-api-docs`, based on merged PR #29 (`49afec9`). The development
+`feature/m8-api-docs` in PR #30, based on merged PR #29 (`49afec9`). The development
 identity is `1.0.0-dev.1`; the latest published preview remains 0.6.0.
 
 ## Implemented and checked
 
-- [Proposed compatibility contract](APIStability.md) and a 611-declaration
-  candidate API inventory, checked independently on Mac and Linux x64.
+- [Proposed compatibility contract](APIStability.md) and a candidate API
+  inventory, checked independently on Mac and Linux x64. The original 611
+  export records include one presentation-only extension block; normalised
+  checks retain all 610 actual declarations without rewriting the baseline.
 - A small validated `MarkdownHTML` facade over existing parser configuration,
   with selected footnote/admonition composition and seven regression tests.
 - DocC catalogs for all six products, with installation, extension selection,
@@ -33,9 +35,9 @@ M7 source; no new performance acceptance is inferred for the facade.
 
 | Gate | Current state |
 | --- | --- |
-| Review/merge M8 changes | Local candidate; owner review/merge pending |
+| Review/merge M8 changes | PR #30 open; owner review/merge pending |
 | Accept M7 and proposed 1.x contracts | Final owner acceptance pending |
-| Minimum Swift 6.2 CI, including DocC/API checks | Workflow updated; new-source CI run pending |
+| Minimum Swift 6.2 CI, including DocC/API checks | Library/spec/script tests and optimized builds pass on both hosts at `f499c4a`; the separate documentation job exposed a test-runner export failure. Library-only graph emission is corrected locally; new CI run pending |
 | Final documentation review | Generated pages and guides build; per-member editorial pass still required |
 | Exact merged release identity and notes | [Draft 1.0 notes](Releases/1.0.0.md) prepared; final commit/identity not chosen |
 | Independent exact-version consumer and source archives | Required after confirmed tag; no 1.0 tag exists |

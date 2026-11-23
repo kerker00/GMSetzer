@@ -36,6 +36,29 @@ class PublicAPICompatibilityTests(unittest.TestCase):
         after = {"Example": {"mode": enum, "new": dict(self.entry, path=["Mode", "new"], kind="swift.enum.case")}}
         self.assertEqual(api.incompatibilities(before, after), ["Added case to existing enum: Example/Mode.new"])
 
+    def test_a_foreign_type_context_is_not_a_removed_public_type(self):
+        key = "s:4Core7ProfileV"
+        entry = dict(self.entry, path=["Profile"], kind="swift.struct", declaration="struct Profile")
+        block = dict(entry, kind="swift.extension", declaration="extension Profile")
+        before = {"Core": {key: entry}, "Extras": {"extension": block, "gfm": self.entry}}
+        current = {"Core": {key: entry}, "Extras": {"gfm": self.entry}}
+        self.assertEqual(api.incompatibilities(before, current), [])
+
+    def test_normalisation_still_rejects_removing_an_extension_member(self):
+        key = "s:4Core7ProfileV"
+        entry = dict(self.entry, path=["Profile"], kind="swift.struct", declaration="struct Profile")
+        block = dict(entry, kind="swift.extension", declaration="extension Profile")
+        before = {"Core": {key: entry}, "Extras": {"extension": block, "gfm": self.entry}}
+        current = {"Core": {key: entry}, "Extras": {}}
+        self.assertEqual(api.incompatibilities(before, current), ["Removed: Extras/Renderer.render(_:)"])
+
+    def test_normalisation_still_rejects_removing_the_defining_type(self):
+        key = "s:4Core7ProfileV"
+        entry = dict(self.entry, path=["Profile"], kind="swift.struct", declaration="struct Profile")
+        block = dict(entry, kind="swift.extension", declaration="extension Profile")
+        before = {"Core": {key: entry}, "Extras": {"extension": block}}
+        self.assertEqual(api.incompatibilities(before, {"Core": {}, "Extras": {}}), ["Removed: Core/Profile"])
+
 
 if __name__ == "__main__":
     unittest.main()

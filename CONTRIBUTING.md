@@ -28,7 +28,7 @@ checkout may be required. Preserve historical validation records as history.
    contract and validation changes.
    Build all six DocC catalogs with `python3 -I Scripts/build_documentation.py`.
    Check the public candidate API with `python3 -I Scripts/check_public_api.py
-   --graph-dir .build/documentation/build`. Review behavioural/default/identifier
+   --graph-dir .build/documentation/symbolgraph`. Review behavioural/default/identifier
    changes separately; never regenerate the candidate inventory to hide a break.
 5. Open a pull request against `main`. The owner merges.
 6. After a confirmed merge, follow
