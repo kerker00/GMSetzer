@@ -59,9 +59,39 @@ do not establish new parser speed, allocation or peak-memory claims. Earlier
 M7 receipts keep their exact runtime identities; the new identity/source file
 must not be presented as hash-equal to those earlier inventories.
 
-DocC builds establish valid catalogs, references and generated API pages,
-not full editorial review of every member. `coverage.json` from the build lists
-source declarations without individual comments. Final API/documentation and
-M7 acceptance remain owner review gates. The release must choose an exact
+DocC builds establish valid catalogs, references and generated API pages.
+The subsequent contract review below documents the consequential public
+preconditions/defaults; `coverage.json` still lists declarations without
+individual summaries and is not a claim of 100% inline-comment coverage.
+Final API/documentation and M7 acceptance remain owner review gates. The release must choose an exact
 merged commit, pass minimum-toolchain CI and consumer/archive checks, then
 obtain confirmation before tagging, publishing or submitting to the Index.
+
+## 1.0 contract review follow-up
+
+The user requested a roadmap without links to other parser projects and
+continued 1.0 work. [Roadmap](Roadmap.md) records independent stages and explicit
+acceptance criteria. Its future syntax stages do not expand the 1.0 scope.
+
+The existing public tree surface is sufficient for 1.0: callers can follow
+child/sibling links, use `children(of:)`, and build `DocumentIndex` for parents,
+ancestors, carets and outlines. A new [DocC tree-query guide](../Sources/GMSetzer/GMSetzer.docc/TreeQueries.md)
+shows preorder traversal and subtree skipping. Visitor/rewriter wrappers can
+be additive later; no new public protocol is required before this freeze.
+
+| Public family | Contract reviewed and clarified |
+| --- | --- |
+| Parser/profile | Configuration construction is tolerant; strict validation is explicit; implementations do not select themselves; profile names are labels |
+| Depth limits | Constructor preconditions are 1...256 container / 1...32 inline-extension depth; invalid values are not silently clamped; limits are not byte/time caps |
+| Node/document | Payload determines kind; ranges include syntax; source segments identify contributing bytes; flat storage is not preorder; release validation owns tree invariants |
+| Tree queries/building | Root is zero; `children(of:)` requires an owned valid index; invalid parent/plain-text queries have documented nil/empty fallbacks; builders expose only validated snapshots |
+| Positions | Original-byte versus UTF-16 versus line/scalar coordinates; exact boundaries and nil rejection; no surrogate/CRLF rounding |
+| HTML | Default options, raw/comment/URL policy independence, trusted hooks, profile-selected rendering behaviour and escaping scope |
+| Extension HTML | Standard recipe ownership, caller-provided title/backlink text, safe footnote ID namespaces, reference ordering and unchanged front-matter/math fallback policies |
+| Native findings/fixes | Explicit rule subsets, snapshot-bound suppressions, stable message keys, separate configuration/runtime/analysis errors and exact byte preconditions before edits |
+| Progressive output | Complete-document context, soft grouping budget, explicit fallback/cancellation boundaries and caller-owned result lifetime |
+
+This follow-up edits source comments and guides, not Swift declarations or
+implementations. The API baseline remains unchanged. The separate library-only
+DocC correction and extension-grouping normalisation are recorded in
+[their execution report](Validation/M8/library-docs-2026-11-23.md).

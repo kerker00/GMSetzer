@@ -29,6 +29,7 @@ linting, networking, file access or UI work runs implicitly in the background.
 - <doc:HTMLSafety>
 - <doc:ProgressiveOutput>
 - <doc:EditorIntegration>
+- <doc:TreeQueries>
 - <doc:Compatibility>
 
 ### HTML convenience and composition

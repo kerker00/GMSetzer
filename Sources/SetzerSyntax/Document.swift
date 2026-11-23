@@ -79,11 +79,13 @@ public struct ReferenceSyntax: Hashable, Sendable {
     }
 }
 
+/// Original list marker style, separate from HTML tightness.
 public enum ListStyle: Hashable, Sendable {
     case bullet(marker: UInt8)
     case ordered(start: Int, delimiter: UInt8)
 }
 
+/// List marker semantics and whether paragraph wrappers are omitted in items.
 public struct ListAttributes: Hashable, Sendable {
     public let style: ListStyle
     public let isTight: Bool
@@ -97,6 +99,7 @@ public struct ListAttributes: Hashable, Sendable {
 /// Column alignment from a GFM table delimiter row.
 public enum TableAlignment: Hashable, Sendable { case none, left, center, right }
 
+/// GFM table column layout; document validation checks rows against this count.
 public struct TableAttributes: Hashable, Sendable {
     /// One entry per column; the header row defines the column count.
     public let alignments: [TableAlignment]
@@ -116,7 +119,8 @@ public struct RenderingPolicy: OptionSet, Hashable, Sendable {
 }
 
 /// Semantic data determines the kind, avoiding mismatched kind/payload pairs.
-/// More built-in cases arrive with the corresponding parser implementation.
+/// Literal strings are semantic text; original spelling stays in the source
+/// and optional tokens. Custom payloads declare their structural role explicitly.
 public enum NodeData: Hashable, Sendable {
     case document
     case paragraph
@@ -268,14 +272,22 @@ package enum SourceSegments: Hashable, Sendable {
 /// Flat tree node. Ranges include syntax; source segments identify contributing
 /// content in the original byte buffer and may exclude prefixes or delimiters.
 public struct Node: Hashable, Sendable {
+    /// Semantic payload that determines this node's kind and structural role.
     public let data: NodeData
+    /// Stable kind derived from the payload, including namespaced custom kinds.
     public var kind: NodeKind { data.kind }
+    /// Complete original-byte span, including syntax delimiters and prefixes.
     public let range: SourceRange
     package let segments: SourceSegments
+    /// Contributing original-byte content spans; may exclude container prefixes.
     public var sourceSegments: [SourceRange] { segments.array }
+    /// First child's index in the owning document, or nil for a leaf.
     public internal(set) var firstChild: Int?
+    /// Next sibling in tree order, or nil at the end of the sibling chain.
     public internal(set) var nextSibling: Int?
 
+    /// Creates a node value. Topology, source ranges and payload invariants are
+    /// checked when the value becomes part of a `Document`, not at this step.
     public init(data: NodeData, range: SourceRange, sourceSegments: [SourceRange] = [],
                 firstChild: Int? = nil, nextSibling: Int? = nil) {
         self.init(data: data, range: range, segments: SourceSegments(sourceSegments),
@@ -293,6 +305,8 @@ public struct Node: Hashable, Sendable {
     }
 }
 
+/// A rejected tree, payload, range, token or diagnostic invariant. Integer
+/// associated values identify node/table indices in the attempted snapshot.
 public enum DocumentError: Error, Equatable, Sendable {
     case invalidRoot
     case invalidRange(node: Int)
@@ -309,6 +323,8 @@ public enum DocumentError: Error, Equatable, Sendable {
     case invalidDiagnostic(Int)
 }
 
+/// A located parser/runtime finding. These differ from source-free configuration
+/// issues and from optional native analysis findings over legal Markdown.
 public struct ParseDiagnostic: Hashable, Sendable {
     public enum Code: Hashable, Sendable {
         case invalidExtensionResult(String)
@@ -326,8 +342,12 @@ public struct ParseDiagnostic: Hashable, Sendable {
 
 /// Immutable, validated source snapshot and syntax tree. Root index is zero.
 public struct Document: Sendable {
+    /// Exact original UTF-8 bytes, including BOM, invalid sequences and line endings.
     public let source: [UInt8]
+    /// Validated flat storage. Follow child/sibling links for tree order; array
+    /// indices are snapshot-local and are not a persistent document identity.
     public let nodes: [Node]
+    /// Source-located runtime/depth findings accumulated while parsing/transformation.
     public private(set) var diagnostics: [ParseDiagnostic]
     /// nil means syntax collection was disabled; [] is a collected empty table.
     public let tokens: [SyntaxToken]?
@@ -338,6 +358,11 @@ public struct Document: Sendable {
     /// HTML behaviours of the parse profile; empty for CommonMark.
     public private(set) var renderingPolicy: RenderingPolicy = []
 
+    /// Validates the complete tree, payloads, ranges, tokens and diagnostics,
+    /// including in optimized builds. Node zero must span the entire source
+    /// as a document root and every other node must be reachable exactly once.
+    ///
+    /// - Throws: `DocumentError` for a rejected snapshot invariant.
     public init(source: [UInt8], nodes: [Node], diagnostics: [ParseDiagnostic] = [],
                 customLeafFallbacks: [Int: String] = [:], tokens: [SyntaxToken]? = nil,
                 renderingPolicy: RenderingPolicy = []) throws {
@@ -455,6 +480,7 @@ public struct Document: Sendable {
         diagnostics.append(ParseDiagnostic(.invalidExtensionResult(identifier), range: root.range))
     }
 
+    /// The validated document root at index zero.
     public var root: Node { nodes[0] }
 
     /// Node indices remain valid for the lifetime of this document only.
@@ -465,6 +491,9 @@ public struct Document: Sendable {
         return copy
     }
 
+    /// Returns direct child indices in sibling/tree order, not flat-array order.
+    ///
+    /// - Precondition: `index` is a valid node index in this document.
     public func children(of index: Int) -> [Int] {
         var result: [Int] = []
         children(of: index, into: &result)
@@ -494,6 +523,8 @@ public struct DocumentBuilder: Sendable {
     private var customLeafFallbacks: [Int: String] = [:]
     private var tokens: [SyntaxToken]?
 
+    /// Starts an open root over the entire original snapshot. Token recording
+    /// is disabled unless explicitly selected; `build()` validates the result.
     public init(source: [UInt8], collectSyntaxDetails: Bool = false) {
         self.tokens = collectSyntaxDetails ? [] : nil
         self.source = source
@@ -540,6 +571,7 @@ public struct DocumentBuilder: Sendable {
         return index
     }
 
+    /// Appends a runtime finding; its range is validated at `build()`.
     public mutating func report(_ diagnostic: ParseDiagnostic) { diagnostics.append(diagnostic) }
 
     /// A no-op when collection is disabled. Ownership/ranges are checked at build.
@@ -560,8 +592,13 @@ public struct DocumentBuilder: Sendable {
         if let fallbackLiteral { customLeafFallbacks[index] = fallbackLiteral }
     }
 
+    /// Document-level HTML policies to carry into the built snapshot.
     public var renderingPolicy: RenderingPolicy = []
 
+    /// Produces an immutable validated document without consuming this builder.
+    /// Later builder mutations cannot change the returned snapshot.
+    ///
+    /// - Throws: `DocumentError` for invalid topology, payloads or provenance.
     public func build() throws -> Document {
         try Document(source: source, nodes: nodes, diagnostics: diagnostics, customLeafFallbacks: customLeafFallbacks,
                      tokens: tokens, renderingPolicy: renderingPolicy)

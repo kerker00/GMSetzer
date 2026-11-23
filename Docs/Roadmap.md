@@ -10,6 +10,8 @@ labels express sequence and can be split when acceptance requires it.
 
 - Finish a reliable 1.0 before adding more Markdown dialect syntax.
 - Preserve CommonMark/GFM behaviour and source compatibility in 1.x.
+- Use the existing custom-node extension boundary for new 1.x syntax; adding
+  cases to existing public enums is outside the proposed minor-release policy.
 - Make new syntax opt-in, with independent selection, exact original-byte
   ranges, optional source-spelled tokens and defined HTML behaviour.
 - Keep the six products consumer-neutral, pure Swift and free of runtime

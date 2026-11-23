@@ -103,7 +103,14 @@ def main():
             parser.error("unsupported API baseline format")
         errors = incompatibilities(baseline["modules"], current)
         if errors:
-            parser.exit(1, "\n".join(errors) + "\n")
+            details = []
+            for module, symbols in normalise_extension_contexts(baseline["modules"]).items():
+                for key, old in symbols.items():
+                    new = current.get(module, {}).get(key)
+                    if new and any(old[k] != new[k] for k in ("path", "kind", "declaration")):
+                        label = module + "/" + ".".join(old["path"])
+                        details.append(f"{label}\n  baseline: {old['declaration']}\n  current:  {new['declaration']}")
+            parser.exit(1, "\n".join(errors + details) + "\n")
     print(f"Public API check: {sum(map(len, current.values()))} source declarations across six modules.")
 
 

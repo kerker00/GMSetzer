@@ -6,6 +6,7 @@ public import SetzerSyntax
 /// in the tree; this renderer appends only cited notes in reference order.
 /// Available through the convenience product `GMSetzer`.
 public struct FootnotesHTMLRenderer: Sendable {
+    /// Base HTML policy; footnote references/definitions receive composed hooks.
     public let renderer: HTMLRenderer
     /// Namespace separate documents on one page. Only ASCII letters, digits,
     /// and `-` survive; other UTF-8 bytes are hex-encoded without collisions.
@@ -13,11 +14,15 @@ public struct FootnotesHTMLRenderer: Sendable {
     /// Callers may localise this plain-text accessible label.
     public let backlinkLabel: String
 
+    /// Chooses base policies, a document namespace and a plain-text backlink label.
+    /// Labels are escaped; the prefix is encoded into safe, collision-free IDs.
     public init(renderer: HTMLRenderer = HTMLRenderer(), idPrefix: String = "fn-",
                 backlinkLabel: String = "Back to reference") {
         self.renderer = renderer; self.idPrefix = idPrefix; self.backlinkLabel = backlinkLabel
     }
 
+    /// Renders the body and then only cited notes, numbered by reference order.
+    /// The validated input tree remains in its original source order.
     public func render(_ document: Document) -> String {
         let context = prepareContext(document)
         return context.renderer.render(document, tree: context.tree) + renderAppendix(document, context: context, checkpoint: {})

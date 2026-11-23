@@ -1,5 +1,6 @@
 public import SetzerSyntax
 
+/// Stable identifiers of the three opt-in native style rules.
 public enum NativeRule: String, CaseIterable, Hashable, Sendable {
     case headingLevel = "gmsetzer.heading-level"
     case duplicateHeading = "gmsetzer.duplicate-heading"
@@ -14,9 +15,12 @@ public struct NativeSuppression: Hashable, Sendable {
     public init(rule: NativeRule, range: SourceRange) { self.rule = rule; self.range = range }
 }
 
+/// Explicit rule subset and caller-resolved source suppression scopes.
+/// An empty rule set produces no findings and does not parse source.
 public struct NativeAnalysisConfiguration: Hashable, Sendable {
     /// Empty by default: analysis is independent of parsing and highlighting.
     public var rules: Set<NativeRule>
+    /// Snapshot-bound ranges to suppress for individual rules.
     public var suppressions: [NativeSuppression]
     public init(rules: Set<NativeRule> = [], suppressions: [NativeSuppression] = []) {
         self.rules = rules; self.suppressions = suppressions
@@ -28,6 +32,8 @@ public struct NativeAnalysisConfiguration: Hashable, Sendable {
     }
 }
 
+/// Rejected analysis configuration: a suppression endpoint is outside the
+/// snapshot or inside a scalar/CRLF boundary.
 public enum NativeAnalysisError: Error, Equatable, Sendable { case invalidSuppression }
 
 /// Whitespace-collapsed UTF-8 identity of a heading title. ASCII titles are
@@ -58,6 +64,11 @@ public enum NativeAnalyzer {
     public static let provider = "gmsetzer.native"
     public static let version = GMSetzerVersion.current
 
+    /// Analyzes an existing snapshot without mutating source or applying fixes.
+    /// The dialect labels the report; it does not select grammar retroactively.
+    ///
+    /// - Throws: `NativeAnalysisError` for invalid suppression boundaries, or
+    ///   a diagnostic validation error if constructed findings violate their contract.
     public static func analyze(_ document: Document, dialect: MarkdownDialect = .commonMark,
                                configuration: NativeAnalysisConfiguration = .init()) throws -> DiagnosticReport {
         if configuration.rules.isEmpty && configuration.suppressions.isEmpty {

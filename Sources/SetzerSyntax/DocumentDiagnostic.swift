@@ -33,6 +33,8 @@ public enum DiagnosticLocation: Hashable, Sendable {
     }
 }
 
+/// A stable message key/argument payload and plain-text fallback. Consumers
+/// can localise it without treating the default wording as an identifier.
 public struct DiagnosticMessage: Hashable, Sendable {
     public let key: String
     public let arguments: [String: SyntaxValue]
@@ -45,6 +47,7 @@ public struct DiagnosticMessage: Hashable, Sendable {
     }
 }
 
+/// An optional explanatory location in the same snapshot as its finding.
 public struct RelatedDiagnosticLocation: Hashable, Sendable {
     public let location: DiagnosticLocation
     public let message: DiagnosticMessage?
@@ -74,6 +77,7 @@ public struct SuggestedEdit: Hashable, Sendable {
     }
 }
 
+/// Rejected diagnostic identity, source location or suggested-edit invariant.
 public enum DiagnosticError: Error, Hashable, Sendable {
     case invalidIdentifier
     case invalidLocation
@@ -83,6 +87,8 @@ public enum DiagnosticError: Error, Hashable, Sendable {
     case staleEdit
 }
 
+/// An explicit, source-ordered edit set with exact original-byte preconditions.
+/// Construction validates edit shape/overlap; snapshot validation is separate.
 public struct SuggestedFix: Hashable, Sendable {
     public let message: DiagnosticMessage
     /// Canonical source order. Adjacent nonempty replacements are allowed;
@@ -109,6 +115,9 @@ public struct SuggestedFix: Hashable, Sendable {
         self.edits = ordered
     }
 
+    /// Checks range bounds and exact original bytes against the supplied snapshot.
+    ///
+    /// - Throws: `DiagnosticError.invalidEdit` or `DiagnosticError.staleEdit`.
     public func validate(in source: [UInt8]) throws {
         for edit in edits {
             guard edit.range.upperBound <= source.count else { throw DiagnosticError.invalidEdit }
@@ -134,6 +143,8 @@ public struct SuggestedFix: Hashable, Sendable {
     }
 }
 
+/// A presentation-free, provider-identified finding with optional related
+/// locations and explicit fixes. Report construction validates source ownership.
 public struct DocumentDiagnostic: Hashable, Sendable {
     public let provider: String
     public let code: String
@@ -168,6 +179,8 @@ public struct DocumentDiagnostic: Hashable, Sendable {
 /// One provider's findings over an exact immutable source/configuration. The
 /// caller adds its session/text stamp and rejects late results before display.
 /// IDs and node indices are never identities across edits.
+/// A validated finding collection bound to original bytes and provider,
+/// dialect and configuration identities. It does not assign an editor revision.
 public struct DiagnosticReport: Sendable {
     public let source: [UInt8]
     public let provider: String

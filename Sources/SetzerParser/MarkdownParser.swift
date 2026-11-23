@@ -4,15 +4,23 @@ public import SetzerSyntax
 /// Optional lexical tokens retain source spelling. Native analysis is a
 /// separate opt-in service over the returned document.
 public struct MarkdownParser: Sendable {
+    /// Selected grammar, extension options and rule ordering for each parse.
     public let profile: Profile
     internal let registry: RuleRegistry
     internal var resolvedTransforms: [ActiveTransform] { registry.transforms }
     internal var resolvedInlineRules: [ActiveInlineRule] { registry.inlineRules }
     internal var resolvedPostInlineTransforms: [ActiveTransform] { registry.postInlineTransforms }
+    /// Configuration findings without source locations. Direct parsing is
+    /// tolerant; use `validated()` to reject these before processing input.
     public var configurationIssues: [ConfigurationIssue] { registry.issues }
+    /// Validated container and custom-inline depth limits, not an input-size cap.
     public let limits: ParserLimits
+    /// Whether returned documents contain the optional source-spelled token table.
     public let collectSyntaxDetails: Bool
 
+    /// Prepares an immutable parser configuration; no source is parsed here.
+    /// Implementations in `extensions` are available only when selected by
+    /// `profile`. Construction records issues rather than throwing them.
     public init(profile: Profile = .commonMark, extensions: [MarkdownExtension] = [], limits: ParserLimits = ParserLimits(),
                 collectSyntaxDetails: Bool = false) {
         self.profile = profile
@@ -28,6 +36,9 @@ public struct MarkdownParser: Sendable {
         return self
     }
 
+    /// Parses the complete string as UTF-8 and returns a validated snapshot.
+    /// Configuration issues remain available on this parser; depth/extension
+    /// runtime findings are returned in the document's diagnostics.
     public func parse(_ text: String) -> Document { parse(bytes: Array(text.utf8)) }
 
     /// Keeps original bytes, including malformed UTF-8. Literals use Swift's
