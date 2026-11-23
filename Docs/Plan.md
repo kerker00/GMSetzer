@@ -14,6 +14,12 @@ Final owner acceptance, merging, tagging, release publication and Index
 submission remain separate. The latest
 published preview remains 0.6.0; no intermediate 0.7 release is required.
 
+**Merged M8 checkpoint:** PR #30 merged at `5f81308`; merged-main CI run
+45131801793 passes all three Swift 6.2 library/spec/script and DocC/API jobs.
+The owner confirmed the merge and requested release preparation: final version
+identity/notes, frozen source-API baseline and release-candidate verification.
+Tag creation, release publication and Index submission remain separate actions.
+
 The dated checkpoint below records the preceding M7 state.
 
 **Status: 22 November 2026, M1–M6 merged and accepted under their declared
@@ -883,8 +889,9 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: review M8's [API contract](APIStability.md), DocC catalogs
-and [1.0 readiness gates](M8Readiness.md). The inline-input/comparison follow-up
+Current next work: prepare the 1.0 release from merged M8, finalising its
+[API contract](APIStability.md), notes and [release readiness](M8Readiness.md).
+The inline-input/comparison follow-up
 merged in [PR #29](https://github.com/kerker00/GMSetzer/pull/29) at `49afec9`,
 after PR #28 (`ce5dedc`) and the [M7 candidate](M7Readiness.md)
 in PR #26 (`a273810`). The measured

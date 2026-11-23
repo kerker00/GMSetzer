@@ -1,8 +1,10 @@
 # M8 / 1.0 preparation
 
 23 November 2026. The owner requested moving GMSetzer toward a stable 1.0 and
-Swift Package Index publication. The reviewed technical candidate is in
-`feature/m8-api-docs` in PR #30, based on merged PR #29 (`49afec9`). The development
+Swift Package Index publication. PR #30 merged the reviewed technical candidate
+into `main` at `5f81308`, following PR #29 (`49afec9`). Merged-main CI run
+45131801793 passes macOS/Linux and DocC/API checks. The owner requested release
+preparation after confirming the merge. The development
 identity is `1.0.0-dev.1`; the latest published preview remains 0.6.0.
 
 ## Implemented and checked
@@ -39,7 +41,7 @@ M7 source; no new performance acceptance is inferred for the facade.
 
 | Gate | Current state |
 | --- | --- |
-| Review/merge M8 changes | PR #30 open; owner review/merge pending |
+| Review/merge M8 changes | Complete: PR #30 merged at `5f81308`; merged-main CI passes |
 | Accept M7 and proposed 1.x contracts | Final owner acceptance pending |
 | Minimum Swift 6.2 CI, including DocC/API checks | All three jobs pass at `cbdc977`: macOS, Linux and DocC/API. Exact run/logs are retained in the follow-up receipt |
 | Final documentation review | Every source-owned public type/typealias now has a summary; consequential defaults, preconditions and ownership are clarified, with a public tree-query guide. Final owner review of guides/remaining individual member summaries pending |

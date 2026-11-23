@@ -96,7 +96,8 @@ M8 preparation uses `1.0.0-dev.1`: a small validated HTML convenience API,
 DocC catalogs for all six products, a proposed source-compatibility contract
 and Swift Package Index documentation configuration. This is development
 work; the published preview and installation example above remain 0.6.0.
-The new `MarkdownHTML` facade is available only on the M8 development branch.
+PR #30 merged the M8 implementation into `main` at `5f81308`; this includes
+the new `MarkdownHTML` facade. Release preparation is now the next step.
 See the [1.0 readiness gates](Docs/M8Readiness.md),
 [development roadmap](Docs/Roadmap.md),
 [API contract](Docs/APIStability.md) and
