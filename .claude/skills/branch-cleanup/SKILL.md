@@ -56,7 +56,7 @@ Fetch with `git fetch --prune` and inspect the PR using
 Documentation reconciliation is part of every branch completion, even when
 the branch already contained a documentation update. Work from current `main`
 and compare the merged change with [README.md](../../../README.md), the status
-and next-work entries in [Docs/Plan.md](../../../Docs/Plan.md), and affected
+and next-work entries in [Docs/Development.md](../../../Docs/Development.md#current-state), and affected
 contract/validation documents. Follow [feature-docs](../feature-docs/SKILL.md).
 
 - Always check README's summary, implemented/planned features, installation

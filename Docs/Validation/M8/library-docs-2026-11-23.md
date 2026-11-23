@@ -2,7 +2,7 @@
 
 23 November 2026, following the initial M8 candidate `f499c4a` in PR #30.
 The user requested a project-focused roadmap and continuation toward 1.0.
-[Roadmap](../../Roadmap.md) records the planned stages without links to other
+[Roadmap](https://github.com/kerker00/GMSetzer/blob/418882ff66357ce17e968d389b62d77296d665db/Docs/Roadmap.md) records the planned stages without links to other
 parser projects.
 
 ## CI failure and correction

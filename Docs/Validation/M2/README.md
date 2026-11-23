@@ -2,7 +2,7 @@
 
 Sources are based on `main` at `34cbe31` (PR #10), with M2 working changes.
 `receipt.json` records content hashes rather than treating an uncommitted tree
-as a main-branch acceptance result. See [M2Inlines](../../M2Inlines.md) for scope,
+as a main-branch acceptance result. See [M2Inlines](https://github.com/kerker00/GMSetzer/blob/418882ff66357ce17e968d389b62d77296d665db/Docs/M2Inlines.md) for scope,
 commands, passed technical acceptance, pending owner review/merge and platform limits.
 
 The short timing probe is diagnostic: one warmup and three ContinuousClock

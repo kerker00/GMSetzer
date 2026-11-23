@@ -16,7 +16,7 @@ CommonMark/no-annotation parse scope, source positions and differing
 swift-markdown defaults. Installation still pins the published 0.6.0 preview;
 no tag, release or repository visibility is changed.
 
-Chronological checkpoints move to [Status](../../Status.md); the reference
+Chronological checkpoints move to [Status](https://github.com/kerker00/GMSetzer/blob/418882ff66357ce17e968d389b62d77296d665db/Docs/Status.md); the reference
 index and module map move to [Documentation](../../README.md). The exact
 first Swift example is extracted from the new README, compiled against the
 unchanged Release library modules and executed. Heading and GFM checkbox
