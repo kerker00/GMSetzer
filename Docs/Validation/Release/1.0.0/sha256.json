@@ -1,7 +1,11 @@
 {
+  "candidate-ci.json": "500499bbe8c6dc19e89b2c63acc512167257c74c652738aa08748d37c9047b92",
+  "consumer-Package.resolved": "167fe4df0a6672319f0bc9db34447c488452a84815a45bdc55176be776069d00",
   "consumer-probe.swift": "be5c25c339d5a36c01c3531abfe247090675e45ac2900a05c89abb384220ca31",
   "local-logs.tar.gz": "f39fb7cfa3c6ab82143e84103b0289e3f982b5848c4489ef8b16630231336f88",
   "local-validation.json": "956233731fa59fa603a5ea6db70f14274c500a49f38ae56e84529b14107d23e3",
+  "remote-consumer-logs.tar.gz": "725e9e1dff67feec0de8f49c973eaa2d18318a180c5b3d48c409910c3041257e",
+  "remote-consumer.json": "98f9ea69335a1eff9a1b981fec05814101279dce6c961bbf9e8e8c26488f3ff6",
   "source-comparison.json": "4e812bd4e8a3db5462494e42c4e97e9a19196c9271dcaa6b5a5a1e1469096ee5",
   "spi-submission.json": "86b9a5cb7831092e821b499573500e7ad8e322938d2f4aafc3ee41f8604b996d"
 }
