@@ -1,7 +1,8 @@
 public import SetzerSyntax
 
 /// Parses CommonMark blocks and inlines over an immutable UTF-8 snapshot.
-/// Optional lexical tokens retain source spelling; native analysis follows in M3.
+/// Optional lexical tokens retain source spelling. Native analysis is a
+/// separate opt-in service over the returned document.
 public struct MarkdownParser: Sendable {
     public let profile: Profile
     internal let registry: RuleRegistry

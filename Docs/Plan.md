@@ -1,5 +1,17 @@
 # GMSetzer – Plan and Requirements
 
+**23 November 2026 — M8 started:** the owner requested development toward
+1.0 and Swift Package Index publication. PR #29 merged at `49afec9`.
+`feature/m8-api-docs` prepares a validated HTML facade over existing parser
+configuration, six DocC catalogs, a proposed 611-declaration compatibility
+inventory and Index documentation configuration, with development identity
+`1.0.0-dev.1`. See [M8 readiness](M8Readiness.md) and [API review](Review-M8.md).
+Final owner acceptance, minimum-toolchain CI on the new sources, merging,
+tagging, release publication and Index submission remain separate. The latest
+published preview remains 0.6.0; no intermediate 0.7 release is required.
+
+The dated checkpoint below records the preceding M7 state.
+
 **Status: 22 November 2026, M1–M6 merged and accepted under their declared
 library gates. PR #24 (`a8a0351`) adds progressive HTML on `main`; the latest
 published source-only preview is v0.6.0. PR #26 (`a273810`) merges the M7
@@ -593,7 +605,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Declared extension fixtures and profile/combination tests pass | 5–8 | **first step merged in PR #19 (`4b0f105`)**: raw YAML/TOML front matter; 153 tests pass on both hosts and macOS/Swift 6.2. PR/main CI pass on both hosts. Named footnotes merged in PR #20 (`a6a2da6`), with 178 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on macOS/Linux. Opaque inline/display/fenced TeX is merged in PR #21 (`6f166b7`), with 202 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on both hosts. Alerts and callouts merged in PR #22 (`c9543fe`); all 227 local tests pass on both hosts and macOS/Swift 6.2, and PR/main CI pass on both hosts. **Functional M5 accepted** against the declared extension/profile/combination criterion; see [M5Acceptance](M5Acceptance.md). See [FrontMatter](FrontMatter.md), [Footnotes](Footnotes.md), [Math](Math.md) and [Admonitions](Admonitions.md) |
 | M6 / 0.6 development | Progressive HTML: prepared complete-document context, structural groups and bounded/on-demand emission | Plan 10.1 gates pass | Accepted; no remaining implementation estimate | **merged in PR #24 (`a8a0351`) and accepted**: exact grouped/full output, explicit fallbacks, source/cancellation/M5 contracts, 42-case measurements with matching runtime hashes and reviewed budgets; merged-main macOS/Swift 6.2.3 and Linux/Swift 6.2 CI pass 242 Swift tests, optimized builds and 31 Python tests. See [M6Acceptance](M6Acceptance.md) |
 | M7 | General speed and hardening: selected-extension measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met; robustness and allocation evidence recorded | previous 5–8; re-estimate after M6 | **candidate merged in [PR #26](https://github.com/kerker00/GMSetzer/pull/26) at `a273810`**; explicit milestone acceptance and the 0.7 release remain separate. [Readiness](M7Readiness.md) records 252-test Mac/x64 Debug/Release and minimum Swift 6.2 CI passes, 12 tool tests per native host, full 69/72-case refreshes with unchanged C/M2 gates, 36 explicit UTF-8 controls, 42 source-matched resource cases, Mac ASan and bounded mutation plus 3,510 coverage-guided x64 units. General C parity and further copying/output work remain aims. See [self-review](Review-M7.md) and [M7Hardening](M7Hardening.md) |
-| M8 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | previous 3–5; re-estimate after M7 | **planned; former M7 moved back one milestone** |
+| M8 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | In progress | **local preparation on `feature/m8-api-docs`**: validated HTML convenience API, six DocC catalogs, candidate API inventory/checks and Swift Package Index configuration; [readiness](M8Readiness.md) tracks current tests and open release gates |
 | | **Original total before explicit editor-analysis scope** | | **38–59; re-estimate required** | |
 
 After 1.0: further profiles (Obsidian, Pandoc), a Markdown serialiser for
@@ -864,11 +876,11 @@ repository; it no longer blocks library publication.
    [ContainerMarkers](ContainerMarkers.md). Consumer color mapping remains
    outside the library.
 
-Current next work: review the inline-input/comparison follow-up in
-[PR #29](https://github.com/kerker00/GMSetzer/pull/29), after the HTML-copy
-follow-up merged in PR #28 (`ce5dedc`), alongside separately
-reviewed source-only 0.7 release preparation after the [M7 candidate](M7Readiness.md)
-merged in PR #26 (`a273810`). The measured
+Current next work: review M8's [API contract](APIStability.md), DocC catalogs
+and [1.0 readiness gates](M8Readiness.md). The inline-input/comparison follow-up
+merged in [PR #29](https://github.com/kerker00/GMSetzer/pull/29) at `49afec9`,
+after PR #28 (`ce5dedc`) and the [M7 candidate](M7Readiness.md)
+in PR #26 (`a273810`). The measured
 scratch/token/buffer/UTF-8 optimizations now have current full Mac/x64 benchmark
 controls, minimum Swift 6.2 CI, a source-matched 42-case progressive resource
 matrix and bounded ASan/coverage-guided evidence. Historical baseline reports
@@ -880,7 +892,8 @@ remain useful follow-ups rather than claims established by these measurements.
 The M6 progressive-output API and reviewed post-baseline budgets are accepted;
 merged-main CI passes on macOS/Linux at the minimum Swift 6.2 toolchain.
 Owner acceptance of the recorded M7 performance/robustness candidate remains
-open; API/DocC/1.0 completion stays M8. Full benchmark
+open; API/DocC/1.0 completion is now in progress in M8. Full benchmark
 and long-test execution still requires the existing owner confirmation.
 Consumer scheduling, dependency pinning and device acceptance remain in their
-own repositories. The source-only v0.6.0 preview is published; 0.7 work remains separate.
+own repositories. The source-only v0.6.0 preview is published; 1.0 preparation
+does not publish a tag or submit to the Swift Package Index.

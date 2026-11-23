@@ -102,7 +102,7 @@ separately as `0.7.0-dev.1`. No tag is moved or rewritten by documentation
 follow-up or development-branch synchronization.
 
 
-## Current M7 development
+## Recorded M7 development
 
 `feature/m7-hardening` continues as `0.7.0-dev.1`, with mutation coverage,
 benchmark data and parser optimization kept outside the published 0.6.0 tag.
@@ -111,3 +111,43 @@ its tested parser/rendering source and original measurement commit history.
 Version-only or documentation integration does not retarget historical timing
 receipts or imply M7 acceptance; the remaining validation is in
 [M7Hardening](M7Hardening.md).
+
+## Swift Package Index and 1.0 preparation
+
+The owner requested preparation toward 1.0 on 23 November 2026. M8 uses
+`1.0.0-dev.1`; see [readiness](M8Readiness.md), [API stability](APIStability.md)
+and the [draft notes](Releases/1.0.0.md). The published preview remains 0.6.0.
+An intermediate 0.7 tag is not required. Before an approved stable tag, set
+the runtime identity to the exact final version and finalise the notes/title.
+`Scripts/check_release_version.py v1.0.0` deliberately rejects the current
+development identity/draft. The release workflow now enforces this check in
+addition to tag ancestry, CI, DocC and public-API validation.
+
+The [Index inclusion requirements](https://swiftpackageindex.com/add-a-package)
+are a public repository, a valid root Swift package, at least one SemVer tag,
+valid `swift package dump-package` JSON with the latest toolchain and a package
+that compiles. A 1.0 tag is not required for inclusion. The canonical submission
+URL is `https://github.com/kerker00/GMSetzer.git`. No package registry or binary
+artifact upload is required.
+
+The root `.spi.yml` follows the Index's
+[documented hosting configuration](https://github.com/SwiftPackageIndex/SPIManifest/blob/main/Sources/SPIManifest/Documentation.docc/CommonUseCases.md):
+it lists all six documentation targets, with `GMSetzer` first as the landing
+target. SPI injects its documentation plugin; no plugin dependency is added
+to this library. The [online manifest validator](https://swiftpackageindex.com/validate-spi-manifest)
+is available for the submission review. Local DocC checks establish valid
+catalogs, not an executed Index build or accepted listing.
+
+After M8 review/merge and successful minimum-toolchain checks:
+
+1. Obtain the owner's confirmation of the exact merged commit/version, then
+   create/push the immutable SemVer tag through the existing release sequence.
+2. Check the release workflow/draft, an independent public-HTTPS exact-version
+   consumer and GitHub's automatic source archives. Publish the release with
+   the owner's confirmation.
+3. Prepare the package submission through the Index's Add a Package flow.
+   Review its exact URL and obtain confirmation before sending the submission;
+   it creates an externally visible request. Record the resulting URL/status.
+4. After the listing/build results exist, verify all six documentation targets
+   and add real Index/documentation/badge links to the README. Do not advertise
+   an unverified listing or substitute a successful local build for SPI results.

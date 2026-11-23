@@ -1,6 +1,6 @@
 # Development status and history
 
-22 November 2026. The latest published preview is [v0.6.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0).
+23 November 2026. The latest published preview is [v0.6.0](https://github.com/kerker00/GMSetzer/releases/tag/v0.6.0).
 The M7 candidate merged in [PR #26](https://github.com/kerker00/GMSetzer/pull/26)
 at `a273810`, with identity `0.7.0-dev.1`. It is not a published 0.7 release;
 explicit milestone acceptance and release preparation remain separate. See
@@ -10,10 +10,13 @@ at `6372cfc`, after the README reorganisation. It leaves the production scanner
 unchanged; the measured variants do not justify blanket adoption. The
 [HTML-copy follow-up](Validation/M7/html-copies-2026-11-22.md) merged in
 [PR #28](https://github.com/kerker00/GMSetzer/pull/28) at `ce5dedc`, with 253-test
-native suites, minimum Swift 6.2 CI and source-matched resources. Next is review
-of the separate inline-input/comparison work in
-[PR #29](https://github.com/kerker00/GMSetzer/pull/29); it is not merged.
-M8 owns the high-level API/configuration review. Input streaming needs a
+native suites, minimum Swift 6.2 CI and source-matched resources. The subsequent
+inline-input/comparison work merged in
+[PR #29](https://github.com/kerker00/GMSetzer/pull/29) at `49afec9`.
+M8 is now implemented locally as `1.0.0-dev.1`: validated HTML convenience
+rendering, six DocC catalogs, a source API candidate inventory and Index
+configuration. See [readiness](M8Readiness.md) for the checked scope and open
+1.0 review/release gates. Input streaming needs a
 separate design for global definitions and document ownership.
 
 ## Historical checkpoints
