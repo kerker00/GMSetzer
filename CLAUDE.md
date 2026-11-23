@@ -6,8 +6,13 @@ describes the workflow.
 
 ## Always
 
-- Credit Codex-assisted work in new commits with `Assisted-by: Codex (OpenAI)`
-  and in PR descriptions (owner preference, 21 November 2026).
+- Keep AI assistance visible in every new assisted commit and its PR description
+  (owner preference, 23 November 2026). Add the appropriate commit trailers:
+  `Assisted-by: Codex (OpenAI)` for Codex work and
+  `Assisted-by: Claude (Anthropic)` for Claude work. Include both when both
+  contributed; name only tools that actually participated. Put trailers after
+  a blank line at the end of the commit message. This also applies to
+  documentation, fixes and cleanup commits. Do not omit assistance credits.
 
 - Keep public APIs and current documentation consumer-neutral. Application
   adapters, session/revision types, UI and device acceptance belong in the
