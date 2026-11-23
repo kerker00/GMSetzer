@@ -5,11 +5,13 @@
 The [development roadmap](Roadmap.md) defines the 1.0 acceptance boundary and
 the proposed sequence of later work, with independent opt-in syntax stages.
 `feature/m8-api-docs` prepares a validated HTML facade over existing parser
-configuration, six DocC catalogs, a proposed 611-declaration compatibility
-inventory and Index documentation configuration, with development identity
+configuration, six DocC catalogs, a proposed compatibility inventory
+(610 declarations, plus one original export grouping node) and Index configuration, with identity
 `1.0.0-dev.1`. See [M8 readiness](M8Readiness.md) and [API review](Review-M8.md).
-Final owner acceptance, minimum-toolchain CI on the new sources, merging,
-tagging, release publication and Index submission remain separate. The latest
+Minimum Swift 6.2 macOS/Linux tests, optimized builds, 61 Python checks,
+six DocC archives and the API inventory check now pass at `cbdc977` in PR #30.
+Final owner acceptance, merging, tagging, release publication and Index
+submission remain separate. The latest
 published preview remains 0.6.0; no intermediate 0.7 release is required.
 
 The dated checkpoint below records the preceding M7 state.
@@ -607,7 +609,7 @@ extension API and hardening work. Every milestone ends with a measurable result.
 | M5 | Footnotes, front matter, math, alerts and callouts; profiles "CommonMark strict" and "GFM" | Declared extension fixtures and profile/combination tests pass | 5–8 | **first step merged in PR #19 (`4b0f105`)**: raw YAML/TOML front matter; 153 tests pass on both hosts and macOS/Swift 6.2. PR/main CI pass on both hosts. Named footnotes merged in PR #20 (`a6a2da6`), with 178 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on macOS/Linux. Opaque inline/display/fenced TeX is merged in PR #21 (`6f166b7`), with 202 local tests passing on both hosts and macOS/Swift 6.2; PR and merged-main CI pass on both hosts. Alerts and callouts merged in PR #22 (`c9543fe`); all 227 local tests pass on both hosts and macOS/Swift 6.2, and PR/main CI pass on both hosts. **Functional M5 accepted** against the declared extension/profile/combination criterion; see [M5Acceptance](M5Acceptance.md). See [FrontMatter](FrontMatter.md), [Footnotes](Footnotes.md), [Math](Math.md) and [Admonitions](Admonitions.md) |
 | M6 / 0.6 development | Progressive HTML: prepared complete-document context, structural groups and bounded/on-demand emission | Plan 10.1 gates pass | Accepted; no remaining implementation estimate | **merged in PR #24 (`a8a0351`) and accepted**: exact grouped/full output, explicit fallbacks, source/cancellation/M5 contracts, 42-case measurements with matching runtime hashes and reviewed budgets; merged-main macOS/Swift 6.2.3 and Linux/Swift 6.2 CI pass 242 Swift tests, optimized builds and 31 Python tests. See [M6Acceptance](M6Acceptance.md) |
 | M7 | General speed and hardening: selected-extension measurements, optimisation, hostile input, fuzzing | Speed targets of section 3 met; robustness and allocation evidence recorded | previous 5–8; re-estimate after M6 | **candidate merged in [PR #26](https://github.com/kerker00/GMSetzer/pull/26) at `a273810`**; explicit milestone acceptance and the 0.7 release remain separate. [Readiness](M7Readiness.md) records 252-test Mac/x64 Debug/Release and minimum Swift 6.2 CI passes, 12 tool tests per native host, full 69/72-case refreshes with unchanged C/M2 gates, 36 explicit UTF-8 controls, 42 source-matched resource cases, Mac ASan and bounded mutation plus 3,510 coverage-guided x64 units. General C parity and further copying/output work remain aims. See [self-review](Review-M7.md) and [M7Hardening](M7Hardening.md) |
-| M8 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | In progress | **local preparation on `feature/m8-api-docs`**: validated HTML convenience API, six DocC catalogs, candidate API inventory/checks and Swift Package Index configuration; [readiness](M8Readiness.md) tracks current tests and open release gates |
+| M8 | Version 1.0: API review, DocC documentation, release | Independently usable versioned package with documented API and owner-confirmed publication | In progress | **candidate in PR #30 (`feature/m8-api-docs`)**: validated HTML convenience API, all public type summaries, six DocC catalogs, source-backed API checks and Index configuration. Swift 6.2 Mac/Linux and DocC/API CI pass at `cbdc977`; [readiness](M8Readiness.md) tracks owner review and remaining release gates |
 | | **Original total before explicit editor-analysis scope** | | **38–59; re-estimate required** | |
 
 The [development roadmap](Roadmap.md) defines the proposed post-1.0 sequence:

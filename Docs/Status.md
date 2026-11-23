@@ -13,9 +13,13 @@ unchanged; the measured variants do not justify blanket adoption. The
 native suites, minimum Swift 6.2 CI and source-matched resources. The subsequent
 inline-input/comparison work merged in
 [PR #29](https://github.com/kerker00/GMSetzer/pull/29) at `49afec9`.
-M8 is now implemented locally as `1.0.0-dev.1`: validated HTML convenience
+M8 is now in PR #30 as `1.0.0-dev.1`: validated HTML convenience
 rendering, six DocC catalogs, a source API candidate inventory and Index
-configuration. See [readiness](M8Readiness.md) for the checked scope and open
+configuration and a project-focused [roadmap](Roadmap.md). All source-owned
+public types/typealiases have summaries. At `cbdc977`, minimum Swift 6.2 CI
+passes 263 Swift tests, both protected corpora, 61 Python checks and optimized
+builds on macOS/Linux, plus all six DocC archives and 610 source API declarations.
+See [readiness](M8Readiness.md) for the checked scope and open
 1.0 review/release gates. Input streaming needs a
 separate design for global definitions and document ownership.
 

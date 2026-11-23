@@ -58,5 +58,12 @@ the source-backed annotation checks. Linux x64 independently passes the earlier
 58-test correction and library graph/API compilation with Swift 6.4.2; DocC
 is not installed on that host and no Linux DocC archive build is claimed.
 No Swift runtime implementation, grammar, profile, fixture, API signature or
-performance budget changes in this correction. Updated minimum-toolchain CI
-and Linux checks are tracked separately; local success is not a CI result.
+performance budget changes in this correction.
+
+The completed follow-up passes all 61 Python checks and the 610-declaration
+API check independently on Linux. At `cbdc977`, all three minimum-toolchain
+CI jobs also pass: macOS Swift 6.2.3 / Linux Swift 6.2 library/spec/script and
+optimized-build checks, plus six warning-free DocC archives and API validation.
+The [retained follow-up receipt](roadmap-followup-2026-11-23/receipt.json)
+records the exact run, source hashes and logs. Earlier failed runs remain
+identified above rather than being relabelled as successful verification.

@@ -52,9 +52,11 @@ with the installed SDKs. The initial consumer build fails at sandbox-restricted
 dSYM generation; repeating with debug symbols disabled succeeds. That setup
 failure is retained separately and supplies no runtime validation.
 
-New code has not yet run on the minimum Swift 6.2 CI or Apple minimum OS
-runtimes. The updated CI adds DocC and API inventory checks on Swift 6.2;
-its definition is prepared locally, not an executed CI result. These changes
+At the initial local checkpoint, minimum Swift 6.2 execution remained pending.
+The subsequent run at `cbdc977` passes macOS/Linux library/spec/script checks,
+optimized builds and all six DocC archives plus the API check; exact evidence
+is retained in the [follow-up receipt](Validation/M8/roadmap-followup-2026-11-23/receipt.json).
+Apple minimum-OS runtime checks are not claimed. These changes
 do not establish new parser speed, allocation or peak-memory claims. Earlier
 M7 receipts keep their exact runtime identities; the new identity/source file
 must not be presented as hash-equal to those earlier inventories.
