@@ -40,11 +40,11 @@ fill a documentation entry; follow the owner's existing authorization.
   scoped execution reports/raw data under `Docs/Validation/` and
   `Docs/BenchmarkData/`. Record configuration/source identities and pending
   measurements without rewriting older evidence as current results.
-- `Docs/Archive/` contains historical plans, feature narratives, reviews and
-  measurement ledgers. Preserve checkpoint content; fix relocated links when
-  needed. New current documentation belongs in the two handbooks, not a new
-  milestone/status file. Versioned release notes and machine-readable evidence
-  keep their established dedicated directories.
+- Keep current prose in the two handbooks; fold in useful contracts and remove
+  superseded standalone documents rather than adding an archive copy. Historical
+  prose remains in Git history; use immutable commit links when old context is
+  needed. Preserve machine-readable/raw evidence and versioned release notes
+  in their established directories. Do not create new milestone/status files.
 - `Tests/SetzerSpecTests/Resources/baseline.json` and its `README.md`: add newly
   passing IDs with the implementation and keep corpus descriptions current.
   Never remove protected IDs to hide regressions or trade failures for passes.

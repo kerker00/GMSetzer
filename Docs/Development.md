@@ -137,13 +137,14 @@ reference parser. The optional normalizer only removes generated void-tag closin
 slashes, never text whitespace, attributes, code or original raw HTML.
 
 
-Documentation consolidation validation (23 November 2026): 747 local Markdown
-links and fragments pass; all 36 archived texts retain their original prose
-apart from the archive notice and relocated link targets. All 61 Python checks,
-six warning-as-error DocC archives, 610-declaration API comparison and `v1.0.0`
-version/notes preflight pass. Non-Markdown source and evidence bytes remain
-unchanged; no fresh Swift runtime test, benchmark or stress campaign is claimed
-for this documentation-only change.
+Documentation consolidation removes the 36 superseded standalone documents
+from the current tree after folding their active contracts into the two
+handbooks. Historical prose remains in Git history, without an archive copy.
+All 223 local links/fragments and 14 immutable historical Git targets pass.
+All 61 Python checks, six warning-as-error DocC archives, the 610-declaration
+API comparison and `v1.0.0` version/notes preflight pass. Non-Markdown source
+and evidence bytes remain unchanged. No additional local runtime test,
+benchmark or stress campaign is claimed for this documentation-only change.
 
 ## API compatibility checks
 
@@ -179,8 +180,8 @@ The [package README](../README.md#performance) gives a bounded M7 snapshot.
 Its rows retain their measured source/runtime identity and are not timings for
 the published 0.6.0 tag or fresh 1.0 results. Read the
 [inline-input report](Validation/M7/inline-input-2026-11-22.md#completion),
-[README control check](Archive/Benchmarks.md#readme-control-check-23-november-2026)
-and [historical measurement ledger](Archive/Benchmarks.md) for exact scopes.
+[README control check](https://github.com/kerker00/GMSetzer/blob/418882ff66357ce17e968d389b62d77296d665db/Docs/Benchmarks.md#readme-control-check-23-november-2026)
+and [historical measurement ledger](https://github.com/kerker00/GMSetzer/blob/418882ff66357ce17e968d389b62d77296d665db/Docs/Benchmarks.md) for exact scopes.
 
 Compare matching CommonMark/GFM profiles over identical actual bytes with source
 positions on for GMSetzer and C, including equivalent parse/tree teardown.
@@ -387,10 +388,12 @@ Ideas do not remove the attribution obligations for copied code or fixtures.
 ## Historical records
 
 The current documentation is deliberately limited to [the package guide](README.md)
-and this document. [Archive](Archive/README.md) holds prior plans, individual
-feature narratives, milestone acceptances, reviews, status logs and the full
-measurement ledger. Their dates, test counts and pending-status statements
-refer to the recorded checkpoint, not today's release state.
+and this document. Superseded plans, individual feature narratives, reviews,
+acceptances and status logs are removed from the current tree. Their original
+texts remain in Git history; links to necessary historical context pin the
+pre-cleanup commit rather than keeping duplicate documents in an archive.
+Dates, counts and pending-status statements in those snapshots refer to their
+recorded checkpoint, not today's release state.
 
 `API/` contains machine-readable compatibility inventories; `BenchmarkData/`
 and `Validation/` retain raw measurements, logs, hashes and executed receipts.

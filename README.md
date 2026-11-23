@@ -44,7 +44,7 @@ Actual inputs are 100,284 and 1,000,100 UTF-8 bytes. See
 [measurement conditions and native x64 results](Docs/Validation/M7/inline-input-2026-11-22.md#completion),
 [same-run raw timings](Docs/BenchmarkData/m7-inline-input-2026-11-22/mac-parser-b/receipt.json) and
 [all benchmark reports](Docs/Development.md#performance-measurements). A
-[23 November control check](Docs/Archive/Benchmarks.md#readme-control-check-23-november-2026)
+[23 November control check](https://github.com/kerker00/GMSetzer/blob/418882ff66357ce17e968d389b62d77296d665db/Docs/Benchmarks.md#readme-control-check-23-november-2026)
 records 2.14 / 22.33 ms for GMSetzer on the same runtime sources.
 
 ## What it provides

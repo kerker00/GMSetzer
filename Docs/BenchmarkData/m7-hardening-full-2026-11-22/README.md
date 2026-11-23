@@ -3,7 +3,7 @@
 22 November 2026. All 69 cases complete at clean commit `2f5f1bd` on
 macOS arm64 / Apple Swift 6.4.2, in 326 seconds. See the
 [report](../../Validation/M7/hardening-scaling-2026-11-22.md) and
-[workload contract](../../Archive/M7HardeningWorkloads.md).
+[workload contract](https://github.com/kerker00/GMSetzer/blob/418882ff66357ce17e968d389b62d77296d665db/Docs/M7HardeningWorkloads.md).
 
 - `receipt.json`, `cases.txt`: exact execution/source/binary/allocator identity
   and all 69 tagged names. Receipt case-log hashes identify original streams.
