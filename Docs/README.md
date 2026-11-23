@@ -22,11 +22,12 @@ provides task guides and individual symbol references.
 
 Requires Swift 6.2+, with declared deployment minimums macOS 15, iOS 18 and
 visionOS 2; Linux is supported. The package has no runtime dependencies.
-The latest published preview is 0.6.0. PR #31 merged 1.0.0 preparation at
-`418882f`; the examples below include that prepared API. The [release checklist](Development.md#release-checklist)
-distinguishes preparation from tagging and publication.
+The public `v1.0.0` tag is available to SwiftPM; its GitHub release is a reviewed
+draft awaiting publication. The latest published GitHub preview remains 0.6.0.
+The examples below describe the 1.0 API. The [release checklist](Development.md#release-checklist)
+distinguishes tagging from release publication.
 
-After the 1.0.0 tag is confirmed, depend on the stable series:
+Depend on the tagged 1.x series:
 
 ```swift
 .package(url: "https://github.com/kerker00/GMSetzer.git", from: "1.0.0")
@@ -34,9 +35,8 @@ After the 1.0.0 tag is confirmed, depend on the stable series:
 
 Select `.product(name: "GMSetzer", package: "GMSetzer")` for the umbrella
 product, or depend on individual products listed in the
-[module graph](Development.md#architecture). Before that tag exists, use the
-published 0.6.0 preview and its matching API, or explicitly pin a reviewed revision.
-`MarkdownHTML` is not part of the 0.6.0 tag.
+[module graph](Development.md#architecture). Older previews require their matching
+API; `MarkdownHTML` is not part of the 0.6.0 tag.
 
 ```swift
 import GMSetzer

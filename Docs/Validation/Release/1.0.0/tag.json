@@ -1,0 +1,11 @@
+{
+  "tag": "v1.0.0",
+  "kind": "tag",
+  "tag_object": "ff7576a85829ea1a02a0b528b962b298de34d4ab",
+  "commit": "9d87e68ccd459f4d12f8543768e72eebfd8e30e1",
+  "remote_refs": [
+    "ff7576a85829ea1a02a0b528b962b298de34d4ab\trefs/tags/v1.0.0",
+    "9d87e68ccd459f4d12f8543768e72eebfd8e30e1\trefs/tags/v1.0.0^{}"
+  ],
+  "authorization": "Owner explicitly confirmed tag creation/push at 9d87e68; release publication and Index submission are separate."
+}

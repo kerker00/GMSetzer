@@ -1,0 +1,19 @@
+{
+  "scope": "canonicalise three local links for the GitHub release page; tagged source notes unchanged",
+  "links": [
+    {
+      "source": "../Validation/Release/1.0.0.md",
+      "release_page": "https://github.com/kerker00/GMSetzer/blob/main/Docs/Validation/Release/1.0.0.md"
+    },
+    {
+      "source": "../README.md#source-compatibility",
+      "release_page": "https://github.com/kerker00/GMSetzer/blob/v1.0.0/Docs/README.md#source-compatibility"
+    },
+    {
+      "source": "../Development.md#roadmap",
+      "release_page": "https://github.com/kerker00/GMSetzer/blob/v1.0.0/Docs/Development.md#roadmap"
+    }
+  ],
+  "tagged_notes_sha256": "d520a2098ca51ce1abbd6b6dcd193e4f256f540401cb75fea5cf8bd7c76baf5f",
+  "release_body_sha256": "fd40ca7b2f66f6d8beb6edfa85d0860aad3e6b6090d0bc8c39ead5b7f5b95695"
+}

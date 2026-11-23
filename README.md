@@ -87,9 +87,9 @@ Pin it with Swift Package Manager:
 Add `.product(name: "GMSetzer", package: "GMSetzer")` to your target's
 dependencies. GitHub provides source ZIP/tar.gz archives; no binary assets or
 package registry are required. See [release notes](Docs/Releases/0.6.0.md).
-The prepared 1.0.0 release is not yet tagged or published. Its
-[release notes](Docs/Releases/1.0.0.md) and [checks](Docs/Validation/Release/1.0.0.md)
-record the candidate; use `from: "1.0.0"` after confirmed publication.
+The public `v1.0.0` tag is also available to SwiftPM with `from: "1.0.0"`;
+its GitHub release remains a reviewed draft. See its
+[release notes](Docs/Releases/1.0.0.md) and [checks](Docs/Validation/Release/1.0.0.md).
 
 ## 1.0 release preparation
 
@@ -97,8 +97,9 @@ The release candidate uses identity `1.0.0` and freezes the reviewed 1.x source
 API, including validated `MarkdownHTML` convenience rendering, six DocC
 catalogs and Swift Package Index documentation configuration. PR #30 merged
 the implementation at `5f81308`; PR #31 merged release preparation at `418882f`.
-This preparation does not publish a tag;
-the published preview and installation example above remain 0.6.0.
+Owner-confirmed annotated `v1.0.0` points to `9d87e68`. Tagged CI, exact-version
+consumption and source-archive checks pass; GitHub release publication remains
+open. The published preview and installation example above remain 0.6.0.
 See the [release checklist and roadmap](Docs/Development.md),
 [API contract](Docs/README.md#source-compatibility) and
 [DocC entry point](Sources/GMSetzer/GMSetzer.docc/GMSetzer.md).

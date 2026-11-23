@@ -1,0 +1,33 @@
+{
+  "state": "tagged source archives checked; GitHub release remains draft/pending",
+  "archives": [
+    {
+      "format": "zip",
+      "url": "https://github.com/kerker00/GMSetzer/archive/refs/tags/v1.0.0.zip",
+      "resolved_url": "https://codeload.github.com/kerker00/GMSetzer/zip/refs/tags/v1.0.0",
+      "http_status": 200,
+      "bytes": 3862997,
+      "sha256": "47c69c58c4cbb5742dd9ce498b26b8c4a38a1407b5569260088bd77876bb8dd4",
+      "checked_files": [
+        "Sources/SetzerSyntax/LibraryIdentity.swift",
+        "Package.swift",
+        "Docs/Releases/1.0.0.md"
+      ],
+      "matching_commit": "9d87e68ccd459f4d12f8543768e72eebfd8e30e1"
+    },
+    {
+      "format": "tar.gz",
+      "url": "https://github.com/kerker00/GMSetzer/archive/refs/tags/v1.0.0.tar.gz",
+      "resolved_url": "https://codeload.github.com/kerker00/GMSetzer/tar.gz/refs/tags/v1.0.0",
+      "http_status": 200,
+      "bytes": 3424788,
+      "sha256": "1869c8fa555072365f9611480ba1d79f84fe6adb7356b09152c746456907b5af",
+      "checked_files": [
+        "Sources/SetzerSyntax/LibraryIdentity.swift",
+        "Package.swift",
+        "Docs/Releases/1.0.0.md"
+      ],
+      "matching_commit": "9d87e68ccd459f4d12f8543768e72eebfd8e30e1"
+    }
+  ]
+}

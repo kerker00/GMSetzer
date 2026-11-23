@@ -1,0 +1,39 @@
+{
+  "exit_code": 0,
+  "seconds": 40.007,
+  "command": [
+    "swift",
+    "run",
+    "--package-path",
+    "/private/tmp/gmsetzer-v100-exact-consumer",
+    "--disable-sandbox",
+    "--disable-netrc",
+    "--disable-keychain",
+    "--jobs",
+    "2",
+    "--cache-path",
+    "/private/tmp/gmsetzer-v100-exact-cache",
+    "--config-path",
+    "/private/tmp/gmsetzer-v100-exact-config",
+    "--security-path",
+    "/private/tmp/gmsetzer-v100-exact-security",
+    "--scratch-path",
+    "/private/tmp/gmsetzer-v100-exact-build",
+    "-debug-info-format",
+    "none",
+    "-c",
+    "release",
+    "Consumer"
+  ],
+  "authentication": "system/global Git config, credential helpers, terminal prompts, SwiftPM netrc/keychain disabled; askpass removed; fresh cache/config/security/build/module paths",
+  "swift": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0",
+  "pin": {
+    "identity": "gmsetzer",
+    "kind": "remoteSourceControl",
+    "location": "https://github.com/kerker00/GMSetzer.git",
+    "state": {
+      "revision": "9d87e68ccd459f4d12f8543768e72eebfd8e30e1",
+      "version": "1.0.0"
+    }
+  }
+}

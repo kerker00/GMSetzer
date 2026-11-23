@@ -1,0 +1,23 @@
+{
+  "release": {
+    "assets": [],
+    "body": "# GMSetzer 1.0.0\n\nThe first stable source API for GMSetzer, a pure Swift Markdown parser with\nCommonMark, GitHub Flavored Markdown, exact source positions and safe-default\nHTML. These notes are prepared ahead of publication; the\n[release record](https://github.com/kerker00/GMSetzer/blob/main/Docs/Validation/Release/1.0.0.md) identifies executed checks\nand the publication state.\n\n## Included\n\n- CommonMark 0.31.2 and GFM, with all protected 652 CommonMark / 672 pinned GFM\n  examples. GFM includes tables, task lists, strikethrough, extended autolinks\n  and rendering policies.\n- Independently selected raw YAML/TOML front matter, named footnotes, opaque\n  inline/display/fenced TeX, GitHub alerts and Obsidian-style callouts.\n- Immutable validated trees over original UTF-8 bytes, optional source-spelled\n  tokens, exact UTF-16/line/scalar conversion, outlines and snapshot-bound queries.\n- Three opt-in native analysis rules, portable findings, explicit suggested\n  fixes and English/German message lookup.\n- Safe-default HTML and explicit renderer hooks. `MarkdownHTML.render` validates\n  one parser configuration and composes standard selected footnote/admonition HTML.\n- Progressive structural HTML groups from a complete document, with explicit\n  whole-document fallbacks and caller-controlled consumption/cancellation.\n- Six library products, DocC guides/API references, a frozen source API baseline\n  and Swift Package Index documentation configuration. No runtime dependencies.\n\n## Requirements and compatibility\n\nRequires Swift 6.2 or later. Declared Apple deployment minimums are macOS 15,\niOS 18 and visionOS 2; Linux is supported. Build/test evidence and minimum-OS\nruntime coverage have distinct scopes in the release record.\n\nThe [1.x source-compatibility contract](https://github.com/kerker00/GMSetzer/blob/v1.0.0/Docs/README.md#source-compatibility) covers public\nsignatures, existing conformances, documented coordinate/ownership contracts,\nextension/token/message identifiers and safe defaults. Source-breaking changes\nrequire a major release. Binary ABI, in-memory layout, persistent tree schemas,\nstable hash values and fixed timings are outside that contract.\n\n## Installation\n\nAfter publication, select the stable 1.x series with Swift Package Manager:\n\n```swift\n.package(url: \"https://github.com/kerker00/GMSetzer.git\", from: \"1.0.0\")\n```\n\nDepend on `.product(name: \"GMSetzer\", package: \"GMSetzer\")`, or select\n`SetzerSyntax`, `SetzerParser`, `SetzerExtensions`, `SetzerHTML` or `SetzerAnalysis`.\nGitHub supplies source ZIP and tar.gz archives; no binary assets or registry\nare required.\n\n```swift\nimport GMSetzer\n\nlet html = try MarkdownHTML.render(\"# Hello\\n\\n- [x] Done\",\n    parser: MarkdownParser(profile: .gfm))\n```\n\nExisting lower-level parsing/rendering APIs remain available. Front matter\nretains its escaped HTML fallback unless a caller explicitly omits it; math\npreserves TeX without bundling a rendering engine.\n\n## Limits\n\nProgressive output requires a complete parse and does not promise input\nstreaming, an interruptible parse, bounded peak memory or fixed device latency.\nNative analysis is a three-rule subset, not a complete linter. Raw-HTML opt-ins\nand hook output are caller trust boundaries. Historical benchmark ratios apply\nto their recorded hosts/configurations; no general C-parity claim is made.\n\nFurther syntax, tree-processing conveniences and Markdown output are planned\nin the [roadmap](https://github.com/kerker00/GMSetzer/blob/v1.0.0/Docs/Development.md#roadmap), outside the 1.0 release scope.\n",
+    "createdAt": "2026-11-23T10:37:12Z",
+    "isDraft": true,
+    "isPrerelease": false,
+    "name": "GMSetzer v1.0.0",
+    "tagName": "v1.0.0",
+    "targetCommitish": "main",
+    "url": "https://github.com/kerker00/GMSetzer/releases/tag/untagged-d555500bbf7dade8ae09"
+  },
+  "review": {
+    "state": "reviewed draft; publication not yet confirmed",
+    "tag_commit": "9d87e68ccd459f4d12f8543768e72eebfd8e30e1",
+    "tag_object": "ff7576a85829ea1a02a0b528b962b298de34d4ab",
+    "notes": "matches tagged notes except three relative links resolved for the release page; prose and tagged source unchanged",
+    "body_sha256": "fd40ca7b2f66f6d8beb6edfa85d0860aad3e6b6090d0bc8c39ead5b7f5b95695",
+    "uploaded_assets": 0,
+    "exact_version_consumer": "pass",
+    "source_archives": "both public archives pass"
+  }
+}

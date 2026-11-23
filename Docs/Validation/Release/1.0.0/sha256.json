@@ -2,10 +2,18 @@
   "candidate-ci.json": "500499bbe8c6dc19e89b2c63acc512167257c74c652738aa08748d37c9047b92",
   "consumer-Package.resolved": "167fe4df0a6672319f0bc9db34447c488452a84815a45bdc55176be776069d00",
   "consumer-probe.swift": "be5c25c339d5a36c01c3531abfe247090675e45ac2900a05c89abb384220ca31",
+  "draft-review.json": "9c4173da478a337d2a6c0ce5c3902c476e44c82926cbd9839363a6bc714a906c",
+  "exact-consumer-logs.tar.gz": "969b98441b896ae571d1375345de8c9cd86a2914ea6a149f82405043594c162d",
+  "exact-consumer.json": "75ba2e33c3bba39412cc62f427929d4eeeb6421a0fccf86cf38c83efb8024d3e",
+  "exact-version-Package.resolved": "88afd436bc8f0b2436d26138f44b87e53c77d5cff60fd01911e355d43c394c0a",
   "local-logs.tar.gz": "f39fb7cfa3c6ab82143e84103b0289e3f982b5848c4489ef8b16630231336f88",
   "local-validation.json": "956233731fa59fa603a5ea6db70f14274c500a49f38ae56e84529b14107d23e3",
+  "release-ci.json": "f4cd4e0418ff04fe47a517dfc98642793157cffac283050308936be8ea8f5c17",
+  "release-notes-links.json": "40a1d19074c4f654eb7745c508b7c02ce7fc9b8279f287344104a666bfcc4c9f",
   "remote-consumer-logs.tar.gz": "725e9e1dff67feec0de8f49c973eaa2d18318a180c5b3d48c409910c3041257e",
   "remote-consumer.json": "98f9ea69335a1eff9a1b981fec05814101279dce6c961bbf9e8e8c26488f3ff6",
+  "source-archives.json": "e33c3b46d33ba6def5b8df2e3648fc16a221a68196ff830e1d4c946fe6014856",
   "source-comparison.json": "4e812bd4e8a3db5462494e42c4e97e9a19196c9271dcaa6b5a5a1e1469096ee5",
-  "spi-submission.json": "86b9a5cb7831092e821b499573500e7ad8e322938d2f4aafc3ee41f8604b996d"
+  "spi-submission.json": "86b9a5cb7831092e821b499573500e7ad8e322938d2f4aafc3ee41f8604b996d",
+  "tag.json": "e2e34927732d92fd703747f282355be38fa3b706bea2fddfbe6903143ee8e256"
 }

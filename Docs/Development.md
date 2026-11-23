@@ -17,7 +17,8 @@
 23 November 2026: M8 merged through PR #30 at `5f81308`. Release preparation
 PR #31 merged at `418882f`, setting identity `1.0.0`, finalising the notes and
 freezing the reviewed source API. The latest published source-only preview remains 0.6.0.
-No 1.0 tag, stable release or Swift Package Index submission has been created.
+Annotated `v1.0.0` now points to owner-confirmed `9d87e68`; the GitHub release
+is a reviewed draft. Stable release publication and Index submission remain open.
 The 1.0 syntax scope is implemented; later syntax is roadmap work.
 
 The prepared implementation at `4c21547` passes 263 Swift tests / 31 suites on
@@ -33,10 +34,10 @@ source, API baseline, package manifest, fixture, dependency or workflow.
 Documentation cleanup PR #32 merged at `a8ca98b`; merged-main
 [CI run 45138594331](https://github.com/kerker00/GMSetzer/actions/runs/45138594331)
 passes all three jobs. The two handbooks replace the old standalone documents;
-there is no archive folder. Next: confirm the exact main commit for `v1.0.0`
-and follow the release checklist. Owner confirmation
-of publication and any remaining acceptance of the recorded evidence stays
-explicit. Warning-free DocC does not claim every member has a source summary;
+there is no archive folder. Tagged [release CI](https://github.com/kerker00/GMSetzer/actions/runs/45157785373),
+an independent exact-version public-HTTPS consumer and both source archives pass.
+Next: obtain confirmation to publish the reviewed draft, then follow the Index
+submission steps. Owner confirmation remains explicit. Warning-free DocC does not claim every member has a source summary;
 minimum Apple OS runtime and consumer UI/device acceptance are not established
 by CI.
 
