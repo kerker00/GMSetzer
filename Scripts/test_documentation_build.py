@@ -21,6 +21,8 @@ class DocumentationGraphTests(unittest.TestCase):
         # load an unbuilt test runner. Library compilation can emit its graphs.
         if "dump-symbol-graph" in command:
             raise subprocess.CalledProcessError(1, command, stderr="Couldn't load module 'GMSetzerPackageTests'")
+        if "-symbol-graph-skip-synthesized-members" in command:
+            raise subprocess.CalledProcessError(1, command, stderr="unknown argument on Swift 6.2")
         self.assertEqual(command[command.index("--target") + 1], "GMSetzer")
         fresh = Path(command[command.index("-emit-symbol-graph-dir") + 2])
         for module in self.modules:

@@ -23,6 +23,13 @@ Three regression tests cover the missing-test-runner scenario, stale previous
 graphs concealing an incomplete current export, and a failed library build.
 The CI API step and documented local commands now read `symbolgraph/` directly.
 
+The first library-only CI attempt then rejects the optional compiler flag
+`-symbol-graph-skip-synthesized-members`, which the local Swift 6.4 toolchain
+accepts but Swift 6.2 does not. That unnecessary flag is removed; the regression
+compiler model also rejects it. Source-owned API collection already excludes
+unowned generated declarations, and all 610 candidate declarations remain
+checked against the unchanged baseline. No compiler failure is ignored.
+
 ## API inventory representation
 
 The compiler's direct emission omits the presentation-only `extension Profile`

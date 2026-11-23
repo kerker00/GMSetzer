@@ -31,7 +31,7 @@ def emit_library_graphs(root, output, jobs, run=subprocess.run):
                    "--config-path", str(output / "config"),
                    "--security-path", str(output / "security"), "--jobs", str(jobs),
                    "-Xswiftc", "-emit-symbol-graph", "-Xswiftc", "-emit-symbol-graph-dir",
-                   "-Xswiftc", str(fresh), "-Xswiftc", "-symbol-graph-skip-synthesized-members"]
+                   "-Xswiftc", str(fresh)]
         run(command, check=True)
         for module in MODULES:
             path = fresh / f"{module}.symbols.json"
