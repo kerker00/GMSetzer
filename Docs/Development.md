@@ -30,9 +30,11 @@ The [1.0 preparation record](Validation/Release/1.0.0.md) retains exact receipts
 commands, hashes and limits. Documentation consolidation changes no runtime
 source, API baseline, package manifest, fixture, dependency or workflow.
 
-Merged-main [CI run 45135414454](https://github.com/kerker00/GMSetzer/actions/runs/45135414454)
-also passes at `418882f`. Next: review this documentation cleanup, confirm the
-exact merged tag commit and follow the release checklist. Owner confirmation
+Documentation cleanup PR #32 merged at `a8ca98b`; merged-main
+[CI run 45138594331](https://github.com/kerker00/GMSetzer/actions/runs/45138594331)
+passes all three jobs. The two handbooks replace the old standalone documents;
+there is no archive folder. Next: confirm the exact main commit for `v1.0.0`
+and follow the release checklist. Owner confirmation
 of publication and any remaining acceptance of the recorded evidence stays
 explicit. Warning-free DocC does not claim every member has a source summary;
 minimum Apple OS runtime and consumer UI/device acceptance are not established
