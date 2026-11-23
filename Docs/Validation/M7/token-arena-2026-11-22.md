@@ -133,7 +133,7 @@ measurement streams are unaffected by that collection correction.
 ## Reproduction and remaining work
 
 Use the normal isolated native Swift test commands from
-[M7 workloads](../../M7HardeningWorkloads.md#reproduction-and-bounds), with the
+[M7 workloads](../../Archive/M7HardeningWorkloads.md#reproduction-and-bounds), with the
 root package for library tests. Focused regression selection is:
 
 ```sh

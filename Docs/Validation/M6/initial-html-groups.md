@@ -62,7 +62,7 @@ full output with the protected expected HTML. Baselines were not weakened.
 
 ## Measurement scope and outstanding gates
 
-The [bounded Release stage probe](../../Benchmarks.md#m6-progressive-html-first-stage-probe)
+The [bounded Release stage probe](../../Archive/Benchmarks.md#m6-progressive-html-first-stage-probe)
 records one 1 MB workload, three samples per variant. It demonstrates earlier
 HTML-group availability after parsing; it measures no WebView, device latency,
 allocation counts or peak memory. The archived hashes match the measured

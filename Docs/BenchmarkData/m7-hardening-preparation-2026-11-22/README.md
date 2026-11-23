@@ -2,7 +2,7 @@
 
 22 November 2026, macOS arm64 / Apple Swift 6.4.2. See the
 [report](../../Validation/M7/hardening-preparation-2026-11-22.md) and
-[workload/reproduction contract](../../M7HardeningWorkloads.md).
+[workload/reproduction contract](../../Archive/M7HardeningWorkloads.md).
 
 - `receipt.json`: final five-case smoke receipt, source/executable hashes,
   compiler/load, Git revision and dirty state. This tools-only change is

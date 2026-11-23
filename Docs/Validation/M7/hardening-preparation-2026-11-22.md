@@ -30,7 +30,7 @@ included in Swift Testing's ten reported tests, not added as separate test
 methods. New checks verify real M5 node kinds, repeated shared-note references,
 hostile shapes, byte retention, annotation invariance, validated documents,
 UTF-16 decoding and full/grouped output equality at bounded sizes. See the
-[workload contract](../../M7HardeningWorkloads.md) for exact scope and commands.
+[workload contract](../../Archive/M7HardeningWorkloads.md) for exact scope and commands.
 Python checks exercise malformed/ambiguous results, literal base-name filters,
 incomplete listings and a bounded subprocess timeout that preserves logs.
 

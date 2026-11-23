@@ -37,7 +37,7 @@ The default specification check remains exact. The separately tested optional
 `HTMLNormalization` helper only removes generated br/hr/img closing slashes;
 it preserves text whitespace, attributes, code and original raw HTML. It is not
 used to turn a strict fixture mismatch into a protected pass. No GFM mismatch
-remains; see Docs/M4GFM.md.
+remains; see [GFM](../../../Docs/README.md#gfm).
 
 The marker-token step also runs all 1,324 examples with syntax collection on
 and off. It requires identical semantic nodes/source segments, diagnostics,

@@ -25,22 +25,26 @@ fill a documentation entry; follow the owner's existing authorization.
 
 ## Update only the affected documents
 
-- [Docs/Plan.md](../../../Docs/Plan.md): update the current status, affected
-  requirements, decisions, milestone status and next work. Distinguish planned,
-  implemented, reviewed and merged work. A merged PR alone does not complete a
-  milestone; check its acceptance criteria and keep remaining work explicit.
-- `Docs/SyntaxTree.md`, `Docs/HTMLReferences.md` and `Docs/EditorAnalysis.md`,
-  when present: maintain the affected tree, parsing, source-range or analysis
-  contracts and their validation evidence. Keep planned APIs labelled planned.
-  For consumer analysis integration, distinguish parser syntax details from diagnostics,
-  linting and UTF-16 editor ranges; library tests do not prove editor underlines
-  or device behavior. Coordinate any required consumer documentation change in
-  its repository rather than claiming integration is finished here.
-- [README.md](../../../README.md): update public examples, supported behavior
-  and limitations when the user-facing API or project status changes.
-- [Docs/Benchmarks.md](../../../Docs/Benchmarks.md): for speed-relevant work,
-  record measured results with configuration and comparison scope, or state
-  that fresh measurements are pending. Preserve historical results as history.
+- [Docs/Development.md](../../../Docs/Development.md): update current state,
+  requirements, architecture, roadmap, validation and release steps when affected.
+  Distinguish planned, implemented, reviewed and merged work. A merged PR alone
+  does not establish milestone acceptance or publication.
+- [Docs/README.md](../../../Docs/README.md): maintain current package examples,
+  tree/source/token coordinates, extension grammars, HTML trust and progressive
+  output contracts, positions, native analysis and advisory fixes. Keep planned
+  capabilities labelled planned. Library checks do not establish consumer UI
+  behavior, diagnostic underlines or device acceptance.
+- [README.md](../../../README.md): update the public summary, installation,
+  examples and limitations when behavior or release state changes.
+- For speed-relevant work, update Development's measurement summary and retain
+  scoped execution reports/raw data under `Docs/Validation/` and
+  `Docs/BenchmarkData/`. Record configuration/source identities and pending
+  measurements without rewriting older evidence as current results.
+- `Docs/Archive/` contains historical plans, feature narratives, reviews and
+  measurement ledgers. Preserve checkpoint content; fix relocated links when
+  needed. New current documentation belongs in the two handbooks, not a new
+  milestone/status file. Versioned release notes and machine-readable evidence
+  keep their established dedicated directories.
 - `Tests/SetzerSpecTests/Resources/baseline.json` and its `README.md`: add newly
   passing IDs with the implementation and keep corpus descriptions current.
   Never remove protected IDs to hide regressions or trade failures for passes.

@@ -5,7 +5,7 @@ M6 implementation at `087e694`. Development identity remains `0.6.0-dev.1`.
 This follow-up adds an offline evidence/budget checker and documentation;
 runtime sources, package manifest, parser grammar and protected fixtures are
 unchanged. This records the initial checkpoint at `5711a3a`; the subsequent
-[self-review](../../Review-M6.md) corrects the measurement tools and expands
+[self-review](../../Archive/Review-M6.md) corrects the measurement tools and expands
 coverage to 242 Swift and 31 Python tests without changing runtime sources.
 The original implementation branch was recovered into a persistent workspace
 worktree; the original `main` checkout and its uncommitted plan changes are
@@ -76,7 +76,7 @@ The check passes **42/42 cases** against the unchanged implementation. Seven
 initial Python regression tests cover per-case failures, the giant-block exception,
 RSS overruns, missing/duplicate cases, invalid samples, changed configuration,
 corrupt artifacts, source mismatch and isolated CLI execution. All **24 offline
-Python tests** passed at `5711a3a`; [self-review](../../Review-M6.md) expands
+Python tests** passed at `5711a3a`; [self-review](../../Archive/Review-M6.md) expands
 this to 31. Normal regression tests inspect historical evidence without
 freezing future library sources to the baseline's hashes.
 
@@ -99,7 +99,7 @@ check succeeded before execution. Package SHA-256:
 
 Swift 6.2 uses the existing Command Line Tools macOS 14.4 SDK, its own Testing
 module/runtime and isolated scratch/cache/configuration/security/module paths,
-as described in [Portability](../../Portability.md#reproduction). The deployment
+as described in [Portability](../../Archive/Portability.md#reproduction). The deployment
 minimum remains macOS 15; this does not prove minimum-OS runtime behavior.
 
 - Complete Swift 6.2 Debug suite, `swift test --disable-sandbox --disable-xctest`

@@ -1,7 +1,8 @@
 # Contributing to GMSetzer
 
-Start with [Docs/Plan.md](Docs/Plan.md): it explains what the library must do,
-the decisions behind it and the order of work.
+Start with [Docs/Development.md](Docs/Development.md): it explains requirements,
+architecture, roadmap, checks and release procedure. The current package contracts
+are in [Docs/README.md](Docs/README.md).
 
 ## Library boundary
 
@@ -20,8 +21,8 @@ checkout may be required. Preserve historical validation records as history.
 3. Run `swift test`; after changes to spec tools, also run
    `python3 -I -m unittest discover -s Scripts`. For speed-relevant changes,
    prepare the benchmark build/list and follow the measurement instructions
-   in [Docs/Benchmarks.md](Docs/Benchmarks.md), including the direct driver for
-   native Linux. Obtain the owner's confirmation before full benchmark runs
+   in [performance measurements](Docs/Development.md#performance-measurements),
+   including the direct driver for native Linux. Obtain the owner's confirmation before full benchmark runs
    or long test runs.
 4. Follow [feature-docs](.claude/skills/feature-docs/SKILL.md) to update the
    affected documentation with the implementation, including milestone,
@@ -48,6 +49,6 @@ checkout may be required. Preserve historical validation records as history.
   origin in the file header and licence in `NOTICE`. Never GPL or LGPL code.
 - Every bug fix comes with a regression test.
 - The owner authorised macOS/Linux CI and source-only release preparation on
-  20 November 2026. See [Releasing](Docs/Releasing.md) for checks and the draft
+  20 November 2026. See [Releasing](Docs/Development.md#release-checklist) for checks and the draft
   release process. Releases, tags and making the repository public still
   require the owner's explicit confirmation before the step.

@@ -1,7 +1,7 @@
 # GMSetzer – rules for Claude
 
-Read [Docs/Plan.md](Docs/Plan.md) first; it is the reference for requirements,
-decisions, architecture and milestones. [CONTRIBUTING.md](CONTRIBUTING.md)
+Read [Docs/Development.md](Docs/Development.md) first; it is the reference for
+requirements, decisions, architecture and roadmap. [CONTRIBUTING.md](CONTRIBUTING.md)
 describes the workflow.
 
 ## Always
@@ -19,8 +19,8 @@ describes the workflow.
 - Keep every specification example ID recorded in
   `Tests/SetzerSpecTests/Resources/baseline.json` passing; add IDs when more
   pass. A new pass must never compensate for a regression elsewhere.
-- Follow the licence rules in Plan section 7 when taking over code or tests:
-  MIT, BSD or Apache-2.0 only, origin in the file header, licence in `NOTICE`;
+- Follow the [licence rules](Docs/Development.md#licences-and-origins) when taking
+  over code or tests: MIT, BSD or Apache-2.0 only, origin in the file header, licence in `NOTICE`;
   never GPL or LGPL.
 - For every feature, fix or review correction, follow
   [feature-docs](.claude/skills/feature-docs/SKILL.md) and include the affected
@@ -38,4 +38,4 @@ describes the workflow.
   without another prompt (owner, 20 November 2026). Source, manifests,
   executable workflows, tags, releases and visibility changes are excluded.
 - The owner authorised macOS/Linux CI and source-only release preparation on
-  20 November 2026; follow [Docs/Releasing.md](Docs/Releasing.md).
+  20 November 2026; follow [release checklist](Docs/Development.md#release-checklist).
