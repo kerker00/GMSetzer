@@ -4,6 +4,7 @@ public import SetzerParser
 /// Raw front matter from one document snapshot. No YAML/TOML deserialisation
 /// or presentation policy is implied. Byte ranges retain the original source.
 public struct FrontMatter: Hashable, Sendable {
+    /// Delimiter family only; payloads remain raw, without YAML/TOML decoding.
     public enum Format: String, CaseIterable, Hashable, Sendable {
         case yaml, toml
 

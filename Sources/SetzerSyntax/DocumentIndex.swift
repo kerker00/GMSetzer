@@ -104,10 +104,12 @@ public struct DocumentIndex: Sendable {
 
     /// Nearest parent first, excluding the node. Iteration allocates no array.
     public func ancestors(of index: Int) -> Ancestors { Ancestors(tables: tables, next: parent(of: index)) }
+    /// Snapshot-owned parent-chain sequence, nearest ancestor first.
     public struct Ancestors: Sequence, Sendable {
         fileprivate let tables: Tables
         fileprivate let next: Int?
         public func makeIterator() -> Iterator { Iterator(tables: tables, current: next) }
+        /// Walks one ancestor chain without allocating an intermediate array.
         public struct Iterator: IteratorProtocol {
             fileprivate let tables: Tables
             fileprivate var current: Int?

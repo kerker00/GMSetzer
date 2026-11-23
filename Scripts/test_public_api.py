@@ -59,6 +59,29 @@ class PublicAPICompatibilityTests(unittest.TestCase):
         before = {"Core": {key: entry}, "Extras": {"extension": block}}
         self.assertEqual(api.incompatibilities(before, {"Core": {}, "Extras": {}}), ["Removed: Core/Profile"])
 
+    def test_legacy_sendable_display_needs_exact_source_evidence(self):
+        old = dict(self.entry, declaration="typealias Hook = @Sendable (Input) -> Output")
+        new = dict(old, declaration="typealias Hook = (Input) -> Output")
+        self.assertFalse(api.same_declaration(old, new))
+        new["source_declaration"] = "public typealias Hook = @Sendable (Input) -> Output"
+        self.assertTrue(api.same_declaration(old, new))
+        new["source_declaration"] = "public typealias Hook = (Input) -> Output"
+        self.assertFalse(api.same_declaration(old, new))
+
+    def test_sendable_cannot_move_to_a_different_callback_parameter(self):
+        old = dict(self.entry, declaration="init(first: @Sendable () -> Void, second: () -> Void)")
+        new = dict(old, declaration="init(first: () -> Void, second: () -> Void)",
+                   source_declaration="public init(first: () -> Void, second: @Sendable () -> Void)")
+        self.assertFalse(api.same_declaration(old, new))
+
+    def test_a_body_annotation_cannot_stand_in_for_the_signature(self):
+        lines = ["public init(", "    action: @escaping () -> Void", ") {", "    let work: @Sendable () -> Void", "}"]
+        header = api.declaration_source(lines, 0)
+        self.assertNotIn("@Sendable", header)
+        old = dict(self.entry, declaration="init(action: @escaping @Sendable () -> Void)")
+        new = dict(old, declaration="init(action: @escaping () -> Void)", source_declaration=header)
+        self.assertFalse(api.same_declaration(old, new))
+
 
 if __name__ == "__main__":
     unittest.main()

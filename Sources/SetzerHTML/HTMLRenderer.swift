@@ -8,6 +8,7 @@ public enum HTMLRendering: Sendable {
     case wrapChildren(open: String, close: String)
 }
 
+/// Snapshot-local node, ancestry and list context for a trusted renderer hook.
 public struct HTMLRendererContext: Sendable {
     public let index: Int
     fileprivate let anchorPrefix: String?
@@ -28,7 +29,9 @@ public struct HTMLRendererContext: Sendable {
     public var ancestors: [Int] { Array(tree.ancestors(of: index)) }
 }
 
+/// Supplies trusted markup with ancestry/context, or nil for default rendering.
 public typealias ContextualHTMLRendererHook = @Sendable (HTMLRendererContext) -> HTMLRendering?
+/// Supplies trusted markup for a node/snapshot, or nil for default rendering.
 public typealias HTMLRendererHook = @Sendable (Node, Document) -> HTMLRendering?
 
 /// Iterative rendering of CommonMark blocks and inlines. Source

@@ -326,6 +326,7 @@ public enum DocumentError: Error, Equatable, Sendable {
 /// A located parser/runtime finding. These differ from source-free configuration
 /// issues and from optional native analysis findings over legal Markdown.
 public struct ParseDiagnostic: Hashable, Sendable {
+    /// Runtime extension/depth conditions, separate from grammar configuration.
     public enum Code: Hashable, Sendable {
         case invalidExtensionResult(String)
         case extensionFinding(owner: String, code: String, message: String)

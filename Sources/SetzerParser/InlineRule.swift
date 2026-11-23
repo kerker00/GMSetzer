@@ -16,6 +16,8 @@ public struct DelimiterHandle: Hashable, Sendable {
     public func hash(into hasher: inout Hasher) { hasher.combine(ObjectIdentifier(identity)) }
 }
 
+/// Asks the inline controller to manage one custom delimiter run. Handles are
+/// rule/snapshot-bound; partial consumption and stale closes are rejected.
 public enum DelimiterRequest: Sendable {
     case none
     /// One entire delimiter run. Partial custom-run consumption is rejected.
@@ -43,6 +45,8 @@ public struct InlineContext: Sendable {
     }
 }
 
+/// One complete custom inline result in projected input coordinates. The
+/// controller validates consumption, children, ownership and emitted tokens.
 public struct InlineMatch: Sendable {
     public let consumed: Int
     public let data: NodeData
@@ -60,7 +64,10 @@ public struct InlineMatch: Sendable {
     }
 }
 
+/// Trusted custom inline rule with protected core dispatch. The profile must
+/// select its extension; a nil match declines without consuming input.
 public struct InlineRule: Sendable {
+    /// Matches at the current projected-input offset, or declines with nil.
     public typealias Matcher = @Sendable (InlineContext) -> InlineMatch?
     public let identifier: String
     public let trigger: UInt8

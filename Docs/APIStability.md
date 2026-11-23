@@ -91,12 +91,19 @@ python3 -I Scripts/check_public_api.py --graph-dir .build/documentation/symbolgr
 ```
 
 The checker rejects removed/changed declarations, lost conformances and cases
-added to existing enums, while allowing additive methods/types. Five Python
-regressions exercise these boundaries. Further checks cover extraction-format
+added to existing enums, while allowing additive methods/types. Regression
+tests exercise these boundaries. Further checks cover extraction-format
 normalisation without accepting removal of the defining type or its extension
 members. A new baseline is created only with
 `--write-baseline`, which refuses to overwrite an existing file. Do not reset
 the baseline to hide a breaking change.
+
+Swift 6.2 omits `@Sendable` in some callback display signatures. Only this
+display omission is accepted, and only when the complete actual source header
+matches the baseline's lexical tokens, including each annotation's position.
+A missing annotation, an annotation on another parameter or one found only
+inside a function body still fails. The candidate baseline is not rewritten
+to accommodate the older compiler.
 
 Symbol graphs do not establish behavioural compatibility, default-argument
 values, raw string identifiers, binary ABI or specification correctness. Those

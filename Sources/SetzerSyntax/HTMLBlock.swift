@@ -4,6 +4,8 @@ public enum HTMLBlockKind: Hashable, Sendable {
     case rawText, comment, processingInstruction, declaration, cdata, blockTag, completeTag
 }
 
+/// Recognised CommonMark HTML block content; recognition grants no rendering
+/// permission. Original byte positions remain on its owning node.
 public struct HTMLBlock: Hashable, Sendable {
     public let kind: HTMLBlockKind
     /// Container prefixes removed and line endings normalised to LF.

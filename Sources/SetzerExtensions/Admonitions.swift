@@ -3,6 +3,7 @@ public import SetzerParser
 
 /// GitHub-style marker-only alert headers. Body Markdown stays in the tree.
 public struct Alert: Hashable, Sendable {
+    /// The five recognised marker spellings; values retain uppercase source names.
     public enum Category: String, CaseIterable, Hashable, Sendable {
         case note = "NOTE", tip = "TIP", important = "IMPORTANT", warning = "WARNING", caution = "CAUTION"
         public var defaultTitle: String { rawValue.prefix(1) + rawValue.dropFirst().lowercased() }
@@ -16,6 +17,8 @@ public struct Alert: Hashable, Sendable {
     public let category: Category
     public let range: SourceRange
 
+    /// Reads a valid alert view; invalid indices and other/custom malformed
+    /// node kinds return nil rather than being interpreted as an alert.
     public init?(_ document: Document, at index: Int) {
         guard document.nodes.indices.contains(index) else { return nil }
         let node = document.nodes[index]
@@ -27,6 +30,7 @@ public struct Alert: Hashable, Sendable {
 
 /// Obsidian-style named callouts, with optional parsed titles and folding.
 public struct Callout: Hashable, Sendable {
+    /// Static aside, initially expanded details or initially collapsed details.
     public enum Fold: String, Hashable, Sendable { case none, expanded, collapsed }
     public static let identifier = "callouts"
     public static let kind = NodeKind("callouts.block")
@@ -46,6 +50,8 @@ public struct Callout: Hashable, Sendable {
     public let titleNode: Int?
     public let range: SourceRange
 
+    /// Reads a well-formed callout and optional parsed title from this snapshot.
+    /// Invalid indices, types, fold values or title topology return nil.
     public init?(_ document: Document, at index: Int) {
         guard document.nodes.indices.contains(index) else { return nil }
         let node = document.nodes[index]

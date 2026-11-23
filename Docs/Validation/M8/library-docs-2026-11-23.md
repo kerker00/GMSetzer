@@ -40,12 +40,23 @@ conformance extension grouping nodes, not nominal types, members or recorded
 conformances. Three regressions check equivalence and ensure that removing the
 defining type or an extension member still fails compatibility.
 
+The next CI run builds all six archives on Swift 6.2, then identifies nine
+callback display signatures with omitted `@Sendable` annotations. Comparison
+now accepts exactly this omission only with matching lexical tokens from the
+actual complete source header. Three further regressions reject absent source
+evidence, removed/moved annotations and an annotation occurring only in a body.
+A local replay of all nine real declarations passes with the original baseline;
+no signature, annotation or compatibility expectation is removed.
+
 ## Local verification
 
 Swift 6.4.2 on the existing Mac builds all six DocC archives with warnings as
 errors using the new library-only path. Both the original standalone-extraction
 graphs and the new compile-time graphs pass the unchanged candidate API
-inventory after representation normalisation. All 58 Python tests pass.
+inventory after representation normalisation. All 61 Python tests pass after
+the source-backed annotation checks. Linux x64 independently passes the earlier
+58-test correction and library graph/API compilation with Swift 6.4.2; DocC
+is not installed on that host and no Linux DocC archive build is claimed.
 No Swift runtime implementation, grammar, profile, fixture, API signature or
 performance budget changes in this correction. Updated minimum-toolchain CI
 and Linux checks are tracked separately; local success is not a CI result.

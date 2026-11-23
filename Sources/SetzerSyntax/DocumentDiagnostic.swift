@@ -5,10 +5,12 @@ public enum DiagnosticSeverity: Int, Hashable, Sendable {
     case information, warning, error
 }
 
+/// Portable finding categories, independent of UI presentation or severity.
 public enum DiagnosticCategory: String, Hashable, Sendable {
     case syntax, style, accessibility
 }
 
+/// A location in one original-byte snapshot, including line/document-level findings.
 public enum DiagnosticLocation: Hashable, Sendable {
     /// Empty ranges are insertion/caret locations; never widen to nearby text.
     case source(SourceRange)

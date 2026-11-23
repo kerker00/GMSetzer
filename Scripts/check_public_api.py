@@ -9,6 +9,7 @@ The candidate baseline is not an assertion that 1.0 has been released.
 import argparse
 import json
 from pathlib import Path
+import re
 from urllib.parse import unquote, urlparse
 
 
@@ -16,9 +17,66 @@ MODULES = ("GMSetzer", "SetzerSyntax", "SetzerParser", "SetzerExtensions",
            "SetzerHTML", "SetzerAnalysis")
 
 
+def declaration_source(lines, start):
+    """Read a declaration header, excluding its body and any following member."""
+    header = []
+    parentheses = brackets = 0
+    quoted = escaped = False
+    for line in lines[start:start + 100]:
+        for character in line:
+            if quoted:
+                header.append(character)
+                if escaped:
+                    escaped = False
+                elif character == "\\":
+                    escaped = True
+                elif character == '"':
+                    quoted = False
+                continue
+            if character == '"':
+                quoted = True
+            elif character == "{" and parentheses == brackets == 0:
+                return " ".join("".join(header).split())
+            elif character == "(":
+                parentheses += 1
+            elif character == ")":
+                parentheses -= 1
+            elif character == "[":
+                brackets += 1
+            elif character == "]":
+                brackets -= 1
+            header.append(character)
+        if parentheses == brackets == 0:
+            return " ".join("".join(header).split())
+        header.append("\n")
+    return ""
+
+
+def declaration_tokens(text):
+    # Keep quoted literals, annotation positions, punctuation and all type names.
+    tokens = re.findall(r'"(?:\\.|[^"\\])*"|`[^`]+`|[A-Za-z_][A-Za-z_0-9]*|\S', text)
+    if tokens[:1] == ["public"]:
+        tokens = tokens[1:]
+    return tokens
+
+
+def same_declaration(old, new):
+    if old["declaration"] == new["declaration"]:
+        return True
+    # Swift 6.2 symbol graphs omit @Sendable on some closure types. Accept
+    # only that display omission, backed by the *complete* actual source header.
+    expected = old["declaration"]
+    if "@Sendable" not in expected or "source_declaration" not in new:
+        return False
+    without_sendable = " ".join(re.sub(r"@Sendable\s*", "", expected).split())
+    return (without_sendable == new["declaration"]
+            and declaration_tokens(expected) == declaration_tokens(new["source_declaration"]))
+
+
 def public_api(graph_dir, root):
     result = {module: {} for module in MODULES}
     seen = set()
+    source_lines = {}
     for path in sorted(graph_dir.rglob("*.symbols.json")):
         owner = path.name.split(".")[0].split("@")[0]
         if owner not in result:
@@ -39,6 +97,12 @@ def public_api(graph_dir, root):
             entry = {"path": symbol["pathComponents"], "kind": symbol["kind"]["identifier"],
                      "declaration": " ".join("".join(f["spelling"] for f in symbol["declarationFragments"]).split()),
                      "conformances": sorted(conforms.get(key, []))}
+            if "->" in entry["declaration"]:
+                if source not in source_lines:
+                    source_lines[source] = source.read_text().splitlines()
+                line = symbol["location"].get("position", {}).get("line")
+                if isinstance(line, int) and line >= 0:
+                    entry["source_declaration"] = declaration_source(source_lines[source], line)
             previous = result[owner].get(key)
             if previous is not None and previous != entry:
                 raise ValueError(f"conflicting symbol graphs for {owner}: {entry['path']}")
@@ -71,7 +135,7 @@ def incompatibilities(baseline, current):
             label = module + "/" + ".".join(old["path"])
             if new is None:
                 errors.append("Removed: " + label)
-            elif any(old[k] != new[k] for k in ("path", "kind", "declaration")):
+            elif old["path"] != new["path"] or old["kind"] != new["kind"] or not same_declaration(old, new):
                 errors.append("Changed: " + label)
             elif not set(old["conformances"]).issubset(new["conformances"]):
                 errors.append("Lost conformance: " + label)
@@ -107,7 +171,7 @@ def main():
             for module, symbols in normalise_extension_contexts(baseline["modules"]).items():
                 for key, old in symbols.items():
                     new = current.get(module, {}).get(key)
-                    if new and any(old[k] != new[k] for k in ("path", "kind", "declaration")):
+                    if new and (old["path"] != new["path"] or old["kind"] != new["kind"] or not same_declaration(old, new)):
                         label = module + "/" + ".".join(old["path"])
                         details.append(f"{label}\n  baseline: {old['declaration']}\n  current:  {new['declaration']}")
             parser.exit(1, "\n".join(errors + details) + "\n")

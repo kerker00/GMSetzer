@@ -38,7 +38,7 @@ M7 source; no new performance acceptance is inferred for the facade.
 | Review/merge M8 changes | PR #30 open; owner review/merge pending |
 | Accept M7 and proposed 1.x contracts | Final owner acceptance pending |
 | Minimum Swift 6.2 CI, including DocC/API checks | Library/spec/script tests and optimized builds pass on both hosts at `f499c4a`; the separate documentation job exposed a test-runner export failure. Library-only graph emission is corrected locally; new CI run pending |
-| Final documentation review | Generated pages and guides build; per-member editorial pass still required |
+| Final documentation review | Every source-owned public type/typealias now has a summary; consequential defaults, preconditions and ownership are clarified, with a public tree-query guide. Final owner review of guides/remaining leaf-member summaries pending |
 | Exact merged release identity and notes | [Draft 1.0 notes](Releases/1.0.0.md) prepared; final commit/identity not chosen |
 | Independent exact-version consumer and source archives | Required after confirmed tag; no 1.0 tag exists |
 | Swift Package Index submission | Configuration ready; no submission sent |

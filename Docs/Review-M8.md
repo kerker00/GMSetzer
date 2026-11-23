@@ -95,3 +95,9 @@ This follow-up edits source comments and guides, not Swift declarations or
 implementations. The API baseline remains unchanged. The separate library-only
 DocC correction and extension-grouping normalisation are recorded in
 [their execution report](Validation/M8/library-docs-2026-11-23.md).
+
+All source-owned public structs, enums and typealiases now have individual
+summary comments. Remaining missing-comment entries are inventoried leaf
+members/cases; this is not a claim of 100% per-member inline documentation.
+The six local DocC archives still compile with warnings as errors, and the
+normalised source API still contains all 610 declarations.
