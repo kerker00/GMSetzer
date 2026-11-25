@@ -40,6 +40,8 @@ describes the workflow.
   [branch-cleanup](.claude/skills/branch-cleanup/SKILL.md): verify and remove
   merged branches and clean worktrees. At every branch completion, check README
   and affected documentation against main and update stale descriptions.
+- For a general review or status check, before a release and at the end of a
+  milestone, follow [project-review](.claude/skills/project-review/SKILL.md).
 - Ask before running the full benchmarks or long test runs, before pushing,
   before opening pull requests, and always before publishing anything:
   making the repository public, tags, releases. The owner merges.
